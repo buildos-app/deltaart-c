@@ -143,9 +143,29 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
 /* NOTIFICATION DOT */
 .notif-dot{width:8px;height:8px;background:var(--red);border-radius:50%;margin-right:auto;flex-shrink:0;}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media(max-width:768px){
+  .sidebar{width:200px;position:fixed;z-index:100;transform:translateX(100%);transition:transform 0.3s;}
+  .sidebar.open{transform:translateX(0);}
+  .main-content{margin-right:0!important;width:100%!important;}
+  .topbar{padding:0 12px;}
+  .stat-card{padding:14px;}
+  .panel{overflow-x:auto;}
+  table{min-width:500px;}
+  .mobile-menu-btn{display:flex!important;}
+  .modal{padding:20px;max-width:95vw;}
+}
+@media(min-width:769px){
+  .mobile-menu-btn{display:none!important;}
+  .sidebar{transform:translateX(0)!important;}
+}
+.mobile-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:8px;cursor:pointer;font-size:18px;border:none;color:var(--gold);}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
+.sidebar-overlay.show{display:block;}
 </style>
 </head>
-<body>
+<body><div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- LOGIN -->
 <div id="login-screen">
@@ -208,7 +228,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
 <!-- MAIN -->
 <div class="main">
-  <div class="topbar">
+  <div class="topbar"><button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
     <h2 id="topbar-title">لوحة التحكم</h2>
     <div style="display:flex;align-items:center;gap:12px">
       <div class="topbar-badge" id="today-date"></div>
@@ -433,7 +453,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
       <div class="panel">
         <table>
-          <thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
+          <thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>كلمة المرور</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
           <tbody id="users-tbody"></tbody>
         </table>
       </div>
@@ -974,12 +994,14 @@ function renderUsersTable(snap) {
     const isActive = u.active !== false;
     html += `<tr>
       <td><strong>${u.name||'—'}</strong></td>
-      <td style="color:var(--gray)">${u.email||'—'}</td>
+      <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
       <td><span class="badge badge-blue">${roleLabel(u.role||'viewer')}</span></td>
       <td><span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span></td>
+      <td style="color:var(--gray);font-size:12px;direction:ltr">${u.password?'••••••••':'-'} <button onclick="showPass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:11px">👁</button></td>
       <td style="color:var(--gray)">${fmtDate(u.createdAt)}</td>
-      <td style="display:flex;gap:6px">
+      <td style="display:flex;gap:4px;flex-wrap:wrap">
         <button class="btn-sm ${isActive?'btn-danger':'btn-primary'}" onclick="toggleUser('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
+        <button class="btn-sm" style="background:rgba(59,130,246,0.2);color:#3B82F6;border:1px solid #3B82F6" onclick="openChangePass('${c.key}','${u.name||''}')">🔑</button>
         <button class="btn-sm btn-danger" onclick="delUser('${c.key}')">🗑️</button>
       </td>
     </tr>`;
@@ -997,7 +1019,7 @@ window.addUser = async function() {
   if (pass.length < 8) { showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف'); return; }
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,createdAt:new Date().toISOString()});
+    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,createdAt:new Date().toISOString(),active:true});
     showAlert(alertEl,'success','✅ تم إضافة المستخدم بنجاح');
     ['usr-name','usr-email','usr-pass'].forEach(id => document.getElementById(id).value='');
     setTimeout(() => closeModal('add-user-modal'), 1500);
@@ -1007,6 +1029,42 @@ window.addUser = async function() {
   }
 };
 window.delUser = async id => { if(confirm('حذف المستخدم؟')) await remove(ref(db,`deltaart/users/${id}`)); };
+
+// ===== MOBILE SIDEBAR =====
+window.toggleSidebar = function() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+};
+
+// ===== SHOW PASSWORD =====
+window.showPass = function(id, pass) {
+  if(!pass) { alert('لا يوجد باسورد محفوظ'); return; }
+  alert('كلمة المرور: ' + pass);
+};
+
+// ===== CHANGE PASSWORD =====
+window.openChangePass = function(id, name) {
+  document.getElementById('cp-uid').value = id;
+  document.getElementById('cp-name').textContent = name;
+  document.getElementById('cp-pass').value = '';
+  openModal('change-pass-modal');
+};
+
+window.changePass = async function() {
+  const uid = document.getElementById('cp-uid').value;
+  const pass = document.getElementById('cp-pass').value;
+  const alertEl = document.getElementById('cp-alert');
+  if(pass.length < 8) { showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف'); return; }
+  try {
+    await set(ref(db,`deltaart/users/${uid}/password`), pass);
+    showAlert(alertEl,'success','✅ تم تغيير كلمة المرور');
+    setTimeout(()=>closeModal('change-pass-modal'),1500);
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
+};
+
+// ===== FORCE LOGOUT ON DISABLE =====
 window.toggleUser = async function(id, isActive) {
   const msg = isActive ? 'إيقاف هذا المستخدم؟' : 'تفعيل هذا المستخدم؟';
   if(!confirm(msg)) return;
@@ -1053,5 +1111,21 @@ function switchGalTab(tab) {
   document.getElementById('gal-tab-url').classList.toggle('active', !isFile);
 }
 </script>
+
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="change-pass-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('change-pass-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔑 تغيير كلمة المرور</h3>
+    <p style="color:var(--gray);font-size:13px;margin-bottom:20px">المستخدم: <strong id="cp-name"></strong></p>
+    <input type="hidden" id="cp-uid">
+    <div class="ff">
+      <label>كلمة المرور الجديدة</label>
+      <input type="text" id="cp-pass" placeholder="8 أحرف على الأقل">
+    </div>
+    <div id="cp-alert" style="margin:12px 0"></div>
+    <button class="btn-gold" onclick="changePass()">💾 حفظ</button>
+  </div>
+</div>
 </body>
 </html>
