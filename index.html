@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دلتا آرت - جبس بورد احترافي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy2: #0F1F3D;
+    --navy3: #162848;
+    --gold: #C9A84C;
+    --gold2: #E8C96A;
+    --gold3: #A07830;
+    --white: #FFFFFF;
+    --gray: #8899AA;
+    --light: #F0F4F8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Cairo',sans-serif; background:var(--navy); color:var(--white); overflow-x:hidden; }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position:fixed; top:0; width:100%; z-index:1000;
+    background:rgba(10,22,40,0.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(201,168,76,0.2);
+    padding:0 5%;
+    display:flex; align-items:center; justify-content:space-between;
+    height:70px;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-icon {
+    width:42px; height:42px; background:linear-gradient(135deg,var(--gold),var(--gold3));
+    border-radius:8px; display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:14px; color:var(--navy);
+  }
+  .logo-text { font-weight:700; font-size:18px; color:var(--white); }
+  .logo-text span { color:var(--gold); }
+  .nav-links { display:flex; align-items:center; gap:30px; }
+  .nav-links a { color:var(--gray); text-decoration:none; font-size:14px; font-weight:600; transition:color 0.3s; }
+  .nav-links a:hover { color:var(--gold); }
+  .nav-cta {
+    background:linear-gradient(135deg,var(--gold),var(--gold3));
+    color:var(--navy); padding:10px 22px; border-radius:8px;
+    font-weight:700; font-size:14px; text-decoration:none; transition:opacity 0.3s;
+  }
+  .nav-cta:hover { opacity:0.85; }
+  .nav-wa {
+    display:flex; align-items:center; gap:8px;
+    background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.4);
+    color:#25D366; padding:10px 18px; border-radius:8px;
+    font-weight:700; font-size:14px; text-decoration:none; transition:all 0.3s;
+  }
+  .nav-wa:hover { background:rgba(37,211,102,0.25); }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height:100vh; display:flex; align-items:center;
+    padding:100px 5% 60px;
+    position:relative; overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0; z-index:0;
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy2) 50%, var(--navy3) 100%);
+  }
+  .hero-bg::before {
+    content:''; position:absolute; inset:0;
+    background:url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=1400&q=80') center/cover;
+    opacity:0.15;
+  }
+  .hero-bg::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to left, transparent 40%, var(--navy) 80%);
+  }
+  .hero-content { position:relative; z-index:2; max-width:600px; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(201,168,76,0.15); border:1px solid rgba(201,168,76,0.4);
+    color:var(--gold); padding:8px 16px; border-radius:20px;
+    font-size:13px; font-weight:600; margin-bottom:24px;
+  }
+  .hero h1 { font-size:clamp(36px,5vw,60px); font-weight:900; line-height:1.2; margin-bottom:20px; }
+  .hero h1 span { color:var(--gold); }
+  .hero p { font-size:17px; color:var(--gray); line-height:1.8; margin-bottom:36px; max-width:480px; }
+  .hero-btns { display:flex; flex-wrap:wrap; gap:14px; }
+  .btn-gold {
+    display:inline-flex; align-items:center; gap:10px;
+    background:linear-gradient(135deg,var(--gold),var(--gold3));
+    color:var(--navy); padding:14px 28px; border-radius:10px;
+    font-weight:700; font-size:15px; text-decoration:none; border:none;
+    cursor:pointer; transition:all 0.3s;
+  }
+  .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,168,76,0.4); }
+  .btn-outline {
+    display:inline-flex; align-items:center; gap:10px;
+    border:1.5px solid rgba(201,168,76,0.5); color:var(--gold);
+    padding:14px 28px; border-radius:10px; font-weight:700;
+    font-size:15px; text-decoration:none; cursor:pointer; background:transparent;
+    transition:all 0.3s;
+  }
+  .btn-outline:hover { background:rgba(201,168,76,0.1); }
+  .btn-wa {
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(37,211,102,0.15); border:1.5px solid rgba(37,211,102,0.4);
+    color:#25D366; padding:14px 28px; border-radius:10px;
+    font-weight:700; font-size:15px; text-decoration:none; cursor:pointer;
+    transition:all 0.3s;
+  }
+  .btn-wa:hover { background:rgba(37,211,102,0.25); }
+  .hero-stats {
+    display:flex; gap:40px; margin-top:48px;
+    padding-top:36px; border-top:1px solid rgba(201,168,76,0.2);
+  }
+  .stat-item { text-align:center; }
+  .stat-num { font-size:32px; font-weight:900; color:var(--gold); }
+  .stat-label { font-size:12px; color:var(--gray); margin-top:4px; }
+
+  /* ===== TRUST BAR ===== */
+  .trust-bar {
+    background:rgba(15,31,61,0.8); border-top:1px solid rgba(201,168,76,0.2);
+    border-bottom:1px solid rgba(201,168,76,0.2);
+    padding:20px 5%; display:flex; justify-content:center;
+    gap:clamp(20px,4vw,60px); flex-wrap:wrap;
+  }
+  .trust-item { display:flex; align-items:center; gap:10px; color:var(--gray); font-size:14px; font-weight:600; }
+  .trust-item svg { color:var(--gold); }
+
+  /* ===== CALC SECTION ===== */
+  .calc-section { padding:80px 5%; }
+  .section-header { text-align:center; margin-bottom:50px; }
+  .section-tag {
+    display:inline-block; background:rgba(201,168,76,0.12);
+    border:1px solid rgba(201,168,76,0.3); color:var(--gold);
+    padding:6px 16px; border-radius:20px; font-size:13px; font-weight:700; margin-bottom:16px;
+  }
+  .section-header h2 { font-size:clamp(28px,4vw,42px); font-weight:900; }
+  .section-header p { color:var(--gray); font-size:16px; margin-top:10px; }
+  .calc-card {
+    max-width:500px; margin:0 auto;
+    background:var(--navy2); border:1px solid rgba(201,168,76,0.2);
+    border-radius:20px; padding:36px; box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+  .calc-field { margin-bottom:22px; }
+  .calc-field label { display:block; font-size:14px; font-weight:600; color:var(--gray); margin-bottom:8px; }
+  .calc-field input, .calc-field select {
+    width:100%; background:var(--navy3); border:1px solid rgba(201,168,76,0.2);
+    border-radius:10px; padding:13px 16px; color:var(--white);
+    font-family:'Cairo',sans-serif; font-size:15px; font-weight:600;
+    outline:none; transition:border-color 0.3s; direction:rtl;
+  }
+  .calc-field input:focus, .calc-field select:focus { border-color:var(--gold); }
+  .calc-result {
+    background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3);
+    border-radius:12px; padding:20px; text-align:center; margin-bottom:22px;
+    display:none;
+  }
+  .calc-result.show { display:block; }
+  .calc-result .result-label { font-size:13px; color:var(--gray); margin-bottom:6px; }
+  .calc-result .result-price { font-size:28px; font-weight:900; color:var(--gold); }
+  .calc-result .result-note { font-size:12px; color:var(--gray); margin-top:6px; }
+
+  /* ===== SERVICES ===== */
+  .services-section { padding:80px 5%; background:rgba(15,31,61,0.4); }
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:50px; }
+  .service-card {
+    background:var(--navy2); border:1px solid rgba(201,168,76,0.15);
+    border-radius:16px; padding:30px; transition:all 0.3s; cursor:default;
+  }
+  .service-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
+  .service-icon {
+    width:56px; height:56px; background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(201,168,76,0.05));
+    border:1px solid rgba(201,168,76,0.3); border-radius:14px;
+    display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:18px;
+  }
+  .service-card h3 { font-size:18px; font-weight:700; margin-bottom:10px; }
+  .service-card p { color:var(--gray); font-size:14px; line-height:1.7; }
+
+  /* ===== GALLERY ===== */
+  .gallery-section { padding:80px 5%; }
+  .gallery-tabs { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:36px; }
+  .gallery-tab {
+    padding:9px 22px; border-radius:8px; font-weight:600; font-size:14px;
+    cursor:pointer; border:1.5px solid rgba(201,168,76,0.3); color:var(--gray);
+    background:transparent; font-family:'Cairo',sans-serif; transition:all 0.3s;
+  }
+  .gallery-tab.active, .gallery-tab:hover { background:var(--gold); color:var(--navy); border-color:var(--gold); }
+  #gallery-grid {
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:16px; min-height:300px;
+  }
+  .gallery-item {
+    border-radius:14px; overflow:hidden; aspect-ratio:4/3;
+    border:1px solid rgba(201,168,76,0.15); background:var(--navy2);
+    position:relative; cursor:pointer;
+  }
+  .gallery-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+  .gallery-item:hover img { transform:scale(1.05); }
+  .gallery-overlay {
+    position:absolute; inset:0; background:linear-gradient(to top,rgba(10,22,40,0.8),transparent);
+    opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:16px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity:1; }
+  .gallery-overlay span { color:var(--white); font-weight:600; font-size:14px; }
+  .gallery-empty {
+    grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--gray);
+  }
+
+  /* ===== WHY US ===== */
+  .why-section { padding:80px 5%; background:rgba(15,31,61,0.4); }
+  .why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px; margin-top:50px; }
+  .why-card {
+    background:var(--navy); border:1px solid rgba(201,168,76,0.12);
+    border-radius:16px; padding:28px; text-align:center;
+  }
+  .why-card .why-num { font-size:40px; font-weight:900; color:var(--gold); margin-bottom:12px; }
+  .why-card h3 { font-size:16px; font-weight:700; margin-bottom:8px; }
+  .why-card p { color:var(--gray); font-size:13px; line-height:1.7; }
+
+  /* ===== CTA BANNER ===== */
+  .cta-section {
+    margin:60px 5%; border-radius:24px;
+    background:linear-gradient(135deg, var(--navy3), var(--navy2));
+    border:1px solid rgba(201,168,76,0.3);
+    padding:60px 40px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .cta-section::before {
+    content:''; position:absolute; top:-50%; right:-20%;
+    width:400px; height:400px; border-radius:50%;
+    background:rgba(201,168,76,0.05); pointer-events:none;
+  }
+  .cta-section h2 { font-size:clamp(26px,4vw,40px); font-weight:900; margin-bottom:14px; }
+  .cta-section p { color:var(--gray); font-size:16px; margin-bottom:32px; max-width:500px; margin-left:auto; margin-right:auto; }
+  .cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .cta-features { display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin-top:28px; }
+  .cta-feature { display:flex; align-items:center; gap:8px; color:var(--gray); font-size:13px; }
+  .cta-feature svg { color:var(--gold); }
+
+  /* ===== CONTACT FORM ===== */
+  .contact-section { padding:80px 5%; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start; }
+  @media(max-width:768px){ .contact-grid { grid-template-columns:1fr; } }
+  .contact-info h2 { font-size:clamp(26px,3vw,36px); font-weight:900; margin-bottom:16px; }
+  .contact-info p { color:var(--gray); font-size:15px; line-height:1.8; margin-bottom:32px; }
+  .contact-links { display:flex; flex-direction:column; gap:16px; }
+  .contact-link {
+    display:flex; align-items:center; gap:14px;
+    background:var(--navy2); border:1px solid rgba(201,168,76,0.15);
+    border-radius:12px; padding:16px 20px; text-decoration:none; color:var(--white); transition:all 0.3s;
+  }
+  .contact-link:hover { border-color:var(--gold); }
+  .contact-link .cl-icon {
+    width:42px; height:42px; border-radius:10px;
+    background:rgba(201,168,76,0.15); display:flex; align-items:center; justify-content:center; font-size:18px;
+  }
+  .contact-link .cl-text .cl-label { font-size:12px; color:var(--gray); }
+  .contact-link .cl-text .cl-val { font-size:14px; font-weight:700; }
+  .contact-form {
+    background:var(--navy2); border:1px solid rgba(201,168,76,0.2);
+    border-radius:20px; padding:36px;
+  }
+  .form-field { margin-bottom:18px; }
+  .form-field label { display:block; font-size:13px; font-weight:600; color:var(--gray); margin-bottom:7px; }
+  .form-field input, .form-field textarea, .form-field select {
+    width:100%; background:var(--navy3); border:1px solid rgba(201,168,76,0.2);
+    border-radius:10px; padding:12px 15px; color:var(--white);
+    font-family:'Cairo',sans-serif; font-size:14px; outline:none; transition:border-color 0.3s; direction:rtl;
+  }
+  .form-field input:focus, .form-field textarea:focus { border-color:var(--gold); }
+  .form-field textarea { resize:vertical; min-height:100px; }
+  #form-msg { display:none; padding:14px; border-radius:10px; text-align:center; font-weight:600; margin-top:12px; }
+  #form-msg.success { background:rgba(37,211,102,0.15); color:#25D366; display:block; }
+  #form-msg.error { background:rgba(255,80,80,0.15); color:#FF5050; display:block; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background:var(--navy2); border-top:1px solid rgba(201,168,76,0.15);
+    padding:50px 5% 30px;
+  }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+  @media(max-width:768px){ .footer-grid { grid-template-columns:1fr; } }
+  .footer-brand .logo { margin-bottom:16px; }
+  .footer-brand p { color:var(--gray); font-size:14px; line-height:1.7; max-width:280px; }
+  .footer-social { display:flex; gap:10px; margin-top:20px; }
+  .social-btn {
+    width:38px; height:38px; border-radius:8px;
+    background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold); text-decoration:none; font-size:16px; transition:all 0.3s;
+  }
+  .social-btn:hover { background:rgba(201,168,76,0.25); }
+  .footer-col h4 { font-size:15px; font-weight:700; margin-bottom:18px; color:var(--gold); }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:10px; }
+  .footer-col ul li a { color:var(--gray); text-decoration:none; font-size:14px; transition:color 0.3s; }
+  .footer-col ul li a:hover { color:var(--gold); }
+  .footer-bottom {
+    border-top:1px solid rgba(201,168,76,0.1); padding-top:24px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:gap;
+    font-size:13px; color:var(--gray);
+  }
+  .footer-bottom a { color:var(--gold); text-decoration:none; }
+
+  /* ===== WHATSAPP FLOAT ===== */
+  .wa-float {
+    position:fixed; bottom:24px; left:24px; z-index:999;
+    width:56px; height:56px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 20px rgba(37,211,102,0.4); transition:transform 0.3s;
+    text-decoration:none;
+  }
+  .wa-float:hover { transform:scale(1.1); }
+  .wa-float svg { width:28px; height:28px; fill:white; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.open { display:flex; }
+  .modal {
+    background:var(--navy2); border:1px solid rgba(201,168,76,0.25);
+    border-radius:20px; padding:36px; max-width:500px; width:100%;
+    max-height:90vh; overflow-y:auto; position:relative;
+  }
+  .modal-close {
+    position:absolute; top:16px; left:16px;
+    background:rgba(255,255,255,0.1); border:none; color:var(--white);
+    width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:18px;
+    display:flex; align-items:center; justify-content:center; transition:background 0.3s;
+  }
+  .modal-close:hover { background:rgba(255,255,255,0.2); }
+  .modal h3 { font-size:22px; font-weight:900; margin-bottom:24px; }
+
+  /* ===== LOADING ===== */
+  .loading-overlay {
+    position:fixed; inset:0; background:var(--navy); z-index:9999;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px;
+  }
+  .loading-overlay.hide { animation:fadeOut 0.5s forwards; }
+  @keyframes fadeOut { to { opacity:0; pointer-events:none; } }
+  .loader { width:50px; height:50px; border:3px solid rgba(201,168,76,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* Mobile nav */
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+  .hamburger span { width:24px; height:2px; background:var(--gold); border-radius:2px; transition:all 0.3s; }
+  @media(max-width:900px){
+    .nav-links { display:none; position:fixed; top:70px; inset-inline:0; background:var(--navy2); flex-direction:column; padding:24px; border-bottom:1px solid rgba(201,168,76,0.2); }
+    .nav-links.open { display:flex; }
+    .hamburger { display:flex; }
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity:0; transform:translateY(30px); transition:all 0.6s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loader">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <div style="width:36px;height:36px;background:linear-gradient(135deg,#C9A84C,#A07830);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0A1628;font-size:14px">DA</div>
+    <span style="font-size:20px;font-weight:700">دلتا آرت</span>
+  </div>
+  <div class="loader"></div>
+</div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/20097347400" target="_blank" class="wa-float" title="تواصل عبر واتساب">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- Navbar -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">DA</div>
+    <div class="logo-text">دلتا <span>آرت</span></div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#services">خدماتنا</a>
+    <a href="#gallery">أعمالنا</a>
+    <a href="#calculator">احسب سعرك</a>
+    <a href="#contact">تواصل معنا</a>
+    <a href="#about">من نحن</a>
+    <a href="https://wa.me/20097347400" class="nav-wa" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      واتساب
+    </a>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content reveal">
+    <div class="hero-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      الرائدون في تشطيبات الجبس بورد
+    </div>
+    <h1>شغل جبس بورد<br><span>احترافي يناسب</span><br>ذوقك وميزانيتك</h1>
+    <p>تصميم وتنفيذ أحدث أشكال الجبس بورد بأعلى جودة وأفضل الأسعار — نضمن رضاك التام أو نُعيد العمل مجاناً</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="openModal('booking-modal')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13zM7 10h5v5H7z"/></svg>
+        احجز معاينة مجانية
+      </button>
+      <a href="#calculator" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+        احسب سعر تقريبي
+      </a>
+      <a href="https://wa.me/20097347400" class="btn-wa" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        تواصل واتساب
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num" id="stat-projects">0+</div>
+        <div class="stat-label">مشروع منجز</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-clients">0+</div>
+        <div class="stat-label">عميل سعيد</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-years">0+</div>
+        <div class="stat-label">سنة خبرة</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-workers">0</div>
+        <div class="stat-label">فريق متخصص</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Bar -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
+    ضمان 5 سنوات على التنفيذ
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    عمالة مدربة متخصصة
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    خامات عالية الجودة
+  </div>
+  <div class="trust-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+    أسعار تنافسية
+  </div>
+</div>
+
+<!-- Services -->
+<section class="services-section" id="services">
+  <div class="section-header reveal">
+    <div class="section-tag">خدماتنا</div>
+    <h2>كل ما تحتاجه في مكان واحد</h2>
+    <p>نقدم خدمات متكاملة من التصميم حتى التسليم</p>
+  </div>
+  <div class="services-grid" id="services-grid">
+    <!-- Loaded from Firebase -->
+    <div class="service-card reveal">
+      <div class="service-icon">🏛️</div>
+      <h3>أسقف جبس بورد</h3>
+      <p>تصميم وتنفيذ أسقف جبس بورد بكل الأشكال والتصاميم العصرية والكلاسيكية</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💡</div>
+      <h3>إضاءة مخفية</h3>
+      <p>حلول إضاءة LED مخفية داخل الجبس بورد تعطي جمالاً ودفئاً لمساحتك</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🏠</div>
+      <h3>فواصل وجدران</h3>
+      <p>تقسيم المساحات وإنشاء جدران جبس بورد بعزل صوتي وحراري عالي</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🎨</div>
+      <h3>ديكورات ثلاثية الأبعاد</h3>
+      <p>لوحات وديكورات جبس بورد ثلاثية الأبعاد للجدران والأسقف</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔧</div>
+      <h3>صيانة وإصلاح</h3>
+      <p>إصلاح وصيانة الجبس بورد القديم والمتضرر بنفس جودة التنفيذ الأصلي</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📐</div>
+      <h3>استشارة وتصميم</h3>
+      <p>جلسة تصميم مجانية مع مهندسينا لتحويل أفكارك إلى مخططات تنفيذية</p>
+    </div>
+  </div>
+</section>
+
+<!-- Calculator -->
+<section class="calc-section" id="calculator">
+  <div class="section-header reveal">
+    <div class="section-tag">حاسبة الأسعار</div>
+    <h2>احسب سعر تقريبي لمشروعك</h2>
+    <p>أدخل مساحتك واختر الخدمة وهنحسبلك تقدير فوري</p>
+  </div>
+  <div class="calc-card reveal">
+    <div class="calc-field">
+      <label>طول الغرفة (متر)</label>
+      <input type="number" id="calc-length" placeholder="مثال: 5" min="1" max="100">
+    </div>
+    <div class="calc-field">
+      <label>عرض الغرفة (متر)</label>
+      <input type="number" id="calc-width" placeholder="مثال: 4" min="1" max="100">
+    </div>
+    <div class="calc-field">
+      <label>نوع الخدمة</label>
+      <select id="calc-type">
+        <option value="basic">سقف بسيط — من 120 جنيه/م²</option>
+        <option value="medium">سقف متوسط مع إضاءة — من 180 جنيه/م²</option>
+        <option value="premium">سقف ديلوكس ثلاثي الأبعاد — من 280 جنيه/م²</option>
+        <option value="partition">فاصل أو جدار — من 200 جنيه/م²</option>
+      </select>
+    </div>
+    <div class="calc-result" id="calc-result">
+      <div class="result-label">التكلفة التقريبية</div>
+      <div class="result-price" id="result-price">—</div>
+      <div class="result-note">السعر تقديري — التسعير النهائي بعد المعاينة</div>
+    </div>
+    <button class="btn-gold" style="width:100%;justify-content:center" onclick="calculatePrice()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+      احسب الآن
+    </button>
+    <div style="margin-top:16px">
+      <button class="btn-outline" style="width:100%;justify-content:center;border:none;cursor:pointer;font-family:Cairo,sans-serif" onclick="openModal('booking-modal')">
+        احجز معاينة مجانية بدل الحساب
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header reveal">
+    <div class="section-tag">أعمالنا</div>
+    <h2>شاهد بعض أعمالنا المميزة</h2>
+    <p>أكثر من 500 مشروع منجز بكل أنحاء مصر</p>
+  </div>
+  <div class="gallery-tabs reveal">
+    <button class="gallery-tab active" onclick="filterGallery('all',this)">الكل</button>
+    <button class="gallery-tab" onclick="filterGallery('ceiling',this)">أسقف</button>
+    <button class="gallery-tab" onclick="filterGallery('lighting',this)">إضاءة</button>
+    <button class="gallery-tab" onclick="filterGallery('partition',this)">فواصل</button>
+    <button class="gallery-tab" onclick="filterGallery('3d',this)">ثلاثي الأبعاد</button>
+  </div>
+  <div id="gallery-grid">
+    <div class="gallery-empty" id="gallery-loading">
+      <div class="loader" style="margin:0 auto 16px"></div>
+      <p>جاري تحميل الأعمال...</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section class="why-section" id="about">
+  <div class="section-header reveal">
+    <div class="section-tag">لماذا دلتا آرت؟</div>
+    <h2>الفرق الحقيقي يظهر في التفاصيل</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-num">500+</div>
+      <h3>مشروع منجز</h3>
+      <p>خبرة واسعة في مشاريع سكنية وتجارية وفندقية</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">5 ⭐</div>
+      <h3>تقييم العملاء</h3>
+      <p>98% من عملائنا يوصون بنا لأصدقائهم وعائلاتهم</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">24h</div>
+      <h3>رد سريع</h3>
+      <p>فريق المبيعات متاح للرد على استفساراتك في أي وقت</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">100%</div>
+      <h3>ضمان الجودة</h3>
+      <p>ضمان 5 سنوات على جميع أعمال الجبس بورد</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section reveal">
+  <h2>جاهز تبدأ مشروعك؟</h2>
+  <p>احجز معاينة مجانية مع مهندسينا واحصل على عرض سعر مفصل خلال 24 ساعة</p>
+  <div class="cta-btns">
+    <button class="btn-gold" onclick="openModal('booking-modal')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13zM7 10h5v5H7z"/></svg>
+      احجز معاينة مجانية
+    </button>
+    <a href="https://wa.me/20097347400" class="btn-wa" target="_blank">تواصل واتساب</a>
+  </div>
+  <div class="cta-features">
+    <div class="cta-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> معاينة مجانية بدون التزام</div>
+    <div class="cta-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> عرض سعر مفصل خلال 24 ساعة</div>
+    <div class="cta-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> التزام بالمواعيد المتفق عليها</div>
+  </div>
+</div>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="section-tag" style="display:inline-block;margin-bottom:16px">تواصل معنا</div>
+      <h2>نحن هنا لمساعدتك في كل خطوة</h2>
+      <p>سواء كنت في مرحلة التخطيط أو جاهزاً للتنفيذ، فريقنا مستعد للإجابة على كل أسئلتك</p>
+      <div class="contact-links">
+        <a href="tel:+20097347400" class="contact-link">
+          <div class="cl-icon">📞</div>
+          <div class="cl-text">
+            <div class="cl-label">اتصل بنا</div>
+            <div class="cl-val">01000000000</div>
+          </div>
+        </a>
+        <a href="https://wa.me/20097347400" class="contact-link" target="_blank">
+          <div class="cl-icon">💬</div>
+          <div class="cl-text">
+            <div class="cl-label">واتساب</div>
+            <div class="cl-val">راسلنا الآن</div>
+          </div>
+        </a>
+        <div class="contact-link" style="cursor:default">
+          <div class="cl-icon">📍</div>
+          <div class="cl-text">
+            <div class="cl-label">موقعنا</div>
+            <div class="cl-val">القاهرة — مصر</div>
+          </div>
+        </div>
+        <div class="contact-link" style="cursor:default">
+          <div class="cl-icon">⏰</div>
+          <div class="cl-text">
+            <div class="cl-label">ساعات العمل</div>
+            <div class="cl-val">السبت – الخميس، 9ص – 10م</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <h3 style="margin-bottom:24px;font-size:20px;font-weight:700">أرسل رسالة</h3>
+      <div class="form-field">
+        <label>الاسم الكامل</label>
+        <input type="text" id="msg-name" placeholder="اسمك">
+      </div>
+      <div class="form-field">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="msg-phone" placeholder="01097347400">
+      </div>
+      <div class="form-field">
+        <label>نوع الخدمة المطلوبة</label>
+        <select id="msg-service">
+          <option>سقف جبس بورد</option>
+          <option>إضاءة مخفية</option>
+          <option>فواصل وجدران</option>
+          <option>ديكورات ثلاثية الأبعاد</option>
+          <option>صيانة وإصلاح</option>
+          <option>استشارة</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>رسالتك</label>
+        <textarea id="msg-text" placeholder="اكتب تفاصيل مشروعك هنا..."></textarea>
+      </div>
+      <button class="btn-gold" style="width:100%;justify-content:center" onclick="sendMessage()">
+        إرسال الرسالة
+      </button>
+      <div id="form-msg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-icon">DA</div>
+        <div class="logo-text">دلتا <span>آرت</span></div>
+      </div>
+      <p>متخصصون في تصميم وتنفيذ أعمال الجبس بورد بأعلى معايير الجودة منذ أكثر من 10 سنوات</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="https://wa.me/20097347400" class="social-btn" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#home">الرئيسية</a></li>
+        <li><a href="#services">خدماتنا</a></li>
+        <li><a href="#gallery">أعمالنا</a></li>
+        <li><a href="#calculator">احسب سعرك</a></li>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>خدماتنا</h4>
+      <ul>
+        <li><a href="#services">أسقف جبس بورد</a></li>
+        <li><a href="#services">إضاءة مخفية</a></li>
+        <li><a href="#services">فواصل وجدران</a></li>
+        <li><a href="#services">ديكورات ثلاثية الأبعاد</a></li>
+        <li><a href="#services">صيانة وإصلاح</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 دلتا آرت — جميع الحقوق محفوظة</span>
+    <span>صُمم بـ ❤️ | <a href="admin.html">لوحة التحكم</a></span>
+  </div>
+</footer>
+
+<!-- Booking Modal -->
+<div class="modal-overlay" id="booking-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('booking-modal')">✕</button>
+    <h3>🗓️ احجز معاينة مجانية</h3>
+    <div class="form-field">
+      <label>الاسم الكامل *</label>
+      <input type="text" id="book-name" placeholder="اسمك بالكامل">
+    </div>
+    <div class="form-field">
+      <label>رقم الهاتف *</label>
+      <input type="tel" id="book-phone" placeholder="01097347400">
+    </div>
+    <div class="form-field">
+      <label>العنوان</label>
+      <input type="text" id="book-address" placeholder="المنطقة أو الحي">
+    </div>
+    <div class="form-field">
+      <label>نوع المشروع</label>
+      <select id="book-type">
+        <option>شقة سكنية</option>
+        <option>فيلا</option>
+        <option>مكتب أو محل تجاري</option>
+        <option>فندق أو مطعم</option>
+        <option>أخرى</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>الوقت المفضل للمعاينة</label>
+      <select id="book-time">
+        <option>صباحاً (9ص - 12م)</option>
+        <option>ظهراً (12م - 4م)</option>
+        <option>مساءً (4م - 9م)</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>ملاحظات إضافية</label>
+      <textarea id="book-notes" placeholder="أي تفاصيل إضافية..." style="min-height:80px"></textarea>
+    </div>
+    <button class="btn-gold" style="width:100%;justify-content:center" onclick="submitBooking()">
+      تأكيد الحجز
+    </button>
+    <div id="book-msg"></div>
+  </div>
+</div>
+
+<!-- Firebase + JS -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, onValue, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",
+  authDomain: "delta-art-26007.firebaseapp.com",
+  ,
+  projectId: "delta-art-26007",
+  storageBucket: "delta-art-26007.firebasestorage.app",
+  messagingSenderId: "892254712139",
+  appId: "1:892254712139:web:54f53b61ff7083ca2d38ce"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+window._db = db;
+window._ref = ref;
+window._push = push;
+window._onValue = onValue;
+window._get = get;
+
+// Load stats
+async function loadStats() {
+  try {
+    const statsSnap = await get(ref(db, 'deltaart/stats'));
+    if (statsSnap.exists()) {
+      const s = statsSnap.val();
+      animateNum('stat-projects', s.projects || 500);
+      animateNum('stat-clients', s.clients || 1200);
+      animateNum('stat-years', s.years || 10);
+      animateNum('stat-workers', s.workers || 35);
+    } else {
+      animateNum('stat-projects', 500);
+      animateNum('stat-clients', 1200);
+      animateNum('stat-years', 10);
+      animateNum('stat-workers', 35);
+    }
+  } catch(e) {
+    animateNum('stat-projects', 500);
+    animateNum('stat-clients', 1200);
+    animateNum('stat-years', 10);
+    animateNum('stat-workers', 35);
+  }
+}
+
+// Load gallery
+let allGalleryItems = [];
+function loadGallery() {
+  onValue(ref(db, 'deltaart/gallery'), (snap) => {
+    const grid = document.getElementById('gallery-grid');
+    grid.innerHTML = '';
+    if (!snap.exists()) {
+      grid.innerHTML = `<div class="gallery-empty"><p style="font-size:15px">لم يتم إضافة صور بعد — تابعونا قريباً! 📸</p></div>`;
+      return;
+    }
+    allGalleryItems = [];
+    snap.forEach(child => {
+      const item = { id: child.key, ...child.val() };
+      allGalleryItems.push(item);
+    });
+    renderGallery(allGalleryItems);
+  });
+}
+
+window.allGalleryItems = allGalleryItems;
+window.renderGallery = function(items) {
+  const grid = document.getElementById('gallery-grid');
+  if (!items.length) {
+    grid.innerHTML = `<div class="gallery-empty"><p>لا توجد صور في هذه الفئة</p></div>`;
+    return;
+  }
+  grid.innerHTML = items.map(item => `
+    <div class="gallery-item">
+      <img src="${item.url}" alt="${item.title||''}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F1F3D/C9A84C?text=دلتا+آرت'">
+      <div class="gallery-overlay"><span>${item.title||''}</span></div>
+    </div>
+  `).join('');
+}
+
+window.filterGallery = function(cat, btn) {
+  document.querySelectorAll('.gallery-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const items = cat === 'all' ? window.allGalleryItems : window.allGalleryItems.filter(i => i.category === cat);
+  renderGallery(items);
+}
+
+// Load services from Firebase (optional override)
+async function loadServices() {
+  try {
+    const snap = await get(ref(db, 'deltaart/services'));
+    if (snap.exists()) {
+      const grid = document.getElementById('services-grid');
+      grid.innerHTML = '';
+      snap.forEach(child => {
+        const s = child.val();
+        grid.innerHTML += `
+          <div class="service-card reveal">
+            <div class="service-icon">${s.icon||'🏛️'}</div>
+            <h3>${s.name}</h3>
+            <p>${s.description}</p>
+          </div>`;
+      });
+    }
+  } catch(e) {}
+}
+
+// Send message
+window.sendMessage = async function() {
+  const name = document.getElementById('msg-name').value.trim();
+  const phone = document.getElementById('msg-phone').value.trim();
+  const service = document.getElementById('msg-service').value;
+  const text = document.getElementById('msg-text').value.trim();
+  const msgEl = document.getElementById('form-msg');
+  if (!name || !phone) { showMsg(msgEl,'error','يرجى إدخال الاسم ورقم الهاتف'); return; }
+  try {
+    await push(ref(db,'deltaart/messages'), { name, phone, service, text, date: new Date().toISOString(), status:'new' });
+    showMsg(msgEl,'success','✅ تم إرسال رسالتك! سنتواصل معك قريباً');
+    ['msg-name','msg-phone','msg-text'].forEach(id => document.getElementById(id).value='');
+  } catch(e) { showMsg(msgEl,'error','حدث خطأ، حاول مجدداً'); }
+}
+
+// Submit booking
+window.submitBooking = async function() {
+  const name = document.getElementById('book-name').value.trim();
+  const phone = document.getElementById('book-phone').value.trim();
+  const address = document.getElementById('book-address').value.trim();
+  const type = document.getElementById('book-type').value;
+  const time = document.getElementById('book-time').value;
+  const notes = document.getElementById('book-notes').value.trim();
+  const msgEl = document.getElementById('book-msg');
+  if (!name || !phone) { showMsg(msgEl,'error','يرجى إدخال الاسم ورقم الهاتف'); return; }
+  try {
+    await push(ref(db,'deltaart/bookings'), { name, phone, address, type, time, notes, date: new Date().toISOString(), status:'pending' });
+    showMsg(msgEl,'success','✅ تم تسجيل حجزك! سنتصل بك لتأكيد الموعد');
+    setTimeout(()=>closeModal('booking-modal'), 2000);
+  } catch(e) { showMsg(msgEl,'error','حدث خطأ، حاول مجدداً'); }
+}
+
+function showMsg(el, type, text) {
+  el.className = type; el.textContent = text; el.style.display='block';
+  setTimeout(()=>{ el.style.display='none'; }, 4000);
+}
+
+// Init
+loadStats();
+loadGallery();
+loadServices();
+loadDynamicSettings();
+
+// Load contact info & prices from Firebase settings
+async function loadDynamicSettings() {
+  try {
+    const snap = await get(ref(db, 'deltaart/settings'));
+    if (!snap.exists()) return;
+    const s = snap.val();
+
+    // Update WhatsApp links
+    if (s.contact && s.contact.whatsapp) {
+      const wa = s.contact.whatsapp;
+      document.querySelectorAll('a[href^="https://wa.me/"]').forEach(el => {
+        el.href = 'https://wa.me/' + wa;
+      });
+    }
+    // Update phone links
+    if (s.contact && s.contact.phone) {
+      document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+        el.href = 'tel:+' + s.contact.phone.replace(/[^0-9]/g,'');
+        if (el.querySelector('.cl-val')) el.querySelector('.cl-val').textContent = s.contact.phone;
+      });
+    }
+    // Update address
+    if (s.contact && s.contact.address) {
+      document.querySelectorAll('.cl-val').forEach(el => {
+        if (el.textContent === 'القاهرة — مصر') el.textContent = s.contact.address;
+      });
+    }
+    // Update hours
+    if (s.contact && s.contact.hours) {
+      document.querySelectorAll('.cl-val').forEach(el => {
+        if (el.textContent.includes('السبت')) el.textContent = s.contact.hours;
+      });
+    }
+    // Update social links
+    if (s.contact && s.contact.facebook) {
+      const fbLinks = document.querySelectorAll('.social-btn');
+      if (fbLinks[0]) fbLinks[0].href = s.contact.facebook;
+    }
+    if (s.contact && s.contact.instagram) {
+      const igLinks = document.querySelectorAll('.social-btn');
+      if (igLinks[1]) igLinks[1].href = s.contact.instagram;
+    }
+
+    // Update calculator prices
+    if (s.prices) {
+      window._calcPrices = s.prices;
+      const sel = document.getElementById('calc-type');
+      if (sel) {
+        sel.options[0].text = `سقف بسيط — من ${s.prices.basic_min||120} جنيه/م²`;
+        sel.options[1].text = `سقف متوسط مع إضاءة — من ${s.prices.mid_min||180} جنيه/م²`;
+        sel.options[2].text = `سقف ديلوكس ثلاثي الأبعاد — من ${s.prices.prem_min||280} جنيه/م²`;
+      }
+    }
+  } catch(e) {}
+}
+
+// Hide loader
+setTimeout(()=>{
+  document.getElementById('loader').classList.add('hide');
+  setTimeout(()=>document.getElementById('loader').remove(),600);
+},800);
+</script>
+
+<script>
+// Calculator
+function calculatePrice() {
+  const l = parseFloat(document.getElementById('calc-length').value);
+  const w = parseFloat(document.getElementById('calc-width').value);
+  const type = document.getElementById('calc-type').value;
+  if (!l || !w || l<=0 || w<=0) { alert('ادخل الأبعاد صح'); return; }
+  const area = l * w;
+  const p = window._calcPrices || {};
+  const rates = {
+    basic:     [p.basic_min||120,  p.basic_max||160],
+    medium:    [p.mid_min||180,    p.mid_max||240],
+    premium:   [p.prem_min||280,   p.prem_max||380],
+    partition: [200, 280]
+  };
+  const [min,max] = rates[type];
+  const minPrice = Math.round(area*min);
+  const maxPrice = Math.round(area*max);
+  const res = document.getElementById('calc-result');
+  document.getElementById('result-price').textContent = `${minPrice.toLocaleString('ar-EG')} — ${maxPrice.toLocaleString('ar-EG')} جنيه`;
+  res.querySelector('.result-note').textContent = `للمساحة ${area} م² — السعر تقديري`;
+  res.classList.add('show');
+}
+
+// Modal
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
+});
+
+// Nav hamburger
+document.getElementById('hamburger').addEventListener('click',()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Animate numbers
+function animateNum(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let current = 0;
+  const suffix = el.textContent.includes('+') ? '+' : '';
+  const steps = 60;
+  const inc = target / steps;
+  const timer = setInterval(()=>{
+    current = Math.min(current + inc, target);
+    el.textContent = Math.round(current) + suffix;
+    if (current >= target) clearInterval(timer);
+  }, 25);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
