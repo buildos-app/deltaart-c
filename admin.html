@@ -209,6 +209,8 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="nav-section-title">الإدارة</div>
     <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🛠️</span> إعدادات الموقع</button>
     <button class="nav-item" onclick="goPage('users',this)"><span class="ni">👥</span> المستخدمون</button>
+    <button class="nav-item" onclick="goPage('attendance',this)"><span class="ni">📅</span> حضور الموظفين</button>
+    <button class="nav-item" onclick="goPage('clients',this)"><span class="ni">🏠</span> إدارة العملاء</button>
 
     <div style="margin-top:12px">
       <a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> عرض الموقع</a>
@@ -1081,7 +1083,7 @@ function showAlert(el,type,text){ el.className=`alert alert-${type==='success'?'
 
 <script>
 // PAGE NAV
-const pageTitles = {dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',gallery:'معرض الأعمال',services:'الخدمات',settings:'إعدادات الموقع',users:'المستخدمون'};
+const pageTitles = {dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',gallery:'معرض الأعمال',services:'الخدمات',settings:'إعدادات الموقع',users:'المستخدمون',attendance:'حضور الموظفين',clients:'إدارة العملاء'};
 function goPage(name, btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
@@ -1110,6 +1112,198 @@ function switchGalTab(tab) {
   document.getElementById('gal-tab-file').classList.toggle('active', isFile);
   document.getElementById('gal-tab-url').classList.toggle('active', !isFile);
 }
+
+
+// ===== ATTENDANCE SYSTEM =====
+function loadEmployeesIntoSelects() {
+  onValue(ref(db,'deltaart/users'), snap => {
+    const emps = [];
+    if(snap.exists()) snap.forEach(c => { const u=c.val(); if(u.name) emps.push({id:c.key,name:u.name}); });
+    ['att-emp','att-filter-emp','rep-emp'].forEach(selId => {
+      const sel = document.getElementById(selId);
+      if(!sel) return;
+      const firstOpt = sel.options[0].outerHTML;
+      sel.innerHTML = firstOpt;
+      emps.forEach(e => { sel.innerHTML += `<option value="${e.id}">${e.name}</option>`; });
+    });
+  });
+}
+
+window.saveAttendance = async function() {
+  const emp = document.getElementById('att-emp').value;
+  const date = document.getElementById('att-date').value;
+  const status = document.getElementById('att-status').value;
+  const notes = document.getElementById('att-notes').value;
+  const alertEl = document.getElementById('att-alert');
+  if(!emp||!date) { showAlert(alertEl,'error','اختر الموظف والتاريخ'); return; }
+  try {
+    const empName = document.getElementById('att-emp').selectedOptions[0].text;
+    await set(ref(db,`deltaart/attendance/${emp}_${date}`),{empId:emp,empName,date,status,notes,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success','✅ تم التسجيل');
+    setTimeout(()=>{ closeModal('add-attendance-modal'); loadAttendance(); },1200);
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
+};
+
+function loadAttendance() {
+  const filterEmp = document.getElementById('att-filter-emp')?.value||'';
+  const filterFrom = document.getElementById('att-filter-from')?.value||'';
+  const filterTo = document.getElementById('att-filter-to')?.value||'';
+  onValue(ref(db,'deltaart/attendance'), snap => {
+    const tbody = document.getElementById('attendance-tbody');
+    if(!tbody) return;
+    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>'; return; }
+    let rows=[]; let present=0,absent=0,late=0;
+    snap.forEach(c => {
+      const a=c.val();
+      if(filterEmp && a.empId!==filterEmp) return;
+      if(filterFrom && a.date<filterFrom) return;
+      if(filterTo && a.date>filterTo) return;
+      if(a.status==='present') present++;
+      else if(a.status==='absent') absent++;
+      else if(a.status==='late') late++;
+      const statusMap={present:'<span class="badge badge-green">✅ حضور</span>',absent:'<span class="badge badge-red">❌ غياب</span>',late:'<span class="badge badge-yellow">⏰ تأخير</span>'};
+      rows.push(`<tr><td><strong>${a.empName||'—'}</strong></td><td>${a.date||'—'}</td><td>${statusMap[a.status]||a.status}</td><td style="color:var(--gray)">${a.notes||'—'}</td><td><button class="btn-sm btn-danger" onclick="delAttendance('${c.key}')">🗑️</button></td></tr>`);
+    });
+    tbody.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>';
+    document.getElementById('att-present').textContent=present;
+    document.getElementById('att-absent').textContent=absent;
+    document.getElementById('att-late').textContent=late;
+    document.getElementById('att-total').textContent=present+absent+late;
+  });
+}
+
+window.delAttendance = async id => { if(confirm('حذف هذا السجل؟')) await remove(ref(db,`deltaart/attendance/${id}`)); };
+
+window.generateReport = function() {
+  const empId = document.getElementById('rep-emp').value;
+  const from = document.getElementById('rep-from').value;
+  const to = document.getElementById('rep-to').value;
+  if(!empId||!from||!to) { alert('اختر الموظف والفترة'); return; }
+  get(ref(db,'deltaart/attendance')).then(snap => {
+    let present=0,absent=0,late=0;
+    if(snap.exists()) snap.forEach(c => {
+      const a=c.val();
+      if(a.empId!==empId) return;
+      if(a.date<from||a.date>to) return;
+      if(a.status==='present') present++;
+      else if(a.status==='absent') absent++;
+      else if(a.status==='late') late++;
+    });
+    const effective = present + (late*0.5);
+    document.getElementById('rep-present').textContent=present;
+    document.getElementById('rep-absent').textContent=absent;
+    document.getElementById('rep-late').textContent=late;
+    document.getElementById('rep-effective').textContent=effective;
+    document.getElementById('report-result').style.display='block';
+  });
+};
+
+// ===== CLIENTS SYSTEM =====
+async function getNextClientId() {
+  const snap = await get(ref(db,'deltaart/clients'));
+  if(!snap.exists()) return '001';
+  let max=0;
+  snap.forEach(c => { const id=parseInt(c.val().clientId||'0'); if(id>max) max=id; });
+  return String(max+1).padStart(3,'0');
+}
+
+function loadClients() {
+  onValue(ref(db,'deltaart/clients'), snap => {
+    const tbody = document.getElementById('clients-tbody');
+    if(!tbody) return;
+    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>'; return; }
+    let html='';
+    snap.forEach(c => {
+      const cl=c.val();
+      const remaining=(parseFloat(cl.total||0)-parseFloat(cl.paid||0));
+      const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون',visa:'💳 فيزا',mixed:'🔀 متعدد'};
+      const statusMap={full:'<span class="badge badge-green">مدفوع</span>',partial:'<span class="badge badge-yellow">جزء</span>',pending:'<span class="badge badge-red">لم يدفع</span>'};
+      html+=`<tr>
+        <td><strong style="color:var(--gold)">#${cl.clientId||'---'}</strong></td>
+        <td><strong>${cl.name||'—'}</strong><br><small style="color:var(--gray)">${cl.phone||''}</small></td>
+        <td style="color:var(--gray);font-size:12px">${cl.phone||'—'}</td>
+        <td>${catLabel(cl.service||'')}</td>
+        <td style="color:var(--white)">${cl.total||0} ج</td>
+        <td style="color:var(--green)">${cl.paid||0} ج</td>
+        <td style="color:${remaining>0?'var(--red)':'var(--green)'}">${remaining} ج</td>
+        <td style="font-size:12px">${payMap[cl.paymentMethod]||cl.paymentMethod||'—'}</td>
+        <td>${statusMap[cl.payStatus]||cl.payStatus||'—'}</td>
+        <td style="display:flex;gap:4px">
+          <button class="btn-sm btn-primary" onclick="viewClient('${c.key}')">👁</button>
+          <button class="btn-sm btn-danger" onclick="delClient('${c.key}')">🗑️</button>
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML=html;
+  });
+}
+
+window.calcRemaining = function() {};
+
+window.saveClient = async function() {
+  const name=document.getElementById('cl-name').value.trim();
+  const phone=document.getElementById('cl-phone').value.trim();
+  const address=document.getElementById('cl-address').value.trim();
+  const service=document.getElementById('cl-service').value;
+  const details=document.getElementById('cl-details').value.trim();
+  const total=document.getElementById('cl-total').value||0;
+  const paid=document.getElementById('cl-paid').value||0;
+  const paymentMethod=document.getElementById('cl-payment').value;
+  const payStatus=document.getElementById('cl-pay-status').value;
+  const alertEl=document.getElementById('cl-alert');
+  if(!name||!phone) { showAlert(alertEl,'error','ادخل الاسم والهاتف'); return; }
+  try {
+    const clientId=await getNextClientId();
+    await push(ref(db,'deltaart/clients'),{clientId,name,phone,address,service,details,total:parseFloat(total),paid:parseFloat(paid),paymentMethod,payStatus,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success',`✅ تم إضافة العميل #${clientId}`);
+    ['cl-name','cl-phone','cl-address','cl-details','cl-total','cl-paid'].forEach(id=>document.getElementById(id).value='');
+    setTimeout(()=>closeModal('add-client-modal'),1500);
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ: '+e.message); }
+};
+
+window.viewClient = async function(key) {
+  const snap=await get(ref(db,`deltaart/clients/${key}`));
+  if(!snap.exists()) return;
+  const cl=snap.val();
+  const remaining=parseFloat(cl.total||0)-parseFloat(cl.paid||0);
+  const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون كاش',visa:'💳 فيزا/كارت',mixed:'🔀 متعدد'};
+  document.getElementById('client-details-content').innerHTML=`
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:36px;font-weight:900;color:var(--gold)">#${cl.clientId}</div>
+      <div style="font-size:20px;font-weight:700">${cl.name}</div>
+      <div style="color:var(--gray)">${cl.phone}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
+        <div style="color:var(--gray);font-size:12px">إجمالي</div>
+        <div style="font-size:20px;font-weight:700">${cl.total||0} ج</div>
+      </div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
+        <div style="color:var(--gray);font-size:12px">مدفوع</div>
+        <div style="font-size:20px;font-weight:700;color:var(--green)">${cl.paid||0} ج</div>
+      </div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
+        <div style="color:var(--gray);font-size:12px">متبقي</div>
+        <div style="font-size:20px;font-weight:700;color:${remaining>0?'var(--red)':'var(--green)'}">${remaining} ج</div>
+      </div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
+        <div style="color:var(--gray);font-size:12px">طريقة الدفع</div>
+        <div style="font-size:16px;font-weight:700">${payMap[cl.paymentMethod]||'—'}</div>
+      </div>
+    </div>
+    <div style="background:var(--navy3);border-radius:10px;padding:14px;margin-bottom:12px">
+      <div style="color:var(--gray);font-size:12px;margin-bottom:6px">تفاصيل الشغل</div>
+      <div>${cl.details||'—'}</div>
+    </div>
+    <div style="color:var(--gray);font-size:12px;text-align:center">${fmtDate(cl.createdAt)}</div>
+  `;
+  openModal('client-details-modal');
+};
+
+window.delClient = async key => { if(confirm('حذف هذا العميل؟')) await remove(ref(db,`deltaart/clients/${key}`)); };
+
+// Init new page data when navigating
+const origGoPage = window.goPage || function(){};
 </script>
 
 <!-- Change Password Modal -->
@@ -1125,6 +1319,125 @@ function switchGalTab(tab) {
     </div>
     <div id="cp-alert" style="margin:12px 0"></div>
     <button class="btn-gold" onclick="changePass()">💾 حفظ</button>
+  </div>
+</div>
+
+<!-- Add Attendance Modal -->
+<div class="modal-overlay" id="add-attendance-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-attendance-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📅 تسجيل حضور</h3>
+    <div class="ff">
+      <label>الموظف</label>
+      <select id="att-emp">
+        <option value="">اختر موظف</option>
+      </select>
+    </div>
+    <div class="ff">
+      <label>التاريخ</label>
+      <input type="date" id="att-date">
+    </div>
+    <div class="ff">
+      <label>الحالة</label>
+      <select id="att-status">
+        <option value="present">✅ حضور</option>
+        <option value="absent">❌ غياب</option>
+        <option value="late">⏰ تأخير (نص يوم)</option>
+      </select>
+    </div>
+    <div class="ff">
+      <label>ملاحظات</label>
+      <input type="text" id="att-notes" placeholder="اختياري">
+    </div>
+    <div id="att-alert" style="margin:12px 0"></div>
+    <button class="btn-gold" onclick="saveAttendance()">💾 حفظ</button>
+  </div>
+</div>
+
+<!-- Attendance Report Modal -->
+<div class="modal-overlay" id="attendance-report-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('attendance-report-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📊 تقرير الحضور</h3>
+    <div class="ff">
+      <label>الموظف</label>
+      <select id="rep-emp"></select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff">
+        <label>من</label>
+        <input type="date" id="rep-from">
+      </div>
+      <div class="ff">
+        <label>إلى</label>
+        <input type="date" id="rep-to">
+      </div>
+    </div>
+    <button class="btn-gold" style="margin-bottom:16px" onclick="generateReport()">📊 احسب</button>
+    <div id="report-result" style="display:none;background:var(--navy3);border-radius:12px;padding:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--green)" id="rep-present">0</div><div style="color:var(--gray);font-size:13px">أيام حضور</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--red)" id="rep-absent">0</div><div style="color:var(--gray);font-size:13px">أيام غياب</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--orange)" id="rep-late">0</div><div style="color:var(--gray);font-size:13px">تأخير (نص يوم)</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="rep-effective">0</div><div style="color:var(--gray);font-size:13px">إجمالي الأيام الفعلية</div></div>
+      </div>
+      <div style="color:var(--gray);font-size:12px;text-align:center">* التأخير يحسب نص يوم</div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Client Modal -->
+<div class="modal-overlay" id="add-client-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">🏠 إضافة عميل جديد</h3>
+    <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:12px;margin-bottom:16px;text-align:center">
+      <span style="color:var(--gray);font-size:13px">رقم العميل: </span>
+      <span style="font-size:22px;font-weight:900;color:var(--gold)" id="new-client-id">---</span>
+    </div>
+    <div class="ff"><label>اسم العميل</label><input type="text" id="cl-name" placeholder="الاسم الكامل"></div>
+    <div class="ff"><label>رقم الهاتف</label><input type="tel" id="cl-phone" placeholder="01XXXXXXXXX"></div>
+    <div class="ff"><label>العنوان</label><input type="text" id="cl-address" placeholder="العنوان بالتفصيل"></div>
+    <div class="ff"><label>الخدمة المطلوبة</label>
+      <select id="cl-service">
+        <option value="ceiling">أسقف جبس بورد</option>
+        <option value="lighting">إضاءة</option>
+        <option value="partition">فواصل</option>
+        <option value="3d">ثلاثي الأبعاد</option>
+        <option value="other">أخرى</option>
+      </select>
+    </div>
+    <div class="ff"><label>تفاصيل الشغل</label><textarea id="cl-details" rows="3" placeholder="وصف تفصيلي للمطلوب"></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff"><label>إجمالي المبلغ (جنيه)</label><input type="number" id="cl-total" placeholder="0"></div>
+      <div class="ff"><label>المبلغ المدفوع</label><input type="number" id="cl-paid" placeholder="0" oninput="calcRemaining()"></div>
+    </div>
+    <div class="ff"><label>طريقة الدفع</label>
+      <select id="cl-payment">
+        <option value="cash">💵 كاش</option>
+        <option value="instapay">📱 InstaPay</option>
+        <option value="vodafone">🔴 فودافون كاش</option>
+        <option value="visa">💳 فيزا / كارت</option>
+        <option value="mixed">🔀 متعدد</option>
+      </select>
+    </div>
+    <div class="ff"><label>حالة الدفع</label>
+      <select id="cl-pay-status">
+        <option value="partial">جزء مقدم</option>
+        <option value="full">مدفوع كامل</option>
+        <option value="pending">لم يدفع بعد</option>
+      </select>
+    </div>
+    <div id="cl-alert" style="margin:12px 0"></div>
+    <button class="btn-gold" onclick="saveClient()">💾 حفظ العميل</button>
+  </div>
+</div>
+
+<!-- Client Details Modal -->
+<div class="modal-overlay" id="client-details-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('client-details-modal')">✕</button>
+    <div id="client-details-content"></div>
   </div>
 </div>
 </body>
