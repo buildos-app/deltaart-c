@@ -146,26 +146,26 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
 /* ===== RESPONSIVE MOBILE ===== */
 @media(max-width:768px){
-  .sidebar{width:200px;position:fixed;z-index:100;transform:translateX(100%);transition:transform 0.3s;}
+  .sidebar{position:fixed;right:0;top:0;height:100vh;z-index:200;transform:translateX(100%);transition:transform 0.3s;}
   .sidebar.open{transform:translateX(0);}
-  .main-content{margin-right:0!important;width:100%!important;}
-  .topbar{padding:0 12px;}
-  .stat-card{padding:14px;}
+  .main{width:100vw;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .two-col{grid-template-columns:1fr;}
   .panel{overflow-x:auto;}
   table{min-width:500px;}
   .mobile-menu-btn{display:flex!important;}
-  .modal{padding:20px;max-width:95vw;}
+  .topbar{padding:0 12px;}
 }
 @media(min-width:769px){
   .mobile-menu-btn{display:none!important;}
   .sidebar{transform:translateX(0)!important;}
 }
-.mobile-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:8px;cursor:pointer;font-size:18px;border:none;color:var(--gold);}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
+.mobile-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:8px;cursor:pointer;font-size:18px;color:var(--gold);}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;}
 .sidebar-overlay.show{display:block;}
 </style>
 </head>
-<body><div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<body>
 
 <!-- LOGIN -->
 <div id="login-screen">
@@ -183,6 +183,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 </div>
 
 <!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sb-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('show')"></div>
 <div class="sidebar">
   <div class="sidebar-logo">
     <div class="li">DA</div>
@@ -230,7 +231,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
 <!-- MAIN -->
 <div class="main">
-  <div class="topbar"><button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="topbar"><button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('show')">☰</button>
     <h2 id="topbar-title">لوحة التحكم</h2>
     <div style="display:flex;align-items:center;gap:12px">
       <div class="topbar-badge" id="today-date"></div>
@@ -461,6 +462,91 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
+
+    <!-- ===== SUPERADMIN PAGE ===== -->
+    <div class="page" id="page-superadmin">
+      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:14px;padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="font-size:36px">🔐</div>
+        <div>
+          <div style="font-size:16px;font-weight:700">لوحة السوبر أدمن</div>
+          <div style="color:var(--gray);font-size:13px">مرئي للسوبر أدمن فقط</div>
+        </div>
+        <button class="btn-sm btn-primary" style="margin-right:auto" onclick="openModal('sa-add-user-modal')">➕ إضافة أكونت</button>
+      </div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>الاسم</th><th>الإيميل</th><th>الدور</th><th>كلمة المرور</th><th>الحالة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
+          <tbody id="sa-users-tbody"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">جاري التحميل...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== CHANGE PASSWORD PAGE ===== -->
+    <div class="page" id="page-change-password">
+      <div style="max-width:460px;margin:0 auto">
+        <div class="panel">
+          <div class="panel-header"><h3>🔑 تغيير كلمة المرور</h3></div>
+          <div class="panel-content">
+            <div class="ff"><label>كلمة المرور الحالية</label><input type="password" id="cp-current" placeholder="كلمة المرور الحالية"></div>
+            <div class="ff"><label>كلمة المرور الجديدة</label><input type="password" id="cp-new" placeholder="8 أحرف على الأقل"></div>
+            <div class="ff"><label>تأكيد كلمة المرور</label><input type="password" id="cp-confirm" placeholder="أعد كتابة الجديدة"></div>
+            <button class="btn-gold" onclick="changeMyPassword()">💾 تغيير</button>
+            <div id="cp-my-alert" class="alert" style="margin-top:12px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ATTENDANCE PAGE ===== -->
+    <div class="page" id="page-attendance">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📅 حضور الموظفين</h3>
+          <p style="color:var(--gray);font-size:13px">تسجيل الحضور والغياب والتأخير</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-sm btn-primary" onclick="document.getElementById('att-date').value=new Date().toISOString().split('T')[0];loadEmployeesIntoSelects();openModal('add-attendance-modal')">➕ تسجيل حضور</button>
+          <button class="btn-sm btn-outline-sm" onclick="openModal('attendance-report-modal')">📊 تقرير</button>
+        </div>
+      </div>
+      <div class="panel" style="padding:16px;margin-bottom:16px">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <select id="att-filter-emp" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:'Cairo',sans-serif"><option value="">كل الموظفين</option></select>
+          <input type="date" id="att-filter-from" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:'Cairo',sans-serif">
+          <input type="date" id="att-filter-to" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:'Cairo',sans-serif">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px">
+        <div class="stat-card" style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--green)" id="att-present">0</div><div style="color:var(--gray);font-size:13px">حضور</div></div>
+        <div class="stat-card" style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--red)" id="att-absent">0</div><div style="color:var(--gray);font-size:13px">غياب</div></div>
+        <div class="stat-card" style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--orange)" id="att-late">0</div><div style="color:var(--gray);font-size:13px">تأخير</div></div>
+        <div class="stat-card" style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="att-total">0</div><div style="color:var(--gray);font-size:13px">الإجمالي</div></div>
+      </div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>الموظف</th><th>التاريخ</th><th>الحالة</th><th>ملاحظات</th><th>إجراء</th></tr></thead>
+          <tbody id="attendance-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== CLIENTS PAGE ===== -->
+    <div class="page" id="page-clients">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🏠 إدارة العملاء</h3>
+          <p style="color:var(--gray);font-size:13px">متابعة المشاريع والمدفوعات</p>
+        </div>
+        <button class="btn-sm btn-primary" onclick="openAddClientModal()">➕ عميل جديد</button>
+      </div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>ID</th><th>الاسم</th><th>الهاتف</th><th>الخدمة</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>طريقة الدفع</th><th>الحالة</th><th>إجراء</th></tr></thead>
+          <tbody id="clients-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -577,8 +663,8 @@ import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "h
 const firebaseConfig = {
   apiKey:"AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",
   authDomain:"delta-art-26007.firebaseapp.com",
-  projectId:"delta-art-26007",
   databaseURL:"https://delta-art-26007-default-rtdb.firebaseio.com",
+  projectId:"delta-art-26007",
   storageBucket:"delta-art-26007.firebasestorage.app",
   messagingSenderId:"892254712139",
   appId:"1:892254712139:web:54f53b61ff7083ca2d38ce"
@@ -600,23 +686,24 @@ window._getDownloadURL = getDownloadURL;
 const SUPERADMIN_EMAIL = 'superadmin@deltaart.com';
 const OWNER_EMAIL = 'admin@deltaart.com';
 window._currentRole = null;
-
 onAuthStateChanged(auth, async user => {
   if (user) {
     document.getElementById('login-screen').classList.add('hide');
 
-    // Determine role
     if (user.email === SUPERADMIN_EMAIL) {
       window._currentRole = 'superadmin';
+      document.getElementById('sidebar-name').textContent = 'السوبر أدمن';
+      document.getElementById('sidebar-role').textContent = '🔐 تحكم كامل';
+      document.getElementById('sidebar-avatar').textContent = 'S';
     } else if (user.email === OWNER_EMAIL) {
       window._currentRole = 'owner';
+      document.getElementById('sidebar-name').textContent = 'صاحب الشركة';
+      document.getElementById('sidebar-role').textContent = '👑 المالك';
+      document.getElementById('sidebar-avatar').textContent = 'O';
     } else {
-      // check DB role
       try {
         const snap = await get(ref(db, `deltaart/users/${user.uid}`));
         const data = snap.exists() ? snap.val() : {};
-        
-        // Check if account is active
         if (data.active === false) {
           await signOut(auth);
           const errEl = document.getElementById('login-err');
@@ -631,17 +718,6 @@ onAuthStateChanged(auth, async user => {
       } catch(e) {}
     }
 
-    // Set sidebar info
-    if (user.email === SUPERADMIN_EMAIL) {
-      document.getElementById('sidebar-name').textContent = 'السوبر أدمن';
-      document.getElementById('sidebar-role').textContent = '🔐 تحكم كامل';
-      document.getElementById('sidebar-avatar').textContent = 'S';
-    } else if (user.email === OWNER_EMAIL) {
-      document.getElementById('sidebar-name').textContent = 'صاحب الشركة';
-      document.getElementById('sidebar-role').textContent = '👑 المالك';
-      document.getElementById('sidebar-avatar').textContent = 'O';
-    }
-
     window._currentUser = user;
     applyRoleUI();
     initApp();
@@ -653,40 +729,33 @@ onAuthStateChanged(auth, async user => {
 
 function applyRoleUI() {
   const role = window._currentRole;
-  const isSuperAdmin = role === 'superadmin';
-  const isOwner = role === 'owner';
-  const isStaff = !isSuperAdmin && !isOwner;
 
-  // SuperAdmin: show ONLY accounts page
-  if (isSuperAdmin) {
+  if (role === 'superadmin') {
     document.querySelector('.sidebar-nav').innerHTML = `
       <div class="nav-section-title">السوبر أدمن</div>
       <button class="nav-item active" onclick="goPage('superadmin',this)"><span class="ni">🔐</span> إدارة الأكونتات</button>
-      <div style="margin-top:12px">
-        <button class="nav-item" onclick="goPage('change-password',this)"><span class="ni">🔑</span> تغيير الباسورد</button>
-      </div>
+      <div class="nav-section-title">الحساب</div>
+      <button class="nav-item" onclick="goPage('change-password',this)"><span class="ni">🔑</span> تغيير الباسورد</button>
     `;
     setTimeout(()=>goPage('superadmin',null), 100);
     return;
   }
 
-  // Staff: hide financial pages
-  if (isStaff) {
-    // Remove clients nav if exists
+  if (role !== 'owner') {
+    // staff: hide clients and attendance nav items
     document.querySelectorAll('.nav-item').forEach(btn => {
-      const txt = btn.textContent;
-      if (txt.includes('إدارة العملاء') || txt.includes('حضور الموظفين')) {
+      if (btn.textContent.includes('إدارة العملاء') || btn.textContent.includes('حضور الموظفين')) {
         btn.style.display = 'none';
       }
     });
   }
 
-  // Add change password to all
+  // Add change password for all
   const nav = document.querySelector('.sidebar-nav');
-  if (nav && !document.getElementById('nav-change-pass')) {
+  if (nav) {
     nav.innerHTML += `
-      <div class="nav-section-title" style="margin-top:8px">الحساب</div>
-      <button id="nav-change-pass" class="nav-item" onclick="goPage('change-password',this)"><span class="ni">🔑</span> تغيير كلمة المرور</button>
+      <div class="nav-section-title">الحساب</div>
+      <button class="nav-item" onclick="goPage('change-password',this)"><span class="ni">🔑</span> تغيير كلمة المرور</button>
     `;
   }
 }
@@ -1065,7 +1134,7 @@ window.savePrices = async function() {
 function renderUsersTable(snap) {
   const tbody = document.getElementById('users-tbody');
   if (!snap || !snap.exists()) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد مستخدمين إضافيين</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد مستخدمين إضافيين</td></tr>';
     return;
   }
   let html = '';
@@ -1077,17 +1146,28 @@ function renderUsersTable(snap) {
       <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
       <td><span class="badge badge-blue">${roleLabel(u.role||'viewer')}</span></td>
       <td><span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span></td>
-      <td style="color:var(--gray);font-size:12px;direction:ltr">${u.password?'••••••••':'-'} <button onclick="showPass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:11px">👁</button></td>
+      <td><span id="up-${c.key}" style="color:var(--gray)">••••••••</span> <button onclick="toggleUserPass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold)">👁</button></td>
       <td style="color:var(--gray)">${fmtDate(u.createdAt)}</td>
       <td style="display:flex;gap:4px;flex-wrap:wrap">
-        <button class="btn-sm ${isActive?'btn-danger':'btn-primary'}" onclick="toggleUser('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
-        <button class="btn-sm" style="background:rgba(59,130,246,0.2);color:#3B82F6;border:1px solid #3B82F6" onclick="openChangePass('${c.key}','${u.name||''}')">🔑</button>
+        <button class="btn-sm ${isActive?'btn-danger':'btn-success'}" onclick="toggleUserActive('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
         <button class="btn-sm btn-danger" onclick="delUser('${c.key}')">🗑️</button>
       </td>
     </tr>`;
   });
   tbody.innerHTML = html;
 }
+
+window.toggleUserPass = function(id, pass) {
+  const el = document.getElementById('up-'+id);
+  if(!el) return;
+  el.textContent = el.textContent === '••••••••' ? (pass||'غير محفوظ') : '••••••••';
+  el.style.color = el.textContent === '••••••••' ? 'var(--gray)' : 'var(--gold)';
+};
+
+window.toggleUserActive = async function(id, isActive) {
+  if(!confirm(isActive?'إيقاف هذا الأكونت؟':'تفعيل هذا الأكونت؟')) return;
+  await set(ref(db,`deltaart/users/${id}/active`), !isActive);
+};
 
 window.addUser = async function() {
   const name  = document.getElementById('usr-name').value.trim();
@@ -1099,7 +1179,7 @@ window.addUser = async function() {
   if (pass.length < 8) { showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف'); return; }
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,createdAt:new Date().toISOString(),active:true});
+    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,active:true,createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة المستخدم بنجاح');
     ['usr-name','usr-email','usr-pass'].forEach(id => document.getElementById(id).value='');
     setTimeout(() => closeModal('add-user-modal'), 1500);
@@ -1109,47 +1189,6 @@ window.addUser = async function() {
   }
 };
 window.delUser = async id => { if(confirm('حذف المستخدم؟')) await remove(ref(db,`deltaart/users/${id}`)); };
-
-// ===== MOBILE SIDEBAR =====
-window.toggleSidebar = function() {
-  const sidebar = document.querySelector('.sidebar');
-  const overlay = document.getElementById('sidebar-overlay');
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('show');
-};
-
-// ===== SHOW PASSWORD =====
-window.showPass = function(id, pass) {
-  if(!pass) { alert('لا يوجد باسورد محفوظ'); return; }
-  alert('كلمة المرور: ' + pass);
-};
-
-// ===== CHANGE PASSWORD =====
-window.openChangePass = function(id, name) {
-  document.getElementById('cp-uid').value = id;
-  document.getElementById('cp-name').textContent = name;
-  document.getElementById('cp-pass').value = '';
-  openModal('change-pass-modal');
-};
-
-window.changePass = async function() {
-  const uid = document.getElementById('cp-uid').value;
-  const pass = document.getElementById('cp-pass').value;
-  const alertEl = document.getElementById('cp-alert');
-  if(pass.length < 8) { showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف'); return; }
-  try {
-    await set(ref(db,`deltaart/users/${uid}/password`), pass);
-    showAlert(alertEl,'success','✅ تم تغيير كلمة المرور');
-    setTimeout(()=>closeModal('change-pass-modal'),1500);
-  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
-};
-
-// ===== FORCE LOGOUT ON DISABLE =====
-window.toggleUser = async function(id, isActive) {
-  const msg = isActive ? 'إيقاف هذا المستخدم؟' : 'تفعيل هذا المستخدم؟';
-  if(!confirm(msg)) return;
-  await set(ref(db,`deltaart/users/${id}/active`), !isActive);
-};
 
 // ===== HELPERS =====
 function statusClass(s){ return {pending:'badge-yellow',confirmed:'badge-blue',done:'badge-green',cancelled:'badge-red'}[s]||'badge-gray'; }
@@ -1161,7 +1200,7 @@ function showAlert(el,type,text){ el.className=`alert alert-${type==='success'?'
 
 <script>
 // PAGE NAV
-const pageTitles = {dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',gallery:'معرض الأعمال',services:'الخدمات',settings:'إعدادات الموقع',users:'المستخدمون',attendance:'حضور الموظفين',clients:'إدارة العملاء'};
+const pageTitles = {dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',gallery:'معرض الأعمال',services:'الخدمات',settings:'إعدادات الموقع',users:'المستخدمون',superadmin:'🔐 إدارة الأكونتات',attendance:'حضور الموظفين',clients:'إدارة العملاء','change-password':'تغيير كلمة المرور'};
 function goPage(name, btn) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
@@ -1190,244 +1229,45 @@ function switchGalTab(tab) {
   document.getElementById('gal-tab-file').classList.toggle('active', isFile);
   document.getElementById('gal-tab-url').classList.toggle('active', !isFile);
 }
-
-
-// ===== ATTENDANCE SYSTEM =====
-function loadEmployeesIntoSelects() {
-  onValue(ref(db,'deltaart/users'), snap => {
-    const emps = [];
-    if(snap.exists()) snap.forEach(c => { const u=c.val(); if(u.name) emps.push({id:c.key,name:u.name}); });
-    ['att-emp','att-filter-emp','rep-emp'].forEach(selId => {
-      const sel = document.getElementById(selId);
-      if(!sel) return;
-      const firstOpt = sel.options[0].outerHTML;
-      sel.innerHTML = firstOpt;
-      emps.forEach(e => { sel.innerHTML += `<option value="${e.id}">${e.name}</option>`; });
-    });
-  });
-}
-
-window.saveAttendance = async function() {
-  const emp = document.getElementById('att-emp').value;
-  const date = document.getElementById('att-date').value;
-  const status = document.getElementById('att-status').value;
-  const notes = document.getElementById('att-notes').value;
-  const alertEl = document.getElementById('att-alert');
-  if(!emp||!date) { showAlert(alertEl,'error','اختر الموظف والتاريخ'); return; }
-  try {
-    const empName = document.getElementById('att-emp').selectedOptions[0].text;
-    await set(ref(db,`deltaart/attendance/${emp}_${date}`),{empId:emp,empName,date,status,notes,createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success','✅ تم التسجيل');
-    setTimeout(()=>{ closeModal('add-attendance-modal'); loadAttendance(); },1200);
-  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
-};
-
-function loadAttendance() {
-  const filterEmp = document.getElementById('att-filter-emp')?.value||'';
-  const filterFrom = document.getElementById('att-filter-from')?.value||'';
-  const filterTo = document.getElementById('att-filter-to')?.value||'';
-  onValue(ref(db,'deltaart/attendance'), snap => {
-    const tbody = document.getElementById('attendance-tbody');
-    if(!tbody) return;
-    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>'; return; }
-    let rows=[]; let present=0,absent=0,late=0;
-    snap.forEach(c => {
-      const a=c.val();
-      if(filterEmp && a.empId!==filterEmp) return;
-      if(filterFrom && a.date<filterFrom) return;
-      if(filterTo && a.date>filterTo) return;
-      if(a.status==='present') present++;
-      else if(a.status==='absent') absent++;
-      else if(a.status==='late') late++;
-      const statusMap={present:'<span class="badge badge-green">✅ حضور</span>',absent:'<span class="badge badge-red">❌ غياب</span>',late:'<span class="badge badge-yellow">⏰ تأخير</span>'};
-      rows.push(`<tr><td><strong>${a.empName||'—'}</strong></td><td>${a.date||'—'}</td><td>${statusMap[a.status]||a.status}</td><td style="color:var(--gray)">${a.notes||'—'}</td><td><button class="btn-sm btn-danger" onclick="delAttendance('${c.key}')">🗑️</button></td></tr>`);
-    });
-    tbody.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>';
-    document.getElementById('att-present').textContent=present;
-    document.getElementById('att-absent').textContent=absent;
-    document.getElementById('att-late').textContent=late;
-    document.getElementById('att-total').textContent=present+absent+late;
-  });
-}
-
-window.delAttendance = async id => { if(confirm('حذف هذا السجل؟')) await remove(ref(db,`deltaart/attendance/${id}`)); };
-
-window.generateReport = function() {
-  const empId = document.getElementById('rep-emp').value;
-  const from = document.getElementById('rep-from').value;
-  const to = document.getElementById('rep-to').value;
-  if(!empId||!from||!to) { alert('اختر الموظف والفترة'); return; }
-  get(ref(db,'deltaart/attendance')).then(snap => {
-    let present=0,absent=0,late=0;
-    if(snap.exists()) snap.forEach(c => {
-      const a=c.val();
-      if(a.empId!==empId) return;
-      if(a.date<from||a.date>to) return;
-      if(a.status==='present') present++;
-      else if(a.status==='absent') absent++;
-      else if(a.status==='late') late++;
-    });
-    const effective = present + (late*0.5);
-    document.getElementById('rep-present').textContent=present;
-    document.getElementById('rep-absent').textContent=absent;
-    document.getElementById('rep-late').textContent=late;
-    document.getElementById('rep-effective').textContent=effective;
-    document.getElementById('report-result').style.display='block';
-  });
-};
-
-// ===== CLIENTS SYSTEM =====
-async function getNextClientId() {
-  const snap = await get(ref(db,'deltaart/clients'));
-  if(!snap.exists()) return '001';
-  let max=0;
-  snap.forEach(c => { const id=parseInt(c.val().clientId||'0'); if(id>max) max=id; });
-  return String(max+1).padStart(3,'0');
-}
-
-function loadClients() {
-  onValue(ref(db,'deltaart/clients'), snap => {
-    const tbody = document.getElementById('clients-tbody');
-    if(!tbody) return;
-    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>'; return; }
-    let html='';
-    snap.forEach(c => {
-      const cl=c.val();
-      const remaining=(parseFloat(cl.total||0)-parseFloat(cl.paid||0));
-      const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون',visa:'💳 فيزا',mixed:'🔀 متعدد'};
-      const statusMap={full:'<span class="badge badge-green">مدفوع</span>',partial:'<span class="badge badge-yellow">جزء</span>',pending:'<span class="badge badge-red">لم يدفع</span>'};
-      html+=`<tr>
-        <td><strong style="color:var(--gold)">#${cl.clientId||'---'}</strong></td>
-        <td><strong>${cl.name||'—'}</strong><br><small style="color:var(--gray)">${cl.phone||''}</small></td>
-        <td style="color:var(--gray);font-size:12px">${cl.phone||'—'}</td>
-        <td>${catLabel(cl.service||'')}</td>
-        <td style="color:var(--white)">${cl.total||0} ج</td>
-        <td style="color:var(--green)">${cl.paid||0} ج</td>
-        <td style="color:${remaining>0?'var(--red)':'var(--green)'}">${remaining} ج</td>
-        <td style="font-size:12px">${payMap[cl.paymentMethod]||cl.paymentMethod||'—'}</td>
-        <td>${statusMap[cl.payStatus]||cl.payStatus||'—'}</td>
-        <td style="display:flex;gap:4px">
-          <button class="btn-sm btn-primary" onclick="viewClient('${c.key}')">👁</button>
-          <button class="btn-sm btn-danger" onclick="delClient('${c.key}')">🗑️</button>
-        </td>
-      </tr>`;
-    });
-    tbody.innerHTML=html;
-  });
-}
-
-window.calcRemaining = function() {};
-
-window.saveClient = async function() {
-  const name=document.getElementById('cl-name').value.trim();
-  const phone=document.getElementById('cl-phone').value.trim();
-  const address=document.getElementById('cl-address').value.trim();
-  const service=document.getElementById('cl-service').value;
-  const details=document.getElementById('cl-details').value.trim();
-  const total=document.getElementById('cl-total').value||0;
-  const paid=document.getElementById('cl-paid').value||0;
-  const paymentMethod=document.getElementById('cl-payment').value;
-  const payStatus=document.getElementById('cl-pay-status').value;
-  const alertEl=document.getElementById('cl-alert');
-  if(!name||!phone) { showAlert(alertEl,'error','ادخل الاسم والهاتف'); return; }
-  try {
-    const clientId=await getNextClientId();
-    await push(ref(db,'deltaart/clients'),{clientId,name,phone,address,service,details,total:parseFloat(total),paid:parseFloat(paid),paymentMethod,payStatus,createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success',`✅ تم إضافة العميل #${clientId}`);
-    ['cl-name','cl-phone','cl-address','cl-details','cl-total','cl-paid'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>closeModal('add-client-modal'),1500);
-  } catch(e) { showAlert(alertEl,'error','حدث خطأ: '+e.message); }
-};
-
-window.viewClient = async function(key) {
-  const snap=await get(ref(db,`deltaart/clients/${key}`));
-  if(!snap.exists()) return;
-  const cl=snap.val();
-  const remaining=parseFloat(cl.total||0)-parseFloat(cl.paid||0);
-  const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون كاش',visa:'💳 فيزا/كارت',mixed:'🔀 متعدد'};
-  document.getElementById('client-details-content').innerHTML=`
-    <div style="text-align:center;margin-bottom:20px">
-      <div style="font-size:36px;font-weight:900;color:var(--gold)">#${cl.clientId}</div>
-      <div style="font-size:20px;font-weight:700">${cl.name}</div>
-      <div style="color:var(--gray)">${cl.phone}</div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
-        <div style="color:var(--gray);font-size:12px">إجمالي</div>
-        <div style="font-size:20px;font-weight:700">${cl.total||0} ج</div>
-      </div>
-      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
-        <div style="color:var(--gray);font-size:12px">مدفوع</div>
-        <div style="font-size:20px;font-weight:700;color:var(--green)">${cl.paid||0} ج</div>
-      </div>
-      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
-        <div style="color:var(--gray);font-size:12px">متبقي</div>
-        <div style="font-size:20px;font-weight:700;color:${remaining>0?'var(--red)':'var(--green)'}">${remaining} ج</div>
-      </div>
-      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
-        <div style="color:var(--gray);font-size:12px">طريقة الدفع</div>
-        <div style="font-size:16px;font-weight:700">${payMap[cl.paymentMethod]||'—'}</div>
-      </div>
-    </div>
-    <div style="background:var(--navy3);border-radius:10px;padding:14px;margin-bottom:12px">
-      <div style="color:var(--gray);font-size:12px;margin-bottom:6px">تفاصيل الشغل</div>
-      <div>${cl.details||'—'}</div>
-    </div>
-    <div style="color:var(--gray);font-size:12px;text-align:center">${fmtDate(cl.createdAt)}</div>
-  `;
-  openModal('client-details-modal');
-};
-
-window.delClient = async key => { if(confirm('حذف هذا العميل؟')) await remove(ref(db,`deltaart/clients/${key}`)); };
-
-// Init new page data when navigating
-const origGoPage = window.goPage || function(){};
 </script>
 
-<!-- Change Password Modal -->
-<div class="modal-overlay" id="change-pass-modal">
+<!-- SA Modal -->
+<div class="modal-overlay" id="sa-add-user-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('change-pass-modal')">✕</button>
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔑 تغيير كلمة المرور</h3>
-    <p style="color:var(--gray);font-size:13px;margin-bottom:20px">المستخدم: <strong id="cp-name"></strong></p>
-    <input type="hidden" id="cp-uid">
-    <div class="ff">
-      <label>كلمة المرور الجديدة</label>
-      <input type="text" id="cp-pass" placeholder="8 أحرف على الأقل">
+    <button class="modal-close" onclick="closeModal('sa-add-user-modal')">✕</button>
+    <h3>🔐 إضافة أكونت جديد</h3>
+    <div class="ff"><label>الاسم *</label><input type="text" id="sa-name" placeholder="اسم المستخدم"></div>
+    <div class="ff"><label>الإيميل *</label><input type="email" id="sa-email" placeholder="user@deltaart.com"></div>
+    <div class="ff"><label>كلمة المرور *</label><input type="text" id="sa-pass" placeholder="8 أحرف على الأقل"></div>
+    <div class="ff"><label>الدور</label>
+      <select id="sa-role">
+        <option value="owner">👑 صاحب الشركة</option>
+        <option value="admin">مدير</option>
+        <option value="employee">موظف</option>
+        <option value="worker">عامل</option>
+      </select>
     </div>
-    <div id="cp-alert" style="margin:12px 0"></div>
-    <button class="btn-gold" onclick="changePass()">💾 حفظ</button>
+    <div id="sa-add-alert" class="alert"></div>
+    <button class="btn-gold" onclick="saAddUser()">➕ إضافة</button>
   </div>
 </div>
 
-<!-- Add Attendance Modal -->
+<!-- Attendance Modal -->
 <div class="modal-overlay" id="add-attendance-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-attendance-modal')">✕</button>
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📅 تسجيل حضور</h3>
-    <div class="ff">
-      <label>الموظف</label>
-      <select id="att-emp">
-        <option value="">اختر موظف</option>
-      </select>
-    </div>
-    <div class="ff">
-      <label>التاريخ</label>
-      <input type="date" id="att-date">
-    </div>
-    <div class="ff">
-      <label>الحالة</label>
+    <h3>📅 تسجيل حضور</h3>
+    <div class="ff"><label>الموظف</label><select id="att-emp"><option value="">اختر موظف</option></select></div>
+    <div class="ff"><label>التاريخ</label><input type="date" id="att-date"></div>
+    <div class="ff"><label>الحالة</label>
       <select id="att-status">
         <option value="present">✅ حضور</option>
         <option value="absent">❌ غياب</option>
         <option value="late">⏰ تأخير (نص يوم)</option>
       </select>
     </div>
-    <div class="ff">
-      <label>ملاحظات</label>
-      <input type="text" id="att-notes" placeholder="اختياري">
-    </div>
-    <div id="att-alert" style="margin:12px 0"></div>
+    <div class="ff"><label>ملاحظات</label><input type="text" id="att-notes" placeholder="اختياري"></div>
+    <div id="att-alert" class="alert"></div>
     <button class="btn-gold" onclick="saveAttendance()">💾 حفظ</button>
   </div>
 </div>
@@ -1436,30 +1276,21 @@ const origGoPage = window.goPage || function(){};
 <div class="modal-overlay" id="attendance-report-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('attendance-report-modal')">✕</button>
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📊 تقرير الحضور</h3>
-    <div class="ff">
-      <label>الموظف</label>
-      <select id="rep-emp"></select>
-    </div>
+    <h3>📊 تقرير الحضور</h3>
+    <div class="ff"><label>الموظف</label><select id="rep-emp"><option value="">اختر موظف</option></select></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="ff">
-        <label>من</label>
-        <input type="date" id="rep-from">
-      </div>
-      <div class="ff">
-        <label>إلى</label>
-        <input type="date" id="rep-to">
-      </div>
+      <div class="ff"><label>من</label><input type="date" id="rep-from"></div>
+      <div class="ff"><label>إلى</label><input type="date" id="rep-to"></div>
     </div>
-    <button class="btn-gold" style="margin-bottom:16px" onclick="generateReport()">📊 احسب</button>
+    <button class="btn-gold" style="margin-bottom:16px" onclick="generateReport()">احسب</button>
     <div id="report-result" style="display:none;background:var(--navy3);border-radius:12px;padding:16px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--green)" id="rep-present">0</div><div style="color:var(--gray);font-size:13px">أيام حضور</div></div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--red)" id="rep-absent">0</div><div style="color:var(--gray);font-size:13px">أيام غياب</div></div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--orange)" id="rep-late">0</div><div style="color:var(--gray);font-size:13px">تأخير (نص يوم)</div></div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="rep-effective">0</div><div style="color:var(--gray);font-size:13px">إجمالي الأيام الفعلية</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--green)" id="rep-present">0</div><div style="color:var(--gray);font-size:13px">حضور</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--red)" id="rep-absent">0</div><div style="color:var(--gray);font-size:13px">غياب</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--orange)" id="rep-late">0</div><div style="color:var(--gray);font-size:13px">تأخير</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="rep-effective">0</div><div style="color:var(--gray);font-size:13px">إجمالي فعلي</div></div>
       </div>
-      <div style="color:var(--gray);font-size:12px;text-align:center">* التأخير يحسب نص يوم</div>
+      <div style="color:var(--gray);font-size:12px;text-align:center;margin-top:8px">* التأخير = نص يوم</div>
     </div>
   </div>
 </div>
@@ -1468,15 +1299,15 @@ const origGoPage = window.goPage || function(){};
 <div class="modal-overlay" id="add-client-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">🏠 إضافة عميل جديد</h3>
+    <h3>🏠 عميل جديد</h3>
     <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:12px;margin-bottom:16px;text-align:center">
       <span style="color:var(--gray);font-size:13px">رقم العميل: </span>
       <span style="font-size:22px;font-weight:900;color:var(--gold)" id="new-client-id">---</span>
     </div>
-    <div class="ff"><label>اسم العميل</label><input type="text" id="cl-name" placeholder="الاسم الكامل"></div>
-    <div class="ff"><label>رقم الهاتف</label><input type="tel" id="cl-phone" placeholder="01XXXXXXXXX"></div>
-    <div class="ff"><label>العنوان</label><input type="text" id="cl-address" placeholder="العنوان بالتفصيل"></div>
-    <div class="ff"><label>الخدمة المطلوبة</label>
+    <div class="ff"><label>الاسم *</label><input type="text" id="cl-name" placeholder="اسم العميل"></div>
+    <div class="ff"><label>الهاتف *</label><input type="tel" id="cl-phone" placeholder="01XXXXXXXXX"></div>
+    <div class="ff"><label>العنوان</label><input type="text" id="cl-address" placeholder="العنوان"></div>
+    <div class="ff"><label>الخدمة</label>
       <select id="cl-service">
         <option value="ceiling">أسقف جبس بورد</option>
         <option value="lighting">إضاءة</option>
@@ -1485,10 +1316,10 @@ const origGoPage = window.goPage || function(){};
         <option value="other">أخرى</option>
       </select>
     </div>
-    <div class="ff"><label>تفاصيل الشغل</label><textarea id="cl-details" rows="3" placeholder="وصف تفصيلي للمطلوب"></textarea></div>
+    <div class="ff"><label>تفاصيل الشغل</label><textarea id="cl-details" rows="3" placeholder="وصف تفصيلي"></textarea></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="ff"><label>إجمالي المبلغ (جنيه)</label><input type="number" id="cl-total" placeholder="0"></div>
-      <div class="ff"><label>المبلغ المدفوع</label><input type="number" id="cl-paid" placeholder="0" oninput="calcRemaining()"></div>
+      <div class="ff"><label>الإجمالي (جنيه)</label><input type="number" id="cl-total" placeholder="0"></div>
+      <div class="ff"><label>المدفوع</label><input type="number" id="cl-paid" placeholder="0"></div>
     </div>
     <div class="ff"><label>طريقة الدفع</label>
       <select id="cl-payment">
@@ -1506,8 +1337,8 @@ const origGoPage = window.goPage || function(){};
         <option value="pending">لم يدفع بعد</option>
       </select>
     </div>
-    <div id="cl-alert" style="margin:12px 0"></div>
-    <button class="btn-gold" onclick="saveClient()">💾 حفظ العميل</button>
+    <div id="cl-alert" class="alert"></div>
+    <button class="btn-gold" onclick="saveClient()">💾 حفظ</button>
   </div>
 </div>
 
@@ -1519,181 +1350,283 @@ const origGoPage = window.goPage || function(){};
   </div>
 </div>
 
-<!-- SuperAdmin Add User Modal -->
-<div class="modal-overlay" id="sa-add-user-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('sa-add-user-modal')">✕</button>
-    <h3>🔐 إضافة أكونت جديد</h3>
-    <div class="ff"><label>الاسم الكامل *</label><input type="text" id="sa-name" placeholder="اسم المستخدم"></div>
-    <div class="ff"><label>الإيميل *</label><input type="email" id="sa-email" placeholder="user@deltaart.com"></div>
-    <div class="ff">
-      <label>كلمة المرور *</label>
-      <div style="position:relative">
-        <input type="text" id="sa-pass" placeholder="8 أحرف على الأقل">
-      </div>
-    </div>
-    <div class="ff">
-      <label>الدور</label>
-      <select id="sa-role">
-        <option value="owner">👑 صاحب الشركة</option>
-        <option value="admin">مدير</option>
-        <option value="employee">موظف</option>
-        <option value="worker">عامل</option>
-      </select>
-    </div>
-    <div id="sa-add-alert" class="alert"></div>
-    <button class="btn-gold" onclick="saAddUser()">➕ إضافة</button>
-  </div>
-</div>
-
 <script type="module">
-import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-import { getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, set, get, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const auth = getAuth();
+const db = window._db;
 
 // ===== SUPERADMIN USERS TABLE =====
-function loadSAUsers() {
-  const db = window._db;
-  onValue(ref(db, 'deltaart/users'), snap => {
+window.loadSAUsers = function() {
+  onValue(ref(db,'deltaart/users'), snap => {
     const tbody = document.getElementById('sa-users-tbody');
     if(!tbody) return;
-    if(!snap || !snap.exists()) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>';
-      return;
-    }
-    let html = '';
+    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>'; return; }
+    const roleMap = {owner:'👑 صاحب الشركة',admin:'مدير',employee:'موظف',worker:'عامل',viewer:'مشاهد',editor:'محرر'};
+    let html='';
     snap.forEach(c => {
-      const u = c.val();
+      const u=c.val();
       const isActive = u.active !== false;
-      const roleMap = {owner:'👑 صاحب الشركة', admin:'مدير', employee:'موظف', worker:'عامل', viewer:'مشاهد', editor:'محرر'};
       html += `<tr>
         <td><strong>${u.name||'—'}</strong></td>
         <td style="font-size:12px;color:var(--gray)">${u.email||'—'}</td>
         <td><span class="badge badge-blue">${roleMap[u.role]||u.role||'—'}</span></td>
-        <td>
-          <span id="pass-${c.key}" style="color:var(--gray);font-size:13px">••••••••</span>
-          <button onclick="togglePass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:13px;margin-right:4px">👁</button>
-        </td>
-        <td>
-          <span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span>
-        </td>
-        <td style="color:var(--gray);font-size:12px">${u.createdAt ? new Date(u.createdAt).toLocaleDateString('ar-EG') : '—'}</td>
-        <td>
-          <div style="display:flex;gap:4px;flex-wrap:wrap">
-            <button class="btn-sm ${isActive?'btn-danger':'btn-success'}" onclick="saToggleUser('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
-            <button class="btn-sm btn-danger" onclick="saDelUser('${c.key}')">🗑️</button>
-          </div>
+        <td><span id="sapass-${c.key}" style="color:var(--gray)">••••••••</span> <button onclick="toggleSAPass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold)">👁</button></td>
+        <td><span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span></td>
+        <td style="color:var(--gray);font-size:12px">${u.createdAt?new Date(u.createdAt).toLocaleDateString('ar-EG'):'—'}</td>
+        <td style="display:flex;gap:4px;flex-wrap:wrap">
+          <button class="btn-sm ${isActive?'btn-danger':'btn-success'}" onclick="saToggle('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
+          <button class="btn-sm btn-danger" onclick="saDel('${c.key}')">🗑️</button>
         </td>
       </tr>`;
     });
     tbody.innerHTML = html;
   });
-}
+};
 
-window.togglePass = function(id, pass) {
-  const el = document.getElementById('pass-'+id);
+window.toggleSAPass = function(id, pass) {
+  const el = document.getElementById('sapass-'+id);
   if(!el) return;
-  if(el.textContent === '••••••••') {
-    el.textContent = pass || '(غير محفوظ)';
-    el.style.color = 'var(--gold)';
-  } else {
-    el.textContent = '••••••••';
-    el.style.color = 'var(--gray)';
-  }
+  el.textContent = el.textContent==='••••••••' ? (pass||'غير محفوظ') : '••••••••';
+  el.style.color = el.textContent==='••••••••' ? 'var(--gray)' : 'var(--gold)';
 };
 
-window.saToggleUser = async function(id, isActive) {
-  if(!confirm(isActive ? 'إيقاف هذا الأكونت؟' : 'تفعيل هذا الأكونت؟')) return;
-  await window._set(ref(window._db, `deltaart/users/${id}/active`), !isActive);
+window.saToggle = async function(id, isActive) {
+  if(!confirm(isActive?'إيقاف هذا الأكونت؟':'تفعيل؟')) return;
+  await set(ref(db,`deltaart/users/${id}/active`), !isActive);
 };
 
-window.saDelUser = async function(id) {
-  if(!confirm('حذف هذا الأكونت نهائياً؟')) return;
-  await remove(ref(window._db, `deltaart/users/${id}`));
+window.saDel = async function(id) {
+  if(!confirm('حذف نهائي؟')) return;
+  await remove(ref(db,`deltaart/users/${id}`));
 };
 
 window.saAddUser = async function() {
-  const name = document.getElementById('sa-name').value.trim();
-  const email = document.getElementById('sa-email').value.trim();
-  const pass = document.getElementById('sa-pass').value;
-  const role = document.getElementById('sa-role').value;
-  const alertEl = document.getElementById('sa-add-alert');
-  if(!name||!email||!pass) { showSAAlert(alertEl,'error','ادخل كل البيانات'); return; }
-  if(pass.length < 8) { showSAAlert(alertEl,'error','كلمة المرور أقل من 8 أحرف'); return; }
+  const name=document.getElementById('sa-name').value.trim();
+  const email=document.getElementById('sa-email').value.trim();
+  const pass=document.getElementById('sa-pass').value;
+  const role=document.getElementById('sa-role').value;
+  const alertEl=document.getElementById('sa-add-alert');
+  if(!name||!email||!pass){alertEl.className='alert alert-error show';alertEl.textContent='ادخل كل البيانات';return;}
+  if(pass.length<8){alertEl.className='alert alert-error show';alertEl.textContent='الباسورد أقل من 8 أحرف';return;}
   try {
-    const auth = getAuth();
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await window._set(ref(window._db, `deltaart/users/${cred.user.uid}`), {
-      name, email, role, password: pass,
-      active: true, createdAt: new Date().toISOString()
-    });
-    showSAAlert(alertEl,'success','✅ تم إضافة الأكونت');
-    ['sa-name','sa-email','sa-pass'].forEach(id => document.getElementById(id).value='');
-    setTimeout(()=>closeModal('sa-add-user-modal'), 1500);
+    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,active:true,createdAt:new Date().toISOString()});
+    alertEl.className='alert alert-success show';alertEl.textContent='✅ تم إضافة الأكونت';
+    ['sa-name','sa-email','sa-pass'].forEach(id=>document.getElementById(id).value='');
+    setTimeout(()=>closeModal('sa-add-user-modal'),1500);
   } catch(e) {
-    const msgs = {'auth/email-already-in-use':'الإيميل مستخدم بالفعل','auth/weak-password':'كلمة المرور ضعيفة'};
-    showSAAlert(alertEl,'error', msgs[e.code]||'حدث خطأ: '+e.message);
+    const msgs={'auth/email-already-in-use':'الإيميل مستخدم','auth/weak-password':'باسورد ضعيف'};
+    alertEl.className='alert alert-error show';alertEl.textContent=msgs[e.code]||'خطأ: '+e.message;
   }
+  setTimeout(()=>alertEl.classList.remove('show'),3500);
 };
-
-function showSAAlert(el, type, text) {
-  el.className = `alert alert-${type==='success'?'success':'error'} show`;
-  el.textContent = text;
-  setTimeout(()=>el.classList.remove('show'), 3500);
-}
 
 // ===== CHANGE MY PASSWORD =====
 window.changeMyPassword = async function() {
-  const current = document.getElementById('cp-current').value;
-  const newPass = document.getElementById('cp-new').value;
-  const confirm = document.getElementById('cp-confirm').value;
-  const alertEl = document.getElementById('cp-my-alert');
-
-  if(!current||!newPass||!confirm) {
-    alertEl.className='alert alert-error show'; alertEl.textContent='ادخل كل الحقول'; return;
-  }
-  if(newPass !== confirm) {
-    alertEl.className='alert alert-error show'; alertEl.textContent='كلمتا المرور مش متطابقتين'; return;
-  }
-  if(newPass.length < 8) {
-    alertEl.className='alert alert-error show'; alertEl.textContent='كلمة المرور أقل من 8 أحرف'; return;
-  }
-
+  const current=document.getElementById('cp-current').value;
+  const newP=document.getElementById('cp-new').value;
+  const conf=document.getElementById('cp-confirm').value;
+  const alertEl=document.getElementById('cp-my-alert');
+  if(!current||!newP||!conf){alertEl.className='alert alert-error show';alertEl.textContent='ادخل كل الحقول';return;}
+  if(newP!==conf){alertEl.className='alert alert-error show';alertEl.textContent='كلمتا المرور مش متطابقتين';return;}
+  if(newP.length<8){alertEl.className='alert alert-error show';alertEl.textContent='أقل من 8 أحرف';return;}
   try {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const credential = EmailAuthProvider.credential(user.email, current);
-    await reauthenticateWithCredential(user, credential);
-    await updatePassword(user, newPass);
-
-    // Update password in DB if exists
-    if(window._db && user.uid) {
-      try { await window._set(ref(window._db, `deltaart/users/${user.uid}/password`), newPass); } catch(e){}
-    }
-
-    alertEl.className='alert alert-success show';
-    alertEl.textContent='✅ تم تغيير كلمة المرور بنجاح';
+    const user=auth.currentUser;
+    const cred=EmailAuthProvider.credential(user.email,current);
+    await reauthenticateWithCredential(user,cred);
+    await updatePassword(user,newP);
+    try{await set(ref(db,`deltaart/users/${user.uid}/password`),newP);}catch(e){}
+    alertEl.className='alert alert-success show';alertEl.textContent='✅ تم تغيير كلمة المرور';
     ['cp-current','cp-new','cp-confirm'].forEach(id=>document.getElementById(id).value='');
   } catch(e) {
-    const msgs = {'auth/wrong-password':'كلمة المرور الحالية غلط','auth/too-many-requests':'محاولات كتير — انتظر شوية'};
-    alertEl.className='alert alert-error show';
-    alertEl.textContent = msgs[e.code]||'حدث خطأ';
+    const msgs={'auth/wrong-password':'كلمة المرور الحالية غلط','auth/too-many-requests':'محاولات كتير'};
+    alertEl.className='alert alert-error show';alertEl.textContent=msgs[e.code]||'خطأ';
   }
-  setTimeout(()=>alertEl.classList.remove('show'), 4000);
+  setTimeout(()=>alertEl.classList.remove('show'),4000);
 };
 
-// Load SA users when page is ready
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(loadSAUsers, 2000);
-});
+// ===== ATTENDANCE =====
+window.loadEmployeesIntoSelects = function() {
+  onValue(ref(db,'deltaart/users'), snap => {
+    ['att-emp','att-filter-emp','rep-emp'].forEach(selId => {
+      const sel=document.getElementById(selId);
+      if(!sel) return;
+      const first=sel.options[0]?.outerHTML||'<option value="">اختر موظف</option>';
+      sel.innerHTML=first;
+      if(snap&&snap.exists()) snap.forEach(c=>{const u=c.val();if(u.name) sel.innerHTML+=`<option value="${c.key}">${u.name}</option>`;});
+    });
+  });
+};
 
-// Also load when navigating to superadmin page
-const origGoPage2 = window.goPage;
+window.saveAttendance = async function() {
+  const emp=document.getElementById('att-emp').value;
+  const date=document.getElementById('att-date').value;
+  const status=document.getElementById('att-status').value;
+  const notes=document.getElementById('att-notes').value;
+  const alertEl=document.getElementById('att-alert');
+  if(!emp||!date){alertEl.className='alert alert-error show';alertEl.textContent='اختر الموظف والتاريخ';return;}
+  const empName=document.getElementById('att-emp').selectedOptions[0].text;
+  await set(ref(db,`deltaart/attendance/${emp}_${date}`),{empId:emp,empName,date,status,notes,createdAt:new Date().toISOString()});
+  alertEl.className='alert alert-success show';alertEl.textContent='✅ تم التسجيل';
+  setTimeout(()=>{closeModal('add-attendance-modal');loadAttendance();},1200);
+};
+
+window.loadAttendance = function() {
+  const filterEmp=document.getElementById('att-filter-emp')?.value||'';
+  const filterFrom=document.getElementById('att-filter-from')?.value||'';
+  const filterTo=document.getElementById('att-filter-to')?.value||'';
+  onValue(ref(db,'deltaart/attendance'), snap=>{
+    const tbody=document.getElementById('attendance-tbody');
+    if(!tbody) return;
+    let rows=[],present=0,absent=0,late=0;
+    if(snap&&snap.exists()) snap.forEach(c=>{
+      const a=c.val();
+      if(filterEmp&&a.empId!==filterEmp) return;
+      if(filterFrom&&a.date<filterFrom) return;
+      if(filterTo&&a.date>filterTo) return;
+      if(a.status==='present') present++;
+      else if(a.status==='absent') absent++;
+      else if(a.status==='late') late++;
+      const sm={present:'<span class="badge badge-green">✅ حضور</span>',absent:'<span class="badge badge-red">❌ غياب</span>',late:'<span class="badge badge-yellow">⏰ تأخير</span>'};
+      rows.push(`<tr><td><strong>${a.empName||'—'}</strong></td><td>${a.date||'—'}</td><td>${sm[a.status]||a.status}</td><td style="color:var(--gray)">${a.notes||'—'}</td><td><button class="btn-sm btn-danger" onclick="delAttendance('${c.key}')">🗑️</button></td></tr>`);
+    });
+    tbody.innerHTML=rows.length?rows.join(''):'<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>';
+    ['att-present','att-absent','att-late','att-total'].forEach((id,i)=>{
+      const el=document.getElementById(id);
+      if(el) el.textContent=[present,absent,late,present+absent+late][i];
+    });
+  });
+};
+
+window.delAttendance = async id => { if(confirm('حذف السجل؟')) await remove(ref(db,`deltaart/attendance/${id}`)); };
+
+window.generateReport = async function() {
+  const empId=document.getElementById('rep-emp').value;
+  const from=document.getElementById('rep-from').value;
+  const to=document.getElementById('rep-to').value;
+  if(!empId||!from||!to){alert('اختر الموظف والفترة');return;}
+  const snap=await get(ref(db,'deltaart/attendance'));
+  let present=0,absent=0,late=0;
+  if(snap.exists()) snap.forEach(c=>{
+    const a=c.val();
+    if(a.empId!==empId||a.date<from||a.date>to) return;
+    if(a.status==='present') present++;
+    else if(a.status==='absent') absent++;
+    else if(a.status==='late') late++;
+  });
+  ['rep-present','rep-absent','rep-late','rep-effective'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=[present,absent,late,present+(late*0.5)][i];
+  });
+  document.getElementById('report-result').style.display='block';
+};
+
+// ===== CLIENTS =====
+async function getNextClientId() {
+  const snap=await get(ref(db,'deltaart/clients'));
+  if(!snap.exists()) return '001';
+  let max=0;
+  snap.forEach(c=>{const id=parseInt(c.val().clientId||'0');if(id>max)max=id;});
+  return String(max+1).padStart(3,'0');
+}
+
+window.openAddClientModal = async function() {
+  const id=await getNextClientId();
+  const el=document.getElementById('new-client-id');
+  if(el) el.textContent=id;
+  openModal('add-client-modal');
+};
+
+window.loadClients = function() {
+  onValue(ref(db,'deltaart/clients'), snap=>{
+    const tbody=document.getElementById('clients-tbody');
+    if(!tbody) return;
+    if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>';return;}
+    const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون',visa:'💳 فيزا',mixed:'🔀 متعدد'};
+    const statusMap={full:'<span class="badge badge-green">مدفوع</span>',partial:'<span class="badge badge-yellow">جزء</span>',pending:'<span class="badge badge-red">لم يدفع</span>'};
+    let html='';
+    snap.forEach(c=>{
+      const cl=c.val();
+      const rem=parseFloat(cl.total||0)-parseFloat(cl.paid||0);
+      html+=`<tr>
+        <td><strong style="color:var(--gold)">#${cl.clientId||'---'}</strong></td>
+        <td><strong>${cl.name||'—'}</strong></td>
+        <td style="color:var(--gray);font-size:12px">${cl.phone||'—'}</td>
+        <td>${cl.service||'—'}</td>
+        <td>${cl.total||0} ج</td>
+        <td style="color:var(--green)">${cl.paid||0} ج</td>
+        <td style="color:${rem>0?'var(--red)':'var(--green)'}">${rem} ج</td>
+        <td style="font-size:12px">${payMap[cl.paymentMethod]||'—'}</td>
+        <td>${statusMap[cl.payStatus]||'—'}</td>
+        <td style="display:flex;gap:4px">
+          <button class="btn-sm btn-primary" onclick="viewClient('${c.key}')">👁</button>
+          <button class="btn-sm btn-danger" onclick="delClient('${c.key}')">🗑️</button>
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML=html;
+  });
+};
+
+window.saveClient = async function() {
+  const name=document.getElementById('cl-name').value.trim();
+  const phone=document.getElementById('cl-phone').value.trim();
+  const alertEl=document.getElementById('cl-alert');
+  if(!name||!phone){alertEl.className='alert alert-error show';alertEl.textContent='ادخل الاسم والهاتف';return;}
+  const clientId=await getNextClientId();
+  await push(ref(db,'deltaart/clients'),{
+    clientId,name,phone,
+    address:document.getElementById('cl-address').value,
+    service:document.getElementById('cl-service').value,
+    details:document.getElementById('cl-details').value,
+    total:parseFloat(document.getElementById('cl-total').value)||0,
+    paid:parseFloat(document.getElementById('cl-paid').value)||0,
+    paymentMethod:document.getElementById('cl-payment').value,
+    payStatus:document.getElementById('cl-pay-status').value,
+    createdAt:new Date().toISOString()
+  });
+  alertEl.className='alert alert-success show';alertEl.textContent=`✅ تم إضافة العميل #${clientId}`;
+  setTimeout(()=>closeModal('add-client-modal'),1500);
+};
+
+window.viewClient = async function(key) {
+  const snap=await get(ref(db,`deltaart/clients/${key}`));
+  if(!snap.exists()) return;
+  const cl=snap.val();
+  const rem=parseFloat(cl.total||0)-parseFloat(cl.paid||0);
+  const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون كاش',visa:'💳 فيزا/كارت',mixed:'🔀 متعدد'};
+  document.getElementById('client-details-content').innerHTML=`
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:36px;font-weight:900;color:var(--gold)">#${cl.clientId}</div>
+      <div style="font-size:20px;font-weight:700">${cl.name}</div>
+      <div style="color:var(--gray)">${cl.phone}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center"><div style="color:var(--gray);font-size:12px">إجمالي</div><div style="font-size:20px;font-weight:700">${cl.total||0} ج</div></div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center"><div style="color:var(--gray);font-size:12px">مدفوع</div><div style="font-size:20px;font-weight:700;color:var(--green)">${cl.paid||0} ج</div></div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center"><div style="color:var(--gray);font-size:12px">متبقي</div><div style="font-size:20px;font-weight:700;color:${rem>0?'var(--red)':'var(--green)'}">${rem} ج</div></div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center"><div style="color:var(--gray);font-size:12px">طريقة الدفع</div><div style="font-size:16px;font-weight:700">${payMap[cl.paymentMethod]||'—'}</div></div>
+    </div>
+    <div style="background:var(--navy3);border-radius:10px;padding:14px"><div style="color:var(--gray);font-size:12px;margin-bottom:6px">تفاصيل الشغل</div><div>${cl.details||'—'}</div></div>
+  `;
+  openModal('client-details-modal');
+};
+
+window.delClient = async key => { if(confirm('حذف هذا العميل؟')) await remove(ref(db,`deltaart/clients/${key}`)); };
+
+// ===== INIT PAGES =====
+const _origGoPage = window.goPage;
 window.goPage = function(name, btn) {
-  origGoPage2 && origGoPage2(name, btn);
-  if(name === 'superadmin') loadSAUsers();
+  _origGoPage && _origGoPage(name, btn);
+  if(name==='superadmin') window.loadSAUsers && window.loadSAUsers();
+  if(name==='attendance') { window.loadAttendance && window.loadAttendance(); window.loadEmployeesIntoSelects && window.loadEmployeesIntoSelects(); }
+  if(name==='clients') window.loadClients && window.loadClients();
 };
+
+// Auto-load SA users
+setTimeout(()=>{ if(window._currentRole==='superadmin') window.loadSAUsers && window.loadSAUsers(); }, 2000);
 </script>
 </body>
 </html>
