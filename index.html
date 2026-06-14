@@ -2,17 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-
-  <!-- PWA -->
-  <meta name="theme-color" content="#0A1628">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="دلتا آرت">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/C9A84C/0A1628?text=DA">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دلتا آرت - جبس بورد احترافي</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#C9A84C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="دلتا آرت">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -312,6 +308,25 @@
   }
   .footer-bottom a { color:var(--gold); text-decoration:none; }
 
+  /* ===== PWA INSTALL ===== */
+  #pwa-banner {
+    position:fixed; bottom:90px; left:16px; z-index:998;
+    background:linear-gradient(135deg,var(--navy2),var(--navy3));
+    border:1px solid rgba(201,168,76,0.4); border-radius:14px;
+    padding:12px 16px; display:none; align-items:center; gap:10px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.4); max-width:280px;
+    animation: slideUp 0.4s ease;
+  }
+  @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  #pwa-banner.show { display:flex; }
+  #pwa-banner .pwa-icon { width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:var(--navy);flex-shrink:0; }
+  #pwa-banner .pwa-text { flex:1; }
+  #pwa-banner .pwa-text .pt { font-size:13px;font-weight:700; }
+  #pwa-banner .pwa-text .ps { font-size:11px;color:var(--gray); }
+  #pwa-banner .pwa-btns { display:flex;gap:6px;margin-top:8px; }
+  #pwa-banner .pwa-install { background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--navy);border:none;border-radius:7px;padding:6px 14px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer; }
+  #pwa-banner .pwa-dismiss { background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--gray);border-radius:7px;padding:6px 10px;font-family:Cairo,sans-serif;font-size:12px;cursor:pointer; }
+
   /* ===== WHATSAPP FLOAT ===== */
   .wa-float {
     position:fixed; bottom:24px; left:24px; z-index:999;
@@ -365,22 +380,6 @@
   /* Scroll reveal */
   .reveal { opacity:0; transform:translateY(30px); transition:all 0.6s ease; }
   .reveal.visible { opacity:1; transform:none; }
-
-/* ===== EXTRA MOBILE FIXES ===== */
-@media(max-width:768px){
-  .hero-title { font-size:32px!important; }
-  .hero-sub { font-size:14px!important; }
-  .hero-btns { flex-direction:column; align-items:center; }
-  .section-title { font-size:24px!important; }
-  .services-grid { grid-template-columns:1fr!important; }
-  .works-grid { grid-template-columns:1fr!important; }
-  .stats-grid { grid-template-columns:1fr 1fr!important; }
-  .about-grid { grid-template-columns:1fr!important; }
-  .calc-grid { grid-template-columns:1fr!important; }
-  .form-row { grid-template-columns:1fr!important; }
-  section { padding:48px 4%!important; }
-  .wa-float { bottom:16px; left:16px; width:52px; height:52px; }
-}
 </style>
 </head>
 <body>
@@ -395,9 +394,22 @@
 </div>
 
 <!-- WhatsApp Float -->
-<a href="https://wa.me/20097347400" target="_blank" class="wa-float" title="تواصل عبر واتساب">
+<a href="https://wa.me/201000000000" target="_blank" class="wa-float" title="تواصل عبر واتساب">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+
+<!-- PWA Install Banner -->
+<div id="pwa-banner">
+  <div class="pwa-icon">DA</div>
+  <div class="pwa-text">
+    <div class="pt">حمّل التطبيق</div>
+    <div class="ps">تجربة أسرع وأفضل</div>
+    <div class="pwa-btns">
+      <button class="pwa-install" id="pwa-install-btn">تحميل</button>
+      <button class="pwa-dismiss" onclick="document.getElementById('pwa-banner').classList.remove('show')">لا شكراً</button>
+    </div>
+  </div>
+</div>
 
 <!-- Navbar -->
 <nav>
@@ -411,7 +423,7 @@
     <a href="#calculator">احسب سعرك</a>
     <a href="#contact">تواصل معنا</a>
     <a href="#about">من نحن</a>
-    <a href="https://wa.me/20097347400" class="nav-wa" target="_blank">
+    <a href="https://wa.me/201000000000" class="nav-wa" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       واتساب
     </a>
@@ -440,7 +452,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
         احسب سعر تقريبي
       </a>
-      <a href="https://wa.me/20097347400" class="btn-wa" target="_blank">
+      <a href="https://wa.me/201000000000" class="btn-wa" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         تواصل واتساب
       </a>
@@ -547,10 +559,12 @@
     <div class="calc-field">
       <label>نوع الخدمة</label>
       <select id="calc-type">
-        <option value="basic">سقف بسيط — من 120 جنيه/م²</option>
-        <option value="medium">سقف متوسط مع إضاءة — من 180 جنيه/م²</option>
-        <option value="premium">سقف ديلوكس ثلاثي الأبعاد — من 280 جنيه/م²</option>
-        <option value="partition">فاصل أو جدار — من 200 جنيه/م²</option>
+        <option value="flat_basic">🥉 باقة الفلات راحة</option>
+        <option value="flat_mid">🥈 باقة الفلات تميز</option>
+        <option value="flat_prem">🥇 باقة الفلات فخامة</option>
+        <option value="nur_basic">🥉 باقة بيت النور راحة</option>
+        <option value="nur_mid">🥈 باقة بيت النور تميز</option>
+        <option value="nur_prem">🥇 باقة بيت النور فخامة</option>
       </select>
     </div>
     <div class="calc-result" id="calc-result">
@@ -631,7 +645,7 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5C3.9 3 3 3.9 3 5v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H5V8h14v13zM7 10h5v5H7z"/></svg>
       احجز معاينة مجانية
     </button>
-    <a href="https://wa.me/20097347400" class="btn-wa" target="_blank">تواصل واتساب</a>
+    <a href="https://wa.me/201000000000" class="btn-wa" target="_blank">تواصل واتساب</a>
   </div>
   <div class="cta-features">
     <div class="cta-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> معاينة مجانية بدون التزام</div>
@@ -648,14 +662,14 @@
       <h2>نحن هنا لمساعدتك في كل خطوة</h2>
       <p>سواء كنت في مرحلة التخطيط أو جاهزاً للتنفيذ، فريقنا مستعد للإجابة على كل أسئلتك</p>
       <div class="contact-links">
-        <a href="tel:+20097347400" class="contact-link">
+        <a href="tel:+201000000000" class="contact-link">
           <div class="cl-icon">📞</div>
           <div class="cl-text">
             <div class="cl-label">اتصل بنا</div>
             <div class="cl-val">01000000000</div>
           </div>
         </a>
-        <a href="https://wa.me/20097347400" class="contact-link" target="_blank">
+        <a href="https://wa.me/201000000000" class="contact-link" target="_blank">
           <div class="cl-icon">💬</div>
           <div class="cl-text">
             <div class="cl-label">واتساب</div>
@@ -686,7 +700,7 @@
       </div>
       <div class="form-field">
         <label>رقم الهاتف</label>
-        <input type="tel" id="msg-phone" placeholder="01097347400">
+        <input type="tel" id="msg-phone" placeholder="01XXXXXXXXX">
       </div>
       <div class="form-field">
         <label>نوع الخدمة المطلوبة</label>
@@ -723,7 +737,7 @@
       <div class="footer-social">
         <a href="#" class="social-btn">f</a>
         <a href="#" class="social-btn">in</a>
-        <a href="https://wa.me/20097347400" class="social-btn" target="_blank">
+        <a href="https://wa.me/201000000000" class="social-btn" target="_blank">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         </a>
       </div>
@@ -767,7 +781,7 @@
     </div>
     <div class="form-field">
       <label>رقم الهاتف *</label>
-      <input type="tel" id="book-phone" placeholder="01097347400">
+      <input type="tel" id="book-phone" placeholder="01XXXXXXXXX">
     </div>
     <div class="form-field">
       <label>العنوان</label>
@@ -805,7 +819,7 @@
 <!-- Firebase + JS -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push, onValue, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, push, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",
@@ -952,6 +966,82 @@ loadStats();
 loadGallery();
 loadServices();
 loadDynamicSettings();
+trackVisitor();
+initPWA();
+
+// ===== VISITOR TRACKING =====
+function trackVisitor() {
+  const startTime = Date.now();
+  let level = 'low'; // default
+
+  // Determine interest level on page unload
+  const saveVisit = () => {
+    const duration = Math.floor((Date.now() - startTime) / 1000);
+    if (duration < 30) level = 'low';
+    else if (duration < 180) level = 'medium';
+    else level = 'high';
+
+    const visit = {
+      date: new Date().toISOString(),
+      duration,
+      level,
+      page: window.location.pathname,
+      ua: navigator.userAgent.substring(0, 80)
+    };
+    // Use sendBeacon for reliability on page unload
+    const blob = new Blob([JSON.stringify(visit)], {type:'application/json'});
+    // Store in Firebase via a quick push
+    try {
+      push(ref(db, 'deltaart/visitors'), visit);
+    } catch(e) {}
+  };
+
+  // Save on unload
+  window.addEventListener('beforeunload', saveVisit);
+
+  // Also update level dynamically
+  setTimeout(() => { level = 'medium'; }, 30000);
+  setTimeout(() => { level = 'high'; }, 180000);
+}
+
+// ===== PWA =====
+function initPWA() {
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  }
+
+  // Install prompt
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Show banner after 3 seconds
+    setTimeout(() => {
+      document.getElementById('pwa-banner').classList.add('show');
+    }, 3000);
+  });
+
+  document.getElementById('pwa-install-btn').addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('pwa-banner').classList.remove('show');
+  });
+
+  // iOS Safari — show manual instructions
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches;
+  if (isIOS && !isInStandaloneMode) {
+    setTimeout(() => {
+      document.getElementById('pwa-banner').classList.add('show');
+      document.querySelector('#pwa-banner .pt').textContent = 'حمّل التطبيق على iPhone';
+      document.querySelector('#pwa-banner .ps').textContent = 'اضغط Share ثم Add to Home Screen';
+      document.getElementById('pwa-install-btn').style.display = 'none';
+    }, 3000);
+  }
+}
 
 // Load contact info & prices from Firebase settings
 async function loadDynamicSettings() {
@@ -1000,10 +1090,20 @@ async function loadDynamicSettings() {
     if (s.prices) {
       window._calcPrices = s.prices;
       const sel = document.getElementById('calc-type');
-      if (sel) {
-        sel.options[0].text = `سقف بسيط — من ${s.prices.basic_min||120} جنيه/م²`;
-        sel.options[1].text = `سقف متوسط مع إضاءة — من ${s.prices.mid_min||180} جنيه/م²`;
-        sel.options[2].text = `سقف ديلوكس ثلاثي الأبعاد — من ${s.prices.prem_min||280} جنيه/م²`;
+      if (sel && s.prices) {
+        const pr = s.prices;
+        const opts = [
+          ['flat_basic', '🥉 باقة الفلات راحة',      pr.flat_basic_min, pr.flat_basic_max],
+          ['flat_mid',   '🥈 باقة الفلات تميز',      pr.flat_mid_min,   pr.flat_mid_max],
+          ['flat_prem',  '🥇 باقة الفلات فخامة',     pr.flat_prem_min,  pr.flat_prem_max],
+          ['nur_basic',  '🥉 باقة بيت النور راحة',   pr.nur_basic_min,  pr.nur_basic_max],
+          ['nur_mid',    '🥈 باقة بيت النور تميز',   pr.nur_mid_min,    pr.nur_mid_max],
+          ['nur_prem',   '🥇 باقة بيت النور فخامة',  pr.nur_prem_min,   pr.nur_prem_max],
+        ];
+        sel.innerHTML = opts.map(([val, label, mn, mx]) => {
+          const priceStr = (mn && mx) ? ` — من ${mn} لحد ${mx} جنيه/م²` : '';
+          return `<option value="${val}">${label}${priceStr}</option>`;
+        }).join('');
       }
     }
   } catch(e) {}
@@ -1026,14 +1126,23 @@ function calculatePrice() {
   const area = l * w;
   const p = window._calcPrices || {};
   const rates = {
-    basic:     [p.basic_min||120,  p.basic_max||160],
-    medium:    [p.mid_min||180,    p.mid_max||240],
-    premium:   [p.prem_min||280,   p.prem_max||380],
-    partition: [200, 280]
+    flat_basic: [p.flat_basic_min||0, p.flat_basic_max||0],
+    flat_mid:   [p.flat_mid_min||0,   p.flat_mid_max||0],
+    flat_prem:  [p.flat_prem_min||0,  p.flat_prem_max||0],
+    nur_basic:  [p.nur_basic_min||0,  p.nur_basic_max||0],
+    nur_mid:    [p.nur_mid_min||0,    p.nur_mid_max||0],
+    nur_prem:   [p.nur_prem_min||0,   p.nur_prem_max||0],
   };
-  const [min,max] = rates[type];
-  const minPrice = Math.round(area*min);
-  const maxPrice = Math.round(area*max);
+  const [min, max] = rates[type];
+  if (!min && !max) {
+    const res = document.getElementById('calc-result');
+    document.getElementById('result-price').textContent = 'سيتم التحديد قريباً';
+    res.querySelector('.result-note').textContent = 'صاحب الشركة لم يحدد السعر بعد';
+    res.classList.add('show');
+    return;
+  }
+  const minPrice = Math.round(area * min);
+  const maxPrice = Math.round(area * max);
   const res = document.getElementById('calc-result');
   document.getElementById('result-price').textContent = `${minPrice.toLocaleString('ar-EG')} — ${maxPrice.toLocaleString('ar-EG')} جنيه`;
   res.querySelector('.result-note').textContent = `للمساحة ${area} م² — السعر تقديري`;
@@ -1072,35 +1181,6 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold:0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-
-<!-- PWA Install Button -->
-<button id="pwa-install-btn" onclick="installPWA()" style="display:none;position:fixed;bottom:90px;left:24px;z-index:998;background:linear-gradient(135deg,#C9A84C,#A07830);color:#0A1628;border:none;border-radius:50px;padding:10px 18px;font-family:Cairo,sans-serif;font-weight:700;font-size:13px;cursor:pointer;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(201,168,76,0.4)">
-  📲 حمّل التطبيق
-</button>
-
-<script>
-// PWA Install
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const btn = document.getElementById('pwa-install-btn');
-  if(btn) btn.style.display = 'flex';
-});
-
-window.installPWA = async function() {
-  if(!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const result = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  document.getElementById('pwa-install-btn').style.display = 'none';
-};
-
-// Register service worker
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
 </script>
 </body>
 </html>

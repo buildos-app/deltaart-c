@@ -1,24 +1,21 @@
 {
   "name": "دلتا آرت — جبس بورد احترافي",
   "short_name": "دلتا آرت",
-  "description": "تصميم وتنفيذ أعمال الجبس بورد",
+  "description": "تصميم وتنفيذ أحدث أشكال الجبس بورد",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0A1628",
   "theme_color": "#C9A84C",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "lang": "ar",
   "dir": "rtl",
   "icons": [
-    {
-      "src": "https://via.placeholder.com/192x192/C9A84C/0A1628?text=DA",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "https://via.placeholder.com/512x512/C9A84C/0A1628?text=DA",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "https://placehold.co/192x192/C9A84C/0A1628?text=DA", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "https://placehold.co/512x512/C9A84C/0A1628?text=DA", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["business", "lifestyle"],
+  "shortcuts": [
+    { "name": "احجز معاينة", "url": "/#booking", "description": "احجز معاينة مجانية" },
+    { "name": "احسب سعرك", "url": "/#calculator", "description": "حاسبة الأسعار" }
   ]
 }
