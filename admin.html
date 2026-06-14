@@ -9,6 +9,8 @@
 :root{--navy:#0A1628;--navy2:#0F1F3D;--navy3:#162848;--navy4:#1C3158;--gold:#C9A84C;--gold2:#E8C96A;--gold3:#A07830;--white:#FFFFFF;--gray:#8899AA;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);display:flex;height:100vh;overflow:hidden;}
+
+/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
 #login-screen.hide{display:none;}
 .login-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
@@ -23,6 +25,8 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--navy);padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.3s;width:100%;}
 .btn-gold:hover{opacity:0.85;}
 #login-err{background:rgba(239,68,68,0.15);color:#EF4444;padding:12px;border-radius:8px;text-align:center;font-size:14px;margin-top:12px;display:none;}
+
+/* SIDEBAR */
 .sidebar{width:240px;height:100vh;background:var(--navy2);border-left:1px solid rgba(201,168,76,0.15);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
 .sidebar-logo{padding:20px;border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;gap:10px;}
 .sidebar-logo .li{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--navy);}
@@ -41,11 +45,15 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .user-info .ur{font-size:11px;color:var(--gray);}
 .logout-btn{margin-top:10px;width:100%;padding:9px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#EF4444;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .logout-btn:hover{background:rgba(239,68,68,0.2);}
+
+/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .topbar{height:60px;background:var(--navy2);border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;}
 .topbar h2{font-size:18px;font-weight:700;}
 .topbar-badge{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .content{flex:1;overflow-y:auto;padding:24px;}
+
+/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
 .stat-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;padding:20px;}
 .stat-card .sc-label{font-size:12px;color:var(--gray);font-weight:600;margin-bottom:8px;}
@@ -53,53 +61,66 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .stat-card .sc-change{font-size:12px;margin-top:4px;}
 .sc-change.up{color:var(--green);}
 .sc-icon{float:left;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+
+/* PANEL */
 .panel{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;overflow:hidden;margin-bottom:16px;}
 .panel-header{padding:16px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:space-between;}
 .panel-header h3{font-size:15px;font-weight:700;}
 .panel-content{padding:20px;}
+
+/* TABLE */
 table{width:100%;border-collapse:collapse;}
 th{text-align:right;font-size:12px;font-weight:700;color:var(--gray);padding:8px 12px;border-bottom:1px solid rgba(201,168,76,0.1);}
 td{padding:12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* BADGE */
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
 .badge-green{background:rgba(34,197,94,0.15);color:#22C55E;}
 .badge-yellow{background:rgba(201,168,76,0.15);color:var(--gold);}
 .badge-red{background:rgba(239,68,68,0.15);color:#EF4444;}
 .badge-blue{background:rgba(59,130,246,0.15);color:#3B82F6;}
 .badge-gray{background:rgba(136,153,170,0.15);color:var(--gray);}
-.badge-purple{background:rgba(168,85,247,0.15);color:#A855F7;}
-.badge-orange{background:rgba(249,115,22,0.15);color:#F97316;}
+
+/* FORM */
 .ff{margin-bottom:16px;}
 .ff label{display:block;font-size:13px;font-weight:600;color:var(--gray);margin-bottom:7px;}
 .ff input,.ff select,.ff textarea{width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s;direction:rtl;}
 .ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--gold);}
-.ff select option{background:var(--navy3);}
 .ff textarea{resize:vertical;min-height:80px;}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 .btn-sm{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'Cairo',sans-serif;transition:all 0.3s;}
 .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--navy);}
 .btn-danger{background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid rgba(239,68,68,0.3);}
 .btn-success{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3);}
 .btn-outline-sm{background:transparent;border:1px solid rgba(201,168,76,0.3);color:var(--gold);}
-.btn-blue{background:rgba(59,130,246,0.15);color:#3B82F6;border:1px solid rgba(59,130,246,0.3);}
+
+/* UPLOAD ZONE */
 .upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.03);}
 .upload-zone:hover{border-color:var(--gold);background:rgba(201,168,76,0.08);}
 .upload-zone input[type=file]{display:none;}
 .upload-progress{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:10px;display:none;}
 .upload-progress-fill{height:100%;background:linear-gradient(to left,var(--gold),var(--gold2));border-radius:3px;transition:width 0.3s;width:0%;}
+
+/* PAGES */
 .page{display:none;}
 .page.active{display:block;}
+
+/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:32px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:32px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;position:relative;}
 .modal-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.1);border:none;color:var(--white);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .modal h3{margin-bottom:20px;font-size:18px;font-weight:700;}
+
+/* ALERT */
 .alert{padding:12px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-top:12px;display:none;}
 .alert.show{display:block;}
 .alert-success{background:rgba(34,197,94,0.15);color:#22C55E;}
 .alert-error{background:rgba(239,68,68,0.15);color:#EF4444;}
+
+/* GALLERY GRID */
 .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
 .gal-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:12px;overflow:hidden;}
 .gal-card img{width:100%;height:140px;object-fit:cover;}
@@ -107,52 +128,44 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .gal-card .gal-title{font-size:13px;font-weight:600;margin-bottom:4px;}
 .gal-card .gal-cat{font-size:11px;color:var(--gray);}
 .gal-card .gal-actions{padding:8px 12px;border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;}
+
+/* SETTINGS TABS */
 .stabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
 .stab{padding:9px 20px;border-radius:8px;border:1px solid rgba(201,168,76,0.25);color:var(--gray);background:transparent;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .stab.active,.stab:hover{background:rgba(201,168,76,0.15);color:var(--gold);border-color:var(--gold);}
 .stab-panel{display:none;}
 .stab-panel.active{display:block;}
+
+/* EMPTY STATE */
 .empty-state{text-align:center;padding:48px 20px;color:var(--gray);}
 .empty-state .ei{font-size:48px;margin-bottom:12px;}
 .empty-state p{font-size:14px;}
-.mobile-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:8px;cursor:pointer;font-size:18px;color:var(--gold);}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
-.sidebar-overlay.show{display:block;}
-.salary-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:16px;margin-bottom:12px;}
-.salary-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
-.salary-box{background:var(--navy3);border-radius:10px;padding:14px;text-align:center;}
-.salary-box .sb-val{font-size:22px;font-weight:900;}
-.salary-box .sb-label{font-size:11px;color:var(--gray);margin-top:4px;}
-.invoice-item{display:flex;gap:8px;margin-bottom:8px;align-items:center;}
-.invoice-item input{flex:1;}
-.invoice-item .btn-sm{flex-shrink:0;}
-.role-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
-.role-superadmin{background:rgba(168,85,247,0.2);color:#A855F7;border:1px solid rgba(168,85,247,0.4);}
-.role-owner{background:rgba(201,168,76,0.2);color:var(--gold);border:1px solid rgba(201,168,76,0.4);}
-.role-admin{background:rgba(59,130,246,0.2);color:#3B82F6;border:1px solid rgba(59,130,246,0.4);}
-.role-editor{background:rgba(34,197,94,0.2);color:#22C55E;border:1px solid rgba(34,197,94,0.4);}
-.role-viewer{background:rgba(136,153,170,0.2);color:var(--gray);border:1px solid rgba(136,153,170,0.4);}
-.role-worker{background:rgba(249,115,22,0.2);color:#F97316;border:1px solid rgba(249,115,22,0.4);}
-.pass-visible{font-family:monospace;background:var(--navy);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:4px 10px;font-size:13px;color:var(--gold);letter-spacing:1px;}
+
+/* NOTIFICATION DOT */
+.notif-dot{width:8px;height:8px;background:var(--red);border-radius:50%;margin-right:auto;flex-shrink:0;}
+
+/* ===== RESPONSIVE MOBILE ===== */
 @media(max-width:768px){
   .sidebar{width:200px;position:fixed;z-index:100;transform:translateX(100%);transition:transform 0.3s;}
   .sidebar.open{transform:translateX(0);}
-  .stats-row{grid-template-columns:1fr 1fr;}
+  .main-content{margin-right:0!important;width:100%!important;}
   .topbar{padding:0 12px;}
+  .stat-card{padding:14px;}
   .panel{overflow-x:auto;}
   table{min-width:500px;}
   .mobile-menu-btn{display:flex!important;}
   .modal{padding:20px;max-width:95vw;}
-  .salary-summary{grid-template-columns:1fr 1fr;}
 }
 @media(min-width:769px){
   .mobile-menu-btn{display:none!important;}
   .sidebar{transform:translateX(0)!important;}
 }
+.mobile-menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:8px;cursor:pointer;font-size:18px;border:none;color:var(--gold);}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
+.sidebar-overlay.show{display:block;}
 </style>
 </head>
-<body>
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+<body><div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- LOGIN -->
 <div id="login-screen">
@@ -170,7 +183,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 </div>
 
 <!-- SIDEBAR -->
-<div class="sidebar" id="main-sidebar">
+<div class="sidebar">
   <div class="sidebar-logo">
     <div class="li">DA</div>
     <div class="lt">دلتا <span>آرت</span></div>
@@ -188,21 +201,16 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <span class="ni">💬</span> الرسائل
       <span id="badge-messages" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span>
     </button>
-    <button class="nav-item" onclick="goPage('clients',this)"><span class="ni">🏠</span> إدارة العملاء</button>
 
     <div class="nav-section-title">المحتوى</div>
     <button class="nav-item" onclick="goPage('gallery',this)"><span class="ni">🖼️</span> معرض الأعمال</button>
     <button class="nav-item" onclick="goPage('services',this)"><span class="ni">⚙️</span> الخدمات</button>
 
-    <div class="nav-section-title">الموظفون</div>
-    <button class="nav-item" onclick="goPage('attendance',this)"><span class="ni">📅</span> الحضور والغياب</button>
-    <button class="nav-item" onclick="goPage('salaries',this)"><span class="ni">💰</span> الرواتب</button>
-
     <div class="nav-section-title">الإدارة</div>
     <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🛠️</span> إعدادات الموقع</button>
-    <button class="nav-item" id="nav-users" onclick="goPage('users',this)"><span class="ni">👥</span> المستخدمون</button>
-    <!-- Super Admin Only -->
-    <button class="nav-item" id="nav-superadmin" style="display:none" onclick="goPage('superadmin',this)"><span class="ni">🔐</span> سوبر أدمن</button>
+    <button class="nav-item" onclick="goPage('users',this)"><span class="ni">👥</span> المستخدمون</button>
+    <button class="nav-item" onclick="goPage('attendance',this)"><span class="ni">📅</span> حضور الموظفين</button>
+    <button class="nav-item" onclick="goPage('clients',this)"><span class="ni">🏠</span> إدارة العملاء</button>
 
     <div style="margin-top:12px">
       <a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> عرض الموقع</a>
@@ -222,8 +230,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
 <!-- MAIN -->
 <div class="main">
-  <div class="topbar">
-    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="topbar"><button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
     <h2 id="topbar-title">لوحة التحكم</h2>
     <div style="display:flex;align-items:center;gap:12px">
       <div class="topbar-badge" id="today-date"></div>
@@ -254,27 +261,28 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         </div>
         <div class="stat-card">
           <div style="display:flex;justify-content:space-between">
-            <div><div class="sc-label">العملاء</div><div class="sc-val" id="ds-c">0</div><div class="sc-change" style="color:var(--gray)">عميل</div></div>
-            <div class="sc-icon" style="background:rgba(249,115,22,0.15);color:#F97316">🏠</div>
+            <div><div class="sc-label">الخدمات</div><div class="sc-val" id="ds-s">0</div><div class="sc-change" style="color:var(--gray)">خدمة</div></div>
+            <div class="sc-icon" style="background:rgba(249,115,22,0.15);color:#F97316">⚙️</div>
           </div>
         </div>
       </div>
+
       <div class="two-col" style="margin-bottom:16px">
         <div class="panel">
           <div class="panel-header"><h3>📅 آخر الحجوزات</h3><button class="btn-sm btn-outline-sm" onclick="goPage('bookings',document.getElementById('nav-bookings'))">الكل</button></div>
-          <table><tbody id="dash-book-tbody"><tr><td colspan="4" style="padding:20px;text-align:center;color:var(--gray)">جاري التحميل...</td></tr></tbody></table>
+          <table><tbody id="dash-book-tbody"><tr><td colspan="4" class="empty-state" style="padding:20px;text-align:center;color:var(--gray)">جاري التحميل...</td></tr></tbody></table>
         </div>
         <div class="panel">
           <div class="panel-header"><h3>💬 آخر الرسائل</h3><button class="btn-sm btn-outline-sm" onclick="goPage('messages',document.getElementById('nav-messages'))">الكل</button></div>
-          <table><tbody id="dash-msg-tbody"><tr><td colspan="4" style="padding:20px;text-align:center;color:var(--gray)">جاري التحميل...</td></tr></tbody></table>
+          <table><tbody id="dash-msg-tbody"><tr><td colspan="4" class="empty-state" style="padding:20px;text-align:center;color:var(--gray)">جاري التحميل...</td></tr></tbody></table>
         </div>
       </div>
+
       <div class="panel">
         <div class="panel-header"><h3>⚡ إجراءات سريعة</h3></div>
         <div class="panel-content" style="display:flex;gap:12px;flex-wrap:wrap">
           <button class="btn-sm btn-primary" onclick="goPage('gallery',null);setTimeout(()=>openModal('add-gallery-modal'),100)">➕ رفع صورة</button>
           <button class="btn-sm btn-primary" onclick="goPage('services',null);setTimeout(()=>openModal('add-service-modal'),100)">➕ إضافة خدمة</button>
-          <button class="btn-sm btn-primary" onclick="goPage('clients',null);setTimeout(()=>openAddClientModal(),100)">➕ إضافة عميل</button>
           <button class="btn-sm btn-outline-sm" onclick="goPage('settings',null)">⚙️ إعدادات الموقع</button>
           <a href="index.html" target="_blank" class="btn-sm btn-success" style="text-decoration:none">🌐 فتح الموقع</a>
         </div>
@@ -323,38 +331,17 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- CLIENTS -->
-    <div class="page" id="page-clients">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <div>
-          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🏠 إدارة العملاء</h3>
-          <p style="color:var(--gray);font-size:13px">جميع العملاء وفواتيرهم</p>
-        </div>
-        <button class="btn-sm btn-primary" onclick="openAddClientModal()">➕ إضافة عميل</button>
-      </div>
-      <!-- Search -->
-      <div style="margin-bottom:16px">
-        <input type="text" id="client-search" placeholder="🔍 ابحث باسم العميل أو رقم الهاتف أو رقم العميل..." oninput="filterClients()" style="width:100%;background:var(--navy2);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:12px 16px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;">
-      </div>
-      <div class="panel">
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>رقم العميل</th><th>الاسم</th><th>الهاتف</th><th>الخدمات</th><th>الإجمالي</th><th>المدفوع</th><th>المتبقي</th><th>حالة الدفع</th><th>التاريخ</th><th>إجراء</th></tr></thead>
-            <tbody id="clients-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
     <!-- GALLERY -->
     <div class="page" id="page-gallery">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div>
           <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🖼️ معرض الأعمال</h3>
-          <p style="color:var(--gray);font-size:13px">ارفع صور أعمالك</p>
+          <p style="color:var(--gray);font-size:13px">ارفع صور أعمالك — من جهازك أو رابط مباشر</p>
         </div>
         <button class="btn-sm btn-primary" onclick="openModal('add-gallery-modal')">➕ إضافة صورة</button>
       </div>
+
+      <!-- Filter tabs -->
       <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
         <button class="stab active" onclick="filterGalleryAdmin('all',this)">الكل</button>
         <button class="stab" onclick="filterGalleryAdmin('ceiling',this)">أسقف</button>
@@ -363,6 +350,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <button class="stab" onclick="filterGalleryAdmin('3d',this)">ثلاثي الأبعاد</button>
         <button class="stab" onclick="filterGalleryAdmin('other',this)">أخرى</button>
       </div>
+
       <div class="gal-grid" id="gallery-admin-grid">
         <div class="empty-state" style="grid-column:1/-1"><div class="ei">🖼️</div><p>جاري تحميل الصور...</p></div>
       </div>
@@ -382,125 +370,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- ATTENDANCE -->
-    <div class="page" id="page-attendance">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <div>
-          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📅 الحضور والغياب</h3>
-          <p style="color:var(--gray);font-size:13px">تسجيل ومتابعة حضور الموظفين والعمال</p>
-        </div>
-        <button class="btn-sm btn-primary" onclick="openModal('add-attendance-modal');loadEmpSelect('att-emp')">➕ تسجيل حضور</button>
-      </div>
-      <!-- Filters -->
-      <div class="panel" style="margin-bottom:16px">
-        <div class="panel-content" style="padding:16px">
-          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
-            <div class="ff" style="margin:0;flex:1;min-width:150px">
-              <label>الموظف</label>
-              <select id="att-filter-emp" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:10px 12px;border-radius:8px;width:100%;">
-                <option value="">الكل</option>
-              </select>
-            </div>
-            <div class="ff" style="margin:0;flex:1;min-width:140px">
-              <label>من تاريخ</label>
-              <input type="date" id="att-filter-from" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 12px;color:var(--white);font-family:Cairo,sans-serif;width:100%;outline:none;">
-            </div>
-            <div class="ff" style="margin:0;flex:1;min-width:140px">
-              <label>إلى تاريخ</label>
-              <input type="date" id="att-filter-to" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 12px;color:var(--white);font-family:Cairo,sans-serif;width:100%;outline:none;">
-            </div>
-            <button class="btn-sm btn-outline-sm" onclick="clearAttFilter()">مسح الفلتر</button>
-          </div>
-        </div>
-      </div>
-      <!-- Summary -->
-      <div class="salary-summary" style="margin-bottom:16px">
-        <div class="salary-box"><div class="sb-val" style="color:var(--green)" id="att-sum-present">0</div><div class="sb-label">✅ حضور</div></div>
-        <div class="salary-box"><div class="sb-val" style="color:var(--red)" id="att-sum-absent">0</div><div class="sb-label">❌ غياب</div></div>
-        <div class="salary-box"><div class="sb-val" style="color:var(--orange)" id="att-sum-late">0</div><div class="sb-label">⏰ تأخير</div></div>
-        <div class="salary-box"><div class="sb-val" style="color:var(--gold)" id="att-sum-total">0</div><div class="sb-label">إجمالي السجلات</div></div>
-      </div>
-      <div class="panel">
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>الموظف</th><th>النوع</th><th>التاريخ</th><th>الحالة</th><th>ملاحظات</th><th>إجراء</th></tr></thead>
-            <tbody id="attendance-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- SALARIES -->
-    <div class="page" id="page-salaries">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <div>
-          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">💰 الرواتب</h3>
-          <p style="color:var(--gray);font-size:13px">احسب راتب كل موظف وعامل على حسب حضوره</p>
-        </div>
-      </div>
-      <!-- Salary Calculator -->
-      <div class="panel" style="margin-bottom:16px">
-        <div class="panel-header"><h3>🧮 حاسبة الراتب</h3></div>
-        <div class="panel-content">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;flex-wrap:wrap">
-            <div class="ff" style="margin:0">
-              <label>الموظف</label>
-              <select id="sal-emp" onchange="loadSalaryCalc()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:10px 12px;border-radius:8px;width:100%;outline:none;">
-                <option value="">اختر موظف</option>
-              </select>
-            </div>
-            <div class="ff" style="margin:0">
-              <label>من تاريخ</label>
-              <input type="date" id="sal-from" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 12px;color:var(--white);font-family:Cairo,sans-serif;width:100%;outline:none;">
-            </div>
-            <div class="ff" style="margin:0">
-              <label>إلى تاريخ</label>
-              <input type="date" id="sal-to" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:10px 12px;color:var(--white);font-family:Cairo,sans-serif;width:100%;outline:none;">
-            </div>
-          </div>
-          <button class="btn-sm btn-primary" onclick="calcSalary()" style="margin-bottom:16px">🧮 احسب الراتب</button>
-          <div id="salary-result" style="display:none">
-            <div class="salary-summary">
-              <div class="salary-box"><div class="sb-val" style="color:var(--green)" id="sal-present">0</div><div class="sb-label">أيام حضور</div></div>
-              <div class="salary-box"><div class="sb-val" style="color:var(--red)" id="sal-absent">0</div><div class="sb-label">أيام غياب</div></div>
-              <div class="salary-box"><div class="sb-val" style="color:var(--orange)" id="sal-late">0</div><div class="sb-label">تأخير (نص يوم)</div></div>
-              <div class="salary-box"><div class="sb-val" style="color:var(--gold)" id="sal-effective">0</div><div class="sb-label">أيام فعلية</div></div>
-            </div>
-            <div style="background:var(--navy3);border-radius:12px;padding:20px;margin-top:12px">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                <div>
-                  <div style="font-size:13px;color:var(--gray)">الراتب الأسبوعي المحدد</div>
-                  <div style="font-size:18px;font-weight:700" id="sal-weekly-rate">0 ج</div>
-                </div>
-                <div>
-                  <div style="font-size:13px;color:var(--gray)">قيمة اليوم</div>
-                  <div style="font-size:18px;font-weight:700" id="sal-day-rate">0 ج</div>
-                </div>
-                <div>
-                  <div style="font-size:13px;color:var(--gray)">المستحق للفترة</div>
-                  <div style="font-size:24px;font-weight:900;color:var(--gold)" id="sal-due">0 ج</div>
-                </div>
-              </div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <button class="btn-sm btn-success" onclick="markSalaryPaid()">✅ تسجيل كمدفوع</button>
-                <div id="sal-paid-badge" style="display:none" class="badge badge-green">✅ تم الصرف في <span id="sal-paid-date"></span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Salary History -->
-      <div class="panel">
-        <div class="panel-header"><h3>📋 سجل صرف الرواتب</h3></div>
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>الموظف</th><th>الفترة</th><th>الأيام الفعلية</th><th>المبلغ</th><th>تاريخ الصرف</th><th>إجراء</th></tr></thead>
-            <tbody id="salary-history-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
     <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <div class="stabs">
@@ -508,12 +377,15 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button>
         <button class="stab" onclick="switchStab('prices',this)">💰 الأسعار التقديرية</button>
       </div>
+
+      <!-- Contact -->
       <div class="stab-panel active" id="stab-contact">
         <div class="panel">
           <div class="panel-header"><h3>📞 معلومات التواصل</h3></div>
           <div class="panel-content">
+            <p style="color:var(--gray);font-size:13px;margin-bottom:20px">هذه البيانات تظهر على الموقع تلقائياً بمجرد حفظها</p>
             <div class="two-col">
-              <div class="ff"><label>رقم الواتساب</label><input type="text" id="set-wa" placeholder="201XXXXXXXXX"></div>
+              <div class="ff"><label>رقم الواتساب (بالكود الدولي)</label><input type="text" id="set-wa" placeholder="201XXXXXXXXX"></div>
               <div class="ff"><label>رقم الهاتف للعرض</label><input type="text" id="set-phone" placeholder="01XXXXXXXXX"></div>
               <div class="ff"><label>العنوان</label><input type="text" id="set-address" placeholder="القاهرة — مصر"></div>
               <div class="ff"><label>البريد الإلكتروني</label><input type="email" id="set-email" placeholder="info@deltaart.com"></div>
@@ -526,10 +398,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           </div>
         </div>
       </div>
+
+      <!-- Stats -->
       <div class="stab-panel" id="stab-stats">
         <div class="panel">
           <div class="panel-header"><h3>📊 إحصائيات الـ Hero</h3></div>
           <div class="panel-content">
+            <p style="color:var(--gray);font-size:13px;margin-bottom:20px">الأرقام اللي بتظهر في أول الموقع</p>
             <div class="two-col">
               <div class="ff"><label>عدد المشاريع المنجزة</label><input type="number" id="set-projects" placeholder="500"></div>
               <div class="ff"><label>عدد العملاء السعداء</label><input type="number" id="set-clients" placeholder="1200"></div>
@@ -541,10 +416,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           </div>
         </div>
       </div>
+
+      <!-- Prices -->
       <div class="stab-panel" id="stab-prices">
         <div class="panel">
           <div class="panel-header"><h3>💰 أسعار الحاسبة التقديرية</h3></div>
           <div class="panel-content">
+            <p style="color:var(--gray);font-size:13px;margin-bottom:20px">النطاق السعري اللي يظهر في حاسبة الأسعار (جنيه/م²)</p>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
               <div>
                 <div class="ff"><label>سقف بسيط — من</label><input type="number" id="pr-basic-min" placeholder="120"></div>
@@ -566,7 +444,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- USERS (Owner/Admin view) -->
+    <!-- USERS -->
     <div class="page" id="page-users">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div>
@@ -576,53 +454,31 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <button class="btn-sm btn-primary" onclick="openModal('add-user-modal')">➕ إضافة مستخدم</button>
       </div>
       <div class="panel">
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الراتب الأسبوعي</th><th>الحالة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
-            <tbody id="users-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUPER ADMIN PAGE -->
-    <div class="page" id="page-superadmin">
-      <div style="margin-bottom:20px">
-        <h3 style="font-size:20px;font-weight:900;color:var(--gold);margin-bottom:6px">🔐 لوحة السوبر أدمن</h3>
-        <p style="color:var(--gray);font-size:13px">التحكم الكامل في جميع الأكونتات — مرئي لك فقط</p>
-      </div>
-      <!-- Alert for forced logout -->
-      <div id="superadmin-action-alert" class="alert" style="margin-bottom:16px"></div>
-      <div class="panel">
-        <div class="panel-header">
-          <h3>👥 جميع الأكونتات</h3>
-          <div style="display:flex;gap:8px">
-            <button class="btn-sm btn-outline-sm" onclick="refreshSuperAdminList()">🔄 تحديث</button>
-          </div>
-        </div>
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>كلمة المرور</th><th>الدور</th><th>الحالة</th><th>آخر تسجيل دخول</th><th>إجراء</th></tr></thead>
-            <tbody id="superadmin-tbody"></tbody>
-          </table>
-        </div>
+        <table>
+          <thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>كلمة المرور</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- ============= MODALS ============= -->
+<!-- MODALS -->
 
 <!-- Add Gallery -->
 <div class="modal-overlay" id="add-gallery-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-gallery-modal')">✕</button>
     <h3>🖼️ إضافة صورة للمعرض</h3>
+
+    <!-- Tabs -->
     <div style="display:flex;gap:8px;margin-bottom:20px">
       <button class="stab active" id="gal-tab-file" onclick="switchGalTab('file')">📁 رفع من الجهاز</button>
       <button class="stab" id="gal-tab-url" onclick="switchGalTab('url')">🔗 رابط مباشر</button>
     </div>
+
+    <!-- File upload -->
     <div id="gal-file-panel">
       <div class="upload-zone" onclick="document.getElementById('gal-file-input').click()">
         <div style="font-size:32px;margin-bottom:8px">📤</div>
@@ -630,18 +486,25 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <div style="font-size:12px;color:var(--gray)">PNG, JPG, WEBP — حد أقصى 5MB</div>
         <input type="file" id="gal-file-input" accept="image/*" onchange="handleFileSelect(this)">
       </div>
-      <div class="upload-progress" id="upload-progress-bar"><div class="upload-progress-fill" id="upload-progress-fill"></div></div>
+      <div class="upload-progress" id="upload-progress-bar">
+        <div class="upload-progress-fill" id="upload-progress-fill"></div>
+      </div>
       <div id="file-preview-wrap" style="display:none;margin-top:12px">
-        <img id="file-preview-img" style="width:100%;max-height:180px;object-fit:cover;border-radius:10px;">
+        <img id="file-preview-img" style="width:100%;max-height:180px;object-fit:cover;border-radius:10px;border:1px solid rgba(201,168,76,0.2)">
         <div id="file-preview-name" style="font-size:12px;color:var(--gray);margin-top:6px"></div>
       </div>
     </div>
+
+    <!-- URL -->
     <div id="gal-url-panel" style="display:none">
-      <div class="ff"><label>رابط الصورة</label><input type="url" id="gal-url" placeholder="https://..."></div>
-      <button class="btn-sm btn-outline-sm" onclick="previewGalUrl()" style="margin-bottom:12px">👁️ معاينة</button>
-      <img id="gal-url-preview" style="display:none;width:100%;max-height:180px;object-fit:cover;border-radius:10px;margin-bottom:12px">
+      <div class="ff"><label>رابط الصورة *</label><input type="url" id="gal-url" placeholder="https://..."></div>
+      <div style="margin-bottom:12px">
+        <button class="btn-sm btn-outline-sm" onclick="previewGalUrl()">👁️ معاينة</button>
+      </div>
+      <img id="gal-url-preview" style="display:none;width:100%;max-height:180px;object-fit:cover;border-radius:10px;border:1px solid rgba(201,168,76,0.2);margin-bottom:12px">
     </div>
-    <div class="ff" style="margin-top:16px"><label>عنوان الصورة</label><input type="text" id="gal-title" placeholder="سقف غرفة معيشة"></div>
+
+    <div class="ff" style="margin-top:16px"><label>عنوان الصورة</label><input type="text" id="gal-title" placeholder="سقف غرفة معيشة — مدينة نصر"></div>
     <div class="ff">
       <label>الفئة</label>
       <select id="gal-cat">
@@ -680,102 +543,18 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="ff"><label>كلمة المرور *</label><input type="password" id="usr-pass" placeholder="8 حروف على الأقل"></div>
     <div class="ff">
       <label>الدور والصلاحيات</label>
-      <select id="usr-role" onchange="toggleSalaryField()">
+      <select id="usr-role">
         <option value="admin">مدير — وصول كامل</option>
         <option value="editor">محرر — يرفع صور وخدمات فقط</option>
         <option value="viewer">مشاهد — للقراءة فقط</option>
-        <option value="worker">عامل</option>
-        <option value="employee">موظف</option>
       </select>
-    </div>
-    <div class="ff" id="salary-field-wrap">
-      <label>الراتب الأسبوعي (جنيه) — للعمال والموظفين</label>
-      <input type="number" id="usr-salary" placeholder="مثال: 700">
     </div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="addUser()">➕ إضافة المستخدم</button>
     <div id="usr-alert" class="alert"></div>
   </div>
 </div>
 
-<!-- Add Client -->
-<div class="modal-overlay" id="add-client-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
-    <h3>🏠 إضافة / تعديل عميل</h3>
-    <input type="hidden" id="cl-edit-key">
-    <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:12px;margin-bottom:16px;text-align:center">
-      <span style="color:var(--gray);font-size:13px">رقم العميل: </span>
-      <span style="font-size:22px;font-weight:900;color:var(--gold)" id="new-client-id">---</span>
-    </div>
-    <div class="two-col">
-      <div class="ff"><label>اسم العميل *</label><input type="text" id="cl-name" placeholder="الاسم الكامل"></div>
-      <div class="ff"><label>رقم الهاتف *</label><input type="tel" id="cl-phone" placeholder="01XXXXXXXXX"></div>
-    </div>
-    <div class="ff"><label>العنوان</label><input type="text" id="cl-address" placeholder="العنوان بالتفصيل"></div>
-    <!-- Services (multiple) -->
-    <div class="ff">
-      <label>الخدمات المطلوبة (ممكن أكتر من خدمة) *</label>
-      <div id="service-checkboxes" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"></div>
-    </div>
-    <div class="ff"><label>تفاصيل الشغل</label><textarea id="cl-details" rows="3" placeholder="وصف تفصيلي للمطلوب"></textarea></div>
-    <!-- Invoice items -->
-    <div class="ff">
-      <label>بنود الفاتورة</label>
-      <div id="invoice-items-wrap"></div>
-      <button class="btn-sm btn-outline-sm" style="margin-top:8px" onclick="addInvoiceItem()">➕ إضافة بند</button>
-    </div>
-    <div style="background:var(--navy3);border-radius:10px;padding:14px;margin-bottom:16px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="color:var(--gray)">إجمالي الفاتورة</span>
-        <span style="font-weight:700;font-size:16px" id="cl-total-display">0 ج</span>
-      </div>
-      <div class="ff" style="margin-bottom:8px">
-        <label>المبلغ المدفوع (جنيه)</label>
-        <input type="number" id="cl-paid" placeholder="0" oninput="updateRemaining()">
-      </div>
-      <div style="display:flex;justify-content:space-between">
-        <span style="color:var(--gray)">المتبقي</span>
-        <span style="font-weight:700;font-size:16px;color:var(--red)" id="cl-remaining-display">0 ج</span>
-      </div>
-    </div>
-    <div class="two-col">
-      <div class="ff">
-        <label>طريقة الدفع</label>
-        <select id="cl-payment">
-          <option value="cash">💵 كاش</option>
-          <option value="instapay">📱 InstaPay</option>
-          <option value="vodafone">🔴 فودافون كاش</option>
-          <option value="visa">💳 فيزا / كارت</option>
-          <option value="mixed">🔀 متعدد</option>
-        </select>
-      </div>
-      <div class="ff">
-        <label>حالة الدفع</label>
-        <select id="cl-pay-status">
-          <option value="partial">جزء مقدم</option>
-          <option value="full">مدفوع كامل</option>
-          <option value="pending">لم يدفع بعد</option>
-        </select>
-      </div>
-    </div>
-    <div id="cl-alert" class="alert"></div>
-    <button class="btn-gold" onclick="saveClient()">💾 حفظ العميل</button>
-  </div>
-</div>
-
-<!-- Client Details -->
-<div class="modal-overlay" id="client-details-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('client-details-modal')">✕</button>
-    <div id="client-details-content"></div>
-    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
-      <button class="btn-sm btn-primary" onclick="editClientFromDetail()">✏️ تعديل</button>
-      <button class="btn-sm btn-danger" id="client-detail-del-btn">🗑️ حذف</button>
-    </div>
-  </div>
-</div>
-
-<!-- Booking Detail -->
+<!-- Booking Detail Modal -->
 <div class="modal-overlay" id="booking-detail-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('booking-detail-modal')">✕</button>
@@ -785,67 +564,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <button class="btn-sm btn-success" onclick="updateBookingStatus(window._detailId,'confirmed')">✓ تأكيد</button>
       <button class="btn-sm btn-primary" onclick="updateBookingStatus(window._detailId,'done')">✅ تم التنفيذ</button>
       <button class="btn-sm btn-danger" onclick="updateBookingStatus(window._detailId,'cancelled')">✕ إلغاء</button>
-      <button class="btn-sm btn-outline-sm" onclick="convertBookingToClient(window._detailId)">➕ تحويل لعميل</button>
     </div>
   </div>
 </div>
 
-<!-- Add Attendance -->
-<div class="modal-overlay" id="add-attendance-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('add-attendance-modal')">✕</button>
-    <h3>📅 تسجيل حضور</h3>
-    <div class="ff">
-      <label>الموظف / العامل</label>
-      <select id="att-emp" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:11px 14px;border-radius:10px;width:100%;outline:none;">
-        <option value="">اختر</option>
-      </select>
-    </div>
-    <div class="ff"><label>التاريخ</label><input type="date" id="att-date"></div>
-    <div class="ff">
-      <label>الحالة</label>
-      <select id="att-status" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:11px 14px;border-radius:10px;width:100%;outline:none;">
-        <option value="present">✅ حضور</option>
-        <option value="absent">❌ غياب</option>
-        <option value="late">⏰ تأخير (نص يوم)</option>
-      </select>
-    </div>
-    <div class="ff"><label>ملاحظات</label><input type="text" id="att-notes" placeholder="اختياري"></div>
-    <div id="att-alert" class="alert"></div>
-    <button class="btn-gold" onclick="saveAttendance()">💾 حفظ</button>
-  </div>
-</div>
-
-<!-- Change Password -->
-<div class="modal-overlay" id="change-pass-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('change-pass-modal')">✕</button>
-    <h3>🔑 تغيير كلمة المرور</h3>
-    <p style="color:var(--gray);font-size:13px;margin-bottom:20px">المستخدم: <strong id="cp-name"></strong></p>
-    <input type="hidden" id="cp-uid">
-    <div class="ff"><label>كلمة المرور الجديدة</label><input type="text" id="cp-pass" placeholder="8 أحرف على الأقل"></div>
-    <div id="cp-alert" class="alert"></div>
-    <button class="btn-gold" onclick="changePass()">💾 حفظ</button>
-  </div>
-</div>
-
-<!-- Edit Salary Modal -->
-<div class="modal-overlay" id="edit-salary-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('edit-salary-modal')">✕</button>
-    <h3>💰 تعديل الراتب الأسبوعي</h3>
-    <p style="color:var(--gray);font-size:13px;margin-bottom:16px">الموظف: <strong id="es-name"></strong></p>
-    <input type="hidden" id="es-uid">
-    <div class="ff"><label>الراتب الأسبوعي (جنيه)</label><input type="number" id="es-salary" placeholder="700"></div>
-    <div id="es-alert" class="alert"></div>
-    <button class="btn-gold" onclick="saveEditSalary()">💾 حفظ</button>
-  </div>
-</div>
-
-<!-- ============= FIREBASE ============= -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push, set, get, onValue, update, remove, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, push, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
@@ -864,75 +589,106 @@ const db = getDatabase(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-// Expose to window
-window._db=db; window._ref=ref; window._push=push; window._set=set;
-window._get=get; window._update=update; window._remove=remove;
-window._storage=storage; window._sref=sref;
-window._uploadBytesResumable=uploadBytesResumable;
-window._getDownloadURL=getDownloadURL;
-window._auth=auth;
-
-// Super admin email
-const SUPER_ADMIN_EMAIL = 'superadmin@deltaart.com';
-window._currentUserRole = '';
-window._currentUserEmail = '';
-window._currentUserId = '';
+// expose to window
+window._db = db; window._ref = ref; window._push = push;
+window._set = set; window._get = get; window._update = update;
+window._remove = remove; window._storage = storage; window._sref = sref;
+window._uploadBytesResumable = uploadBytesResumable;
+window._getDownloadURL = getDownloadURL;
 
 // ===== AUTH =====
+const SUPERADMIN_EMAIL = 'superadmin@deltaart.com';
+const OWNER_EMAIL = 'admin@deltaart.com';
+window._currentRole = null;
+
 onAuthStateChanged(auth, async user => {
   if (user) {
     document.getElementById('login-screen').classList.add('hide');
-    window._currentUserEmail = user.email;
-    window._currentUserId = user.uid;
 
-    // Update last login
-    try { await update(ref(db,`deltaart/users/${user.uid}`),{lastLogin:new Date().toISOString()}); } catch(e){}
+    // Determine role
+    if (user.email === SUPERADMIN_EMAIL) {
+      window._currentRole = 'superadmin';
+    } else if (user.email === OWNER_EMAIL) {
+      window._currentRole = 'owner';
+    } else {
+      // check DB role
+      try {
+        const snap = await get(ref(db, `deltaart/users/${user.uid}`));
+        const data = snap.exists() ? snap.val() : {};
+        
+        // Check if account is active
+        if (data.active === false) {
+          await signOut(auth);
+          const errEl = document.getElementById('login-err');
+          errEl.textContent = 'تم تعطيل حسابك — تواصل مع المدير';
+          errEl.style.display = 'block';
+          return;
+        }
+        window._currentRole = data.role || 'viewer';
+        document.getElementById('sidebar-name').textContent = data.name || user.email.split('@')[0];
+        document.getElementById('sidebar-role').textContent = roleLabel(data.role || 'viewer');
+        document.getElementById('sidebar-avatar').textContent = (data.name || user.email)[0].toUpperCase();
+      } catch(e) {}
+    }
 
-    try {
-      const snap = await get(ref(db,`deltaart/users/${user.uid}`));
-      const data = snap.exists() ? snap.val() : {};
+    // Set sidebar info
+    if (user.email === SUPERADMIN_EMAIL) {
+      document.getElementById('sidebar-name').textContent = 'السوبر أدمن';
+      document.getElementById('sidebar-role').textContent = '🔐 تحكم كامل';
+      document.getElementById('sidebar-avatar').textContent = 'S';
+    } else if (user.email === OWNER_EMAIL) {
+      document.getElementById('sidebar-name').textContent = 'صاحب الشركة';
+      document.getElementById('sidebar-role').textContent = '👑 المالك';
+      document.getElementById('sidebar-avatar').textContent = 'O';
+    }
 
-      // Check if account is disabled
-      if (data.active === false && user.email !== SUPER_ADMIN_EMAIL) {
-        showForceLogout();
-        return;
-      }
-
-      const role = data.role || 'admin';
-      window._currentUserRole = role;
-      document.getElementById('sidebar-name').textContent = data.name || user.email.split('@')[0];
-      document.getElementById('sidebar-role').textContent = roleLabel(role);
-      document.getElementById('sidebar-avatar').textContent = (data.name || user.email)[0].toUpperCase();
-
-      // Show super admin nav only for super admin
-      if (user.email === SUPER_ADMIN_EMAIL) {
-        document.getElementById('nav-superadmin').style.display = 'flex';
-        window._currentUserRole = 'superadmin';
-      }
-    } catch(e) {}
-
-    // Listen for real-time disable
-    listenForDisable(user.uid, user.email);
+    window._currentUser = user;
+    applyRoleUI();
     initApp();
   } else {
     document.getElementById('login-screen').classList.remove('hide');
+    window._currentRole = null;
   }
 });
 
-function listenForDisable(uid, email) {
-  if (email === SUPER_ADMIN_EMAIL) return; // superadmin never gets disabled
-  onValue(ref(db,`deltaart/users/${uid}/active`), snap => {
-    if (snap.exists() && snap.val() === false) {
-      showForceLogout();
-    }
-  });
-}
+function applyRoleUI() {
+  const role = window._currentRole;
+  const isSuperAdmin = role === 'superadmin';
+  const isOwner = role === 'owner';
+  const isStaff = !isSuperAdmin && !isOwner;
 
-function showForceLogout() {
-  signOut(auth);
-  document.getElementById('login-screen').classList.remove('hide');
-  document.getElementById('login-err').textContent = '🚫 تم إيقاف حسابك. تواصل مع المدير.';
-  document.getElementById('login-err').style.display = 'block';
+  // SuperAdmin: show ONLY accounts page
+  if (isSuperAdmin) {
+    document.querySelector('.sidebar-nav').innerHTML = `
+      <div class="nav-section-title">السوبر أدمن</div>
+      <button class="nav-item active" onclick="goPage('superadmin',this)"><span class="ni">🔐</span> إدارة الأكونتات</button>
+      <div style="margin-top:12px">
+        <button class="nav-item" onclick="goPage('change-password',this)"><span class="ni">🔑</span> تغيير الباسورد</button>
+      </div>
+    `;
+    setTimeout(()=>goPage('superadmin',null), 100);
+    return;
+  }
+
+  // Staff: hide financial pages
+  if (isStaff) {
+    // Remove clients nav if exists
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      const txt = btn.textContent;
+      if (txt.includes('إدارة العملاء') || txt.includes('حضور الموظفين')) {
+        btn.style.display = 'none';
+      }
+    });
+  }
+
+  // Add change password to all
+  const nav = document.querySelector('.sidebar-nav');
+  if (nav && !document.getElementById('nav-change-pass')) {
+    nav.innerHTML += `
+      <div class="nav-section-title" style="margin-top:8px">الحساب</div>
+      <button id="nav-change-pass" class="nav-item" onclick="goPage('change-password',this)"><span class="ni">🔑</span> تغيير كلمة المرور</button>
+    `;
+  }
 }
 
 window.doLogin = async function() {
@@ -940,26 +696,13 @@ window.doLogin = async function() {
   const pass = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-err');
   errEl.style.display = 'none';
-  try {
-    const cred = await signInWithEmailAndPassword(auth, email, pass);
-    // Check if disabled before login completes
-    if (email !== SUPER_ADMIN_EMAIL) {
-      const snap = await get(ref(db,`deltaart/users/${cred.user.uid}`));
-      if (snap.exists() && snap.val().active === false) {
-        signOut(auth);
-        errEl.textContent = '🚫 هذا الحساب موقوف. تواصل مع المدير.';
-        errEl.style.display = 'block';
-      }
-    }
-  } catch(e) {
-    errEl.textContent = 'بيانات الدخول غلط، جرب تاني';
-    errEl.style.display = 'block';
-  }
+  try { await signInWithEmailAndPassword(auth, email, pass); }
+  catch(e) { errEl.style.display = 'block'; }
 };
 window.doLogout = () => signOut(auth);
 
 function roleLabel(r) {
-  return {superadmin:'سوبر أدمن',owner:'صاحب الشركة',admin:'مدير النظام',editor:'محرر المحتوى',viewer:'مشاهد',worker:'عامل',employee:'موظف'}[r]||r;
+  return {admin:'مدير النظام',editor:'محرر المحتوى',viewer:'مشاهد',owner:'صاحب الشركة'}[r] || r;
 }
 
 // ===== INIT APP =====
@@ -970,107 +713,73 @@ function initApp() {
   onValue(ref(db,'deltaart/bookings'), snap => {
     const all = []; let newC = 0;
     if (snap.exists()) snap.forEach(c => { const v={id:c.key,...c.val()}; all.push(v); if(v.status==='pending') newC++; });
-    all.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    all.sort((a,b) => new Date(b.date) - new Date(a.date));
     window._allBookings = all;
     document.getElementById('ds-b').textContent = all.length;
     document.getElementById('ds-b-new').textContent = newC + ' جديدة';
     const badge = document.getElementById('badge-bookings');
-    if(newC>0){badge.textContent=newC;badge.style.display='inline-block';}else badge.style.display='none';
+    if (newC > 0) { badge.textContent = newC; badge.style.display='inline-block'; } else badge.style.display='none';
+    // dashboard preview
     document.getElementById('dash-book-tbody').innerHTML = all.slice(0,5).map(b=>`
       <tr>
         <td><strong>${b.name}</strong></td>
         <td style="color:var(--gray)">${b.phone}</td>
         <td>${b.type||''}</td>
         <td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td>
-      </tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد حجوزات</td></tr>';
+      </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد حجوزات</td></tr>';
     filterBookings();
   });
 
   // MESSAGES
   onValue(ref(db,'deltaart/messages'), snap => {
-    const all=[]; let newC=0;
-    if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')newC++;});
-    all.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    window._allMessages=all;
-    document.getElementById('ds-m').textContent=all.length;
-    document.getElementById('ds-m-new').textContent=newC+' جديدة';
-    const badge=document.getElementById('badge-messages');
-    if(newC>0){badge.textContent=newC;badge.style.display='inline-block';}else badge.style.display='none';
-    document.getElementById('dash-msg-tbody').innerHTML=all.slice(0,5).map(m=>`
+    const all = []; let newC = 0;
+    if (snap.exists()) snap.forEach(c => { const v={id:c.key,...c.val()}; all.push(v); if(v.status==='new') newC++; });
+    all.sort((a,b) => new Date(b.date) - new Date(a.date));
+    window._allMessages = all;
+    document.getElementById('ds-m').textContent = all.length;
+    document.getElementById('ds-m-new').textContent = newC + ' جديدة';
+    const badge = document.getElementById('badge-messages');
+    if (newC > 0) { badge.textContent = newC; badge.style.display='inline-block'; } else badge.style.display='none';
+    document.getElementById('dash-msg-tbody').innerHTML = all.slice(0,5).map(m=>`
       <tr>
         <td><strong>${m.name}</strong></td>
         <td style="color:var(--gray)">${m.phone}</td>
         <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||''}</td>
         <td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td>
-      </tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد رسائل</td></tr>';
+      </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد رسائل</td></tr>';
     filterMessages();
   });
 
   // GALLERY
-  onValue(ref(db,'deltaart/gallery'), snap=>{
-    let count=0; const all=[];
-    if(snap.exists()) snap.forEach(c=>{count++;all.push({id:c.key,...c.val()});});
-    window._allGallery=all;
-    document.getElementById('ds-g').textContent=count;
+  onValue(ref(db,'deltaart/gallery'), snap => {
+    let count = 0; const all = [];
+    if (snap.exists()) snap.forEach(c => { count++; all.push({id:c.key,...c.val()}); });
+    window._allGallery = all;
+    document.getElementById('ds-g').textContent = count;
     renderAdminGallery(all);
   });
 
   // SERVICES
-  onValue(ref(db,'deltaart/services'), snap=>{
-    let count=0;
-    if(snap.exists()) snap.forEach(()=>count++);
+  onValue(ref(db,'deltaart/services'), snap => {
+    let count = 0;
+    if (snap.exists()) snap.forEach(() => count++);
+    document.getElementById('ds-s').textContent = count;
     renderServicesTable(snap);
-    renderServiceCheckboxes(snap);
   });
 
   // USERS
-  onValue(ref(db,'deltaart/users'), snap=>{
-    renderUsersTable(snap);
-    loadEmpSelects(snap);
-  });
-
-  // CLIENTS
-  onValue(ref(db,'deltaart/clients'), snap=>{
-    const all=[];
-    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-    window._allClients=all;
-    document.getElementById('ds-c').textContent=all.length;
-    renderClientsTable(all);
-  });
-
-  // ATTENDANCE
-  onValue(ref(db,'deltaart/attendance'), snap=>{
-    const all=[];
-    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    window._allAttendance=all;
-    applyAttFilter();
-  });
-
-  // SALARY HISTORY
-  onValue(ref(db,'deltaart/salaryHistory'), snap=>{
-    const all=[];
-    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    all.sort((a,b)=>new Date(b.paidAt)-new Date(a.paidAt));
-    window._salaryHistory=all;
-    renderSalaryHistory(all);
-  });
+  onValue(ref(db,'deltaart/users'), snap => renderUsersTable(snap));
 
   // SETTINGS
   loadSettings();
-
-  // SUPER ADMIN
-  if(window._currentUserEmail===SUPER_ADMIN_EMAIL) {
-    refreshSuperAdminList();
-  }
 }
 
-// ===== BOOKINGS =====
-window._allBookings=[];
-window.filterBookings=function(){
-  const f=document.getElementById('book-filter').value;
-  const items=f==='all'?window._allBookings:window._allBookings.filter(b=>b.status===f);
-  document.getElementById('bookings-tbody').innerHTML=items.map(b=>`
+// ===== BOOKINGS TABLE =====
+window._allBookings = [];
+window.filterBookings = function() {
+  const f = document.getElementById('book-filter').value;
+  const items = f==='all' ? window._allBookings : window._allBookings.filter(b=>b.status===f);
+  document.getElementById('bookings-tbody').innerHTML = items.map(b=>`
     <tr>
       <td><strong>${b.name}</strong></td>
       <td><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></td>
@@ -1085,23 +794,22 @@ window.filterBookings=function(){
           <button class="btn-sm btn-primary" onclick="updateBookingStatus('${b.id}','done')">✅</button>
           <button class="btn-sm btn-danger" onclick="updateBookingStatus('${b.id}','cancelled')">✕</button>
           <button class="btn-sm btn-outline-sm" onclick="showBookingDetail('${b.id}')">👁️</button>
-          <button class="btn-sm btn-blue" onclick="convertBookingToClient('${b.id}')">➕</button>
         </div>
       </td>
-    </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد حجوزات</td></tr>';
+    </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد حجوزات في هذه الفئة</td></tr>';
 };
-window.updateBookingStatus=async(id,status)=>{
+window.updateBookingStatus = async (id, status) => {
   await update(ref(db,`deltaart/bookings/${id}`),{status});
   closeModal('booking-detail-modal');
 };
-window.showBookingDetail=function(id){
-  const b=window._allBookings.find(x=>x.id===id);
-  if(!b)return;
-  window._detailId=id;
-  document.getElementById('booking-detail-content').innerHTML=`
+window.showBookingDetail = (id) => {
+  const b = window._allBookings.find(x=>x.id===id);
+  if (!b) return;
+  window._detailId = id;
+  document.getElementById('booking-detail-content').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div><div style="font-size:12px;color:var(--gray)">الاسم</div><div style="font-weight:700">${b.name}</div></div>
-      <div><div style="font-size:12px;color:var(--gray)">الهاتف</div><div><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></div></div>
+      <div><div style="font-size:12px;color:var(--gray)">الهاتف</div><div style="font-weight:700"><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></div></div>
       <div><div style="font-size:12px;color:var(--gray)">نوع المشروع</div><div>${b.type||'—'}</div></div>
       <div><div style="font-size:12px;color:var(--gray)">الوقت المفضل</div><div>${b.time||'—'}</div></div>
       <div style="grid-column:1/-1"><div style="font-size:12px;color:var(--gray)">العنوان</div><div>${b.address||'—'}</div></div>
@@ -1111,23 +819,13 @@ window.showBookingDetail=function(id){
     </div>`;
   openModal('booking-detail-modal');
 };
-window.convertBookingToClient=async function(id){
-  const b=window._allBookings.find(x=>x.id===id);
-  if(!b)return;
-  closeModal('booking-detail-modal');
-  await openAddClientModal();
-  document.getElementById('cl-name').value=b.name||'';
-  document.getElementById('cl-phone').value=b.phone||'';
-  document.getElementById('cl-address').value=b.address||'';
-  document.getElementById('cl-details').value=b.notes||'';
-};
 
-// ===== MESSAGES =====
-window._allMessages=[];
-window.filterMessages=function(){
-  const f=document.getElementById('msg-filter').value;
-  const items=f==='all'?window._allMessages:window._allMessages.filter(m=>m.status===f);
-  document.getElementById('messages-tbody').innerHTML=items.map(m=>`
+// ===== MESSAGES TABLE =====
+window._allMessages = [];
+window.filterMessages = function() {
+  const f = document.getElementById('msg-filter').value;
+  const items = f==='all' ? window._allMessages : window._allMessages.filter(m=>m.status===f);
+  document.getElementById('messages-tbody').innerHTML = items.map(m=>`
     <tr>
       <td><strong>${m.name}</strong></td>
       <td><a href="tel:${m.phone}" style="color:var(--gold)">${m.phone}</a></td>
@@ -1135,308 +833,525 @@ window.filterMessages=function(){
       <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||'—'}</td>
       <td style="color:var(--gray)">${fmtDate(m.date)}</td>
       <td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td>
-      <td><div style="display:flex;gap:4px">
-        <button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓</button>
-        <button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button>
-      </div></td>
-    </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد رسائل</td></tr>';
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓ قراءة</button>
+          <button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد رسائل</td></tr>';
 };
-window.markRead=async id=>{ await update(ref(db,`deltaart/messages/${id}`),{status:'read'}); };
-window.delMsg=async id=>{ if(confirm('حذف الرسالة؟')) await remove(ref(db,`deltaart/messages/${id}`)); };
+window.markRead = async id => { await update(ref(db,`deltaart/messages/${id}`),{status:'read'}); };
+window.delMsg = async id => { if(confirm('حذف الرسالة؟')) await remove(ref(db,`deltaart/messages/${id}`)); };
 
 // ===== GALLERY =====
-window._allGallery=[];
-window._galCurrentFile=null;
-window.handleFileSelect=function(input){
-  const file=input.files[0];
-  if(!file)return;
-  if(file.size>5*1024*1024){showAlert(document.getElementById('gal-alert'),'error','الصورة أكبر من 5MB');return;}
-  window._galCurrentFile=file;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    document.getElementById('file-preview-img').src=e.target.result;
-    document.getElementById('file-preview-name').textContent=file.name+' ('+(file.size/1024).toFixed(0)+' KB)';
-    document.getElementById('file-preview-wrap').style.display='block';
+window._allGallery = [];
+window._galCurrentFile = null;
+
+window.handleFileSelect = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5*1024*1024) { showAlert(document.getElementById('gal-alert'),'error','الصورة أكبر من 5MB'); return; }
+  window._galCurrentFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('file-preview-img').src = e.target.result;
+    document.getElementById('file-preview-name').textContent = file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+    document.getElementById('file-preview-wrap').style.display = 'block';
   };
   reader.readAsDataURL(file);
 };
-window.previewGalUrl=function(){
-  const url=document.getElementById('gal-url').value.trim();
-  const img=document.getElementById('gal-url-preview');
-  if(url){img.src=url;img.style.display='block';}
+
+window.previewGalUrl = function() {
+  const url = document.getElementById('gal-url').value.trim();
+  const img = document.getElementById('gal-url-preview');
+  if (url) { img.src = url; img.style.display = 'block'; }
 };
-window.addGalleryItem=async function(){
-  const isFile=document.getElementById('gal-file-panel').style.display!=='none';
-  const title=document.getElementById('gal-title').value.trim();
-  const category=document.getElementById('gal-cat').value;
-  const alertEl=document.getElementById('gal-alert');
-  if(isFile){
-    if(!window._galCurrentFile){showAlert(alertEl,'error','اختار صورة أولاً');return;}
-    const file=window._galCurrentFile;
-    const path=`deltaart/gallery/${Date.now()}_${file.name}`;
-    const storageRef=sref(storage,path);
-    const task=uploadBytesResumable(storageRef,file);
-    document.getElementById('upload-progress-bar').style.display='block';
+
+window.addGalleryItem = async function() {
+  const isFile = document.getElementById('gal-file-panel').style.display !== 'none';
+  const title = document.getElementById('gal-title').value.trim();
+  const category = document.getElementById('gal-cat').value;
+  const alertEl = document.getElementById('gal-alert');
+
+  if (isFile) {
+    if (!window._galCurrentFile) { showAlert(alertEl,'error','اختار صورة أولاً'); return; }
+    const file = window._galCurrentFile;
+    const path = `deltaart/gallery/${Date.now()}_${file.name}`;
+    const storageRef = sref(storage, path);
+    const task = uploadBytesResumable(storageRef, file);
+    document.getElementById('upload-progress-bar').style.display = 'block';
     task.on('state_changed',
-      snap=>{const pct=(snap.bytesTransferred/snap.totalBytes)*100;document.getElementById('upload-progress-fill').style.width=pct+'%';},
-      err=>{showAlert(alertEl,'error','فشل الرفع: '+err.message);},
-      async()=>{
-        const url=await getDownloadURL(task.snapshot.ref);
+      snap => {
+        const pct = (snap.bytesTransferred / snap.totalBytes) * 100;
+        document.getElementById('upload-progress-fill').style.width = pct + '%';
+      },
+      err => { showAlert(alertEl,'error','فشل الرفع: ' + err.message); },
+      async () => {
+        const url = await getDownloadURL(task.snapshot.ref);
         await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});
-        showAlert(alertEl,'success','✅ تم رفع الصورة');
-        document.getElementById('upload-progress-bar').style.display='none';
-        document.getElementById('upload-progress-fill').style.width='0%';
-        document.getElementById('file-preview-wrap').style.display='none';
-        window._galCurrentFile=null;
-        document.getElementById('gal-file-input').value='';
-        document.getElementById('gal-title').value='';
-        setTimeout(()=>closeModal('add-gallery-modal'),1500);
+        showAlert(alertEl,'success','✅ تم رفع الصورة وإضافتها للمعرض');
+        document.getElementById('upload-progress-bar').style.display = 'none';
+        document.getElementById('upload-progress-fill').style.width = '0%';
+        document.getElementById('file-preview-wrap').style.display = 'none';
+        window._galCurrentFile = null;
+        document.getElementById('gal-file-input').value = '';
+        document.getElementById('gal-title').value = '';
+        setTimeout(() => closeModal('add-gallery-modal'), 1500);
       }
     );
   } else {
-    const url=document.getElementById('gal-url').value.trim();
-    if(!url){showAlert(alertEl,'error','ادخل رابط الصورة');return;}
-    try{
+    const url = document.getElementById('gal-url').value.trim();
+    if (!url) { showAlert(alertEl,'error','ادخل رابط الصورة'); return; }
+    try {
       await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});
       showAlert(alertEl,'success','✅ تم إضافة الصورة');
-      document.getElementById('gal-url').value='';
-      document.getElementById('gal-url-preview').style.display='none';
-      document.getElementById('gal-title').value='';
-      setTimeout(()=>closeModal('add-gallery-modal'),1500);
-    }catch(e){showAlert(alertEl,'error','حدث خطأ');}
+      document.getElementById('gal-url').value = '';
+      document.getElementById('gal-url-preview').style.display = 'none';
+      document.getElementById('gal-title').value = '';
+      setTimeout(() => closeModal('add-gallery-modal'), 1500);
+    } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
   }
 };
-function renderAdminGallery(all){
-  const grid=document.getElementById('gallery-admin-grid');
-  if(!all.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ei">🖼️</div><p>لا توجد صور بعد</p></div>';return;}
-  grid.innerHTML=all.map(item=>`
+
+window._allGallery = [];
+function renderAdminGallery(all) {
+  const grid = document.getElementById('gallery-admin-grid');
+  if (!all.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="ei">🖼️</div><p>لا توجد صور بعد — ابدأ برفع أعمالك</p></div>';
+    return;
+  }
+  grid.innerHTML = all.map(item => `
     <div class="gal-card">
       <img src="${item.url}" alt="${item.title||''}" loading="lazy" onerror="this.src='https://placehold.co/400x300/0F1F3D/C9A84C?text=خطأ'">
-      <div class="gal-info"><div class="gal-title">${item.title||'بدون عنوان'}</div><div class="gal-cat">${catLabel(item.category)}</div></div>
-      <div class="gal-actions"><button class="btn-sm btn-danger" style="flex:1" onclick="delGallery('${item.id}')">🗑️ حذف</button></div>
+      <div class="gal-info">
+        <div class="gal-title">${item.title||'بدون عنوان'}</div>
+        <div class="gal-cat">${catLabel(item.category)}</div>
+      </div>
+      <div class="gal-actions">
+        <button class="btn-sm btn-danger" style="flex:1" onclick="delGallery('${item.id}')">🗑️ حذف</button>
+      </div>
     </div>`).join('');
 }
-window.filterGalleryAdmin=function(cat,btn){
-  document.querySelectorAll('#page-gallery .stab').forEach(b=>b.classList.remove('active'));
+
+window.filterGalleryAdmin = function(cat, btn) {
+  document.querySelectorAll('.stab').forEach(b => { if(b.parentElement.id !== 'stab-contact') b.classList.remove('active'); });
   btn.classList.add('active');
-  const filtered=cat==='all'?window._allGallery:window._allGallery.filter(i=>i.category===cat);
+  const filtered = cat === 'all' ? window._allGallery : window._allGallery.filter(i => i.category === cat);
   renderAdminGallery(filtered);
 };
-window.delGallery=async id=>{if(!confirm('حذف الصورة نهائياً؟'))return;await remove(ref(db,`deltaart/gallery/${id}`));};
+
+window.delGallery = async id => {
+  if (!confirm('حذف الصورة نهائياً؟')) return;
+  await remove(ref(db,`deltaart/gallery/${id}`));
+};
 
 // ===== SERVICES =====
-window._allServices=[];
-function renderServicesTable(snap){
-  const tbody=document.getElementById('services-tbody');
-  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا توجد خدمات</td></tr>';return;}
-  let html='';
-  snap.forEach(c=>{const s=c.val();html+=`<tr><td style="font-size:24px">${s.icon||'🏛️'}</td><td><strong>${s.name}</strong></td><td style="color:var(--gray);max-width:300px">${s.description||''}</td><td><button class="btn-sm btn-danger" onclick="delService('${c.key}')">🗑️</button></td></tr>`;});
-  tbody.innerHTML=html;
-}
-function renderServiceCheckboxes(snap){
-  const wrap=document.getElementById('service-checkboxes');
-  if(!wrap)return;
-  if(!snap||!snap.exists()){wrap.innerHTML='<span style="color:var(--gray);font-size:13px">لا توجد خدمات مضافة بعد</span>';return;}
-  let html='';
-  const svcs=[];
-  snap.forEach(c=>{svcs.push({id:c.key,...c.val()});});
-  window._allServices=svcs;
-  // Add extra options
-  const extras=[{id:'ceiling',name:'أسقف جبس بورد',icon:'🏛️'},{id:'lighting',name:'إضاءة',icon:'💡'},{id:'partition',name:'فواصل',icon:'🪵'},{id:'3d',name:'ثلاثي الأبعاد',icon:'🎨'},{id:'other',name:'أخرى',icon:'🔧'}];
-  const allSvcs=[...svcs,...extras.filter(e=>!svcs.find(s=>s.id===e.id||s.name===e.name))];
-  allSvcs.forEach(s=>{
-    html+=`<label style="display:flex;align-items:center;gap:8px;cursor:pointer;background:var(--navy3);border-radius:8px;padding:8px 12px;border:1px solid rgba(201,168,76,0.1);">
-      <input type="checkbox" class="cl-service-cb" value="${s.id}" style="accent-color:var(--gold);">
-      <span>${s.icon||'🔧'} ${s.name}</span>
-    </label>`;
+function renderServicesTable(snap) {
+  const tbody = document.getElementById('services-tbody');
+  if (!snap || !snap.exists()) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا توجد خدمات — أضف أول خدمة</td></tr>';
+    return;
+  }
+  let html = '';
+  snap.forEach(c => {
+    const s = c.val();
+    html += `<tr>
+      <td style="font-size:24px">${s.icon||'🏛️'}</td>
+      <td><strong>${s.name}</strong></td>
+      <td style="color:var(--gray);max-width:300px">${s.description||''}</td>
+      <td><button class="btn-sm btn-danger" onclick="delService('${c.key}')">🗑️ حذف</button></td>
+    </tr>`;
   });
-  wrap.innerHTML=html;
+  tbody.innerHTML = html;
 }
-window.addService=async function(){
-  const icon=document.getElementById('svc-icon').value||'🏛️';
-  const name=document.getElementById('svc-name').value.trim();
-  const description=document.getElementById('svc-desc').value.trim();
-  const alertEl=document.getElementById('svc-alert');
-  if(!name||!description){showAlert(alertEl,'error','ادخل الاسم والوصف');return;}
-  try{
+
+window.addService = async function() {
+  const icon = document.getElementById('svc-icon').value || '🏛️';
+  const name = document.getElementById('svc-name').value.trim();
+  const description = document.getElementById('svc-desc').value.trim();
+  const alertEl = document.getElementById('svc-alert');
+  if (!name || !description) { showAlert(alertEl,'error','ادخل الاسم والوصف'); return; }
+  try {
     await push(ref(db,'deltaart/services'),{icon,name,description});
     showAlert(alertEl,'success','✅ تم إضافة الخدمة');
-    ['svc-icon','svc-name','svc-desc'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>closeModal('add-service-modal'),1500);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
+    ['svc-icon','svc-name','svc-desc'].forEach(id => document.getElementById(id).value = '');
+    setTimeout(() => closeModal('add-service-modal'), 1500);
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
 };
-window.delService=async id=>{if(confirm('حذف الخدمة؟'))await remove(ref(db,`deltaart/services/${id}`));};
+window.delService = async id => { if(confirm('حذف الخدمة؟')) await remove(ref(db,`deltaart/services/${id}`)); };
 
-// ===== CLIENTS =====
-window._allClients=[];
-let _invoiceItemCount=0;
+// ===== SETTINGS =====
+async function loadSettings() {
+  try {
+    const snap = await get(ref(db,'deltaart/settings'));
+    if (!snap.exists()) return;
+    const s = snap.val();
+    if (s.contact) {
+      document.getElementById('set-wa').value = s.contact.whatsapp||'';
+      document.getElementById('set-phone').value = s.contact.phone||'';
+      document.getElementById('set-address').value = s.contact.address||'';
+      document.getElementById('set-email').value = s.contact.email||'';
+      document.getElementById('set-fb').value = s.contact.facebook||'';
+      document.getElementById('set-ig').value = s.contact.instagram||'';
+      document.getElementById('set-hours').value = s.contact.hours||'';
+    }
+    if (s.stats) {
+      document.getElementById('set-projects').value = s.stats.projects||'';
+      document.getElementById('set-clients').value = s.stats.clients||'';
+      document.getElementById('set-years').value = s.stats.years||'';
+      document.getElementById('set-workers').value = s.stats.workers||'';
+    }
+    if (s.prices) {
+      document.getElementById('pr-basic-min').value = s.prices.basic_min||'';
+      document.getElementById('pr-basic-max').value = s.prices.basic_max||'';
+      document.getElementById('pr-mid-min').value = s.prices.mid_min||'';
+      document.getElementById('pr-mid-max').value = s.prices.mid_max||'';
+      document.getElementById('pr-prem-min').value = s.prices.prem_min||'';
+      document.getElementById('pr-prem-max').value = s.prices.prem_max||'';
+    }
+  } catch(e) {}
+}
 
-window.openAddClientModal=async function(){
-  document.getElementById('cl-edit-key').value='';
-  document.getElementById('cl-name').value='';
-  document.getElementById('cl-phone').value='';
-  document.getElementById('cl-address').value='';
-  document.getElementById('cl-details').value='';
-  document.getElementById('cl-paid').value='';
-  document.getElementById('cl-payment').value='cash';
-  document.getElementById('cl-pay-status').value='partial';
-  document.getElementById('cl-total-display').textContent='0 ج';
-  document.getElementById('cl-remaining-display').textContent='0 ج';
-  // Clear service checkboxes
-  document.querySelectorAll('.cl-service-cb').forEach(cb=>cb.checked=false);
-  // Reset invoice items
-  _invoiceItemCount=0;
-  document.getElementById('invoice-items-wrap').innerHTML='';
-  addInvoiceItem();
-  // Get next ID
-  const id=await getNextClientId();
-  document.getElementById('new-client-id').textContent=id;
-  window._newClientId=id;
-  openModal('add-client-modal');
+window.saveContact = async function() {
+  const contact = {
+    whatsapp: document.getElementById('set-wa').value.trim(),
+    phone: document.getElementById('set-phone').value.trim(),
+    address: document.getElementById('set-address').value.trim(),
+    email: document.getElementById('set-email').value.trim(),
+    facebook: document.getElementById('set-fb').value.trim(),
+    instagram: document.getElementById('set-ig').value.trim(),
+    hours: document.getElementById('set-hours').value.trim(),
+  };
+  const alertEl = document.getElementById('contact-alert');
+  try {
+    await set(ref(db,'deltaart/settings/contact'), contact);
+    showAlert(alertEl,'success','✅ تم حفظ معلومات التواصل — الموقع اتحدث تلقائياً');
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
 };
 
-async function getNextClientId(){
-  const snap=await get(ref(db,'deltaart/clients'));
-  if(!snap.exists())return'001';
+window.saveStats = async function() {
+  const stats = {
+    projects: +document.getElementById('set-projects').value||500,
+    clients:  +document.getElementById('set-clients').value||1200,
+    years:    +document.getElementById('set-years').value||10,
+    workers:  +document.getElementById('set-workers').value||35,
+  };
+  const alertEl = document.getElementById('stats-alert');
+  try {
+    await set(ref(db,'deltaart/stats'), stats);
+    await set(ref(db,'deltaart/settings/stats'), stats);
+    showAlert(alertEl,'success','✅ تم حفظ الإحصائيات');
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
+};
+
+window.savePrices = async function() {
+  const prices = {
+    basic_min: +document.getElementById('pr-basic-min').value||120,
+    basic_max: +document.getElementById('pr-basic-max').value||160,
+    mid_min:   +document.getElementById('pr-mid-min').value||180,
+    mid_max:   +document.getElementById('pr-mid-max').value||240,
+    prem_min:  +document.getElementById('pr-prem-min').value||280,
+    prem_max:  +document.getElementById('pr-prem-max').value||380,
+  };
+  const alertEl = document.getElementById('prices-alert');
+  try {
+    await set(ref(db,'deltaart/settings/prices'), prices);
+    showAlert(alertEl,'success','✅ تم حفظ الأسعار — الحاسبة اتحدثت');
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
+};
+
+// ===== USERS =====
+function renderUsersTable(snap) {
+  const tbody = document.getElementById('users-tbody');
+  if (!snap || !snap.exists()) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد مستخدمين إضافيين</td></tr>';
+    return;
+  }
+  let html = '';
+  snap.forEach(c => {
+    const u = c.val();
+    const isActive = u.active !== false;
+    html += `<tr>
+      <td><strong>${u.name||'—'}</strong></td>
+      <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
+      <td><span class="badge badge-blue">${roleLabel(u.role||'viewer')}</span></td>
+      <td><span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span></td>
+      <td style="color:var(--gray);font-size:12px;direction:ltr">${u.password?'••••••••':'-'} <button onclick="showPass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:11px">👁</button></td>
+      <td style="color:var(--gray)">${fmtDate(u.createdAt)}</td>
+      <td style="display:flex;gap:4px;flex-wrap:wrap">
+        <button class="btn-sm ${isActive?'btn-danger':'btn-primary'}" onclick="toggleUser('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
+        <button class="btn-sm" style="background:rgba(59,130,246,0.2);color:#3B82F6;border:1px solid #3B82F6" onclick="openChangePass('${c.key}','${u.name||''}')">🔑</button>
+        <button class="btn-sm btn-danger" onclick="delUser('${c.key}')">🗑️</button>
+      </td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+window.addUser = async function() {
+  const name  = document.getElementById('usr-name').value.trim();
+  const email = document.getElementById('usr-email').value.trim();
+  const pass  = document.getElementById('usr-pass').value;
+  const role  = document.getElementById('usr-role').value;
+  const alertEl = document.getElementById('usr-alert');
+  if (!name||!email||!pass) { showAlert(alertEl,'error','ادخل كل البيانات'); return; }
+  if (pass.length < 8) { showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف'); return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,createdAt:new Date().toISOString(),active:true});
+    showAlert(alertEl,'success','✅ تم إضافة المستخدم بنجاح');
+    ['usr-name','usr-email','usr-pass'].forEach(id => document.getElementById(id).value='');
+    setTimeout(() => closeModal('add-user-modal'), 1500);
+  } catch(e) {
+    const msgs = {'auth/email-already-in-use':'البريد مستخدم بالفعل','auth/weak-password':'كلمة المرور ضعيفة'};
+    showAlert(alertEl,'error', msgs[e.code]||'حدث خطأ');
+  }
+};
+window.delUser = async id => { if(confirm('حذف المستخدم؟')) await remove(ref(db,`deltaart/users/${id}`)); };
+
+// ===== MOBILE SIDEBAR =====
+window.toggleSidebar = function() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+};
+
+// ===== SHOW PASSWORD =====
+window.showPass = function(id, pass) {
+  if(!pass) { alert('لا يوجد باسورد محفوظ'); return; }
+  alert('كلمة المرور: ' + pass);
+};
+
+// ===== CHANGE PASSWORD =====
+window.openChangePass = function(id, name) {
+  document.getElementById('cp-uid').value = id;
+  document.getElementById('cp-name').textContent = name;
+  document.getElementById('cp-pass').value = '';
+  openModal('change-pass-modal');
+};
+
+window.changePass = async function() {
+  const uid = document.getElementById('cp-uid').value;
+  const pass = document.getElementById('cp-pass').value;
+  const alertEl = document.getElementById('cp-alert');
+  if(pass.length < 8) { showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف'); return; }
+  try {
+    await set(ref(db,`deltaart/users/${uid}/password`), pass);
+    showAlert(alertEl,'success','✅ تم تغيير كلمة المرور');
+    setTimeout(()=>closeModal('change-pass-modal'),1500);
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
+};
+
+// ===== FORCE LOGOUT ON DISABLE =====
+window.toggleUser = async function(id, isActive) {
+  const msg = isActive ? 'إيقاف هذا المستخدم؟' : 'تفعيل هذا المستخدم؟';
+  if(!confirm(msg)) return;
+  await set(ref(db,`deltaart/users/${id}/active`), !isActive);
+};
+
+// ===== HELPERS =====
+function statusClass(s){ return {pending:'badge-yellow',confirmed:'badge-blue',done:'badge-green',cancelled:'badge-red'}[s]||'badge-gray'; }
+function statusLabel(s){ return {pending:'قيد الانتظار',confirmed:'مؤكدة',done:'منتهية',cancelled:'ملغية'}[s]||s; }
+function catLabel(c){ return {ceiling:'أسقف',lighting:'إضاءة',partition:'فواصل','3d':'ثلاثي الأبعاد',other:'أخرى'}[c]||c; }
+function fmtDate(d){ if(!d)return'—'; try{return new Date(d).toLocaleDateString('ar-EG');}catch(e){return d;} }
+function showAlert(el,type,text){ el.className=`alert alert-${type==='success'?'success':'error'} show`; el.textContent=text; setTimeout(()=>el.classList.remove('show'),3500); }
+</script>
+
+<script>
+// PAGE NAV
+const pageTitles = {dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',gallery:'معرض الأعمال',services:'الخدمات',settings:'إعدادات الموقع',users:'المستخدمون',attendance:'حضور الموظفين',clients:'إدارة العملاء'};
+function goPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('topbar-title').textContent = pageTitles[name]||name;
+  if (btn) { document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); btn.classList.add('active'); }
+}
+
+// MODAL
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
+
+// SETTINGS STABS
+function switchStab(name, btn) {
+  document.querySelectorAll('.stab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('stab-'+name).classList.add('active');
+  btn.parentElement.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// GALLERY TAB
+function switchGalTab(tab) {
+  const isFile = tab === 'file';
+  document.getElementById('gal-file-panel').style.display = isFile ? 'block' : 'none';
+  document.getElementById('gal-url-panel').style.display = isFile ? 'none' : 'block';
+  document.getElementById('gal-tab-file').classList.toggle('active', isFile);
+  document.getElementById('gal-tab-url').classList.toggle('active', !isFile);
+}
+
+
+// ===== ATTENDANCE SYSTEM =====
+function loadEmployeesIntoSelects() {
+  onValue(ref(db,'deltaart/users'), snap => {
+    const emps = [];
+    if(snap.exists()) snap.forEach(c => { const u=c.val(); if(u.name) emps.push({id:c.key,name:u.name}); });
+    ['att-emp','att-filter-emp','rep-emp'].forEach(selId => {
+      const sel = document.getElementById(selId);
+      if(!sel) return;
+      const firstOpt = sel.options[0].outerHTML;
+      sel.innerHTML = firstOpt;
+      emps.forEach(e => { sel.innerHTML += `<option value="${e.id}">${e.name}</option>`; });
+    });
+  });
+}
+
+window.saveAttendance = async function() {
+  const emp = document.getElementById('att-emp').value;
+  const date = document.getElementById('att-date').value;
+  const status = document.getElementById('att-status').value;
+  const notes = document.getElementById('att-notes').value;
+  const alertEl = document.getElementById('att-alert');
+  if(!emp||!date) { showAlert(alertEl,'error','اختر الموظف والتاريخ'); return; }
+  try {
+    const empName = document.getElementById('att-emp').selectedOptions[0].text;
+    await set(ref(db,`deltaart/attendance/${emp}_${date}`),{empId:emp,empName,date,status,notes,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success','✅ تم التسجيل');
+    setTimeout(()=>{ closeModal('add-attendance-modal'); loadAttendance(); },1200);
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ'); }
+};
+
+function loadAttendance() {
+  const filterEmp = document.getElementById('att-filter-emp')?.value||'';
+  const filterFrom = document.getElementById('att-filter-from')?.value||'';
+  const filterTo = document.getElementById('att-filter-to')?.value||'';
+  onValue(ref(db,'deltaart/attendance'), snap => {
+    const tbody = document.getElementById('attendance-tbody');
+    if(!tbody) return;
+    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>'; return; }
+    let rows=[]; let present=0,absent=0,late=0;
+    snap.forEach(c => {
+      const a=c.val();
+      if(filterEmp && a.empId!==filterEmp) return;
+      if(filterFrom && a.date<filterFrom) return;
+      if(filterTo && a.date>filterTo) return;
+      if(a.status==='present') present++;
+      else if(a.status==='absent') absent++;
+      else if(a.status==='late') late++;
+      const statusMap={present:'<span class="badge badge-green">✅ حضور</span>',absent:'<span class="badge badge-red">❌ غياب</span>',late:'<span class="badge badge-yellow">⏰ تأخير</span>'};
+      rows.push(`<tr><td><strong>${a.empName||'—'}</strong></td><td>${a.date||'—'}</td><td>${statusMap[a.status]||a.status}</td><td style="color:var(--gray)">${a.notes||'—'}</td><td><button class="btn-sm btn-danger" onclick="delAttendance('${c.key}')">🗑️</button></td></tr>`);
+    });
+    tbody.innerHTML = rows.length ? rows.join('') : '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>';
+    document.getElementById('att-present').textContent=present;
+    document.getElementById('att-absent').textContent=absent;
+    document.getElementById('att-late').textContent=late;
+    document.getElementById('att-total').textContent=present+absent+late;
+  });
+}
+
+window.delAttendance = async id => { if(confirm('حذف هذا السجل؟')) await remove(ref(db,`deltaart/attendance/${id}`)); };
+
+window.generateReport = function() {
+  const empId = document.getElementById('rep-emp').value;
+  const from = document.getElementById('rep-from').value;
+  const to = document.getElementById('rep-to').value;
+  if(!empId||!from||!to) { alert('اختر الموظف والفترة'); return; }
+  get(ref(db,'deltaart/attendance')).then(snap => {
+    let present=0,absent=0,late=0;
+    if(snap.exists()) snap.forEach(c => {
+      const a=c.val();
+      if(a.empId!==empId) return;
+      if(a.date<from||a.date>to) return;
+      if(a.status==='present') present++;
+      else if(a.status==='absent') absent++;
+      else if(a.status==='late') late++;
+    });
+    const effective = present + (late*0.5);
+    document.getElementById('rep-present').textContent=present;
+    document.getElementById('rep-absent').textContent=absent;
+    document.getElementById('rep-late').textContent=late;
+    document.getElementById('rep-effective').textContent=effective;
+    document.getElementById('report-result').style.display='block';
+  });
+};
+
+// ===== CLIENTS SYSTEM =====
+async function getNextClientId() {
+  const snap = await get(ref(db,'deltaart/clients'));
+  if(!snap.exists()) return '001';
   let max=0;
-  snap.forEach(c=>{const id=parseInt(c.val().clientId||'0');if(id>max)max=id;});
+  snap.forEach(c => { const id=parseInt(c.val().clientId||'0'); if(id>max) max=id; });
   return String(max+1).padStart(3,'0');
 }
 
-window.addInvoiceItem=function(){
-  _invoiceItemCount++;
-  const wrap=document.getElementById('invoice-items-wrap');
-  const div=document.createElement('div');
-  div.className='invoice-item';
-  div.id='inv-item-'+_invoiceItemCount;
-  div.innerHTML=`
-    <input type="text" placeholder="البند (مثال: سقف غرفة المعيشة)" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;flex:2;outline:none;">
-    <input type="number" placeholder="المبلغ" oninput="calcInvoiceTotal()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;flex:1;outline:none;">
-    <button class="btn-sm btn-danger" onclick="removeInvoiceItem(${_invoiceItemCount})" style="padding:9px 12px">🗑️</button>`;
-  wrap.appendChild(div);
-};
-window.removeInvoiceItem=function(n){
-  const el=document.getElementById('inv-item-'+n);
-  if(el)el.remove();
-  calcInvoiceTotal();
-};
-window.calcInvoiceTotal=function(){
-  let total=0;
-  document.querySelectorAll('#invoice-items-wrap .invoice-item input[type=number]').forEach(inp=>{total+=parseFloat(inp.value||0);});
-  document.getElementById('cl-total-display').textContent=total.toFixed(0)+' ج';
-  updateRemaining();
-};
-window.updateRemaining=function(){
-  const totalText=document.getElementById('cl-total-display').textContent;
-  const total=parseFloat(totalText)||0;
-  const paid=parseFloat(document.getElementById('cl-paid').value||0);
-  const rem=total-paid;
-  document.getElementById('cl-remaining-display').textContent=rem.toFixed(0)+' ج';
-  document.getElementById('cl-remaining-display').style.color=rem>0?'var(--red)':'var(--green)';
-};
+function loadClients() {
+  onValue(ref(db,'deltaart/clients'), snap => {
+    const tbody = document.getElementById('clients-tbody');
+    if(!tbody) return;
+    if(!snap||!snap.exists()) { tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>'; return; }
+    let html='';
+    snap.forEach(c => {
+      const cl=c.val();
+      const remaining=(parseFloat(cl.total||0)-parseFloat(cl.paid||0));
+      const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون',visa:'💳 فيزا',mixed:'🔀 متعدد'};
+      const statusMap={full:'<span class="badge badge-green">مدفوع</span>',partial:'<span class="badge badge-yellow">جزء</span>',pending:'<span class="badge badge-red">لم يدفع</span>'};
+      html+=`<tr>
+        <td><strong style="color:var(--gold)">#${cl.clientId||'---'}</strong></td>
+        <td><strong>${cl.name||'—'}</strong><br><small style="color:var(--gray)">${cl.phone||''}</small></td>
+        <td style="color:var(--gray);font-size:12px">${cl.phone||'—'}</td>
+        <td>${catLabel(cl.service||'')}</td>
+        <td style="color:var(--white)">${cl.total||0} ج</td>
+        <td style="color:var(--green)">${cl.paid||0} ج</td>
+        <td style="color:${remaining>0?'var(--red)':'var(--green)'}">${remaining} ج</td>
+        <td style="font-size:12px">${payMap[cl.paymentMethod]||cl.paymentMethod||'—'}</td>
+        <td>${statusMap[cl.payStatus]||cl.payStatus||'—'}</td>
+        <td style="display:flex;gap:4px">
+          <button class="btn-sm btn-primary" onclick="viewClient('${c.key}')">👁</button>
+          <button class="btn-sm btn-danger" onclick="delClient('${c.key}')">🗑️</button>
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML=html;
+  });
+}
 
-window.saveClient=async function(){
-  const editKey=document.getElementById('cl-edit-key').value;
+window.calcRemaining = function() {};
+
+window.saveClient = async function() {
   const name=document.getElementById('cl-name').value.trim();
   const phone=document.getElementById('cl-phone').value.trim();
   const address=document.getElementById('cl-address').value.trim();
+  const service=document.getElementById('cl-service').value;
   const details=document.getElementById('cl-details').value.trim();
-  const paid=parseFloat(document.getElementById('cl-paid').value||0);
+  const total=document.getElementById('cl-total').value||0;
+  const paid=document.getElementById('cl-paid').value||0;
   const paymentMethod=document.getElementById('cl-payment').value;
   const payStatus=document.getElementById('cl-pay-status').value;
   const alertEl=document.getElementById('cl-alert');
-  if(!name||!phone){showAlert(alertEl,'error','ادخل الاسم والهاتف');return;}
-
-  // Collect services
-  const services=[];
-  document.querySelectorAll('.cl-service-cb:checked').forEach(cb=>services.push(cb.value));
-
-  // Collect invoice items
-  const invoiceItems=[];
-  let total=0;
-  document.querySelectorAll('#invoice-items-wrap .invoice-item').forEach(row=>{
-    const inputs=row.querySelectorAll('input');
-    const desc=inputs[0].value.trim();
-    const amount=parseFloat(inputs[1].value||0);
-    if(desc||amount>0){invoiceItems.push({desc,amount});total+=amount;}
-  });
-
-  try{
-    const data={name,phone,address,services,details,invoiceItems,total,paid,paymentMethod,payStatus,updatedAt:new Date().toISOString()};
-    if(editKey){
-      await update(ref(db,`deltaart/clients/${editKey}`),data);
-      showAlert(alertEl,'success','✅ تم تحديث بيانات العميل');
-    } else {
-      const clientId=window._newClientId||await getNextClientId();
-      data.clientId=clientId;
-      data.createdAt=new Date().toISOString();
-      await push(ref(db,'deltaart/clients'),data);
-      showAlert(alertEl,'success',`✅ تم إضافة العميل #${clientId}`);
-    }
+  if(!name||!phone) { showAlert(alertEl,'error','ادخل الاسم والهاتف'); return; }
+  try {
+    const clientId=await getNextClientId();
+    await push(ref(db,'deltaart/clients'),{clientId,name,phone,address,service,details,total:parseFloat(total),paid:parseFloat(paid),paymentMethod,payStatus,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success',`✅ تم إضافة العميل #${clientId}`);
+    ['cl-name','cl-phone','cl-address','cl-details','cl-total','cl-paid'].forEach(id=>document.getElementById(id).value='');
     setTimeout(()=>closeModal('add-client-modal'),1500);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
+  } catch(e) { showAlert(alertEl,'error','حدث خطأ: '+e.message); }
 };
 
-function renderClientsTable(all){
-  const tbody=document.getElementById('clients-tbody');
-  if(!all.length){tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء بعد</td></tr>';return;}
-  const payStatusMap={full:'<span class="badge badge-green">مدفوع</span>',partial:'<span class="badge badge-yellow">جزء</span>',pending:'<span class="badge badge-red">لم يدفع</span>'};
-  tbody.innerHTML=all.map(cl=>{
-    const remaining=parseFloat(cl.total||0)-parseFloat(cl.paid||0);
-    const svcNames=(cl.services||[]).map(s=>catLabel(s)).join('، ')||catLabel(cl.service||'')||'—';
-    return`<tr>
-      <td><strong style="color:var(--gold)">#${cl.clientId||'---'}</strong></td>
-      <td><strong>${cl.name}</strong></td>
-      <td><a href="tel:${cl.phone}" style="color:var(--gold)">${cl.phone}</a></td>
-      <td style="font-size:12px;color:var(--gray);max-width:120px">${svcNames}</td>
-      <td>${(cl.total||0).toFixed(0)} ج</td>
-      <td style="color:var(--green)">${(cl.paid||0).toFixed(0)} ج</td>
-      <td style="color:${remaining>0?'var(--red)':'var(--green)'}">${remaining.toFixed(0)} ج</td>
-      <td>${payStatusMap[cl.payStatus]||'—'}</td>
-      <td style="color:var(--gray)">${fmtDate(cl.createdAt)}</td>
-      <td><div style="display:flex;gap:4px">
-        <button class="btn-sm btn-outline-sm" onclick="viewClient('${cl.id}')">👁️</button>
-        <button class="btn-sm btn-primary" onclick="editClient('${cl.id}')">✏️</button>
-        <button class="btn-sm btn-danger" onclick="delClient('${cl.id}')">🗑️</button>
-      </div></td>
-    </tr>`;
-  }).join('');
-}
-window.filterClients=function(){
-  const q=(document.getElementById('client-search').value||'').toLowerCase();
-  if(!q){renderClientsTable(window._allClients||[]);return;}
-  const filtered=(window._allClients||[]).filter(cl=>
-    (cl.name||'').toLowerCase().includes(q)||
-    (cl.phone||'').includes(q)||
-    (cl.clientId||'').includes(q)
-  );
-  renderClientsTable(filtered);
-};
-window.viewClient=function(id){
-  const cl=(window._allClients||[]).find(x=>x.id===id);
-  if(!cl)return;
-  window._viewClientId=id;
+window.viewClient = async function(key) {
+  const snap=await get(ref(db,`deltaart/clients/${key}`));
+  if(!snap.exists()) return;
+  const cl=snap.val();
   const remaining=parseFloat(cl.total||0)-parseFloat(cl.paid||0);
-  const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون',visa:'💳 فيزا',mixed:'🔀 متعدد'};
-  const svcNames=(cl.services||[]).map(s=>catLabel(s)).join('، ')||catLabel(cl.service||'')||'—';
-  let invoiceHtml='';
-  if(cl.invoiceItems&&cl.invoiceItems.length){
-    invoiceHtml=`<div style="background:var(--navy3);border-radius:10px;padding:14px;margin-bottom:12px">
-      <div style="color:var(--gray);font-size:12px;margin-bottom:8px">📋 بنود الفاتورة</div>
-      ${cl.invoiceItems.map(item=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span>${item.desc}</span><span style="color:var(--gold);font-weight:700">${item.amount} ج</span></div>`).join('')}
-      <div style="display:flex;justify-content:space-between;padding-top:10px;font-weight:700"><span>الإجمالي</span><span style="color:var(--gold)">${cl.total||0} ج</span></div>
-    </div>`;
-  }
+  const payMap={cash:'💵 كاش',instapay:'📱 InstaPay',vodafone:'🔴 فودافون كاش',visa:'💳 فيزا/كارت',mixed:'🔀 متعدد'};
   document.getElementById('client-details-content').innerHTML=`
     <div style="text-align:center;margin-bottom:20px">
       <div style="font-size:36px;font-weight:900;color:var(--gold)">#${cl.clientId}</div>
       <div style="font-size:20px;font-weight:700">${cl.name}</div>
       <div style="color:var(--gray)">${cl.phone}</div>
-      <div style="color:var(--gray);font-size:12px;margin-top:4px">${cl.address||''}</div>
     </div>
-    <div style="margin-bottom:12px"><span style="color:var(--gray);font-size:12px">الخدمات: </span><strong>${svcNames}</strong></div>
-    ${invoiceHtml}
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
       <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
         <div style="color:var(--gray);font-size:12px">إجمالي</div>
         <div style="font-size:20px;font-weight:700">${cl.total||0} ج</div>
@@ -1449,472 +1364,336 @@ window.viewClient=function(id){
         <div style="color:var(--gray);font-size:12px">متبقي</div>
         <div style="font-size:20px;font-weight:700;color:${remaining>0?'var(--red)':'var(--green)'}">${remaining} ج</div>
       </div>
+      <div style="background:var(--navy3);border-radius:10px;padding:14px;text-align:center">
+        <div style="color:var(--gray);font-size:12px">طريقة الدفع</div>
+        <div style="font-size:16px;font-weight:700">${payMap[cl.paymentMethod]||'—'}</div>
+      </div>
     </div>
     <div style="background:var(--navy3);border-radius:10px;padding:14px;margin-bottom:12px">
-      <div style="color:var(--gray);font-size:12px;margin-bottom:4px">تفاصيل الشغل</div>
+      <div style="color:var(--gray);font-size:12px;margin-bottom:6px">تفاصيل الشغل</div>
       <div>${cl.details||'—'}</div>
     </div>
-    <div style="color:var(--gray);font-size:12px;text-align:center">${fmtDate(cl.createdAt)}</div>`;
-  document.getElementById('client-detail-del-btn').onclick=()=>delClient(id,true);
+    <div style="color:var(--gray);font-size:12px;text-align:center">${fmtDate(cl.createdAt)}</div>
+  `;
   openModal('client-details-modal');
 };
-window.editClientFromDetail=function(){
-  closeModal('client-details-modal');
-  if(window._viewClientId)editClient(window._viewClientId);
-};
-window.editClient=async function(id){
-  const cl=(window._allClients||[]).find(x=>x.id===id);
-  if(!cl)return;
-  await openAddClientModal();
-  document.getElementById('cl-edit-key').value=id;
-  document.getElementById('new-client-id').textContent=cl.clientId||'---';
-  document.getElementById('cl-name').value=cl.name||'';
-  document.getElementById('cl-phone').value=cl.phone||'';
-  document.getElementById('cl-address').value=cl.address||'';
-  document.getElementById('cl-details').value=cl.details||'';
-  document.getElementById('cl-paid').value=cl.paid||0;
-  document.getElementById('cl-payment').value=cl.paymentMethod||'cash';
-  document.getElementById('cl-pay-status').value=cl.payStatus||'partial';
-  // Check services
-  if(cl.services){
-    cl.services.forEach(sv=>{
-      const cb=document.querySelector(`.cl-service-cb[value="${sv}"]`);
-      if(cb)cb.checked=true;
-    });
-  }
-  // Restore invoice items
-  document.getElementById('invoice-items-wrap').innerHTML='';
-  _invoiceItemCount=0;
-  if(cl.invoiceItems&&cl.invoiceItems.length){
-    cl.invoiceItems.forEach(item=>{
-      _invoiceItemCount++;
-      const wrap=document.getElementById('invoice-items-wrap');
-      const div=document.createElement('div');
-      div.className='invoice-item';
-      div.id='inv-item-'+_invoiceItemCount;
-      div.innerHTML=`
-        <input type="text" value="${item.desc||''}" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;flex:2;outline:none;">
-        <input type="number" value="${item.amount||0}" oninput="calcInvoiceTotal()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;flex:1;outline:none;">
-        <button class="btn-sm btn-danger" onclick="removeInvoiceItem(${_invoiceItemCount})" style="padding:9px 12px">🗑️</button>`;
-      wrap.appendChild(div);
-    });
-  } else { addInvoiceItem(); }
-  calcInvoiceTotal();
-};
-window.delClient=async function(id,fromModal){
-  if(!confirm('حذف هذا العميل نهائياً؟'))return;
-  await remove(ref(db,`deltaart/clients/${id}`));
-  if(fromModal)closeModal('client-details-modal');
-};
 
-// ===== ATTENDANCE =====
-window._allAttendance=[];
-function loadEmpSelects(snap){
-  const emps=[];
-  if(snap&&snap.exists()) snap.forEach(c=>{const u=c.val();if(u.name&&(u.role==='worker'||u.role==='employee'||u.role==='admin'||u.role==='editor'))emps.push({id:c.key,name:u.name,role:u.role,salary:u.salary||0});});
-  window._allEmps=emps;
-  ['att-emp','att-filter-emp','sal-emp'].forEach(selId=>{
-    const sel=document.getElementById(selId);
-    if(!sel)return;
-    const firstOpt=sel.options[0].outerHTML;
-    sel.innerHTML=firstOpt;
-    emps.forEach(e=>{sel.innerHTML+=`<option value="${e.id}">${e.name} (${roleLabel(e.role)})</option>`;});
-  });
-}
-window.loadEmpSelect=function(selId){
-  if(!window._allEmps)return;
-  const sel=document.getElementById(selId);
-  if(!sel)return;
-  const first=sel.options[0].outerHTML;
-  sel.innerHTML=first;
-  window._allEmps.forEach(e=>{sel.innerHTML+=`<option value="${e.id}">${e.name}</option>`;});
-};
-window.saveAttendance=async function(){
-  const empId=document.getElementById('att-emp').value;
-  const date=document.getElementById('att-date').value;
-  const status=document.getElementById('att-status').value;
-  const notes=document.getElementById('att-notes').value;
-  const alertEl=document.getElementById('att-alert');
-  if(!empId||!date){showAlert(alertEl,'error','اختر الموظف والتاريخ');return;}
-  const empName=document.getElementById('att-emp').selectedOptions[0].text;
-  const emp=(window._allEmps||[]).find(e=>e.id===empId);
-  try{
-    await set(ref(db,`deltaart/attendance/${empId}_${date}`),{empId,empName,empRole:emp?emp.role:'',date,status,notes,createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success','✅ تم التسجيل');
-    document.getElementById('att-notes').value='';
-    setTimeout(()=>closeModal('add-attendance-modal'),1200);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-window.applyAttFilter=function(){
-  const filterEmp=(document.getElementById('att-filter-emp')||{}).value||'';
-  const filterFrom=(document.getElementById('att-filter-from')||{}).value||'';
-  const filterTo=(document.getElementById('att-filter-to')||{}).value||'';
-  const all=window._allAttendance||[];
-  let rows=[];let present=0,absent=0,late=0;
-  all.filter(a=>{
-    if(filterEmp&&a.empId!==filterEmp)return false;
-    if(filterFrom&&a.date<filterFrom)return false;
-    if(filterTo&&a.date>filterTo)return false;
-    return true;
-  }).sort((a,b)=>b.date.localeCompare(a.date)).forEach(a=>{
-    if(a.status==='present')present++;
-    else if(a.status==='absent')absent++;
-    else if(a.status==='late')late++;
-    const statusMap={present:'<span class="badge badge-green">✅ حضور</span>',absent:'<span class="badge badge-red">❌ غياب</span>',late:'<span class="badge badge-yellow">⏰ تأخير</span>'};
-    rows.push(`<tr><td><strong>${a.empName||'—'}</strong></td><td><span class="badge badge-gray">${roleLabel(a.empRole||'')}</span></td><td>${a.date||'—'}</td><td>${statusMap[a.status]||a.status}</td><td style="color:var(--gray)">${a.notes||'—'}</td><td><button class="btn-sm btn-danger" onclick="delAttendance('${a.id}')">🗑️</button></td></tr>`);
-  });
-  const tbody=document.getElementById('attendance-tbody');
-  if(tbody) tbody.innerHTML=rows.length?rows.join(''):'<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات</td></tr>';
-  const ps=document.getElementById('att-sum-present');const as=document.getElementById('att-sum-absent');const ls=document.getElementById('att-sum-late');const ts=document.getElementById('att-sum-total');
-  if(ps)ps.textContent=present;if(as)as.textContent=absent;if(ls)ls.textContent=late;if(ts)ts.textContent=present+absent+late;
-};
-window.loadAttendance=window.applyAttFilter;
-window.clearAttFilter=function(){
-  document.getElementById('att-filter-emp').value='';
-  document.getElementById('att-filter-from').value='';
-  document.getElementById('att-filter-to').value='';
-  applyAttFilter();
-};
-window.delAttendance=async id=>{if(confirm('حذف هذا السجل؟'))await remove(ref(db,`deltaart/attendance/${id}`));};
+window.delClient = async key => { if(confirm('حذف هذا العميل؟')) await remove(ref(db,`deltaart/clients/${key}`)); };
 
-// ===== SALARIES =====
-window._salaryHistory=[];
-window._currentSalCalc=null;
-
-window.loadSalaryCalc=function(){
-  const empId=document.getElementById('sal-emp').value;
-  const emp=(window._allEmps||[]).find(e=>e.id===empId);
-  if(emp){window._currentSalEmp=emp;}
-  document.getElementById('salary-result').style.display='none';
-};
-
-window.calcSalary=function(){
-  const empId=document.getElementById('sal-emp').value;
-  const from=document.getElementById('sal-from').value;
-  const to=document.getElementById('sal-to').value;
-  if(!empId||!from||!to){alert('اختر الموظف والفترة');return;}
-  const emp=(window._allEmps||[]).find(e=>e.id===empId);
-  if(!emp){alert('الموظف مش موجود');return;}
-  const weeklySalary=parseFloat(emp.salary||0);
-  const dayRate=weeklySalary/7;
-  let present=0,absent=0,late=0;
-  (window._allAttendance||[]).forEach(a=>{
-    if(a.empId!==empId)return;
-    if(a.date<from||a.date>to)return;
-    if(a.status==='present')present++;
-    else if(a.status==='absent')absent++;
-    else if(a.status==='late')late++;
-  });
-  const effectiveDays=present+(late*0.5);
-  const due=effectiveDays*dayRate;
-  document.getElementById('sal-present').textContent=present;
-  document.getElementById('sal-absent').textContent=absent;
-  document.getElementById('sal-late').textContent=late;
-  document.getElementById('sal-effective').textContent=effectiveDays.toFixed(1);
-  document.getElementById('sal-weekly-rate').textContent=weeklySalary.toFixed(0)+' ج';
-  document.getElementById('sal-day-rate').textContent=dayRate.toFixed(0)+' ج';
-  document.getElementById('sal-due').textContent=due.toFixed(0)+' ج';
-  document.getElementById('salary-result').style.display='block';
-  // Check if already paid
-  const existing=(window._salaryHistory||[]).find(h=>h.empId===empId&&h.from===from&&h.to===to);
-  const paidBadge=document.getElementById('sal-paid-badge');
-  if(existing){paidBadge.style.display='inline-block';document.getElementById('sal-paid-date').textContent=fmtDate(existing.paidAt);}
-  else{paidBadge.style.display='none';}
-  window._currentSalCalc={empId,empName:emp.name,from,to,present,absent,late,effectiveDays,due,weeklySalary,dayRate};
-};
-
-window.markSalaryPaid=async function(){
-  if(!window._currentSalCalc)return;
-  const c=window._currentSalCalc;
-  if(!confirm(`تسجيل صرف ${c.due.toFixed(0)} ج لـ ${c.empName}؟`))return;
-  try{
-    await push(ref(db,'deltaart/salaryHistory'),{...c,paidAt:new Date().toISOString()});
-    document.getElementById('sal-paid-badge').style.display='inline-block';
-    document.getElementById('sal-paid-date').textContent=fmtDate(new Date().toISOString());
-    alert('✅ تم تسجيل صرف الراتب');
-  }catch(e){alert('حدث خطأ');}
-};
-
-function renderSalaryHistory(all){
-  const tbody=document.getElementById('salary-history-tbody');
-  if(!tbody)return;
-  if(!all.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد سجلات صرف</td></tr>';return;}
-  tbody.innerHTML=all.map(h=>`<tr>
-    <td><strong>${h.empName||'—'}</strong></td>
-    <td style="color:var(--gray)">${h.from} → ${h.to}</td>
-    <td style="text-align:center">${h.effectiveDays}</td>
-    <td style="color:var(--gold);font-weight:700">${parseFloat(h.due||0).toFixed(0)} ج</td>
-    <td style="color:var(--gray)">${fmtDate(h.paidAt)}</td>
-    <td><button class="btn-sm btn-danger" onclick="delSalaryHistory('${h.id}')">🗑️</button></td>
-  </tr>`).join('');
-}
-window.delSalaryHistory=async id=>{if(confirm('حذف هذا السجل؟'))await remove(ref(db,`deltaart/salaryHistory/${id}`));};
-
-// ===== USERS TABLE =====
-function renderUsersTable(snap){
-  const tbody=document.getElementById('users-tbody');
-  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد مستخدمين</td></tr>';return;}
-  let html='';
-  snap.forEach(c=>{
-    const u=c.val();
-    if(window._currentUserEmail!==SUPER_ADMIN_EMAIL && u.role==='superadmin')return;
-    const isActive=u.active!==false;
-    const roleCls={superadmin:'role-superadmin',owner:'role-owner',admin:'role-admin',editor:'role-editor',viewer:'role-viewer',worker:'role-worker',employee:'role-worker'}[u.role||'viewer']||'role-viewer';
-    html+=`<tr>
-      <td><strong>${u.name||'—'}</strong></td>
-      <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
-      <td><span class="role-badge ${roleCls}">${roleLabel(u.role||'viewer')}</span></td>
-      <td style="color:var(--gold)">${u.salary?u.salary+' ج/أسبوع':'—'}</td>
-      <td><span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span></td>
-      <td style="color:var(--gray)">${fmtDate(u.createdAt)}</td>
-      <td><div style="display:flex;gap:4px;flex-wrap:wrap">
-        <button class="btn-sm ${isActive?'btn-danger':'btn-success'}" onclick="toggleUser('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
-        <button class="btn-sm btn-blue" onclick="openChangePass('${c.key}','${u.name||''}')">🔑</button>
-        <button class="btn-sm btn-outline-sm" onclick="openEditSalary('${c.key}','${u.name||''}',${u.salary||0})">💰</button>
-        <button class="btn-sm btn-danger" onclick="delUser('${c.key}')">🗑️</button>
-      </div></td>
-    </tr>`;
-  });
-  tbody.innerHTML=html||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد مستخدمين</td></tr>';
-}
-
-window.toggleSalaryField=function(){
-  const role=document.getElementById('usr-role').value;
-  const show=role==='worker'||role==='employee';
-  document.getElementById('salary-field-wrap').style.display=show?'block':'none';
-};
-window.addUser=async function(){
-  const name=document.getElementById('usr-name').value.trim();
-  const email=document.getElementById('usr-email').value.trim();
-  const pass=document.getElementById('usr-pass').value;
-  const role=document.getElementById('usr-role').value;
-  const salary=parseFloat(document.getElementById('usr-salary').value||0);
-  const alertEl=document.getElementById('usr-alert');
-  if(!name||!email||!pass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
-  if(pass.length<8){showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف');return;}
-  try{
-    const cred=await createUserWithEmailAndPassword(auth,email,pass);
-    await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,salary,password:pass,createdAt:new Date().toISOString(),active:true});
-    showAlert(alertEl,'success','✅ تم إضافة المستخدم');
-    ['usr-name','usr-email','usr-pass','usr-salary'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>closeModal('add-user-modal'),1500);
-  }catch(e){
-    const msgs={'auth/email-already-in-use':'البريد مستخدم بالفعل','auth/weak-password':'كلمة المرور ضعيفة'};
-    showAlert(alertEl,'error',msgs[e.code]||'حدث خطأ');
-  }
-};
-window.delUser=async id=>{if(confirm('حذف المستخدم؟'))await remove(ref(db,`deltaart/users/${id}`));};
-window.toggleUser=async function(id,isActive){
-  const msg=isActive?'إيقاف هذا المستخدم فوراً؟':'تفعيل هذا المستخدم؟';
-  if(!confirm(msg))return;
-  await set(ref(db,`deltaart/users/${id}/active`),!isActive);
-};
-window.openChangePass=function(id,name){
-  document.getElementById('cp-uid').value=id;
-  document.getElementById('cp-name').textContent=name;
-  document.getElementById('cp-pass').value='';
-  openModal('change-pass-modal');
-};
-window.changePass=async function(){
-  const uid=document.getElementById('cp-uid').value;
-  const pass=document.getElementById('cp-pass').value;
-  const alertEl=document.getElementById('cp-alert');
-  if(pass.length<8){showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف');return;}
-  try{
-    await set(ref(db,`deltaart/users/${uid}/password`),pass);
-    showAlert(alertEl,'success','✅ تم تغيير كلمة المرور');
-    setTimeout(()=>closeModal('change-pass-modal'),1500);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-window.openEditSalary=function(id,name,salary){
-  document.getElementById('es-uid').value=id;
-  document.getElementById('es-name').textContent=name;
-  document.getElementById('es-salary').value=salary||'';
-  openModal('edit-salary-modal');
-};
-window.saveEditSalary=async function(){
-  const uid=document.getElementById('es-uid').value;
-  const salary=parseFloat(document.getElementById('es-salary').value||0);
-  const alertEl=document.getElementById('es-alert');
-  try{
-    await set(ref(db,`deltaart/users/${uid}/salary`),salary);
-    showAlert(alertEl,'success','✅ تم تحديث الراتب');
-    setTimeout(()=>closeModal('edit-salary-modal'),1500);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-
-// ===== SUPER ADMIN =====
-window.refreshSuperAdminList=async function(){
-  try{
-    const snap=await get(ref(db,'deltaart/users'));
-    const tbody=document.getElementById('superadmin-tbody');
-    if(!tbody)return;
-    if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>';return;}
-    let html='';
-    snap.forEach(c=>{
-      const u=c.val();
-      const isActive=u.active!==false;
-      const roleCls={superadmin:'role-superadmin',owner:'role-owner',admin:'role-admin',editor:'role-editor',viewer:'role-viewer',worker:'role-worker',employee:'role-worker'}[u.role||'viewer']||'role-viewer';
-      html+=`<tr>
-        <td><strong>${u.name||'—'}</strong></td>
-        <td style="color:var(--gold);font-size:13px">${u.email||'—'}</td>
-        <td><span class="pass-visible">${u.password||'—'}</span></td>
-        <td><span class="role-badge ${roleCls}">${roleLabel(u.role||'viewer')}</span></td>
-        <td><span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span></td>
-        <td style="color:var(--gray);font-size:12px">${u.lastLogin?fmtDate(u.lastLogin):'—'}</td>
-        <td><div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="btn-sm ${isActive?'btn-danger':'btn-success'}" onclick="saToggleUser('${c.key}',${isActive},'${u.email||''}')">${isActive?'🚫 إيقاف':'✅ تفعيل'}</button>
-          <button class="btn-sm btn-blue" onclick="openChangePass('${c.key}','${u.name||''}')">🔑 باسورد</button>
-          <button class="btn-sm btn-danger" onclick="saDelUser('${c.key}','${u.email||''}')">🗑️ حذف</button>
-        </div></td>
-      </tr>`;
-    });
-    tbody.innerHTML=html||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>';
-  }catch(e){console.log(e);}
-};
-window.saToggleUser=async function(id,isActive,email){
-  if(email===SUPER_ADMIN_EMAIL){alert('لا يمكن إيقاف السوبر أدمن');return;}
-  if(!confirm((isActive?'إيقاف':'تفعيل')+' هذا الأكونت فوراً؟'))return;
-  await set(ref(db,`deltaart/users/${id}/active`),!isActive);
-  const alertEl=document.getElementById('superadmin-action-alert');
-  alertEl.className='alert alert-success show';
-  alertEl.textContent=isActive?'🚫 تم إيقاف الأكونت فوراً — لو كان مستخدمها هيتطرد تلقائياً':'✅ تم تفعيل الأكونت';
-  setTimeout(()=>alertEl.classList.remove('show'),3000);
-  refreshSuperAdminList();
-};
-window.saDelUser=async function(id,email){
-  if(email===SUPER_ADMIN_EMAIL){alert('لا يمكن حذف السوبر أدمن');return;}
-  if(!confirm('حذف هذا الأكونت نهائياً؟'))return;
-  await remove(ref(db,`deltaart/users/${id}`));
-  refreshSuperAdminList();
-};
-
-// ===== SETTINGS =====
-async function loadSettings(){
-  try{
-    const snap=await get(ref(db,'deltaart/settings'));
-    if(!snap.exists())return;
-    const s=snap.val();
-    if(s.contact){
-      document.getElementById('set-wa').value=s.contact.whatsapp||'';
-      document.getElementById('set-phone').value=s.contact.phone||'';
-      document.getElementById('set-address').value=s.contact.address||'';
-      document.getElementById('set-email').value=s.contact.email||'';
-      document.getElementById('set-fb').value=s.contact.facebook||'';
-      document.getElementById('set-ig').value=s.contact.instagram||'';
-      document.getElementById('set-hours').value=s.contact.hours||'';
-    }
-    if(s.stats){
-      document.getElementById('set-projects').value=s.stats.projects||'';
-      document.getElementById('set-clients').value=s.stats.clients||'';
-      document.getElementById('set-years').value=s.stats.years||'';
-      document.getElementById('set-workers').value=s.stats.workers||'';
-    }
-    if(s.prices){
-      document.getElementById('pr-basic-min').value=s.prices.basic_min||'';
-      document.getElementById('pr-basic-max').value=s.prices.basic_max||'';
-      document.getElementById('pr-mid-min').value=s.prices.mid_min||'';
-      document.getElementById('pr-mid-max').value=s.prices.mid_max||'';
-      document.getElementById('pr-prem-min').value=s.prices.prem_min||'';
-      document.getElementById('pr-prem-max').value=s.prices.prem_max||'';
-    }
-  }catch(e){}
-}
-window.saveContact=async function(){
-  const contact={whatsapp:document.getElementById('set-wa').value.trim(),phone:document.getElementById('set-phone').value.trim(),address:document.getElementById('set-address').value.trim(),email:document.getElementById('set-email').value.trim(),facebook:document.getElementById('set-fb').value.trim(),instagram:document.getElementById('set-ig').value.trim(),hours:document.getElementById('set-hours').value.trim()};
-  const alertEl=document.getElementById('contact-alert');
-  try{await set(ref(db,'deltaart/settings/contact'),contact);showAlert(alertEl,'success','✅ تم حفظ معلومات التواصل');}
-  catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-window.saveStats=async function(){
-  const stats={projects:+document.getElementById('set-projects').value||500,clients:+document.getElementById('set-clients').value||1200,years:+document.getElementById('set-years').value||10,workers:+document.getElementById('set-workers').value||35};
-  const alertEl=document.getElementById('stats-alert');
-  try{await set(ref(db,'deltaart/stats'),stats);await set(ref(db,'deltaart/settings/stats'),stats);showAlert(alertEl,'success','✅ تم حفظ الإحصائيات');}
-  catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-window.savePrices=async function(){
-  const prices={basic_min:+document.getElementById('pr-basic-min').value||120,basic_max:+document.getElementById('pr-basic-max').value||160,mid_min:+document.getElementById('pr-mid-min').value||180,mid_max:+document.getElementById('pr-mid-max').value||240,prem_min:+document.getElementById('pr-prem-min').value||280,prem_max:+document.getElementById('pr-prem-max').value||380};
-  const alertEl=document.getElementById('prices-alert');
-  try{await set(ref(db,'deltaart/settings/prices'),prices);showAlert(alertEl,'success','✅ تم حفظ الأسعار');}
-  catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-
-// ===== HELPERS =====
-function statusClass(s){return{pending:'badge-yellow',confirmed:'badge-blue',done:'badge-green',cancelled:'badge-red'}[s]||'badge-gray';}
-function statusLabel(s){return{pending:'قيد الانتظار',confirmed:'مؤكدة',done:'منتهية',cancelled:'ملغية'}[s]||s;}
-function catLabel(c){return{ceiling:'أسقف',lighting:'إضاءة',partition:'فواصل','3d':'ثلاثي الأبعاد',other:'أخرى'}[c]||c||'—';}
-function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('ar-EG');}catch(e){return d;}}
-function showAlert(el,type,text){if(!el)return;el.className=`alert alert-${type==='success'?'success':'error'} show`;el.textContent=text;setTimeout(()=>el.classList.remove('show'),3500);}
+// Init new page data when navigating
+const origGoPage = window.goPage || function(){};
 </script>
 
-<script>
-// ===== PAGE NAV =====
-const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'إدارة العملاء',gallery:'معرض الأعمال',services:'الخدمات',attendance:'الحضور والغياب',salaries:'الرواتب',settings:'إعدادات الموقع',users:'المستخدمون',superadmin:'سوبر أدمن 🔐'};
-function goPage(name,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const pg=document.getElementById('page-'+name);
-  if(pg)pg.classList.add('active');
-  document.getElementById('topbar-title').textContent=pageTitles[name]||name;
-  if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
-  // Close mobile sidebar
-  document.querySelector('.sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('show');
-  // Load specific page data
-  if(name==='salaries'){if(window._allEmps)loadSalaryEmpsSelect();}
-  if(name==='superadmin'){if(typeof refreshSuperAdminList==='function')refreshSuperAdminList();}
-  if(name==='attendance'){if(typeof applyAttFilter==='function')applyAttFilter();}
-}
-function loadSalaryEmpsSelect(){
-  const sel=document.getElementById('sal-emp');
-  if(!sel||!window._allEmps)return;
-  const first=sel.options[0].outerHTML;
-  sel.innerHTML=first;
-  window._allEmps.forEach(e=>{sel.innerHTML+=`<option value="${e.id}">${e.name} (${e.salary||0} ج/أسبوع)</option>`;});
-}
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="change-pass-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('change-pass-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔑 تغيير كلمة المرور</h3>
+    <p style="color:var(--gray);font-size:13px;margin-bottom:20px">المستخدم: <strong id="cp-name"></strong></p>
+    <input type="hidden" id="cp-uid">
+    <div class="ff">
+      <label>كلمة المرور الجديدة</label>
+      <input type="text" id="cp-pass" placeholder="8 أحرف على الأقل">
+    </div>
+    <div id="cp-alert" style="margin:12px 0"></div>
+    <button class="btn-gold" onclick="changePass()">💾 حفظ</button>
+  </div>
+</div>
 
-// MODAL
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+<!-- Add Attendance Modal -->
+<div class="modal-overlay" id="add-attendance-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-attendance-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📅 تسجيل حضور</h3>
+    <div class="ff">
+      <label>الموظف</label>
+      <select id="att-emp">
+        <option value="">اختر موظف</option>
+      </select>
+    </div>
+    <div class="ff">
+      <label>التاريخ</label>
+      <input type="date" id="att-date">
+    </div>
+    <div class="ff">
+      <label>الحالة</label>
+      <select id="att-status">
+        <option value="present">✅ حضور</option>
+        <option value="absent">❌ غياب</option>
+        <option value="late">⏰ تأخير (نص يوم)</option>
+      </select>
+    </div>
+    <div class="ff">
+      <label>ملاحظات</label>
+      <input type="text" id="att-notes" placeholder="اختياري">
+    </div>
+    <div id="att-alert" style="margin:12px 0"></div>
+    <button class="btn-gold" onclick="saveAttendance()">💾 حفظ</button>
+  </div>
+</div>
 
-// SETTINGS STABS
-function switchStab(name,btn){
-  document.querySelectorAll('.stab-panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('stab-'+name).classList.add('active');
-  btn.parentElement.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
+<!-- Attendance Report Modal -->
+<div class="modal-overlay" id="attendance-report-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('attendance-report-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">📊 تقرير الحضور</h3>
+    <div class="ff">
+      <label>الموظف</label>
+      <select id="rep-emp"></select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff">
+        <label>من</label>
+        <input type="date" id="rep-from">
+      </div>
+      <div class="ff">
+        <label>إلى</label>
+        <input type="date" id="rep-to">
+      </div>
+    </div>
+    <button class="btn-gold" style="margin-bottom:16px" onclick="generateReport()">📊 احسب</button>
+    <div id="report-result" style="display:none;background:var(--navy3);border-radius:12px;padding:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--green)" id="rep-present">0</div><div style="color:var(--gray);font-size:13px">أيام حضور</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--red)" id="rep-absent">0</div><div style="color:var(--gray);font-size:13px">أيام غياب</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--orange)" id="rep-late">0</div><div style="color:var(--gray);font-size:13px">تأخير (نص يوم)</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="rep-effective">0</div><div style="color:var(--gray);font-size:13px">إجمالي الأيام الفعلية</div></div>
+      </div>
+      <div style="color:var(--gray);font-size:12px;text-align:center">* التأخير يحسب نص يوم</div>
+    </div>
+  </div>
+</div>
 
-// GALLERY TAB
-function switchGalTab(tab){
-  const isFile=tab==='file';
-  document.getElementById('gal-file-panel').style.display=isFile?'block':'none';
-  document.getElementById('gal-url-panel').style.display=isFile?'none':'block';
-  document.getElementById('gal-tab-file').classList.toggle('active',isFile);
-  document.getElementById('gal-tab-url').classList.toggle('active',!isFile);
-}
+<!-- Add Client Modal -->
+<div class="modal-overlay" id="add-client-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">🏠 إضافة عميل جديد</h3>
+    <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:12px;margin-bottom:16px;text-align:center">
+      <span style="color:var(--gray);font-size:13px">رقم العميل: </span>
+      <span style="font-size:22px;font-weight:900;color:var(--gold)" id="new-client-id">---</span>
+    </div>
+    <div class="ff"><label>اسم العميل</label><input type="text" id="cl-name" placeholder="الاسم الكامل"></div>
+    <div class="ff"><label>رقم الهاتف</label><input type="tel" id="cl-phone" placeholder="01XXXXXXXXX"></div>
+    <div class="ff"><label>العنوان</label><input type="text" id="cl-address" placeholder="العنوان بالتفصيل"></div>
+    <div class="ff"><label>الخدمة المطلوبة</label>
+      <select id="cl-service">
+        <option value="ceiling">أسقف جبس بورد</option>
+        <option value="lighting">إضاءة</option>
+        <option value="partition">فواصل</option>
+        <option value="3d">ثلاثي الأبعاد</option>
+        <option value="other">أخرى</option>
+      </select>
+    </div>
+    <div class="ff"><label>تفاصيل الشغل</label><textarea id="cl-details" rows="3" placeholder="وصف تفصيلي للمطلوب"></textarea></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="ff"><label>إجمالي المبلغ (جنيه)</label><input type="number" id="cl-total" placeholder="0"></div>
+      <div class="ff"><label>المبلغ المدفوع</label><input type="number" id="cl-paid" placeholder="0" oninput="calcRemaining()"></div>
+    </div>
+    <div class="ff"><label>طريقة الدفع</label>
+      <select id="cl-payment">
+        <option value="cash">💵 كاش</option>
+        <option value="instapay">📱 InstaPay</option>
+        <option value="vodafone">🔴 فودافون كاش</option>
+        <option value="visa">💳 فيزا / كارت</option>
+        <option value="mixed">🔀 متعدد</option>
+      </select>
+    </div>
+    <div class="ff"><label>حالة الدفع</label>
+      <select id="cl-pay-status">
+        <option value="partial">جزء مقدم</option>
+        <option value="full">مدفوع كامل</option>
+        <option value="pending">لم يدفع بعد</option>
+      </select>
+    </div>
+    <div id="cl-alert" style="margin:12px 0"></div>
+    <button class="btn-gold" onclick="saveClient()">💾 حفظ العميل</button>
+  </div>
+</div>
 
-// MOBILE SIDEBAR
-function toggleSidebar(){
-  document.querySelector('.sidebar').classList.toggle('open');
-  document.getElementById('sidebar-overlay').classList.toggle('show');
-}
+<!-- Client Details Modal -->
+<div class="modal-overlay" id="client-details-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('client-details-modal')">✕</button>
+    <div id="client-details-content"></div>
+  </div>
+</div>
 
-// Set today's date for attendance
-window.addEventListener('DOMContentLoaded',()=>{
-  const attDate=document.getElementById('att-date');
-  if(attDate)attDate.value=new Date().toISOString().split('T')[0];
-  // Show salary field logic
-  const usrRole=document.getElementById('usr-role');
-  if(usrRole){
-    const sf=document.getElementById('salary-field-wrap');
-    if(sf)sf.style.display='none';
-    usrRole.addEventListener('change',()=>{
-      const show=usrRole.value==='worker'||usrRole.value==='employee';
-      if(sf)sf.style.display=show?'block':'none';
+<!-- SuperAdmin Add User Modal -->
+<div class="modal-overlay" id="sa-add-user-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('sa-add-user-modal')">✕</button>
+    <h3>🔐 إضافة أكونت جديد</h3>
+    <div class="ff"><label>الاسم الكامل *</label><input type="text" id="sa-name" placeholder="اسم المستخدم"></div>
+    <div class="ff"><label>الإيميل *</label><input type="email" id="sa-email" placeholder="user@deltaart.com"></div>
+    <div class="ff">
+      <label>كلمة المرور *</label>
+      <div style="position:relative">
+        <input type="text" id="sa-pass" placeholder="8 أحرف على الأقل">
+      </div>
+    </div>
+    <div class="ff">
+      <label>الدور</label>
+      <select id="sa-role">
+        <option value="owner">👑 صاحب الشركة</option>
+        <option value="admin">مدير</option>
+        <option value="employee">موظف</option>
+        <option value="worker">عامل</option>
+      </select>
+    </div>
+    <div id="sa-add-alert" class="alert"></div>
+    <button class="btn-gold" onclick="saAddUser()">➕ إضافة</button>
+  </div>
+</div>
+
+<script type="module">
+import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// ===== SUPERADMIN USERS TABLE =====
+function loadSAUsers() {
+  const db = window._db;
+  onValue(ref(db, 'deltaart/users'), snap => {
+    const tbody = document.getElementById('sa-users-tbody');
+    if(!tbody) return;
+    if(!snap || !snap.exists()) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>';
+      return;
+    }
+    let html = '';
+    snap.forEach(c => {
+      const u = c.val();
+      const isActive = u.active !== false;
+      const roleMap = {owner:'👑 صاحب الشركة', admin:'مدير', employee:'موظف', worker:'عامل', viewer:'مشاهد', editor:'محرر'};
+      html += `<tr>
+        <td><strong>${u.name||'—'}</strong></td>
+        <td style="font-size:12px;color:var(--gray)">${u.email||'—'}</td>
+        <td><span class="badge badge-blue">${roleMap[u.role]||u.role||'—'}</span></td>
+        <td>
+          <span id="pass-${c.key}" style="color:var(--gray);font-size:13px">••••••••</span>
+          <button onclick="togglePass('${c.key}','${u.password||''}')" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:13px;margin-right:4px">👁</button>
+        </td>
+        <td>
+          <span class="badge ${isActive?'badge-green':'badge-red'}">${isActive?'✅ مفعّل':'🚫 موقوف'}</span>
+        </td>
+        <td style="color:var(--gray);font-size:12px">${u.createdAt ? new Date(u.createdAt).toLocaleDateString('ar-EG') : '—'}</td>
+        <td>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">
+            <button class="btn-sm ${isActive?'btn-danger':'btn-success'}" onclick="saToggleUser('${c.key}',${isActive})">${isActive?'إيقاف':'تفعيل'}</button>
+            <button class="btn-sm btn-danger" onclick="saDelUser('${c.key}')">🗑️</button>
+          </div>
+        </td>
+      </tr>`;
     });
+    tbody.innerHTML = html;
+  });
+}
+
+window.togglePass = function(id, pass) {
+  const el = document.getElementById('pass-'+id);
+  if(!el) return;
+  if(el.textContent === '••••••••') {
+    el.textContent = pass || '(غير محفوظ)';
+    el.style.color = 'var(--gold)';
+  } else {
+    el.textContent = '••••••••';
+    el.style.color = 'var(--gray)';
   }
+};
+
+window.saToggleUser = async function(id, isActive) {
+  if(!confirm(isActive ? 'إيقاف هذا الأكونت؟' : 'تفعيل هذا الأكونت؟')) return;
+  await window._set(ref(window._db, `deltaart/users/${id}/active`), !isActive);
+};
+
+window.saDelUser = async function(id) {
+  if(!confirm('حذف هذا الأكونت نهائياً؟')) return;
+  await remove(ref(window._db, `deltaart/users/${id}`));
+};
+
+window.saAddUser = async function() {
+  const name = document.getElementById('sa-name').value.trim();
+  const email = document.getElementById('sa-email').value.trim();
+  const pass = document.getElementById('sa-pass').value;
+  const role = document.getElementById('sa-role').value;
+  const alertEl = document.getElementById('sa-add-alert');
+  if(!name||!email||!pass) { showSAAlert(alertEl,'error','ادخل كل البيانات'); return; }
+  if(pass.length < 8) { showSAAlert(alertEl,'error','كلمة المرور أقل من 8 أحرف'); return; }
+  try {
+    const auth = getAuth();
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await window._set(ref(window._db, `deltaart/users/${cred.user.uid}`), {
+      name, email, role, password: pass,
+      active: true, createdAt: new Date().toISOString()
+    });
+    showSAAlert(alertEl,'success','✅ تم إضافة الأكونت');
+    ['sa-name','sa-email','sa-pass'].forEach(id => document.getElementById(id).value='');
+    setTimeout(()=>closeModal('sa-add-user-modal'), 1500);
+  } catch(e) {
+    const msgs = {'auth/email-already-in-use':'الإيميل مستخدم بالفعل','auth/weak-password':'كلمة المرور ضعيفة'};
+    showSAAlert(alertEl,'error', msgs[e.code]||'حدث خطأ: '+e.message);
+  }
+};
+
+function showSAAlert(el, type, text) {
+  el.className = `alert alert-${type==='success'?'success':'error'} show`;
+  el.textContent = text;
+  setTimeout(()=>el.classList.remove('show'), 3500);
+}
+
+// ===== CHANGE MY PASSWORD =====
+window.changeMyPassword = async function() {
+  const current = document.getElementById('cp-current').value;
+  const newPass = document.getElementById('cp-new').value;
+  const confirm = document.getElementById('cp-confirm').value;
+  const alertEl = document.getElementById('cp-my-alert');
+
+  if(!current||!newPass||!confirm) {
+    alertEl.className='alert alert-error show'; alertEl.textContent='ادخل كل الحقول'; return;
+  }
+  if(newPass !== confirm) {
+    alertEl.className='alert alert-error show'; alertEl.textContent='كلمتا المرور مش متطابقتين'; return;
+  }
+  if(newPass.length < 8) {
+    alertEl.className='alert alert-error show'; alertEl.textContent='كلمة المرور أقل من 8 أحرف'; return;
+  }
+
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, current);
+    await reauthenticateWithCredential(user, credential);
+    await updatePassword(user, newPass);
+
+    // Update password in DB if exists
+    if(window._db && user.uid) {
+      try { await window._set(ref(window._db, `deltaart/users/${user.uid}/password`), newPass); } catch(e){}
+    }
+
+    alertEl.className='alert alert-success show';
+    alertEl.textContent='✅ تم تغيير كلمة المرور بنجاح';
+    ['cp-current','cp-new','cp-confirm'].forEach(id=>document.getElementById(id).value='');
+  } catch(e) {
+    const msgs = {'auth/wrong-password':'كلمة المرور الحالية غلط','auth/too-many-requests':'محاولات كتير — انتظر شوية'};
+    alertEl.className='alert alert-error show';
+    alertEl.textContent = msgs[e.code]||'حدث خطأ';
+  }
+  setTimeout(()=>alertEl.classList.remove('show'), 4000);
+};
+
+// Load SA users when page is ready
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(loadSAUsers, 2000);
 });
+
+// Also load when navigating to superadmin page
+const origGoPage2 = window.goPage;
+window.goPage = function(name, btn) {
+  origGoPage2 && origGoPage2(name, btn);
+  if(name === 'superadmin') loadSAUsers();
+};
 </script>
 </body>
 </html>
