@@ -10,6 +10,37 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);display:flex;height:100vh;overflow:hidden;}
 
+/* ===== RESPONSIVE MOBILE ===== */
+@media(max-width:768px){
+  body{flex-direction:column;overflow:auto;height:auto;min-height:100vh;}
+  .sidebar{width:100%;height:auto;border-left:none;border-bottom:1px solid rgba(201,168,76,0.15);flex-direction:row;align-items:center;flex-wrap:wrap;}
+  .sidebar-logo{padding:12px 16px;border-bottom:none;border-left:1px solid rgba(201,168,76,0.1);}
+  .sidebar-nav{display:flex;flex-wrap:wrap;gap:4px;padding:8px;flex:1;overflow:visible;}
+  .nav-item{padding:7px 10px;font-size:12px;margin-bottom:0;}
+  .nav-section-title{display:none;}
+  .sidebar-footer{padding:8px 12px;border-top:none;border-left:1px solid rgba(201,168,76,0.1);}
+  .user-info .un{font-size:11px;}
+  .logout-btn{margin-top:4px;padding:6px 10px;font-size:11px;}
+  .main{height:auto;overflow:visible;}
+  .content{overflow-y:visible;padding:12px;}
+  .stats-row{grid-template-columns:repeat(2,1fr)!important;gap:10px;}
+  .two-col{grid-template-columns:1fr!important;}
+  table{font-size:12px;}
+  td,th{padding:8px 6px;}
+  .modal{padding:20px 16px;}
+  .stats-row .stat-card .sc-val{font-size:22px;}
+  .topbar{padding:0 12px;}
+  .topbar h2{font-size:15px;}
+  .gal-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;}
+  .inv-items-table{font-size:12px;}
+  .payment-row{flex-direction:column;gap:8px;}
+}
+@media(max-width:480px){
+  .stats-row{grid-template-columns:1fr 1fr!important;}
+  .sidebar-nav .nav-item .ni{font-size:14px;}
+  .sidebar-nav .nav-item{padding:6px 8px;font-size:11px;}
+}
+
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
 #login-screen.hide{display:none;}
@@ -89,6 +120,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .badge-blue{background:rgba(59,130,246,0.15);color:#3B82F6;}
 .badge-gray{background:rgba(136,153,170,0.15);color:var(--gray);}
 .badge-purple{background:rgba(168,85,247,0.15);color:#A855F7;}
+.badge-orange{background:rgba(249,115,22,0.15);color:#F97316;}
 
 /* FORM */
 .ff{margin-bottom:16px;}
@@ -103,6 +135,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .btn-success{background:rgba(34,197,94,0.15);color:#22C55E;border:1px solid rgba(34,197,94,0.3);}
 .btn-warning{background:rgba(249,115,22,0.15);color:#F97316;border:1px solid rgba(249,115,22,0.3);}
 .btn-outline-sm{background:transparent;border:1px solid rgba(201,168,76,0.3);color:var(--gold);}
+.btn-blue{background:rgba(59,130,246,0.15);color:#3B82F6;border:1px solid rgba(59,130,246,0.3);}
 
 /* PASSWORD FIELD */
 .pass-field{position:relative;}
@@ -123,7 +156,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:32px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;position:relative;}
+.modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:32px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
 .modal-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.1);border:none;color:var(--white);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .modal h3{margin-bottom:20px;font-size:18px;font-weight:700;}
 
@@ -161,6 +194,43 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 /* EMPTY */
 .empty-state{text-align:center;padding:48px 20px;color:var(--gray);}
 .empty-state .ei{font-size:48px;margin-bottom:12px;}
+
+/* ===== INVOICE ADVANCED STYLES ===== */
+.client-select-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;}
+.client-select-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.05);}
+.client-select-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.1);}
+.client-card-name{font-weight:700;font-size:14px;}
+.client-card-info{font-size:12px;color:var(--gray);margin-top:2px;}
+
+.inv-items-table{width:100%;border-collapse:collapse;margin-top:8px;}
+.inv-items-table th{text-align:right;font-size:12px;color:var(--gray);padding:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.inv-items-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;vertical-align:middle;}
+.inv-items-table tr:last-child td{border-bottom:none;}
+.inv-items-table input{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:6px;padding:6px 10px;color:var(--white);font-family:'Cairo',sans-serif;font-size:13px;outline:none;width:100%;direction:rtl;}
+.inv-items-table input:focus{border-color:var(--gold);}
+.inv-total-box{background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:16px;margin-top:12px;}
+.inv-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px;}
+.inv-total-row:last-child{margin-bottom:0;font-size:16px;font-weight:700;color:var(--gold);}
+.inv-total-label{color:var(--gray);}
+
+.payment-strip{background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.payment-strip .pm-info{font-size:13px;}
+.payment-strip .pm-amount{font-weight:700;color:var(--green);}
+.payment-strip .pm-date{font-size:11px;color:var(--gray);margin-top:2px;}
+
+.debt-bar-wrap{margin-top:8px;}
+.debt-bar-bg{background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden;}
+.debt-bar-fill{height:100%;border-radius:20px;background:linear-gradient(to left,var(--green),#16a34a);transition:width 0.4s;}
+
+/* Invoice detail view */
+.inv-detail-header{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(10,22,40,0));border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:16px;}
+.inv-stat-mini{text-align:center;padding:10px;}
+.inv-stat-mini .val{font-size:20px;font-weight:900;}
+.inv-stat-mini .lbl{font-size:11px;color:var(--gray);margin-top:2px;}
+
+/* Total revenue card */
+.revenue-card{background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(10,22,40,0));border:1px solid rgba(201,168,76,0.3);border-radius:14px;padding:20px;position:relative;overflow:hidden;}
+.revenue-card::before{content:'💰';position:absolute;left:-10px;bottom:-10px;font-size:80px;opacity:0.07;}
 </style>
 </head>
 <body>
@@ -192,9 +262,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="li">DA</div>
     <div class="lt">دلتا <span>آرت</span></div>
   </div>
-  <nav class="sidebar-nav" id="sidebar-nav">
-    <!-- filled dynamically based on role -->
-  </nav>
+  <nav class="sidebar-nav" id="sidebar-nav"></nav>
   <div class="sidebar-footer">
     <div class="user-card">
       <div class="user-avatar" id="sidebar-avatar">A</div>
@@ -223,6 +291,16 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">صور المعرض</div><div class="sc-val" id="ds-g">0</div><div class="sc-change" style="color:var(--gray)">صورة</div></div><div class="sc-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🖼️</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">الموظفون</div><div class="sc-val" id="ds-u">0</div><div class="sc-change" style="color:var(--gray)">مستخدم</div></div><div class="sc-icon" style="background:rgba(168,85,247,0.15);color:#A855F7">👥</div></div></div>
       </div>
+      <!-- Revenue Row -->
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="revenue-card">
+          <div class="sc-label" style="font-size:13px">💰 إجمالي الإيرادات</div>
+          <div style="font-size:32px;font-weight:900;color:var(--gold)" id="ds-total-rev">0</div>
+          <div style="font-size:12px;color:var(--gray);margin-top:4px">جنيه — كل الفواتير</div>
+        </div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">✅ تم تحصيله</div><div class="sc-val" style="color:var(--green)" id="ds-paid-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">✅</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">⏳ متبقي للتحصيل</div><div class="sc-val" style="color:var(--red)" id="ds-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">⏳</div></div></div>
+      </div>
       <div class="two-col" style="margin-bottom:16px">
         <div class="panel">
           <div class="panel-header"><h3>📅 آخر الحجوزات</h3><button class="btn-sm btn-outline-sm" onclick="goPage('bookings',null)">الكل</button></div>
@@ -233,11 +311,17 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <table><tbody id="dash-msg-tbody"></tbody></table>
         </div>
       </div>
+      <div class="panel">
+        <div class="panel-header"><h3>🧾 آخر الفواتير</h3><button class="btn-sm btn-outline-sm" onclick="goPage('invoices',null)">الكل</button></div>
+        <table><thead><tr><th>العميل</th><th>إجمالي المشروع</th><th>تم الدفع</th><th>المتبقي</th><th>الحالة</th></tr></thead>
+        <tbody id="dash-inv-tbody"></tbody></table>
+      </div>
       <div class="panel" id="quick-actions-panel">
         <div class="panel-header"><h3>⚡ إجراءات سريعة</h3></div>
         <div class="panel-content" style="display:flex;gap:12px;flex-wrap:wrap">
           <button class="btn-sm btn-primary" onclick="goPage('gallery',null);setTimeout(()=>openModal('add-gallery-modal'),100)">➕ رفع صورة</button>
           <button class="btn-sm btn-primary" onclick="goPage('services',null);setTimeout(()=>openModal('add-service-modal'),100)">➕ إضافة خدمة</button>
+          <button class="btn-sm btn-primary" onclick="goPage('clients',null);setTimeout(()=>openModal('add-client-modal'),100)">👤 عميل جديد</button>
           <button class="btn-sm btn-outline-sm" onclick="goPage('settings',null)">⚙️ الإعدادات</button>
           <a href="index.html" target="_blank" class="btn-sm btn-success" style="text-decoration:none">🌐 فتح الموقع</a>
         </div>
@@ -270,14 +354,48 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- INVOICES -->
-    <div class="page" id="page-invoices">
+    <!-- CLIENTS PAGE -->
+    <div class="page" id="page-clients">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <h3 style="font-size:18px;font-weight:700">🧾 الفواتير</h3>
-        <button class="btn-sm btn-primary" onclick="openModal('add-invoice-modal')">➕ فاتورة جديدة</button>
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👤 العملاء</h3><p style="color:var(--gray);font-size:13px">إدارة بيانات العملاء</p></div>
+        <button class="btn-sm btn-primary" onclick="openModal('add-client-modal')">➕ عميل جديد</button>
       </div>
       <div class="panel">
-        <div style="overflow-x:auto"><table><thead><tr><th>رقم الفاتورة</th><th>اسم العميل</th><th>الخدمة</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="invoices-tbody"></tbody></table></div>
+        <div style="padding:12px 20px;border-bottom:1px solid rgba(201,168,76,0.1)">
+          <input type="text" id="client-search" oninput="filterClients()" placeholder="بحث بالاسم أو الهاتف..." style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:10px 14px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;width:100%;direction:rtl;">
+        </div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>المشاريع</th><th>إجمالي العقود</th><th>تم الدفع</th><th>المتبقي</th><th>إجراء</th></tr></thead>
+          <tbody id="clients-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- INVOICES PAGE -->
+    <div class="page" id="page-invoices">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🧾 الفواتير والمشاريع</h3></div>
+        <button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">➕ فاتورة جديدة</button>
+      </div>
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
+        <div class="revenue-card"><div class="sc-label">💰 إجمالي الإيرادات</div><div style="font-size:26px;font-weight:900;color:var(--gold)" id="inv-total-rev">0 جنيه</div></div>
+        <div class="stat-card"><div><div class="sc-label">✅ تم تحصيله</div><div class="sc-val" style="color:var(--green)" id="inv-paid-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
+        <div class="stat-card"><div><div class="sc-label">⏳ متبقي للتحصيل</div><div class="sc-val" style="color:var(--red)" id="inv-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h3>كل الفواتير</h3>
+          <select id="inv-filter" onchange="filterInvoices()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;">
+            <option value="all">الكل</option>
+            <option value="partial">دفع جزئي</option>
+            <option value="paid">مدفوعة بالكامل</option>
+            <option value="unpaid">لم يُدفع</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>#</th><th>العميل</th><th>المشروع</th><th>إجمالي المشروع</th><th>تم الدفع</th><th>المتبقي</th><th>الحالة</th><th>إجراء</th></tr></thead>
+          <tbody id="invoices-tbody"></tbody>
+        </table></div>
       </div>
     </div>
 
@@ -306,7 +424,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <div class="panel"><table><thead><tr><th>الأيقونة</th><th>اسم الخدمة</th><th>الوصف</th><th>إجراء</th></tr></thead><tbody id="services-tbody"></tbody></table></div>
     </div>
 
-    <!-- TEAM (owner only) -->
+    <!-- TEAM -->
     <div class="page" id="page-team">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👥 فريق العمل</h3><p style="color:var(--gray);font-size:13px">إضافة وإدارة الموظفين</p></div>
@@ -318,26 +436,18 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- SUPERADMIN ACCOUNTS PAGE -->
+    <!-- SUPERADMIN -->
     <div class="page" id="page-superadmin">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <div>
-          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔐 إدارة الأكونتات</h3>
-          <p style="color:var(--gray);font-size:13px">كل المستخدمين في النظام</p>
-        </div>
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔐 إدارة الأكونتات</h3><p style="color:var(--gray);font-size:13px">كل المستخدمين في النظام</p></div>
         <button class="btn-sm btn-primary" onclick="openModal('sa-add-modal')">➕ إضافة أكونت</button>
       </div>
       <div class="sa-table-wrap">
-        <div class="sa-search">
-          <span>🔍</span>
-          <input type="text" id="sa-search-input" placeholder="بحث بالاسم أو البريد..." oninput="filterSATable()">
-        </div>
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>الدور</th><th>كلمة المرور</th><th>الحالة</th><th>إجراء</th></tr></thead>
-            <tbody id="sa-tbody"></tbody>
-          </table>
-        </div>
+        <div class="sa-search"><span>🔍</span><input type="text" id="sa-search-input" placeholder="بحث بالاسم أو البريد..." oninput="filterSATable()"></div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>الدور</th><th>كلمة المرور</th><th>الحالة</th><th>إجراء</th></tr></thead>
+          <tbody id="sa-tbody"></tbody>
+        </table></div>
       </div>
     </div>
 
@@ -345,9 +455,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="page" id="page-attendance">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📋 حضور الموظفين</h3><p style="color:var(--gray);font-size:13px">تسجيل الحضور والانصراف اليومي</p></div>
-        <div style="display:flex;gap:8px">
-          <input type="date" id="att-date-filter" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
-        </div>
+        <input type="date" id="att-date-filter" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
       </div>
       <div class="two-col" style="margin-bottom:16px">
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">حاضرون اليوم</div><div class="sc-val" id="att-present">0</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">✅</div></div></div>
@@ -364,20 +472,14 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
     <!-- VISITORS -->
     <div class="page" id="page-visitors">
-      <div style="margin-bottom:16px">
-        <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3>
-        <p style="color:var(--gray);font-size:13px">تتبع اهتمام الزوار بالموقع</p>
-      </div>
+      <div style="margin-bottom:16px"><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3><p style="color:var(--gray);font-size:13px">تتبع اهتمام الزوار بالموقع</p></div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟢 مهتمون جداً</div><div class="sc-val" id="vis-high">0</div><div class="sc-change" style="color:var(--green)">أكثر من 3 دقايق</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">🟢</div></div></div>
-        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟡 مهتمون شوية</div><div class="sc-val" id="vis-medium">0</div><div class="sc-change" style="color:var(--gold)">30 ثانية - 3 دقايق</div></div><div class="sc-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🟡</div></div></div>
-        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🔴 مش مهتمين</div><div class="sc-val" id="vis-low">0</div><div class="sc-change" style="color:var(--red)">أقل من 30 ثانية</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">🔴</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟡 مهتمون شوية</div><div class="sc-val" id="vis-medium">0</div><div class="sc-change" style="color:var(--gold)">30 ث - 3 د</div></div><div class="sc-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🟡</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🔴 مش مهتمين</div><div class="sc-val" id="vis-low">0</div><div class="sc-change" style="color:var(--red)">أقل من 30 ث</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">🔴</div></div></div>
       </div>
       <div class="panel" style="margin-top:16px">
-        <div class="panel-header">
-          <h3>أحدث الزوار</h3>
-          <button class="btn-sm btn-danger" onclick="clearVisitors()">🗑️ مسح الكل</button>
-        </div>
+        <div class="panel-header"><h3>أحدث الزوار</h3><button class="btn-sm btn-danger" onclick="clearVisitors()">🗑️ مسح الكل</button></div>
         <div style="overflow-x:auto"><table>
           <thead><tr><th>الوقت</th><th>مدة الزيارة</th><th>مستوى الاهتمام</th><th>الجهاز</th></tr></thead>
           <tbody id="visitors-tbody"></tbody>
@@ -387,10 +489,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
     <!-- SETTINGS -->
     <div class="page" id="page-settings">
-      <div class="stabs" id="settings-tabs">
-        <!-- tabs filled by role -->
-      </div>
-      <!-- Change Password (all roles) -->
+      <div class="stabs" id="settings-tabs"></div>
       <div class="stab-panel active" id="stab-password">
         <div class="panel">
           <div class="panel-header"><h3>🔑 تغيير كلمة المرور</h3></div>
@@ -403,7 +502,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           </div>
         </div>
       </div>
-      <!-- Contact (owner only) -->
       <div class="stab-panel" id="stab-contact">
         <div class="panel">
           <div class="panel-header"><h3>📞 معلومات التواصل</h3></div>
@@ -423,7 +521,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           </div>
         </div>
       </div>
-      <!-- Stats (owner only) -->
       <div class="stab-panel" id="stab-stats">
         <div class="panel">
           <div class="panel-header"><h3>📊 إحصائيات الـ Hero</h3></div>
@@ -439,7 +536,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           </div>
         </div>
       </div>
-      <!-- Prices (owner only) -->
       <div class="stab-panel" id="stab-prices">
         <div class="panel">
           <div class="panel-header"><h3>💰 أسعار الباقات (جنيه/م²)</h3></div>
@@ -470,7 +566,82 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ========== MODALS ========== -->
+
+<!-- Add Client -->
+<div class="modal-overlay" id="add-client-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
+    <h3>👤 إضافة عميل جديد</h3>
+    <div class="ff"><label>الاسم الكامل *</label><input type="text" id="cl-name" placeholder="اسم العميل"></div>
+    <div class="two-col">
+      <div class="ff"><label>رقم الهاتف *</label><input type="tel" id="cl-phone" placeholder="01XXXXXXXXX"></div>
+      <div class="ff"><label>رقم الهاتف 2</label><input type="tel" id="cl-phone2" placeholder="اختياري"></div>
+    </div>
+    <div class="ff"><label>العنوان</label><input type="text" id="cl-address" placeholder="المنطقة / الحي / المدينة"></div>
+    <div class="ff"><label>ملاحظات</label><textarea id="cl-notes" placeholder="أي ملاحظات عن العميل..."></textarea></div>
+    <button class="btn-sm btn-primary" style="width:100%" onclick="addClient()">➕ إضافة العميل</button>
+    <div id="cl-alert" class="alert"></div>
+  </div>
+</div>
+
+<!-- New Invoice / Project Modal -->
+<div class="modal-overlay" id="new-invoice-modal">
+  <div class="modal" style="max-width:740px">
+    <button class="modal-close" onclick="closeModal('new-invoice-modal')">✕</button>
+    <h3>🧾 فاتورة / مشروع جديد</h3>
+
+    <!-- Step 1: Select client -->
+    <div id="inv-step1">
+      <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:12px">الخطوة 1: اختار العميل</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <input type="text" id="inv-client-search" oninput="filterInvClients()" placeholder="ابحث عن العميل..." style="flex:1;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:10px 14px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;direction:rtl;">
+        <button class="btn-sm btn-outline-sm" onclick="openModal('add-client-modal')" style="white-space:nowrap">➕ جديد</button>
+      </div>
+      <div id="inv-client-list" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+
+    <!-- Step 2: Project details & items -->
+    <div id="inv-step2" style="display:none">
+      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:14px;font-weight:700" id="inv-selected-client-name">—</div>
+          <div style="font-size:12px;color:var(--gray)" id="inv-selected-client-phone">—</div>
+        </div>
+        <button class="btn-sm btn-outline-sm" onclick="document.getElementById('inv-step1').style.display='block';document.getElementById('inv-step2').style.display='none';window._invSelectedClient=null">تغيير</button>
+      </div>
+
+      <div class="ff"><label>اسم المشروع / وصفه *</label><input type="text" id="inv-project-name" placeholder="مثال: تشطيب شقة - المعادي"></div>
+
+      <!-- Project items table -->
+      <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">📋 بنود المشروع</div>
+      <table class="inv-items-table">
+        <thead><tr><th>البند / الخدمة</th><th>الكمية / المساحة</th><th>الوحدة</th><th>سعر الوحدة</th><th>الإجمالي</th><th></th></tr></thead>
+        <tbody id="inv-items-tbody"></tbody>
+      </table>
+      <button class="btn-sm btn-outline-sm" style="margin-top:8px;width:100%" onclick="addInvItem()">➕ إضافة بند</button>
+
+      <div class="inv-total-box" id="inv-total-box">
+        <div class="inv-total-row"><span class="inv-total-label">مجموع البنود</span><span id="inv-subtotal">0 جنيه</span></div>
+        <div class="inv-total-row"><span class="inv-total-label">خصم</span><span><input type="number" id="inv-discount" value="0" min="0" oninput="recalcInvTotal()" style="width:80px;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:4px 8px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;text-align:center"> جنيه</span></div>
+        <div class="inv-total-row"><span>💰 إجمالي المشروع</span><span id="inv-grand-total">0 جنيه</span></div>
+      </div>
+
+      <div class="ff" style="margin-top:16px"><label>ملاحظات</label><textarea id="inv-project-notes" placeholder="شروط الدفع، ملاحظات..."></textarea></div>
+      <button class="btn-sm btn-primary" style="width:100%;margin-top:8px" onclick="saveNewInvoice()">💾 حفظ الفاتورة</button>
+      <div id="new-inv-alert" class="alert"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Invoice Detail Modal -->
+<div class="modal-overlay" id="invoice-detail-modal">
+  <div class="modal" style="max-width:720px">
+    <button class="modal-close" onclick="closeModal('invoice-detail-modal')">✕</button>
+    <div id="invoice-detail-content"></div>
+  </div>
+</div>
+
 <!-- Add Gallery -->
 <div class="modal-overlay" id="add-gallery-modal">
   <div class="modal">
@@ -515,25 +686,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Invoice -->
-<div class="modal-overlay" id="add-invoice-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('add-invoice-modal')">✕</button>
-    <h3>🧾 فاتورة جديدة</h3>
-    <div class="ff"><label>اسم العميل *</label><input type="text" id="inv-client" placeholder="اسم العميل"></div>
-    <div class="ff"><label>رقم الهاتف</label><input type="tel" id="inv-phone" placeholder="01XXXXXXXXX"></div>
-    <div class="ff"><label>الخدمة</label><select id="inv-service"><option>باقة الفلات راحة 🥉</option><option>باقة الفلات تميز 🥈</option><option>باقة الفلات فخامة 🥇</option><option>باقة بيت النور راحة 🥉</option><option>باقة بيت النور تميز 🥈</option><option>باقة بيت النور فخامة 🥇</option><option>خدمة أخرى</option></select></div>
-    <div class="two-col">
-      <div class="ff"><label>المبلغ (جنيه) *</label><input type="number" id="inv-amount" placeholder="0"></div>
-      <div class="ff"><label>المساحة (م²)</label><input type="number" id="inv-area" placeholder="0"></div>
-    </div>
-    <div class="ff"><label>ملاحظات</label><textarea id="inv-notes" placeholder="أي تفاصيل إضافية..."></textarea></div>
-    <button class="btn-sm btn-primary" style="width:100%" onclick="addInvoice()">💾 حفظ الفاتورة</button>
-    <div id="inv-alert" class="alert"></div>
-  </div>
-</div>
-
-<!-- Add User (owner) -->
+<!-- Add User -->
 <div class="modal-overlay" id="add-user-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-user-modal')">✕</button>
@@ -541,19 +694,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="ff"><label>الاسم الكامل *</label><input type="text" id="usr-name" placeholder="اسم الموظف"></div>
     <div class="ff"><label>البريد الإلكتروني *</label><input type="email" id="usr-email" placeholder="user@deltaart.com"></div>
     <div class="ff"><label>كلمة المرور *</label><div class="pass-field"><input type="password" id="usr-pass" placeholder="8 حروف على الأقل"><button class="pass-toggle" onclick="togglePass('usr-pass',this)">👁️</button></div></div>
-    <div class="ff"><label>الدور</label>
-      <select id="usr-role">
-        <option value="manager">مدير</option>
-        <option value="employee">موظف</option>
-        <option value="worker">عامل</option>
-      </select>
-    </div>
+    <div class="ff"><label>الدور</label><select id="usr-role"><option value="manager">مدير</option><option value="employee">موظف</option><option value="worker">عامل</option></select></div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="addUser()">➕ إضافة</button>
     <div id="usr-alert" class="alert"></div>
   </div>
 </div>
 
-<!-- SuperAdmin Add Account -->
+<!-- SuperAdmin Add -->
 <div class="modal-overlay" id="sa-add-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('sa-add-modal')">✕</button>
@@ -561,14 +708,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="ff"><label>الاسم الكامل *</label><input type="text" id="sa-name" placeholder="الاسم"></div>
     <div class="ff"><label>البريد الإلكتروني *</label><input type="email" id="sa-email" placeholder="email@deltaart.com"></div>
     <div class="ff"><label>كلمة المرور *</label><div class="pass-field"><input type="password" id="sa-pass" placeholder="••••••••"><button class="pass-toggle" onclick="togglePass('sa-pass',this)">👁️</button></div></div>
-    <div class="ff"><label>الدور</label>
-      <select id="sa-role">
-        <option value="owner">صاحب الشركة</option>
-        <option value="manager">مدير</option>
-        <option value="employee">موظف</option>
-        <option value="worker">عامل</option>
-      </select>
-    </div>
+    <div class="ff"><label>الدور</label><select id="sa-role"><option value="owner">صاحب الشركة</option><option value="manager">مدير</option><option value="employee">موظف</option><option value="worker">عامل</option></select></div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="saAddAccount()">➕ إضافة</button>
     <div id="sa-add-alert" class="alert"></div>
   </div>
@@ -588,11 +728,12 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
+<!-- ========== FIREBASE ========== -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword, updatePassword, reauthenticateWithCredential, EmailAuthProvider, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getStorage, ref as sref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey:"AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",
@@ -607,38 +748,36 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
-const storage = getStorage(app);
-// Keep user logged in across page refreshes
-setPersistence(auth, browserLocalPersistence).catch(() => {});
+setPersistence(auth, browserLocalPersistence).catch(()=>{});
 
-// SUPERADMIN EMAIL — only this email sees the accounts page
 const SUPERADMIN_EMAIL = 'superadmin@deltaart.com';
-// OWNER EMAIL
 const OWNER_EMAIL = 'admin@deltaart.com';
 
 let currentUserRole = null;
 let currentUserData = null;
+window._allClients = [];
+window._allInvoices = [];
+window._invItems = [];
+window._invSelectedClient = null;
 
 // ===== AUTH =====
 onAuthStateChanged(auth, async user => {
-  if (user) {
+  if(user){
     document.getElementById('login-screen').classList.add('hide');
-    // Check if superadmin
-    if (user.email === SUPERADMIN_EMAIL) {
-      currentUserRole = 'superadmin';
-      currentUserData = { name: 'Super Admin', email: user.email, role: 'superadmin' };
+    if(user.email === SUPERADMIN_EMAIL){
+      currentUserRole='superadmin';
+      currentUserData={name:'Super Admin',email:user.email,role:'superadmin'};
     } else {
-      // Load role from DB
-      const snap = await get(ref(db, `deltaart/users/${user.uid}`));
-      if (snap.exists()) {
-        currentUserData = { ...snap.val(), uid: user.uid, email: user.email };
-        currentUserRole = currentUserData.role || 'employee';
-      } else if (user.email === OWNER_EMAIL) {
-        currentUserRole = 'owner';
-        currentUserData = { name: 'صاحب الشركة', email: user.email, role: 'owner', uid: user.uid };
+      const snap = await get(ref(db,`deltaart/users/${user.uid}`));
+      if(snap.exists()){
+        currentUserData={...snap.val(),uid:user.uid,email:user.email};
+        currentUserRole=currentUserData.role||'employee';
+      } else if(user.email===OWNER_EMAIL){
+        currentUserRole='owner';
+        currentUserData={name:'صاحب الشركة',email:user.email,role:'owner',uid:user.uid};
       } else {
-        currentUserRole = 'employee';
-        currentUserData = { name: user.email.split('@')[0], email: user.email, role: 'employee', uid: user.uid };
+        currentUserRole='employee';
+        currentUserData={name:user.email.split('@')[0],email:user.email,role:'employee',uid:user.uid};
       }
     }
     setupUI();
@@ -648,48 +787,42 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-window.doLogin = async function() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  document.getElementById('login-err').style.display = 'none';
-  try { await signInWithEmailAndPassword(auth, email, pass); }
-  catch(e) { document.getElementById('login-err').style.display = 'block'; }
+window.doLogin = async function(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  document.getElementById('login-err').style.display='none';
+  try{ await signInWithEmailAndPassword(auth,email,pass); }
+  catch(e){ document.getElementById('login-err').style.display='block'; }
 };
-window.doLogout = () => signOut(auth);
+window.doLogout=()=>signOut(auth);
 
-// ===== SETUP UI BY ROLE =====
-function setupUI() {
-  const r = currentUserRole;
-  const d = currentUserData;
+// ===== SETUP UI =====
+function setupUI(){
+  const r=currentUserRole, d=currentUserData;
+  document.getElementById('sidebar-avatar').textContent=(d.name||'A')[0].toUpperCase();
+  document.getElementById('sidebar-name').textContent=d.name||d.email;
+  document.getElementById('sidebar-role-badge').innerHTML=`<span class="role-badge role-${r}">${roleLabelAr(r)}</span>`;
+  document.getElementById('today-date').textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-  // Sidebar avatar
-  document.getElementById('sidebar-avatar').textContent = (d.name||'A')[0].toUpperCase();
-  document.getElementById('sidebar-name').textContent = d.name || d.email;
-  document.getElementById('sidebar-role-badge').innerHTML = `<span class="role-badge role-${r}">${roleLabelAr(r)}</span>`;
-  document.getElementById('today-date').textContent = new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const nav=document.getElementById('sidebar-nav');
+  nav.innerHTML='';
 
-  // Build sidebar nav
-  const nav = document.getElementById('sidebar-nav');
-  nav.innerHTML = '';
-
-  if (r === 'superadmin') {
-    // SuperAdmin: ONLY accounts page
-    nav.innerHTML = `
+  if(r==='superadmin'){
+    nav.innerHTML=`
       <div class="nav-section-title">الإدارة</div>
       <button class="nav-item active" onclick="goPage('superadmin',this)"><span class="ni">🔐</span> الأكونتات</button>
       <div class="nav-section-title">الإعدادات</div>
       <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🔑</span> تغيير الباسورد</button>`;
-    // Setup settings tabs for superadmin (password only)
-    document.getElementById('settings-tabs').innerHTML = `<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
-    // Go to superadmin page
-    goPage('superadmin', null);
-  } else if (r === 'owner') {
-    nav.innerHTML = `
+    document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
+    goPage('superadmin',null);
+  } else if(r==='owner'){
+    nav.innerHTML=`
       <div class="nav-section-title">الرئيسية</div>
-      <button class="nav-item active" id="nav-dash" onclick="goPage('dashboard',this)"><span class="ni">📊</span> لوحة التحكم</button>
+      <button class="nav-item active" onclick="goPage('dashboard',this)"><span class="ni">📊</span> لوحة التحكم</button>
       <div class="nav-section-title">العملاء</div>
-      <button class="nav-item" id="nav-bookings" onclick="goPage('bookings',this)"><span class="ni">📅</span> الحجوزات <span id="badge-bookings" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
-      <button class="nav-item" id="nav-messages" onclick="goPage('messages',this)"><span class="ni">💬</span> الرسائل <span id="badge-messages" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
+      <button class="nav-item" onclick="goPage('clients',this)"><span class="ni">👤</span> العملاء</button>
+      <button class="nav-item" onclick="goPage('bookings',this)"><span class="ni">📅</span> الحجوزات <span id="badge-bookings" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
+      <button class="nav-item" onclick="goPage('messages',this)"><span class="ni">💬</span> الرسائل <span id="badge-messages" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
       <button class="nav-item" onclick="goPage('invoices',this)"><span class="ni">🧾</span> الفواتير</button>
       <div class="nav-section-title">المحتوى</div>
       <button class="nav-item" onclick="goPage('gallery',this)"><span class="ni">🖼️</span> المعرض</button>
@@ -702,63 +835,62 @@ function setupUI() {
       <button class="nav-item" onclick="goPage('attendance',this)"><span class="ni">📋</span> حضور الموظفين</button>
       <button class="nav-item" onclick="goPage('visitors',this)"><span class="ni">👁️</span> زوار الموقع</button>
       <div style="margin-top:12px"><a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> الموقع</a></div>`;
-    document.getElementById('settings-tabs').innerHTML = `
+    document.getElementById('settings-tabs').innerHTML=`
       <button class="stab active" onclick="switchStab('password',this)">🔑 كلمة المرور</button>
       <button class="stab" onclick="switchStab('contact',this)">📞 التواصل</button>
       <button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button>
       <button class="stab" onclick="switchStab('prices',this)">💰 الأسعار</button>`;
   } else {
-    // manager / employee / worker — same nav, no money pages
-    nav.innerHTML = `
+    nav.innerHTML=`
       <div class="nav-section-title">الرئيسية</div>
-      <button class="nav-item active" id="nav-dash" onclick="goPage('dashboard',this)"><span class="ni">📊</span> لوحة التحكم</button>
+      <button class="nav-item active" onclick="goPage('dashboard',this)"><span class="ni">📊</span> لوحة التحكم</button>
       <div class="nav-section-title">العملاء</div>
-      <button class="nav-item" id="nav-bookings" onclick="goPage('bookings',this)"><span class="ni">📅</span> الحجوزات <span id="badge-bookings" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
-      <button class="nav-item" id="nav-messages" onclick="goPage('messages',this)"><span class="ni">💬</span> الرسائل <span id="badge-messages" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
+      <button class="nav-item" onclick="goPage('clients',this)"><span class="ni">👤</span> العملاء</button>
+      <button class="nav-item" onclick="goPage('bookings',this)"><span class="ni">📅</span> الحجوزات <span id="badge-bookings" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
+      <button class="nav-item" onclick="goPage('messages',this)"><span class="ni">💬</span> الرسائل <span id="badge-messages" style="display:none;background:rgba(239,68,68,0.2);color:#EF4444;border-radius:20px;padding:1px 8px;font-size:11px;margin-right:auto">0</span></button>
       <button class="nav-item" onclick="goPage('invoices',this)"><span class="ni">🧾</span> فواتير العملاء</button>
       <div class="nav-section-title">الإعدادات</div>
       <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🔑</span> تغيير الباسورد</button>`;
-    document.getElementById('settings-tabs').innerHTML = `<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
-    // Hide quick actions money stuff
-    const qa = document.getElementById('quick-actions-panel');
-    if (qa) qa.querySelector('.panel-content').innerHTML = `
+    document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
+    const qa=document.getElementById('quick-actions-panel');
+    if(qa) qa.querySelector('.panel-content').innerHTML=`
       <a href="index.html" target="_blank" class="btn-sm btn-success" style="text-decoration:none">🌐 الموقع</a>
-      <button class="btn-sm btn-primary" onclick="goPage('invoices',null)">🧾 فاتورة جديدة</button>`;
+      <button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">🧾 فاتورة جديدة</button>`;
   }
 }
 
 // ===== INIT APP =====
-function initApp() {
-  if (currentUserRole === 'superadmin') {
-    loadSAAccounts();
-    return;
-  }
+function initApp(){
+  if(currentUserRole==='superadmin'){ loadSAAccounts(); return; }
+
   // Bookings
-  onValue(ref(db,'deltaart/bookings'), snap => {
-    const all = []; let nc = 0;
-    if (snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
+  onValue(ref(db,'deltaart/bookings'), snap=>{
+    const all=[];let nc=0;
+    if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
     all.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    window._allBookings = all;
-    document.getElementById('ds-b').textContent = all.length;
-    document.getElementById('ds-b-new').textContent = nc+' جديدة';
-    const badge = document.getElementById('badge-bookings');
+    window._allBookings=all;
+    document.getElementById('ds-b').textContent=all.length;
+    document.getElementById('ds-b-new').textContent=nc+' جديدة';
+    const badge=document.getElementById('badge-bookings');
     if(badge){if(nc>0){badge.textContent=nc;badge.style.display='inline-block';}else badge.style.display='none';}
-    document.getElementById('dash-book-tbody').innerHTML = all.slice(0,5).map(b=>`<tr><td><strong>${b.name}</strong></td><td style="color:var(--gray)">${b.phone}</td><td>${b.type||''}</td><td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد حجوزات</td></tr>';
+    document.getElementById('dash-book-tbody').innerHTML=all.slice(0,5).map(b=>`<tr><td><strong>${b.name}</strong></td><td style="color:var(--gray)">${b.phone}</td><td>${b.type||''}</td><td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد حجوزات</td></tr>';
     filterBookings();
   });
+
   // Messages
-  onValue(ref(db,'deltaart/messages'), snap => {
-    const all = []; let nc = 0;
+  onValue(ref(db,'deltaart/messages'), snap=>{
+    const all=[];let nc=0;
     if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
     all.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    window._allMessages = all;
-    document.getElementById('ds-m').textContent = all.length;
-    document.getElementById('ds-m-new').textContent = nc+' جديدة';
-    const badge = document.getElementById('badge-messages');
+    window._allMessages=all;
+    document.getElementById('ds-m').textContent=all.length;
+    document.getElementById('ds-m-new').textContent=nc+' جديدة';
+    const badge=document.getElementById('badge-messages');
     if(badge){if(nc>0){badge.textContent=nc;badge.style.display='inline-block';}else badge.style.display='none';}
-    document.getElementById('dash-msg-tbody').innerHTML = all.slice(0,5).map(m=>`<tr><td><strong>${m.name}</strong></td><td style="color:var(--gray)">${m.phone}</td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||''}</td><td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد رسائل</td></tr>';
+    document.getElementById('dash-msg-tbody').innerHTML=all.slice(0,5).map(m=>`<tr><td><strong>${m.name}</strong></td><td style="color:var(--gray)">${m.phone}</td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||''}</td><td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد رسائل</td></tr>';
     filterMessages();
   });
+
   // Gallery
   onValue(ref(db,'deltaart/gallery'), snap=>{
     let c=0;const all=[];
@@ -767,127 +899,445 @@ function initApp() {
     document.getElementById('ds-g').textContent=c;
     renderAdminGallery(all);
   });
-  // Users count
+
+  // Users
   onValue(ref(db,'deltaart/users'), snap=>{
-    let c=0; if(snap.exists()) snap.forEach(()=>c++);
+    let c=0;if(snap.exists()) snap.forEach(()=>c++);
     document.getElementById('ds-u').textContent=c;
     if(currentUserRole==='owner') renderTeamTable(snap);
   });
+
   // Services
   onValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
+
+  // Clients
+  onValue(ref(db,'deltaart/clients'), snap=>{
+    const all=[];
+    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
+    window._allClients=all;
+    renderClientsTable();
+  });
+
   // Invoices
-  onValue(ref(db,'deltaart/invoices'), snap=>renderInvoicesTable(snap));
-  // Settings
+  onValue(ref(db,'deltaart/invoices'), snap=>{
+    const all=[];
+    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
+    all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    window._allInvoices=all;
+    calcRevenue();
+    renderInvoicesTable(all);
+    renderDashInvoices(all);
+  });
+
   if(currentUserRole==='owner') loadSettings();
-
-  // Attendance auto-record check-in for logged in user
-  if (currentUserRole !== 'superadmin') {
-    recordCheckIn();
-  }
+  if(currentUserRole!=='superadmin') recordCheckIn();
 }
 
-// Auto check-in when user logs in
-async function recordCheckIn() {
-  const uid = currentUserData?.uid;
-  if (!uid || uid === 'owner-static') return;
-  const today = new Date().toISOString().split('T')[0];
-  const attRef = ref(db, `deltaart/attendance/${today}/${uid}`);
-  const snap = await get(attRef);
-  if (!snap.exists()) {
-    await set(attRef, { checkIn: new Date().toISOString(), name: currentUserData.name, role: currentUserData.role });
-  }
+// ===== CLIENTS =====
+window.addClient = async function(){
+  const name=document.getElementById('cl-name').value.trim();
+  const phone=document.getElementById('cl-phone').value.trim();
+  const phone2=document.getElementById('cl-phone2').value.trim();
+  const address=document.getElementById('cl-address').value.trim();
+  const notes=document.getElementById('cl-notes').value.trim();
+  const alertEl=document.getElementById('cl-alert');
+  if(!name||!phone){showAlert(alertEl,'error','اسم ورقم الهاتف مطلوبان');return;}
+  try{
+    await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success','✅ تم إضافة العميل');
+    ['cl-name','cl-phone','cl-phone2','cl-address','cl-notes'].forEach(id=>document.getElementById(id).value='');
+    setTimeout(()=>{closeModal('add-client-modal');renderInvClientList();},1200);
+  } catch(e){showAlert(alertEl,'error','حدث خطأ');}
+};
+
+function calcClientStats(clientId){
+  const invs=window._allInvoices.filter(i=>i.clientId===clientId);
+  let total=0,paid=0;
+  invs.forEach(inv=>{
+    total+=(inv.total||0);
+    paid+=(inv.totalPaid||0);
+  });
+  return{count:invs.length,total,paid,remaining:total-paid};
 }
 
-// Auto check-out on page unload
-window.addEventListener('beforeunload', async () => {
-  const uid = currentUserData?.uid;
-  if (!uid || uid === 'owner-static' || currentUserRole === 'superadmin') return;
-  const today = new Date().toISOString().split('T')[0];
-  const attRef = ref(db, `deltaart/attendance/${today}/${uid}/checkOut`);
-  try { await set(attRef, new Date().toISOString()); } catch(e) {}
-});
+window.renderClientsTable = function(){
+  const q=(document.getElementById('client-search')?.value||'').toLowerCase();
+  const clients=window._allClients.filter(c=>!q||(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q));
+  const tbody=document.getElementById('clients-tbody');
+  if(!clients.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>';return;}
+  tbody.innerHTML=clients.map(cl=>{
+    const st=calcClientStats(cl.id);
+    return `<tr>
+      <td><strong>${cl.name}</strong>${cl.address?`<div style="font-size:11px;color:var(--gray)">${cl.address}</div>`:''}</td>
+      <td><a href="tel:${cl.phone}" style="color:var(--gold)">${cl.phone}</a>${cl.phone2?`<br><a href="tel:${cl.phone2}" style="color:var(--gray);font-size:11px">${cl.phone2}</a>`:''}</td>
+      <td style="color:var(--gray);font-size:12px">${cl.address||'—'}</td>
+      <td style="text-align:center"><span class="badge badge-blue">${st.count}</span></td>
+      <td style="color:var(--gold);font-weight:700">${st.total.toLocaleString('ar-EG')}</td>
+      <td style="color:var(--green);font-weight:700">${st.paid.toLocaleString('ar-EG')}</td>
+      <td style="color:${st.remaining>0?'var(--red)':'var(--green)'};font-weight:700">${st.remaining.toLocaleString('ar-EG')}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn-sm btn-primary" onclick="openNewInvoiceForClient('${cl.id}')">➕ فاتورة</button>
+          <button class="btn-sm btn-outline-sm" onclick="viewClientInvoices('${cl.id}')">👁️</button>
+          <button class="btn-sm btn-danger" onclick="deleteClient('${cl.id}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+};
+window.filterClients=window.renderClientsTable;
 
-// ===== SUPERADMIN ACCOUNTS =====
-window._saAllAccounts = [];
-function loadSAAccounts() {
-  // Load all users from DB + also show owner
-  onValue(ref(db,'deltaart/users'), snap => {
-    const all = [];
-    // Add owner hardcoded
-    all.push({ uid:'owner-static', name:'صاحب الشركة', email: OWNER_EMAIL, role:'owner', status:'active', password:'DeltaArt@2025!' });
-    if(snap.exists()) snap.forEach(c=>{ const v={uid:c.key,...c.val()}; all.push(v); });
-    window._saAllAccounts = all;
+window.deleteClient=async id=>{
+  if(!confirm('حذف العميل وكل فواتيره؟'))return;
+  await remove(ref(db,`deltaart/clients/${id}`));
+  const invs=window._allInvoices.filter(i=>i.clientId===id);
+  for(const inv of invs) await remove(ref(db,`deltaart/invoices/${inv.id}`));
+};
+
+window.viewClientInvoices=function(clientId){
+  const cl=window._allClients.find(c=>c.id===clientId);
+  const invs=window._allInvoices.filter(i=>i.clientId===clientId);
+  const st=calcClientStats(clientId);
+  const pct=st.total>0?Math.round(st.paid/st.total*100):0;
+  document.getElementById('invoice-detail-content').innerHTML=`
+    <div style="font-size:18px;font-weight:900;margin-bottom:4px">${cl?.name||'—'}</div>
+    <div style="color:var(--gray);font-size:13px;margin-bottom:16px">${cl?.phone||''} ${cl?.address?'• '+cl.address:''}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+      <div class="stat-card" style="text-align:center"><div class="sc-label">إجمالي العقود</div><div style="font-size:20px;font-weight:900;color:var(--gold)">${st.total.toLocaleString('ar-EG')}</div></div>
+      <div class="stat-card" style="text-align:center"><div class="sc-label">تم الدفع</div><div style="font-size:20px;font-weight:900;color:var(--green)">${st.paid.toLocaleString('ar-EG')}</div></div>
+      <div class="stat-card" style="text-align:center"><div class="sc-label">المتبقي</div><div style="font-size:20px;font-weight:900;color:var(--red)">${(st.total-st.paid).toLocaleString('ar-EG')}</div></div>
+    </div>
+    <div class="debt-bar-wrap" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-bottom:4px"><span>نسبة التحصيل</span><span>${pct}%</span></div><div class="debt-bar-bg"><div class="debt-bar-fill" style="width:${pct}%"></div></div></div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:8px">المشاريع والفواتير (${invs.length})</div>
+    ${invs.map(inv=>`
+      <div style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+          <div><div style="font-weight:700">${inv.projectName||'مشروع'}</div><div style="font-size:12px;color:var(--gray)">${fmtDate(inv.createdAt)}</div></div>
+          <span class="badge ${invPayStatus(inv)}">${invPayLabel(inv)}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;margin-bottom:10px">
+          <div><div style="color:var(--gray)">إجمالي المشروع</div><div style="font-weight:700;color:var(--gold)">${(inv.total||0).toLocaleString('ar-EG')} جنيه</div></div>
+          <div><div style="color:var(--gray)">تم الدفع</div><div style="font-weight:700;color:var(--green)">${(inv.totalPaid||0).toLocaleString('ar-EG')} جنيه</div></div>
+          <div><div style="color:var(--gray)">المتبقي</div><div style="font-weight:700;color:${((inv.total||0)-(inv.totalPaid||0))>0?'var(--red)':'var(--green)'}"}>${((inv.total||0)-(inv.totalPaid||0)).toLocaleString('ar-EG')} جنيه</div></div>
+        </div>
+        ${(inv.items||[]).length?`
+        <div style="font-size:11px;color:var(--gray);margin-bottom:6px">بنود المشروع:</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <tr style="color:var(--gray)"><th style="text-align:right;padding:4px">البند</th><th style="text-align:right;padding:4px">الكمية</th><th style="text-align:right;padding:4px">سعر الوحدة</th><th style="text-align:right;padding:4px">الإجمالي</th><th style="padding:4px"></th></tr>
+          ${(inv.items||[]).map((item,idx)=>`<tr>
+            <td style="padding:4px"><input type="text" value="${item.name||''}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;outline:none;padding:2px"></td>
+            <td style="padding:4px"><input type="number" value="${item.qty||0}" onchange="updateInvItem('${inv.id}',${idx},'qty',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:60px;outline:none;padding:2px;text-align:center"></td>
+            <td style="padding:4px"><input type="number" value="${item.price||0}" onchange="updateInvItem('${inv.id}',${idx},'price',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:80px;outline:none;padding:2px;text-align:center"></td>
+            <td style="padding:4px;color:var(--gold);font-weight:700">${((item.qty||0)*(item.price||0)).toLocaleString('ar-EG')}</td>
+            <td style="padding:4px"><button onclick="removeInvItem('${inv.id}',${idx})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:4px;cursor:pointer;padding:2px 6px;font-size:11px">✕</button></td>
+          </tr>`).join('')}
+        </table>
+        <button onclick="addItemToExistingInv('${inv.id}')" class="btn-sm btn-outline-sm" style="margin-top:6px;font-size:11px;padding:4px 10px">➕ إضافة بند</button>
+        `:''} 
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-top:10px">
+          <div style="font-size:12px;color:var(--gray);margin-bottom:6px">💳 المدفوعات:</div>
+          ${(inv.payments||[]).map((p,pi)=>`
+            <div class="payment-strip">
+              <div class="pm-info"><div class="pm-amount">+${(p.amount||0).toLocaleString('ar-EG')} جنيه</div><div class="pm-date">${fmtDate(p.date)} — ${p.note||'دفعة'}</div></div>
+              <button onclick="removePayment('${inv.id}',${pi})" class="btn-sm btn-danger" style="padding:4px 8px;font-size:11px">✕</button>
+            </div>`).join('')}
+          <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap" class="payment-row">
+            <input type="number" id="pay-amount-${inv.id}" placeholder="المبلغ" style="flex:1;min-width:80px;background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
+            <input type="text" id="pay-note-${inv.id}" placeholder="بعد الاستلام / دفعة أولى..." style="flex:2;min-width:120px;background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
+            <button onclick="addPayment('${inv.id}')" class="btn-sm btn-success">➕ إضافة دفعة</button>
+          </div>
+        </div>
+      </div>`).join('')||'<div style="text-align:center;color:var(--gray);padding:24px">لا يوجد مشاريع</div>'}
+    <button class="btn-sm btn-primary" style="width:100%;margin-top:12px" onclick="openNewInvoiceForClient('${clientId}');closeModal('invoice-detail-modal')">➕ إضافة مشروع جديد</button>
+  `;
+  openModal('invoice-detail-modal');
+};
+
+window.updateInvItem = async function(invId, idx, field, val){
+  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+  const items=[...(inv.items||[])];
+  items[idx]={...items[idx],[field]:field==='name'?val:parseFloat(val)||0};
+  const total=items.reduce((s,it)=>s+(it.qty||0)*(it.price||0),0)-(inv.discount||0);
+  await update(ref(db,`deltaart/invoices/${invId}`),{items,total:Math.max(0,total)});
+};
+
+window.removeInvItem = async function(invId, idx){
+  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+  const items=(inv.items||[]).filter((_,i)=>i!==idx);
+  const total=items.reduce((s,it)=>s+(it.qty||0)*(it.price||0),0)-(inv.discount||0);
+  await update(ref(db,`deltaart/invoices/${invId}`),{items,total:Math.max(0,total)});
+  const cl=window._allClients.find(c=>c.id===inv.clientId);
+  if(cl) setTimeout(()=>viewClientInvoices(inv.clientId),300);
+};
+
+window.addItemToExistingInv = async function(invId){
+  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+  const items=[...(inv.items||[]),{name:'بند جديد',qty:1,unit:'م²',price:0}];
+  await update(ref(db,`deltaart/invoices/${invId}`),{items});
+  setTimeout(()=>viewClientInvoices(inv.clientId),300);
+};
+
+// ===== PAYMENTS =====
+window.addPayment = async function(invId){
+  const amountEl=document.getElementById('pay-amount-'+invId);
+  const noteEl=document.getElementById('pay-note-'+invId);
+  const amount=parseFloat(amountEl?.value)||0;
+  const note=noteEl?.value||'دفعة';
+  if(!amount||amount<=0){alert('ادخل مبلغ صحيح');return;}
+  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+  const payments=[...(inv.payments||[]),{amount,note,date:new Date().toISOString()}];
+  const totalPaid=payments.reduce((s,p)=>s+(p.amount||0),0);
+  await update(ref(db,`deltaart/invoices/${invId}`),{payments,totalPaid});
+  setTimeout(()=>viewClientInvoices(inv.clientId),300);
+};
+
+window.removePayment = async function(invId, idx){
+  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+  const payments=(inv.payments||[]).filter((_,i)=>i!==idx);
+  const totalPaid=payments.reduce((s,p)=>s+(p.amount||0),0);
+  await update(ref(db,`deltaart/invoices/${invId}`),{payments,totalPaid});
+  setTimeout(()=>viewClientInvoices(inv.clientId),300);
+};
+
+// ===== NEW INVOICE =====
+window.openNewInvoiceModal = function(){
+  window._invSelectedClient=null;
+  window._invItems=[{name:'',qty:1,unit:'م²',price:0}];
+  document.getElementById('inv-step1').style.display='block';
+  document.getElementById('inv-step2').style.display='none';
+  document.getElementById('inv-project-name').value='';
+  document.getElementById('inv-discount').value=0;
+  document.getElementById('inv-project-notes').value='';
+  renderInvClientList();
+  renderInvItemsTable();
+  openModal('new-invoice-modal');
+};
+
+window.openNewInvoiceForClient = function(clientId){
+  openNewInvoiceModal();
+  setTimeout(()=>selectInvClient(clientId),100);
+};
+
+function renderInvClientList(q=''){
+  const list=document.getElementById('inv-client-list');
+  const filtered=window._allClients.filter(c=>!q||(c.name||'').toLowerCase().includes(q.toLowerCase())||(c.phone||'').includes(q));
+  if(!filtered.length){list.innerHTML='<div style="text-align:center;color:var(--gray);padding:16px">لا يوجد عملاء — أضف عميلاً أولاً</div>';return;}
+  list.innerHTML=filtered.map(cl=>`
+    <div class="client-select-card ${window._invSelectedClient?.id===cl.id?'selected':''}" onclick="selectInvClient('${cl.id}')">
+      <div class="client-card-name">${cl.name}</div>
+      <div class="client-card-info">📞 ${cl.phone} ${cl.address?'• '+cl.address:''}</div>
+    </div>`).join('');
+}
+window.renderInvClientList = renderInvClientList;
+
+window.filterInvClients = function(){
+  renderInvClientList(document.getElementById('inv-client-search').value);
+};
+
+window.selectInvClient = function(clientId){
+  const cl=window._allClients.find(c=>c.id===clientId);
+  if(!cl)return;
+  window._invSelectedClient=cl;
+  document.getElementById('inv-selected-client-name').textContent=cl.name;
+  document.getElementById('inv-selected-client-phone').textContent=`📞 ${cl.phone}`;
+  document.getElementById('inv-step1').style.display='none';
+  document.getElementById('inv-step2').style.display='block';
+  renderInvItemsTable();
+};
+
+function renderInvItemsTable(){
+  const tbody=document.getElementById('inv-items-tbody');
+  if(!tbody)return;
+  tbody.innerHTML=(window._invItems||[]).map((item,i)=>`
+    <tr>
+      <td><input type="text" value="${item.name||''}" placeholder="اسم البند / الخدمة" oninput="updateTempItem(${i},'name',this.value)"></td>
+      <td><input type="number" value="${item.qty||1}" min="0" step="0.1" oninput="updateTempItem(${i},'qty',this.value)" style="text-align:center"></td>
+      <td>
+        <select onchange="updateTempItem(${i},'unit',this.value)" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:6px;padding:6px 8px;color:var(--white);font-family:Cairo,sans-serif;font-size:12px;outline:none">
+          ${['م²','م طولي','قطعة','وحدة','مجموعة'].map(u=>`<option ${item.unit===u?'selected':''}>${u}</option>`).join('')}
+        </select>
+      </td>
+      <td><input type="number" value="${item.price||0}" min="0" placeholder="0" oninput="updateTempItem(${i},'price',this.value)" style="text-align:center"></td>
+      <td style="color:var(--gold);font-weight:700;white-space:nowrap">${((item.qty||0)*(item.price||0)).toLocaleString('ar-EG')}</td>
+      <td><button onclick="removeTempItem(${i})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:6px;cursor:pointer;padding:4px 8px;font-size:14px">✕</button></td>
+    </tr>`).join('');
+  recalcInvTotal();
+}
+
+window.updateTempItem=function(i,field,val){
+  if(!window._invItems[i])return;
+  window._invItems[i][field]=field==='name'||field==='unit'?val:parseFloat(val)||0;
+  const row=document.getElementById('inv-items-tbody').rows[i];
+  if(row) row.cells[4].textContent=((window._invItems[i].qty||0)*(window._invItems[i].price||0)).toLocaleString('ar-EG');
+  recalcInvTotal();
+};
+window.removeTempItem=function(i){window._invItems.splice(i,1);renderInvItemsTable();};
+window.addInvItem=function(){window._invItems.push({name:'',qty:1,unit:'م²',price:0});renderInvItemsTable();};
+
+window.recalcInvTotal=function(){
+  const subtotal=(window._invItems||[]).reduce((s,it)=>s+(it.qty||0)*(it.price||0),0);
+  const disc=parseFloat(document.getElementById('inv-discount')?.value)||0;
+  const grand=Math.max(0,subtotal-disc);
+  const el1=document.getElementById('inv-subtotal');
+  const el2=document.getElementById('inv-grand-total');
+  if(el1) el1.textContent=subtotal.toLocaleString('ar-EG')+' جنيه';
+  if(el2) el2.textContent=grand.toLocaleString('ar-EG')+' جنيه';
+};
+
+window.saveNewInvoice=async function(){
+  const alertEl=document.getElementById('new-inv-alert');
+  if(!window._invSelectedClient){showAlert(alertEl,'error','اختار العميل أولاً');return;}
+  const projectName=document.getElementById('inv-project-name').value.trim();
+  if(!projectName){showAlert(alertEl,'error','ادخل اسم المشروع');return;}
+  const items=window._invItems.filter(it=>it.name&&it.price>0);
+  if(!items.length){showAlert(alertEl,'error','أضف بند واحد على الأقل بسعر');return;}
+  const subtotal=items.reduce((s,it)=>s+(it.qty||0)*(it.price||0),0);
+  const discount=parseFloat(document.getElementById('inv-discount').value)||0;
+  const total=Math.max(0,subtotal-discount);
+  const notes=document.getElementById('inv-project-notes').value.trim();
+  try{
+    await push(ref(db,'deltaart/invoices'),{
+      clientId:window._invSelectedClient.id,
+      clientName:window._invSelectedClient.name,
+      clientPhone:window._invSelectedClient.phone,
+      projectName,items,subtotal,discount,total,notes,
+      totalPaid:0,payments:[],
+      createdAt:new Date().toISOString(),
+      createdBy:currentUserData.name||'—'
+    });
+    showAlert(alertEl,'success','✅ تم حفظ الفاتورة');
+    setTimeout(()=>closeModal('new-invoice-modal'),1200);
+  } catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
+};
+
+// ===== INVOICE TABLE & STATS =====
+function calcRevenue(){
+  let total=0,paid=0;
+  window._allInvoices.forEach(inv=>{total+=(inv.total||0);paid+=(inv.totalPaid||0);});
+  const remaining=total-paid;
+  ['ds-total-rev','inv-total-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=total.toLocaleString('ar-EG')+(id.includes('inv')?' جنيه':'');});
+  ['ds-paid-rev','inv-paid-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=paid.toLocaleString('ar-EG');});
+  ['ds-remaining-rev','inv-remaining-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=remaining.toLocaleString('ar-EG');});
+}
+
+function renderDashInvoices(all){
+  const tbody=document.getElementById('dash-inv-tbody');
+  if(!all.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px">لا يوجد فواتير</td></tr>';return;}
+  tbody.innerHTML=all.slice(0,5).map(inv=>`<tr>
+    <td><strong>${inv.clientName||'—'}</strong></td>
+    <td style="color:var(--gold);font-weight:700">${(inv.total||0).toLocaleString('ar-EG')} جنيه</td>
+    <td style="color:var(--green)">${(inv.totalPaid||0).toLocaleString('ar-EG')} جنيه</td>
+    <td style="color:var(--red)">${((inv.total||0)-(inv.totalPaid||0)).toLocaleString('ar-EG')} جنيه</td>
+    <td><span class="badge ${invPayStatus(inv)}">${invPayLabel(inv)}</span></td>
+  </tr>`).join('');
+}
+
+window._invFilterValue='all';
+window.filterInvoices=function(){
+  window._invFilterValue=document.getElementById('inv-filter')?.value||'all';
+  renderInvoicesTable(window._allInvoices);
+};
+
+function renderInvoicesTable(all){
+  const f=window._invFilterValue||'all';
+  const filtered=all.filter(inv=>{
+    if(f==='all')return true;
+    const rem=(inv.total||0)-(inv.totalPaid||0);
+    if(f==='paid')return rem<=0;
+    if(f==='unpaid')return (inv.totalPaid||0)===0;
+    if(f==='partial')return (inv.totalPaid||0)>0&&rem>0;
+    return true;
+  });
+  calcRevenue();
+  const tbody=document.getElementById('invoices-tbody');
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد فواتير</td></tr>';return;}
+  tbody.innerHTML=filtered.map((inv,i)=>{
+    const rem=(inv.total||0)-(inv.totalPaid||0);
+    const pct=inv.total>0?Math.round((inv.totalPaid||0)/inv.total*100):0;
+    return `<tr>
+      <td style="color:var(--gray);font-size:12px">#${String(i+1).padStart(3,'0')}</td>
+      <td><strong>${inv.clientName||'—'}</strong><div style="font-size:11px;color:var(--gray)">${inv.clientPhone||''}</div></td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.projectName||'—'}</td>
+      <td style="color:var(--gold);font-weight:700">${(inv.total||0).toLocaleString('ar-EG')}</td>
+      <td>
+        <div style="color:var(--green);font-weight:700">${(inv.totalPaid||0).toLocaleString('ar-EG')}</div>
+        <div class="debt-bar-bg" style="margin-top:4px;width:80px"><div class="debt-bar-fill" style="width:${pct}%"></div></div>
+      </td>
+      <td style="color:${rem>0?'var(--red)':'var(--green)'};font-weight:700">${rem.toLocaleString('ar-EG')}</td>
+      <td><span class="badge ${invPayStatus(inv)}">${invPayLabel(inv)}</span></td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn-sm btn-blue" onclick="viewClientInvoices('${inv.clientId}')">👁️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function invPayStatus(inv){
+  const rem=(inv.total||0)-(inv.totalPaid||0);
+  if(rem<=0)return 'badge-green';
+  if((inv.totalPaid||0)>0)return 'badge-orange';
+  return 'badge-red';
+}
+function invPayLabel(inv){
+  const rem=(inv.total||0)-(inv.totalPaid||0);
+  if(rem<=0)return 'مدفوعة بالكامل ✅';
+  if((inv.totalPaid||0)>0)return `دفع جزئي (${Math.round((inv.totalPaid/inv.total)*100)}%)`;
+  return 'لم يُدفع';
+}
+
+// ===== SUPERADMIN =====
+window._saAllAccounts=[];
+function loadSAAccounts(){
+  onValue(ref(db,'deltaart/users'),snap=>{
+    const all=[{uid:'owner-static',name:'صاحب الشركة',email:OWNER_EMAIL,role:'owner',status:'active',password:'DeltaArt@2025!'}];
+    if(snap.exists()) snap.forEach(c=>{const v={uid:c.key,...c.val()};all.push(v);});
+    window._saAllAccounts=all;
     renderSATable(all);
   });
 }
-
-function renderSATable(accounts) {
-  const tbody = document.getElementById('sa-tbody');
-  if(!accounts.length){ tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>'; return; }
-  tbody.innerHTML = accounts.map(u=>`
-    <tr>
-      <td><strong>${u.name||'—'}</strong></td>
-      <td style="color:var(--gray)">${u.email||'—'}</td>
-      <td><span class="badge role-badge role-${u.role||'employee'}" style="display:inline-block">${roleLabelAr(u.role)}</span></td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span id="pw-dots-${u.uid}">••••••••</span>
-          <span id="pw-text-${u.uid}" style="display:none;color:var(--gold);font-family:monospace">${u.password||'—'}</span>
-          <button class="btn-sm" style="padding:4px 8px;font-size:11px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:var(--gold);border-radius:6px" onclick="toggleSAPass('${u.uid}')">إظهار</button>
-        </div>
-      </td>
-      <td>
-        <span class="status-dot ${u.status==='inactive'?'status-inactive':'status-active'}"></span>
-        ${u.status==='inactive'?'معطل':'نشط'}
-      </td>
-      <td>
-        <div style="display:flex;gap:4px">
-          ${u.uid==='owner-static'?'':`
-          <button class="btn-sm ${u.status==='inactive'?'btn-success':'btn-warning'}" onclick="toggleSAStatus('${u.uid}','${u.status}')">${u.status==='inactive'?'تفعيل':'تعطيل'}</button>
-          <button class="btn-sm btn-danger" onclick="deleteSAAccount('${u.uid}')">🗑️</button>`}
-        </div>
-      </td>
-    </tr>`).join('');
+function renderSATable(accounts){
+  const tbody=document.getElementById('sa-tbody');
+  if(!accounts.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>';return;}
+  tbody.innerHTML=accounts.map(u=>`<tr>
+    <td><strong>${u.name||'—'}</strong></td>
+    <td style="color:var(--gray)">${u.email||'—'}</td>
+    <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
+    <td><div style="display:flex;align-items:center;gap:6px">
+      <span id="pw-dots-${u.uid}">••••••••</span>
+      <span id="pw-text-${u.uid}" style="display:none;color:var(--gold);font-family:monospace">${u.password||'—'}</span>
+      <button class="btn-sm" style="padding:4px 8px;font-size:11px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:var(--gold);border-radius:6px" onclick="toggleSAPass('${u.uid}')">إظهار</button>
+    </div></td>
+    <td><span class="status-dot ${u.status==='inactive'?'status-inactive':'status-active'}"></span>${u.status==='inactive'?'معطل':'نشط'}</td>
+    <td><div style="display:flex;gap:4px">${u.uid==='owner-static'?'':`
+      <button class="btn-sm ${u.status==='inactive'?'btn-success':'btn-warning'}" onclick="toggleSAStatus('${u.uid}','${u.status}')">${u.status==='inactive'?'تفعيل':'تعطيل'}</button>
+      <button class="btn-sm btn-danger" onclick="deleteSAAccount('${u.uid}')">🗑️</button>`}
+    </div></td>
+  </tr>`).join('');
 }
-
-window.toggleSAPass = function(uid) {
-  const dots = document.getElementById('pw-dots-'+uid);
-  const text = document.getElementById('pw-text-'+uid);
-  const btn = dots.nextElementSibling.nextElementSibling;
-  if(text.style.display==='none'){ text.style.display='inline'; dots.style.display='none'; btn.textContent='إخفاء'; }
-  else { text.style.display='none'; dots.style.display='inline'; btn.textContent='إظهار'; }
+window.toggleSAPass=function(uid){
+  const dots=document.getElementById('pw-dots-'+uid),text=document.getElementById('pw-text-'+uid);
+  const btn=dots.nextElementSibling.nextElementSibling;
+  if(text.style.display==='none'){text.style.display='inline';dots.style.display='none';btn.textContent='إخفاء';}
+  else{text.style.display='none';dots.style.display='inline';btn.textContent='إظهار';}
 };
-
-window.filterSATable = function() {
-  const q = document.getElementById('sa-search-input').value.toLowerCase();
-  const filtered = window._saAllAccounts.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q));
-  renderSATable(filtered);
+window.filterSATable=function(){
+  const q=document.getElementById('sa-search-input').value.toLowerCase();
+  renderSATable(window._saAllAccounts.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)));
 };
-
-window.toggleSAStatus = async (uid, currentStatus) => {
-  const newStatus = currentStatus==='inactive' ? 'active' : 'inactive';
-  await update(ref(db,`deltaart/users/${uid}`),{status:newStatus});
-};
-
-window.deleteSAAccount = async (uid) => {
-  if(!confirm('حذف الأكونت نهائياً؟')) return;
-  await remove(ref(db,`deltaart/users/${uid}`));
-};
-
-window.saAddAccount = async function() {
-  const name = document.getElementById('sa-name').value.trim();
-  const email = document.getElementById('sa-email').value.trim();
-  const pass = document.getElementById('sa-pass').value;
-  const role = document.getElementById('sa-role').value;
-  const alertEl = document.getElementById('sa-add-alert');
-  if(!name||!email||!pass){ showAlert(alertEl,'error','ادخل كل البيانات'); return; }
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+window.toggleSAStatus=async(uid,s)=>{await update(ref(db,`deltaart/users/${uid}`),{status:s==='inactive'?'active':'inactive'});};
+window.deleteSAAccount=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/users/${id}`));};
+window.saAddAccount=async function(){
+  const name=document.getElementById('sa-name').value.trim(),email=document.getElementById('sa-email').value.trim(),pass=document.getElementById('sa-pass').value,role=document.getElementById('sa-role').value,alertEl=document.getElementById('sa-add-alert');
+  if(!name||!email||!pass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
+  try{
+    const cred=await createUserWithEmailAndPassword(auth,email,pass);
     await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,status:'active',createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة الأكونت');
     ['sa-name','sa-email','sa-pass'].forEach(id=>document.getElementById(id).value='');
     setTimeout(()=>closeModal('sa-add-modal'),1500);
-  } catch(e){ showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم بالفعل':'حدث خطأ'); }
+  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
 };
 
 // ===== BOOKINGS =====
@@ -895,25 +1345,24 @@ window._allBookings=[];
 window.filterBookings=function(){
   const f=document.getElementById('book-filter').value;
   const items=f==='all'?window._allBookings:window._allBookings.filter(b=>b.status===f);
-  document.getElementById('bookings-tbody').innerHTML=items.map(b=>`
-    <tr>
-      <td><strong>${b.name}</strong></td>
-      <td><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></td>
-      <td>${b.type||'—'}</td><td style="color:var(--gray)">${b.time||'—'}</td>
-      <td style="color:var(--gray);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.address||'—'}</td>
-      <td style="color:var(--gray)">${fmtDate(b.date)}</td>
-      <td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td>
-      <td><div style="display:flex;gap:4px">
-        <button class="btn-sm btn-success" onclick="updateBookingStatus('${b.id}','confirmed')">✓</button>
-        <button class="btn-sm btn-primary" onclick="updateBookingStatus('${b.id}','done')">✅</button>
-        <button class="btn-sm btn-danger" onclick="updateBookingStatus('${b.id}','cancelled')">✕</button>
-        <button class="btn-sm btn-outline-sm" onclick="showBookingDetail('${b.id}')">👁️</button>
-      </div></td>
-    </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد حجوزات</td></tr>';
+  document.getElementById('bookings-tbody').innerHTML=items.map(b=>`<tr>
+    <td><strong>${b.name}</strong></td>
+    <td><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></td>
+    <td>${b.type||'—'}</td><td style="color:var(--gray)">${b.time||'—'}</td>
+    <td style="color:var(--gray);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.address||'—'}</td>
+    <td style="color:var(--gray)">${fmtDate(b.date)}</td>
+    <td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td>
+    <td><div style="display:flex;gap:4px">
+      <button class="btn-sm btn-success" onclick="updateBookingStatus('${b.id}','confirmed')">✓</button>
+      <button class="btn-sm btn-primary" onclick="updateBookingStatus('${b.id}','done')">✅</button>
+      <button class="btn-sm btn-danger" onclick="updateBookingStatus('${b.id}','cancelled')">✕</button>
+      <button class="btn-sm btn-outline-sm" onclick="showBookingDetail('${b.id}')">👁️</button>
+    </div></td>
+  </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد حجوزات</td></tr>';
 };
 window.updateBookingStatus=async(id,status)=>{await update(ref(db,`deltaart/bookings/${id}`),{status});closeModal('booking-detail-modal');};
 window.showBookingDetail=id=>{
-  const b=window._allBookings.find(x=>x.id===id); if(!b)return;
+  const b=window._allBookings.find(x=>x.id===id);if(!b)return;
   window._detailId=id;
   document.getElementById('booking-detail-content').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
     <div><div style="font-size:12px;color:var(--gray)">الاسم</div><div style="font-weight:700">${b.name}</div></div>
@@ -933,68 +1382,26 @@ window._allMessages=[];
 window.filterMessages=function(){
   const f=document.getElementById('msg-filter').value;
   const items=f==='all'?window._allMessages:window._allMessages.filter(m=>m.status===f);
-  document.getElementById('messages-tbody').innerHTML=items.map(m=>`
-    <tr>
-      <td><strong>${m.name}</strong></td>
-      <td><a href="tel:${m.phone}" style="color:var(--gold)">${m.phone}</a></td>
-      <td>${m.service||'—'}</td>
-      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||'—'}</td>
-      <td style="color:var(--gray)">${fmtDate(m.date)}</td>
-      <td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td>
-      <td><div style="display:flex;gap:4px">
-        <button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓</button>
-        <button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button>
-      </div></td>
-    </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد رسائل</td></tr>';
+  document.getElementById('messages-tbody').innerHTML=items.map(m=>`<tr>
+    <td><strong>${m.name}</strong></td>
+    <td><a href="tel:${m.phone}" style="color:var(--gold)">${m.phone}</a></td>
+    <td>${m.service||'—'}</td>
+    <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||'—'}</td>
+    <td style="color:var(--gray)">${fmtDate(m.date)}</td>
+    <td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td>
+    <td><div style="display:flex;gap:4px">
+      <button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓</button>
+      <button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button>
+    </div></td>
+  </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد رسائل</td></tr>';
 };
 window.markRead=async id=>{await update(ref(db,`deltaart/messages/${id}`),{status:'read'});};
 window.delMsg=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/messages/${id}`));};
 
-// ===== INVOICES =====
-function renderInvoicesTable(snap){
-  const tbody=document.getElementById('invoices-tbody');
-  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد فواتير</td></tr>';return;}
-  let html='',i=1;
-  snap.forEach(c=>{
-    const v=c.val();
-    html+=`<tr>
-      <td><strong>#${String(i++).padStart(4,'0')}</strong></td>
-      <td>${v.client||'—'}</td><td>${v.service||'—'}</td>
-      <td style="color:var(--gold);font-weight:700">${(v.amount||0).toLocaleString('ar-EG')} جنيه</td>
-      <td style="color:var(--gray)">${fmtDate(v.date)}</td>
-      <td><span class="badge ${v.paid?'badge-green':'badge-yellow'}">${v.paid?'مدفوعة':'معلقة'}</span></td>
-      <td><div style="display:flex;gap:4px">
-        <button class="btn-sm btn-success" onclick="markInvPaid('${c.key}')">✓ مدفوعة</button>
-        <button class="btn-sm btn-danger" onclick="delInvoice('${c.key}')">🗑️</button>
-      </div></td>
-    </tr>`;
-  });
-  tbody.innerHTML=html;
-}
-window.addInvoice=async function(){
-  const client=document.getElementById('inv-client').value.trim();
-  const phone=document.getElementById('inv-phone').value.trim();
-  const service=document.getElementById('inv-service').value;
-  const amount=+document.getElementById('inv-amount').value;
-  const area=+document.getElementById('inv-area').value;
-  const notes=document.getElementById('inv-notes').value.trim();
-  const alertEl=document.getElementById('inv-alert');
-  if(!client||!amount){showAlert(alertEl,'error','ادخل اسم العميل والمبلغ');return;}
-  try{
-    await push(ref(db,'deltaart/invoices'),{client,phone,service,amount,area,notes,paid:false,date:new Date().toISOString(),createdBy:currentUserData.name||'—'});
-    showAlert(alertEl,'success','✅ تم حفظ الفاتورة');
-    ['inv-client','inv-phone','inv-amount','inv-area','inv-notes'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>closeModal('add-invoice-modal'),1500);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
-};
-window.markInvPaid=async id=>{await update(ref(db,`deltaart/invoices/${id}`),{paid:true});};
-window.delInvoice=async id=>{if(confirm('حذف الفاتورة؟'))await remove(ref(db,`deltaart/invoices/${id}`));};
-
 // ===== GALLERY =====
-window._allGallery=[];
-window._galCurrentFile=null;
+window._allGallery=[];window._galCurrentFile=null;
 window.handleFileSelect=function(input){
-  const file=input.files[0]; if(!file)return;
+  const file=input.files[0];if(!file)return;
   if(file.size>5*1024*1024){showAlert(document.getElementById('gal-alert'),'error','الصورة أكبر من 5MB');return;}
   window._galCurrentFile=file;
   const reader=new FileReader();
@@ -1010,48 +1417,29 @@ window.addGalleryItem=async function(){
   if(isFile){
     if(!window._galCurrentFile){showAlert(alertEl,'error','اختار صورة أولاً');return;}
     const file=window._galCurrentFile;
-    const CLOUD='dlmda45sv';
-    const PRESET='deltaart c';
+    const CLOUD='dlmda45sv';const PRESET='deltaart c';
     const formData=new FormData();
-    formData.append('file',file);
-    formData.append('upload_preset',PRESET);
-    formData.append('folder','deltaart/gallery');
-    const progressBar=document.getElementById('upload-progress-bar');
-    const progressFill=document.getElementById('upload-progress-fill');
+    formData.append('file',file);formData.append('upload_preset',PRESET);formData.append('folder','deltaart/gallery');
+    const progressBar=document.getElementById('upload-progress-bar'),progressFill=document.getElementById('upload-progress-fill');
     progressBar.style.display='block';
     showAlert(alertEl,'success','⏳ جاري رفع الصورة...');
     try{
       const imgUrl=await new Promise((resolve,reject)=>{
         const xhr=new XMLHttpRequest();
         xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`);
-        xhr.upload.onprogress=e=>{
-          if(e.lengthComputable){
-            const pct=Math.round(e.loaded/e.total*100);
-            progressFill.style.width=pct+'%';
-            showAlert(alertEl,'success',`⏳ جاري الرفع... ${pct}%`);
-          }
-        };
-        xhr.onload=()=>{
-          if(xhr.status===200){resolve(JSON.parse(xhr.responseText).secure_url);}
-          else{reject(new Error('فشل الرفع — كود: '+xhr.status));}
-        };
-        xhr.onerror=()=>reject(new Error('خطأ في الاتصال بالانترنت'));
+        xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=Math.round(e.loaded/e.total*100);progressFill.style.width=pct+'%';showAlert(alertEl,'success',`⏳ ${pct}%`);}};
+        xhr.onload=()=>{if(xhr.status===200)resolve(JSON.parse(xhr.responseText).secure_url);else reject(new Error('فشل الرفع'));};
+        xhr.onerror=()=>reject(new Error('خطأ في الاتصال'));
         xhr.send(formData);
       });
       await push(ref(db,'deltaart/gallery'),{url:imgUrl,title,category,date:new Date().toISOString()});
-      showAlert(alertEl,'success','✅ تم رفع الصورة وإضافتها للمعرض!');
-      progressBar.style.display='none';
-      progressFill.style.width='0%';
+      showAlert(alertEl,'success','✅ تم رفع الصورة!');
+      progressBar.style.display='none';progressFill.style.width='0%';
       document.getElementById('file-preview-wrap').style.display='none';
-      window._galCurrentFile=null;
-      document.getElementById('gal-file-input').value='';
-      document.getElementById('gal-title').value='';
+      window._galCurrentFile=null;document.getElementById('gal-file-input').value='';document.getElementById('gal-title').value='';
       setTimeout(()=>closeModal('add-gallery-modal'),1500);
-    }catch(e){
-      showAlert(alertEl,'error',e.message||'فشل الرفع');
-      progressBar.style.display='none';
-      progressFill.style.width='0%';
-    }  } else {
+    }catch(e){showAlert(alertEl,'error',e.message||'فشل الرفع');progressBar.style.display='none';}
+  } else {
     const url=document.getElementById('gal-url').value.trim();
     if(!url){showAlert(alertEl,'error','ادخل رابط الصورة');return;}
     try{await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});showAlert(alertEl,'success','✅ تم الإضافة');document.getElementById('gal-url').value='';document.getElementById('gal-url-preview').style.display='none';document.getElementById('gal-title').value='';setTimeout(()=>closeModal('add-gallery-modal'),1500);}
@@ -1068,7 +1456,7 @@ window.filterGalleryAdmin=function(cat,btn){
   btn.classList.add('active');
   renderAdminGallery(cat==='all'?window._allGallery:window._allGallery.filter(i=>i.category===cat));
 };
-window.delGallery=async id=>{if(!confirm('حذف الصورة؟'))return;await remove(ref(db,`deltaart/gallery/${id}`));};
+window.delGallery=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/gallery/${id}`));};
 
 // ===== SERVICES =====
 function renderServicesTable(snap){
@@ -1085,7 +1473,7 @@ window.addService=async function(){
 };
 window.delService=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/services/${id}`));};
 
-// ===== TEAM (owner) =====
+// ===== TEAM =====
 function renderTeamTable(snap){
   const tbody=document.getElementById('team-tbody');
   if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
@@ -1102,14 +1490,13 @@ window.addUser=async function(){
     showAlert(alertEl,'success','✅ تم إضافة الموظف');
     ['usr-name','usr-email','usr-pass'].forEach(id=>document.getElementById(id).value='');
     setTimeout(()=>closeModal('add-user-modal'),1500);
-  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم بالفعل':'حدث خطأ');}
+  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
 };
 
 // ===== SETTINGS =====
 async function loadSettings(){
   try{
-    const snap=await get(ref(db,'deltaart/settings'));
-    if(!snap.exists())return;
+    const snap=await get(ref(db,'deltaart/settings'));if(!snap.exists())return;
     const s=snap.val();
     if(s.contact){document.getElementById('set-wa').value=s.contact.whatsapp||'';document.getElementById('set-phone').value=s.contact.phone||'';document.getElementById('set-address').value=s.contact.address||'';document.getElementById('set-email').value=s.contact.email||'';document.getElementById('set-fb').value=s.contact.facebook||'';document.getElementById('set-ig').value=s.contact.instagram||'';document.getElementById('set-hours').value=s.contact.hours||'';}
     if(s.stats){document.getElementById('set-projects').value=s.stats.projects||'';document.getElementById('set-clients').value=s.stats.clients||'';document.getElementById('set-years').value=s.stats.years||'';document.getElementById('set-workers').value=s.stats.workers||'';}
@@ -1133,12 +1520,9 @@ window.savePrices=async function(){
   try{await set(ref(db,'deltaart/settings/prices'),prices);showAlert(alertEl,'success','✅ تم حفظ الأسعار');}catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
 
-// ===== CHANGE PASSWORD =====
+// ===== PASSWORD =====
 window.changePassword=async function(){
-  const curPass=document.getElementById('cur-pass').value;
-  const newPass=document.getElementById('new-pass').value;
-  const confPass=document.getElementById('conf-pass').value;
-  const alertEl=document.getElementById('pass-alert');
+  const curPass=document.getElementById('cur-pass').value,newPass=document.getElementById('new-pass').value,confPass=document.getElementById('conf-pass').value,alertEl=document.getElementById('pass-alert');
   if(!curPass||!newPass||!confPass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
   if(newPass!==confPass){showAlert(alertEl,'error','كلمة المرور الجديدة مش متطابقة');return;}
   if(newPass.length<8){showAlert(alertEl,'error','كلمة المرور أقل من 8 حروف');return;}
@@ -1147,11 +1531,8 @@ window.changePassword=async function(){
     const cred=EmailAuthProvider.credential(user.email,curPass);
     await reauthenticateWithCredential(user,cred);
     await updatePassword(user,newPass);
-    // Update stored password in DB
-    if(currentUserData.uid && currentUserData.uid!=='owner-static'){
-      await update(ref(db,`deltaart/users/${currentUserData.uid}`),{password:newPass});
-    }
-    showAlert(alertEl,'success','✅ تم تغيير كلمة المرور بنجاح');
+    if(currentUserData.uid&&currentUserData.uid!=='owner-static') await update(ref(db,`deltaart/users/${currentUserData.uid}`),{password:newPass});
+    showAlert(alertEl,'success','✅ تم تغيير كلمة المرور');
     ['cur-pass','new-pass','conf-pass'].forEach(id=>document.getElementById(id).value='');
   }catch(e){
     const msgs={'auth/wrong-password':'كلمة المرور الحالية غلط','auth/invalid-credential':'كلمة المرور الحالية غلط'};
@@ -1160,109 +1541,64 @@ window.changePassword=async function(){
 };
 
 // ===== ATTENDANCE =====
-function loadAttendance() {
-  const dateEl = document.getElementById('att-date-filter');
-  const selectedDate = dateEl.value || new Date().toISOString().split('T')[0];
-  if (!dateEl.value) dateEl.value = selectedDate;
-
-  onValue(ref(db, 'deltaart/attendance'), snap => {
-    const tbody = document.getElementById('attendance-tbody');
-    // Get all users first
-    get(ref(db, 'deltaart/users')).then(userSnap => {
-      const users = {};
-      if (userSnap.exists()) userSnap.forEach(c => { users[c.key] = c.val(); });
-
-      const records = {};
-      if (snap.exists()) {
-        snap.forEach(dateNode => {
-          if (dateNode.key === selectedDate) {
-            dateNode.forEach(userNode => {
-              records[userNode.key] = userNode.val();
-            });
-          }
-        });
-      }
-
-      const totalUsers = Object.keys(users).length;
-      const presentCount = Object.keys(records).length;
-      document.getElementById('att-present').textContent = presentCount;
-      document.getElementById('att-absent').textContent = Math.max(0, totalUsers - presentCount);
-
-      if (!Object.keys(users).length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون مسجلون</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = Object.entries(users).map(([uid, u]) => {
-        const rec = records[uid];
-        const checkIn = rec?.checkIn ? new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}) : '—';
-        const checkOut = rec?.checkOut ? new Date(rec.checkOut).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}) : '—';
-        let hours = '—';
-        if (rec?.checkIn && rec?.checkOut) {
-          const diff = (new Date(rec.checkOut) - new Date(rec.checkIn)) / 3600000;
-          hours = diff.toFixed(1) + ' ساعة';
-        }
-        const status = rec ? 'badge-green" >حاضر' : 'badge-red" >غائب';
-        return `<tr>
-          <td><strong>${u.name||'—'}</strong></td>
-          <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
-          <td style="color:var(--green)">${checkIn}</td>
-          <td style="color:var(--red)">${checkOut}</td>
-          <td style="color:var(--gold)">${hours}</td>
-          <td><span class="badge ${status}</span></td>
-        </tr>`;
+function loadAttendance(){
+  const dateEl=document.getElementById('att-date-filter');
+  const selectedDate=dateEl.value||new Date().toISOString().split('T')[0];
+  if(!dateEl.value)dateEl.value=selectedDate;
+  onValue(ref(db,'deltaart/attendance'),snap=>{
+    get(ref(db,'deltaart/users')).then(userSnap=>{
+      const users={};if(userSnap.exists())userSnap.forEach(c=>{users[c.key]=c.val();});
+      const records={};
+      if(snap.exists()){snap.forEach(dateNode=>{if(dateNode.key===selectedDate){dateNode.forEach(userNode=>{records[userNode.key]=userNode.val();});}});}
+      const totalUsers=Object.keys(users).length,presentCount=Object.keys(records).length;
+      document.getElementById('att-present').textContent=presentCount;
+      document.getElementById('att-absent').textContent=Math.max(0,totalUsers-presentCount);
+      const tbody=document.getElementById('attendance-tbody');
+      if(!Object.keys(users).length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
+      tbody.innerHTML=Object.entries(users).map(([uid,u])=>{
+        const rec=records[uid];
+        const checkIn=rec?.checkIn?new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
+        const checkOut=rec?.checkOut?new Date(rec.checkOut).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
+        let hours='—';if(rec?.checkIn&&rec?.checkOut){const diff=(new Date(rec.checkOut)-new Date(rec.checkIn))/3600000;hours=diff.toFixed(1)+' ساعة';}
+        const status=rec?'badge-green" >حاضر':'badge-red" >غائب';
+        return `<tr><td><strong>${u.name||'—'}</strong></td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td><span class="badge ${status}</span></td></tr>`;
       }).join('');
     });
-  }, { onlyOnce: true });
+  },{onlyOnce:true});
 }
 
 // ===== VISITORS =====
-function loadVisitors() {
-  onValue(ref(db,'deltaart/visitors'), snap => {
-    let high=0, medium=0, low=0;
-    const visits = [];
-    if (snap.exists()) {
-      snap.forEach(c => {
-        const v = c.val();
-        visits.push(v);
-        if (v.level === 'high') high++;
-        else if (v.level === 'medium') medium++;
-        else low++;
-      });
-    }
-    document.getElementById('vis-high').textContent = high;
-    document.getElementById('vis-medium').textContent = medium;
-    document.getElementById('vis-low').textContent = low;
-
-    const tbody = document.getElementById('visitors-tbody');
-    if (!visits.length) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار مسجلون بعد</td></tr>';
-      return;
-    }
-    // Show latest 50 visits
-    const sorted = visits.sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 50);
-    tbody.innerHTML = sorted.map(v => {
-      const levelMap = {
-        high: '<span class="badge badge-green">🟢 مهتم جداً</span>',
-        medium: '<span class="badge badge-yellow">🟡 مهتم شوية</span>',
-        low: '<span class="badge badge-red">🔴 مش مهتم</span>'
-      };
-      const dur = v.duration < 60 ? v.duration + ' ث' : Math.floor(v.duration/60) + ' د ' + (v.duration%60) + ' ث';
-      const device = /mobile|android|iphone/i.test(v.ua||'') ? '📱 موبايل' : '💻 كمبيوتر';
-      return `<tr>
-        <td style="color:var(--gray)">${fmtDate(v.date)} ${v.date ? new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}) : ''}</td>
-        <td style="color:var(--gold);font-weight:700">${dur}</td>
-        <td>${levelMap[v.level] || '—'}</td>
-        <td>${device}</td>
-      </tr>`;
+function loadVisitors(){
+  onValue(ref(db,'deltaart/visitors'),snap=>{
+    let high=0,medium=0,low=0;const visits=[];
+    if(snap.exists()){snap.forEach(c=>{const v=c.val();visits.push(v);if(v.level==='high')high++;else if(v.level==='medium')medium++;else low++;});}
+    document.getElementById('vis-high').textContent=high;document.getElementById('vis-medium').textContent=medium;document.getElementById('vis-low').textContent=low;
+    const tbody=document.getElementById('visitors-tbody');
+    if(!visits.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار</td></tr>';return;}
+    const sorted=visits.sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+    tbody.innerHTML=sorted.map(v=>{
+      const levelMap={high:'<span class="badge badge-green">🟢 مهتم جداً</span>',medium:'<span class="badge badge-yellow">🟡 مهتم شوية</span>',low:'<span class="badge badge-red">🔴 مش مهتم</span>'};
+      const dur=v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث';
+      const device=/mobile|android|iphone/i.test(v.ua||'')?'📱 موبايل':'💻 كمبيوتر';
+      return `<tr><td style="color:var(--gray)">${fmtDate(v.date)} ${v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):''}</td><td style="color:var(--gold);font-weight:700">${dur}</td><td>${levelMap[v.level]||'—'}</td><td>${device}</td></tr>`;
     }).join('');
-  }, { onlyOnce: true });
+  },{onlyOnce:true});
 }
+window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));};
 
-window.clearVisitors = async () => {
-  if (!confirm('مسح كل بيانات الزوار؟')) return;
-  await remove(ref(db,'deltaart/visitors'));
-};
+// ===== ATTENDANCE CHECKIN =====
+async function recordCheckIn(){
+  const uid=currentUserData?.uid;if(!uid||uid==='owner-static')return;
+  const today=new Date().toISOString().split('T')[0];
+  const attRef=ref(db,`deltaart/attendance/${today}/${uid}`);
+  const snap=await get(attRef);
+  if(!snap.exists())await set(attRef,{checkIn:new Date().toISOString(),name:currentUserData.name,role:currentUserData.role});
+}
+window.addEventListener('beforeunload',async()=>{
+  const uid=currentUserData?.uid;if(!uid||uid==='owner-static'||currentUserRole==='superadmin')return;
+  const today=new Date().toISOString().split('T')[0];
+  try{await set(ref(db,`deltaart/attendance/${today}/${uid}/checkOut`),new Date().toISOString());}catch(e){}
+});
 
 // ===== HELPERS =====
 function statusClass(s){return{pending:'badge-yellow',confirmed:'badge-blue',done:'badge-green',cancelled:'badge-red'}[s]||'badge-gray';}
@@ -1274,7 +1610,7 @@ function showAlert(el,type,text){el.className=`alert alert-${type==='success'?'s
 </script>
 
 <script>
-const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',invoices:'الفواتير',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
+const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
 function goPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
