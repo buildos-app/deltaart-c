@@ -1721,16 +1721,17 @@ function loadAttendance(){
   const dateEl=document.getElementById('att-date-filter');
   const selectedDate=dateEl.value||new Date().toISOString().split('T')[0];
   if(!dateEl.value)dateEl.value=selectedDate;
-  onValue(ref(db,'deltaart/attendance'),snap=>{
-    get(ref(db,'deltaart/users')).then(userSnap=>{
-      const users={};if(userSnap.exists())userSnap.forEach(c=>{users[c.key]=c.val();});
-      const records={};
-      if(snap.exists()){snap.forEach(dateNode=>{if(dateNode.key===selectedDate){dateNode.forEach(userNode=>{records[userNode.key]=userNode.val();});}});}
-      const totalUsers=Object.keys(users).length,presentCount=Object.keys(records).length;
+  // employees
+  get(ref(db,'deltaart/users')).then(userSnap=>{
+    const users={};if(userSnap.exists())userSnap.forEach(c=>{const u=c.val();if(u.role!=='worker')users[c.key]=u;});
+    get(ref(db,`deltaart/attendance/${selectedDate}`)).then(snap=>{
+      const records={};if(snap.exists())snap.forEach(c=>{records[c.key]=c.val();});
+      const totalUsers=Object.keys(users).length;
+      const presentCount=Object.keys(records).filter(uid=>users[uid]).length;
       document.getElementById('att-present').textContent=presentCount;
       document.getElementById('att-absent').textContent=Math.max(0,totalUsers-presentCount);
       const tbody=document.getElementById('attendance-tbody');
-      if(!Object.keys(users).length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
+      if(!totalUsers){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
       tbody.innerHTML=Object.entries(users).map(([uid,u])=>{
         const rec=records[uid];
         const checkIn=rec?.checkIn?new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
@@ -1740,25 +1741,41 @@ function loadAttendance(){
         return `<tr><td><strong>${u.name||'—'}</strong></td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td><span class="badge ${status}</span></td></tr>`;
       }).join('');
     });
-  },{onlyOnce:true});
+  });
+  // workers manual
+  renderWorkersAttTable(window._allWorkers, selectedDate);
 }
 
-// ===== VISITORS =====
+// ===== VISITORS — fixed to read from deltaart/visitors correctly =====
 function loadVisitors(){
-  onValue(ref(db,'deltaart/visitors'),snap=>{
+  get(ref(db,'deltaart/visitors')).then(snap=>{
     let high=0,medium=0,low=0;const visits=[];
-    if(snap.exists()){snap.forEach(c=>{const v=c.val();visits.push(v);if(v.level==='high')high++;else if(v.level==='medium')medium++;else low++;});}
-    document.getElementById('vis-high').textContent=high;document.getElementById('vis-medium').textContent=medium;document.getElementById('vis-low').textContent=low;
+    if(snap.exists()){
+      snap.forEach(c=>{
+        const v=c.val();
+        // support both flat list and nested by session key
+        if(v && typeof v==='object'){
+          if(v.level){visits.push(v);if(v.level==='high')high++;else if(v.level==='medium')medium++;else low++;}
+          else{
+            // nested: each child is a session
+            Object.values(v).forEach(sv=>{if(sv&&sv.level){visits.push(sv);if(sv.level==='high')high++;else if(sv.level==='medium')medium++;else low++;}});
+          }
+        }
+      });
+    }
+    document.getElementById('vis-high').textContent=high;
+    document.getElementById('vis-medium').textContent=medium;
+    document.getElementById('vis-low').textContent=low;
     const tbody=document.getElementById('visitors-tbody');
-    if(!visits.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار</td></tr>';return;}
-    const sorted=visits.sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+    if(!visits.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار مسجلون بعد</td></tr>';return;}
+    const sorted=visits.filter(v=>v.date).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
     tbody.innerHTML=sorted.map(v=>{
       const levelMap={high:'<span class="badge badge-green">🟢 مهتم جداً</span>',medium:'<span class="badge badge-yellow">🟡 مهتم شوية</span>',low:'<span class="badge badge-red">🔴 مش مهتم</span>'};
-      const dur=v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث';
+      const dur=v.duration!=null?(v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث'):'—';
       const device=/mobile|android|iphone/i.test(v.ua||'')?'📱 موبايل':'💻 كمبيوتر';
       return `<tr><td style="color:var(--gray)">${fmtDate(v.date)} ${v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):''}</td><td style="color:var(--gold);font-weight:700">${dur}</td><td>${levelMap[v.level]||'—'}</td><td>${device}</td></tr>`;
     }).join('');
-  },{onlyOnce:true});
+  });
 }
 window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));};
 
