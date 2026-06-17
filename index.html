@@ -1159,7 +1159,7 @@ if('serviceWorker' in navigator) {
 
 <script type="module">
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",
@@ -1174,16 +1174,96 @@ const firebaseConfig = {
 const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Track visitor behavior
+// ===== VISITOR TRACKING — REAL-TIME =====
+// Determine device & browser info
+function getDevice() {
+  const ua = navigator.userAgent;
+  if (/iPad/.test(ua)) return 'تابلت';
+  if (/Mobi|Android/i.test(ua)) return 'موبايل';
+  return 'كمبيوتر';
+}
+
+function getBrowser() {
+  const ua = navigator.userAgent;
+  if (/Edg\//.test(ua)) return 'Edge';
+  if (/OPR\//.test(ua)) return 'Opera';
+  if (/Chrome\//.test(ua)) return 'Chrome';
+  if (/Safari\//.test(ua)) return 'Safari';
+  if (/Firefox\//.test(ua)) return 'Firefox';
+  return 'آخر';
+}
+
+// Determine interest level based on behavior
+function calcLevel(s) {
+  if (s.booked) return 'high';
+  if (s.clickedWA) return 'high';
+  if (s.usedCalc && s.duration >= 60) return 'high';
+  if (s.usedCalc || s.duration >= 180) return 'high';
+  if (s.duration >= 60) return 'medium';
+  if (s.duration >= 30) return 'medium';
+  return 'low';
+}
+
+// Pages / sections visited
+const pagesVisited = new Set(['الرئيسية']);
+function trackSection() {
+  const sections = [
+    { id: 'services', label: 'الخدمات' },
+    { id: 'gallery', label: 'المعرض' },
+    { id: 'calculator', label: 'الحاسبة' },
+    { id: 'contact', label: 'التواصل' },
+    { id: 'about', label: 'من نحن' }
+  ];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const found = sections.find(s => e.target.id === s.id || e.target.closest('#'+s.id));
+        if (found) pagesVisited.add(found.label);
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el) obs.observe(el);
+  });
+}
+trackSection();
+
+const sessionStart = Date.now();
+const sessionDate = new Date().toISOString();
+const today = new Date().toISOString().split('T')[0];
+
 const session = {
-  start: Date.now(),
+  date: sessionDate,
+  device: getDevice(),
+  browser: getBrowser(),
+  ua: navigator.userAgent.slice(0, 120),
   duration: 0,
   usedCalc: false,
   clickedWA: false,
   booked: false,
-  device: /Mobi|Android/i.test(navigator.userAgent) ? 'موبايل' : 'كمبيوتر',
-  date: new Date().toISOString()
+  sentMessage: false,
+  sectionsViewed: '',
+  level: 'low',
+  savedAt: sessionDate
 };
+
+// Push immediately on page load (marks that the visitor arrived)
+let visitorRef = null;
+try {
+  visitorRef = push(ref(db, `deltaart/visitors/${today}`));
+  set(visitorRef, { ...session, level: 'low' });
+} catch(e) {}
+
+// Update the record every 30 seconds while they stay
+const updateInterval = setInterval(() => {
+  if (!visitorRef) return;
+  session.duration = Math.round((Date.now() - sessionStart) / 1000);
+  session.sectionsViewed = [...pagesVisited].join('، ');
+  session.level = calcLevel(session);
+  session.savedAt = new Date().toISOString();
+  try { set(visitorRef, { ...session }); } catch(e) {}
+}, 30000);
 
 // Track calculator use
 const origCalc = window.calculatePrice;
@@ -1195,7 +1275,7 @@ window.calculatePrice = function() {
 // Track WhatsApp clicks
 document.addEventListener('click', e => {
   const link = e.target.closest('a');
-  if(link && link.href && link.href.includes('wa.me')) {
+  if (link && link.href && link.href.includes('wa.me')) {
     session.clickedWA = true;
   }
 });
@@ -1207,18 +1287,32 @@ window.submitBooking = async function() {
   origBook && await origBook();
 };
 
-// Save on page leave
-function saveVisitor() {
-  session.duration = Math.round((Date.now() - session.start) / 1000);
-  if(session.duration < 3) return; // ignore bots
-  try {
-    push(ref(db,'deltaart/visitors'), session);
-  } catch(e) {}
+// Track message send
+const origMsg = window.sendMessage;
+window.sendMessage = async function() {
+  session.sentMessage = true;
+  origMsg && await origMsg();
+};
+
+// Final save on page leave
+function finalSave() {
+  clearInterval(updateInterval);
+  if (!visitorRef) return;
+  session.duration = Math.round((Date.now() - sessionStart) / 1000);
+  if (session.duration < 3) return; // ignore bots
+  session.sectionsViewed = [...pagesVisited].join('، ');
+  session.level = calcLevel(session);
+  session.savedAt = new Date().toISOString();
+  // Use sendBeacon for reliable delivery on page close
+  const payload = JSON.stringify({ ...session });
+  try { set(visitorRef, { ...session }); } catch(e) {}
 }
 
-window.addEventListener('beforeunload', saveVisitor);
+window.addEventListener('beforeunload', finalSave);
 document.addEventListener('visibilitychange', () => {
-  if(document.visibilityState === 'hidden') saveVisitor();
+  if (document.visibilityState === 'hidden') {
+    finalSave();
+  }
 });
 </script>
 </body>

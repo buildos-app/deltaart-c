@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دلتا آرت — لوحة التحكم</title>
+<!-- PWA -->
+<meta name="theme-color" content="#0A1628">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="دلتا آرت — أدمن">
+<link rel="manifest" href="manifest-admin.json">
+<link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/C9A84C/0A1628?text=DA">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0A1628;--navy2:#0F1F3D;--navy3:#162848;--gold:#C9A84C;--gold2:#E8C96A;--gold3:#A07830;--white:#FFFFFF;--gray:#8899AA;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;}
@@ -648,16 +656,28 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
     <!-- VISITORS -->
     <div class="page" id="page-visitors">
-      <div style="margin-bottom:16px"><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3><p style="color:var(--gray);font-size:13px">تتبع اهتمام الزوار بالموقع</p></div>
-      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟢 مهتمون جداً</div><div class="sc-val" id="vis-high">0</div><div class="sc-change" style="color:var(--green)">أكثر من 3 دقايق</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">🟢</div></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3><p style="color:var(--gray);font-size:13px">كل زيارة بتتسجل فور ما حد يفتح الموقع</p></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <input type="date" id="vis-date-filter" onchange="loadVisitors()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
+          <button class="btn-sm btn-outline-sm" onclick="document.getElementById('vis-date-filter').value='';loadVisitors()">📅 كل الأيام</button>
+          <button class="btn-sm btn-danger" onclick="clearVisitors()">🗑️ مسح الكل</button>
+        </div>
+      </div>
+      <!-- Summary cards -->
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:12px">
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">👁️ إجمالي الزوار</div><div class="sc-val" id="vis-total">0</div><div class="sc-change" style="color:var(--gray)" id="vis-date-label">اليوم</div></div><div class="sc-icon" style="background:rgba(59,130,246,0.15);color:#3B82F6">👁️</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟢 مهتمون جداً</div><div class="sc-val" id="vis-high">0</div><div class="sc-change" style="color:var(--green)">حجز / واتساب / حاسبة</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">🟢</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟡 مهتمون شوية</div><div class="sc-val" id="vis-medium">0</div><div class="sc-change" style="color:var(--gold)">30 ث - 3 د</div></div><div class="sc-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🟡</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🔴 مش مهتمين</div><div class="sc-val" id="vis-low">0</div><div class="sc-change" style="color:var(--red)">أقل من 30 ث</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">🔴</div></div></div>
       </div>
-      <div class="panel" style="margin-top:16px">
-        <div class="panel-header"><h3>أحدث الزوار</h3><button class="btn-sm btn-danger" onclick="clearVisitors()">🗑️ مسح الكل</button></div>
+      <div class="panel" style="margin-top:8px">
+        <div class="panel-header">
+          <h3 id="vis-table-title">أحدث الزوار</h3>
+          <span style="font-size:12px;color:var(--gray)" id="vis-count-label"></span>
+        </div>
         <div style="overflow-x:auto"><table>
-          <thead><tr><th>الوقت</th><th>مدة الزيارة</th><th>مستوى الاهتمام</th><th>الجهاز</th></tr></thead>
+          <thead><tr><th>التاريخ والوقت</th><th>المدة</th><th>الصفحات اللي شافها</th><th>الإجراءات</th><th>الجهاز</th><th>مستوى الاهتمام</th></tr></thead>
           <tbody id="visitors-tbody"></tbody>
         </table></div>
       </div>
@@ -2156,38 +2176,95 @@ function loadAttendance(){
   renderWorkersAttTable(window._allWorkers, selectedDate);
 }
 
-// ===== VISITORS — fixed to read from deltaart/visitors correctly =====
+// ===== VISITORS — reads deltaart/visitors/{date}/{sessionId} =====
 function loadVisitors(){
-  get(ref(db,'deltaart/visitors')).then(snap=>{
-    let high=0,medium=0,low=0;const visits=[];
+  const dateFilter = document.getElementById('vis-date-filter');
+  const today = new Date().toISOString().split('T')[0];
+  if(dateFilter && !dateFilter.value) dateFilter.value = today;
+  const selectedDate = dateFilter ? dateFilter.value : today;
+
+  const visRef = selectedDate
+    ? ref(db, `deltaart/visitors/${selectedDate}`)
+    : ref(db, 'deltaart/visitors');
+
+  get(visRef).then(snap=>{
+    let high=0, medium=0, low=0;
+    const visits=[];
+
     if(snap.exists()){
-      snap.forEach(c=>{
-        const v=c.val();
-        // support both flat list and nested by session key
-        if(v && typeof v==='object'){
-          if(v.level){visits.push(v);if(v.level==='high')high++;else if(v.level==='medium')medium++;else low++;}
-          else{
-            // nested: each child is a session
-            Object.values(v).forEach(sv=>{if(sv&&sv.level){visits.push(sv);if(sv.level==='high')high++;else if(sv.level==='medium')medium++;else low++;}});
+      if(selectedDate){
+        snap.forEach(c=>{
+          const v=c.val();
+          if(v && typeof v==='object' && v.date){
+            visits.push(v);
+            if(v.level==='high') high++;
+            else if(v.level==='medium') medium++;
+            else low++;
+          } else if(v && typeof v==='object'){
+            // fallback: old flat data under date
+            Object.values(v).forEach(sv=>{
+              if(sv && sv.date){ visits.push(sv); if(sv.level==='high')high++; else if(sv.level==='medium')medium++; else low++; }
+            });
           }
-        }
-      });
+        });
+      } else {
+        snap.forEach(dateNode=>{
+          if(dateNode.val() && typeof dateNode.val()==='object'){
+            if(dateNode.val().date){ visits.push(dateNode.val()); const v=dateNode.val(); if(v.level==='high')high++; else if(v.level==='medium')medium++; else low++; }
+            else { dateNode.forEach(sessionNode=>{ const v=sessionNode.val(); if(v&&v.date){ visits.push(v); if(v.level==='high')high++; else if(v.level==='medium')medium++; else low++; } }); }
+          }
+        });
+      }
     }
+
+    const total = high+medium+low;
+    const totalEl=document.getElementById('vis-total'); if(totalEl) totalEl.textContent=total;
     document.getElementById('vis-high').textContent=high;
     document.getElementById('vis-medium').textContent=medium;
     document.getElementById('vis-low').textContent=low;
+    const dateLabelEl=document.getElementById('vis-date-label'); if(dateLabelEl) dateLabelEl.textContent=selectedDate?fmtDate(selectedDate):'كل الأيام';
+    const countEl=document.getElementById('vis-count-label'); if(countEl) countEl.textContent=total+' زيارة';
+    const titleEl=document.getElementById('vis-table-title'); if(titleEl) titleEl.textContent=selectedDate?'زوار يوم '+fmtDate(selectedDate):'كل الزوار';
+
     const tbody=document.getElementById('visitors-tbody');
-    if(!visits.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار مسجلون بعد</td></tr>';return;}
-    const sorted=visits.filter(v=>v.date).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+    if(!visits.length){
+      tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px">لا يوجد زوار في هذه الفترة</td></tr>';
+      return;
+    }
+
+    const sorted=visits.filter(v=>v.date).sort((a,b)=>new Date(b.date)-new Date(a.date));
     tbody.innerHTML=sorted.map(v=>{
+      const dur=v.duration!=null?(v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث'):'جاري...';
+      const deviceIcon=v.device==='موبايل'?'📱':v.device==='تابلت'?'📟':'💻';
+      const deviceLabel=`${deviceIcon} ${v.device||'—'}${v.browser?' · '+v.browser:''}`;
       const levelMap={high:'<span class="badge badge-green">🟢 مهتم جداً</span>',medium:'<span class="badge badge-yellow">🟡 مهتم شوية</span>',low:'<span class="badge badge-red">🔴 مش مهتم</span>'};
-      const dur=v.duration!=null?(v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث'):'—';
-      const device=/mobile|android|iphone/i.test(v.ua||'')?'📱 موبايل':'💻 كمبيوتر';
-      return `<tr><td style="color:var(--gray)">${fmtDate(v.date)} ${v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):''}</td><td style="color:var(--gold);font-weight:700">${dur}</td><td>${levelMap[v.level]||'—'}</td><td>${device}</td></tr>`;
+      const actions=[];
+      if(v.booked) actions.push('<span class="badge badge-green">📅 حجز</span>');
+      if(v.clickedWA) actions.push('<span class="badge badge-green">💬 واتساب</span>');
+      if(v.sentMessage) actions.push('<span class="badge badge-blue">✉️ رسالة</span>');
+      if(v.usedCalc) actions.push('<span class="badge badge-yellow">🧮 حاسبة</span>');
+      const actionsHtml=actions.length?actions.join(' '):'<span style="color:var(--gray);font-size:12px">تصفح فقط</span>';
+      const sections=v.sectionsViewed||'الرئيسية';
+      const dateStr=v.date?new Date(v.date).toLocaleDateString('ar-EG'):'—';
+      const timeStr=v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'';
+      return `<tr>
+        <td style="color:var(--gray);white-space:nowrap">${dateStr}<div style="font-size:11px;color:var(--gold)">${timeStr}</div></td>
+        <td style="color:var(--gold);font-weight:700;white-space:nowrap">${dur}</td>
+        <td style="font-size:12px;color:var(--gray)">${sections}</td>
+        <td style="white-space:nowrap">${actionsHtml}</td>
+        <td style="font-size:12px">${deviceLabel}</td>
+        <td>${levelMap[v.level]||'<span class="badge badge-gray">—</span>'}</td>
+      </tr>`;
     }).join('');
   });
 }
-window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));loadVisitors();};
+window.clearVisitors=async()=>{
+  const df=document.getElementById('vis-date-filter');
+  const sd=df?.value;
+  if(!confirm(sd?`مسح زوار يوم ${sd}؟`:'مسح كل بيانات الزوار؟'))return;
+  await remove(ref(db,sd?`deltaart/visitors/${sd}`:'deltaart/visitors'));
+  loadVisitors();
+};
 
 // ===== MANUAL ATTENDANCE MODAL =====
 window.openManualAttModal = async function(){
@@ -2355,6 +2432,43 @@ function togglePass(id,btn){
   const input=document.getElementById(id);
   if(input.type==='password'){input.type='text';btn.textContent='🙈';}
   else{input.type='password';btn.textContent='👁️';}
+}
+</script>
+
+<!-- PWA Install Banner -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9000;background:var(--navy2);border:1px solid rgba(201,168,76,0.4);border-radius:16px;padding:16px 20px;font-family:Cairo,sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.5);align-items:center;gap:14px;max-width:360px;width:90%">
+  <div style="width:44px;height:44px;background:linear-gradient(135deg,#C9A84C,#A07830);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0A1628;font-size:16px;flex-shrink:0">DA</div>
+  <div style="flex:1">
+    <div style="font-weight:700;font-size:14px;color:#fff">نزّل لوحة التحكم</div>
+    <div style="font-size:12px;color:#8899AA;margin-top:2px">شغّلها زي أي تطبيق من الشاشة الرئيسية</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0">
+    <button onclick="installAdminPWA()" style="background:linear-gradient(135deg,#C9A84C,#A07830);color:#0A1628;border:none;border-radius:8px;padding:8px 14px;font-family:Cairo,sans-serif;font-weight:700;font-size:13px;cursor:pointer">تحميل</button>
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:8px;padding:8px 10px;font-family:Cairo,sans-serif;cursor:pointer;font-size:16px">✕</button>
+  </div>
+</div>
+
+<script>
+// Admin PWA Install
+let _adminDeferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _adminDeferredPrompt = e;
+  setTimeout(() => {
+    const banner = document.getElementById('pwa-banner');
+    if(banner) banner.style.display = 'flex';
+  }, 5000);
+});
+window.installAdminPWA = async function() {
+  if(!_adminDeferredPrompt) return;
+  _adminDeferredPrompt.prompt();
+  await _adminDeferredPrompt.userChoice;
+  _adminDeferredPrompt = null;
+  document.getElementById('pwa-banner').style.display = 'none';
+};
+// Register service worker for admin
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw-admin.js').catch(()=>{});
 }
 </script>
 </body>
