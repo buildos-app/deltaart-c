@@ -15,8 +15,8 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:800;}
 
 @media(max-width:900px){
-  /* body becomes column layout on mobile */
-  body{overflow:hidden;height:100vh;flex-direction:column;}
+  /* body stays flex row always */
+  body{overflow:hidden;height:100vh;}
 
   /* Sidebar slides in as overlay */
   .sidebar{
@@ -38,10 +38,10 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
   #mob-menu-btn{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);color:var(--gold);width:38px;height:38px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
   #mob-page-title{font-size:14px;font-weight:700;color:var(--white);}
 
-  /* Main area fills remaining space below topbar */
-  .main{flex:1;width:100%;overflow:hidden;display:flex;flex-direction:column;}
+  /* Main area fills remaining space */
+  .main{flex:1;width:100%;overflow:hidden;}
   .topbar{display:none;}
-  .content{flex:1;padding:14px;overflow-y:auto;height:calc(100vh - 56px);}
+  .content{padding:14px;overflow-y:auto;height:calc(100vh - 56px);}
 
   /* Grids */
   .stats-row{grid-template-columns:repeat(2,1fr)!important;gap:10px;}
@@ -520,7 +520,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📋 حضور الموظفين والعمال</h3></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
           <input type="date" id="att-date-filter" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
-          <button class="btn-sm btn-primary" onclick="openManualAttModal()">➕ تسجيل حضور</button>
         </div>
       </div>
 
@@ -886,48 +885,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="ff"><label>رقم الهاتف (اختياري)</label><input type="tel" id="wk-phone" placeholder="01XXXXXXXXX"></div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="addWorker()">➕ إضافة</button>
     <div id="wk-alert" class="alert"></div>
-  </div>
-</div>
-
-<!-- Manual Attendance Modal -->
-<div class="modal-overlay" id="manual-att-modal">
-  <div class="modal" style="max-width:500px">
-    <button class="modal-close" onclick="closeModal('manual-att-modal')">✕</button>
-    <h3>📋 تسجيل حضور يدوي</h3>
-    <p style="color:var(--gray);font-size:13px;margin-bottom:20px">اختار الموظف أو العامل وسجل حضوره</p>
-
-    <div class="ff">
-      <label>التاريخ</label>
-      <input type="date" id="matt-date" style="width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;direction:rtl;">
-    </div>
-
-    <div class="ff">
-      <label>اختار الشخص</label>
-      <select id="matt-person" style="width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;direction:rtl;">
-        <option value="">— اختار —</option>
-      </select>
-    </div>
-
-    <div class="ff">
-      <label>الحالة</label>
-      <div style="display:flex;gap:10px;margin-top:4px">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:12px 14px;">
-          <input type="radio" name="matt-status" value="present" style="accent-color:#22C55E;width:16px;height:16px">
-          <span style="font-size:14px;color:#22C55E;font-weight:700">✅ حاضر</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:12px 14px;">
-          <input type="radio" name="matt-status" value="absent" style="accent-color:#EF4444;width:16px;height:16px">
-          <span style="font-size:14px;color:#EF4444;font-weight:700">❌ غائب</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:12px 14px;">
-          <input type="radio" name="matt-status" value="half" style="accent-color:#C9A84C;width:16px;height:16px">
-          <span style="font-size:14px;color:var(--gold);font-weight:700">🌓 نص يوم</span>
-        </label>
-      </div>
-    </div>
-
-    <button class="btn-sm btn-primary" style="width:100%;padding:14px;font-size:15px" onclick="saveManualAtt()">💾 تسجيل الحضور</button>
-    <div id="matt-alert" class="alert"></div>
   </div>
 </div>
 
@@ -1624,12 +1581,7 @@ window.loadAttReport=async function(period,btn){
   else {
     empTbody.innerHTML=Object.entries(users).map(([uid,u])=>{
       const userRecs=attMap[uid]||{};
-      let presentDays=0;
-      Object.values(userRecs).forEach(r=>{
-        if(r.status==='absent') return;
-        if(r.status==='half') presentDays+=0.5;
-        else presentDays+=1;
-      });
+      const presentDays=Object.keys(userRecs).length;
       const absentDays=totalDays-presentDays;
       const pct=totalDays>0?Math.round(presentDays/totalDays*100):0;
       let totalMins=0;
@@ -1677,12 +1629,8 @@ window.loadAttReport=async function(period,btn){
   else{
     wrkTbody.innerHTML=workers.map(w=>{
       const wRecs=wkAttMap[w.id]||{};
-      let presentDays=0,absentDays=0;
-      Object.values(wRecs).forEach(r=>{
-        if(r.status==='present') presentDays++;
-        else if(r.status==='half'){presentDays+=0.5;absentDays+=0.5;}
-        else absentDays++;
-      });
+      const presentDays=Object.values(wRecs).filter(r=>r.status==='present').length;
+      const absentDays=Object.values(wRecs).filter(r=>r.status==='absent').length;
       const totalRecorded=presentDays+absentDays;
       const pct=totalRecorded>0?Math.round(presentDays/totalRecorded*100):0;
       return `<tr>
@@ -2002,7 +1950,7 @@ async function loadWorkerMonthStats(w){
     snap.forEach(dateNode=>{
       if(dateNode.key.startsWith(month)){
         const rec=dateNode.child(w.id).val();
-        if(rec){if(rec.status==='present')present++;else if(rec.status==='half'){present+=0.5;absent+=0.5;}else absent++;}
+        if(rec){if(rec.status==='present')present++;else absent++;}
       }
     });
   }
@@ -2024,14 +1972,13 @@ function renderWorkersAttTable(workers,date){
       const status=rec?.status;
       return `<tr>
         <td><strong>${w.name}</strong>${w.phone?`<div style="font-size:11px;color:var(--gray)">${w.phone}</div>`:''}</td>
-        <td>${status==='present'?'<span class="badge badge-green">✅ حاضر</span>':status==='absent'?'<span class="badge badge-red">❌ غائب</span>':status==='half'?'<span class="badge badge-yellow">🌓 نص يوم</span>':'<span class="badge badge-gray">لم يُسجَّل</span>'}</td>
+        <td>${status==='present'?'<span class="badge badge-green">✅ حاضر</span>':status==='absent'?'<span class="badge badge-red">❌ غائب</span>':'<span class="badge badge-gray">لم يُسجَّل</span>'}</td>
         <td style="color:var(--green)" id="wk-mp-${w.id}">—</td>
         <td style="color:var(--red)" id="wk-ma-${w.id}">—</td>
         <td>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             <button class="btn-sm btn-success" onclick="markWorkerAtt('${w.id}','present','${date}')">✅ حاضر</button>
             <button class="btn-sm btn-danger" onclick="markWorkerAtt('${w.id}','absent','${date}')">❌ غائب</button>
-            <button class="btn-sm btn-warning" onclick="markWorkerAtt('${w.id}','half','${date}')" style="background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.3)">🌓 نص</button>
             ${status?`<button class="btn-sm btn-gray" onclick="clearWorkerAtt('${w.id}','${date}')" style="background:rgba(136,153,170,0.15);color:var(--gray);border:1px solid rgba(136,153,170,0.2)">↩️ مسح</button>`:''}
           </div>
         </td>
@@ -2041,7 +1988,7 @@ function renderWorkersAttTable(workers,date){
     get(ref(db,'deltaart/workers-attendance')).then(allSnap=>{
       workers.forEach(w=>{
         let p=0,a=0;
-        if(allSnap.exists()){allSnap.forEach(dn=>{if(dn.key.startsWith(month)){const r=dn.child(w.id).val();if(r){if(r.status==='present')p++;else if(r.status==='half'){p+=0.5;a+=0.5;}else a++;}}});}
+        if(allSnap.exists()){allSnap.forEach(dn=>{if(dn.key.startsWith(month)){const r=dn.child(w.id).val();if(r){if(r.status==='present')p++;else a++;}}});}
         const ep=document.getElementById(`wk-mp-${w.id}`),ea=document.getElementById(`wk-ma-${w.id}`);
         if(ep)ep.textContent=p+' يوم';if(ea)ea.textContent=a+' يوم';
       });
@@ -2132,7 +2079,7 @@ function loadAttendance(){
     get(ref(db,`deltaart/attendance/${selectedDate}`)).then(snap=>{
       const records={};if(snap.exists())snap.forEach(c=>{records[c.key]=c.val();});
       const totalUsers=Object.keys(users).length;
-      const presentCount=Object.keys(records).filter(uid=>users[uid]&&records[uid]?.status!=='absent').length;
+      const presentCount=Object.keys(records).filter(uid=>users[uid]).length;
       document.getElementById('att-present').textContent=presentCount;
       document.getElementById('att-absent').textContent=Math.max(0,totalUsers-presentCount);
       const tbody=document.getElementById('attendance-tbody');
@@ -2142,13 +2089,8 @@ function loadAttendance(){
         const checkIn=rec?.checkIn?new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
         const checkOut=rec?.checkOut?new Date(rec.checkOut).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
         let hours='—';if(rec?.checkIn&&rec?.checkOut){const diff=(new Date(rec.checkOut)-new Date(rec.checkIn))/3600000;hours=diff.toFixed(1)+' ساعة';}
-        let statusBadge='<span class="badge badge-red">غائب</span>';
-        if(rec){
-          if(rec.status==='absent') statusBadge='<span class="badge badge-red">غائب</span>';
-          else if(rec.status==='half') statusBadge='<span class="badge badge-yellow">🌓 نص يوم</span>';
-          else statusBadge='<span class="badge badge-green">حاضر</span>';
-        }
-        return `<tr><td><strong>${u.name||'—'}</strong></td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td>${statusBadge}</td></tr>`;
+        const status=rec?'badge-green" >حاضر':'badge-red" >غائب';
+        return `<tr><td><strong>${u.name||'—'}</strong></td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td><span class="badge ${status}</span></td></tr>`;
       }).join('');
     });
   });
@@ -2188,102 +2130,6 @@ function loadVisitors(){
   });
 }
 window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));loadVisitors();};
-
-// ===== MANUAL ATTENDANCE MODAL =====
-window.openManualAttModal = async function(){
-  // Set default date to current att-date-filter value or today
-  const dateEl = document.getElementById('att-date-filter');
-  const today = dateEl?.value || new Date().toISOString().split('T')[0];
-  document.getElementById('matt-date').value = today;
-
-  // Clear previous selection
-  document.querySelectorAll('input[name="matt-status"]').forEach(r=>r.checked=false);
-  document.getElementById('matt-alert').classList.remove('show');
-
-  // Build person list: employees + workers
-  const sel = document.getElementById('matt-person');
-  sel.innerHTML = '<option value="">— اختار —</option>';
-
-  // Add employees (users from Firebase)
-  try{
-    const uSnap = await get(ref(db,'deltaart/users'));
-    if(uSnap.exists()){
-      let grp = document.createElement('optgroup');
-      grp.label = '👔 الموظفون';
-      uSnap.forEach(c=>{
-        const u=c.val();
-        if(u.role==='worker') return;
-        const opt=document.createElement('option');
-        opt.value='emp:'+c.key;
-        opt.textContent=u.name||u.email||c.key;
-        grp.appendChild(opt);
-      });
-      if(grp.children.length) sel.appendChild(grp);
-    }
-  }catch(e){}
-
-  // Add workers
-  const workers = window._allWorkers||[];
-  if(workers.length){
-    let grp = document.createElement('optgroup');
-    grp.label = '🪛 العمال';
-    workers.forEach(w=>{
-      const opt=document.createElement('option');
-      opt.value='wkr:'+w.id;
-      opt.textContent=w.name;
-      grp.appendChild(opt);
-    });
-    sel.appendChild(grp);
-  }
-
-  openModal('manual-att-modal');
-};
-
-window.saveManualAtt = async function(){
-  const alertEl = document.getElementById('matt-alert');
-  const personVal = document.getElementById('matt-person').value;
-  const date = document.getElementById('matt-date').value;
-  const statusEl = document.querySelector('input[name="matt-status"]:checked');
-
-  if(!personVal){showAlert(alertEl,'error','اختار الموظف أو العامل أولاً');return;}
-  if(!date){showAlert(alertEl,'error','حدد التاريخ');return;}
-  if(!statusEl){showAlert(alertEl,'error','اختار الحالة (حاضر / غائب / نص يوم)');return;}
-
-  const status = statusEl.value; // present | absent | half
-  const [type, id] = personVal.split(':');
-
-  try{
-    if(type==='emp'){
-      // Employee: use attendance path
-      const attRef = ref(db,`deltaart/attendance/${date}/${id}`);
-      if(status==='absent'){
-        // For absent, store a marker
-        await set(attRef,{status:'absent',recordedAt:new Date().toISOString()});
-      } else if(status==='half'){
-        await set(attRef,{status:'half',recordedAt:new Date().toISOString()});
-      } else {
-        // present — set checkIn if not exists
-        const snap = await get(attRef);
-        if(!snap.exists()){
-          // get user name
-          const uSnap = await get(ref(db,`deltaart/users/${id}`));
-          const u = uSnap.val()||{};
-          await set(attRef,{checkIn:new Date().toISOString(),name:u.name||'',role:u.role||'employee',status:'present'});
-        } else {
-          await update(attRef,{status:'present'});
-        }
-      }
-    } else {
-      // Worker: use workers-attendance path
-      await set(ref(db,`deltaart/workers-attendance/${date}/${id}`),{status:status==='present'?'present':status==='half'?'half':'absent',recordedAt:new Date().toISOString()});
-    }
-    showAlert(alertEl,'success','✅ تم تسجيل الحضور بنجاح');
-    // Refresh attendance page
-    const dateFilter = document.getElementById('att-date-filter');
-    if(dateFilter) dateFilter.value = date;
-    setTimeout(()=>{loadAttendance();closeModal('manual-att-modal');},1000);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ، جرب تاني');}
-};
 
 // ===== ATTENDANCE CHECKIN =====
 async function recordCheckIn(){
