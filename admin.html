@@ -1777,7 +1777,7 @@ function loadVisitors(){
     }).join('');
   });
 }
-window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));};
+window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));loadVisitors();};
 
 // ===== ATTENDANCE CHECKIN =====
 async function recordCheckIn(){
@@ -1804,14 +1804,32 @@ function showAlert(el,type,text){el.className=`alert alert-${type==='success'?'s
 
 <script>
 const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
+
 function goPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
-  document.getElementById('topbar-title').textContent=pageTitles[name]||name;
+  // update both desktop and mobile titles
+  const title=pageTitles[name]||name;
+  document.getElementById('topbar-title').textContent=title;
+  const mobTitle=document.getElementById('mob-page-title');
+  if(mobTitle)mobTitle.textContent=title;
   if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
+  // close mobile sidebar after nav
+  const sidebar=document.querySelector('.sidebar');
+  const overlay=document.getElementById('sidebar-overlay');
+  if(sidebar)sidebar.classList.remove('open');
+  if(overlay)overlay.classList.remove('open');
   if(name==='attendance') loadAttendance();
   if(name==='visitors') loadVisitors();
 }
+
+function toggleMobSidebar(){
+  const sidebar=document.querySelector('.sidebar');
+  const overlay=document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
