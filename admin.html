@@ -406,14 +406,33 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
     <!-- INVOICES PAGE -->
     <div class="page" id="page-invoices">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🧾 الفواتير والمشاريع</h3></div>
         <button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">➕ فاتورة جديدة</button>
       </div>
+      <!-- Revenue Period Cards -->
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:8px">
+        <div class="revenue-card"><div class="sc-label">💰 إجمالي الإيرادات</div><div style="font-size:24px;font-weight:900;color:var(--gold)" id="inv-total-rev">0 جنيه</div></div>
+        <div class="stat-card"><div><div class="sc-label">✅ تم تحصيله</div><div class="sc-val" style="color:var(--green);font-size:22px" id="inv-paid-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
+        <div class="stat-card"><div><div class="sc-label">⏳ متبقي</div><div class="sc-val" style="color:var(--red);font-size:22px" id="inv-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
+      </div>
+      <!-- Period breakdown -->
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
-        <div class="revenue-card"><div class="sc-label">💰 إجمالي الإيرادات</div><div style="font-size:26px;font-weight:900;color:var(--gold)" id="inv-total-rev">0 جنيه</div></div>
-        <div class="stat-card"><div><div class="sc-label">✅ تم تحصيله</div><div class="sc-val" style="color:var(--green)" id="inv-paid-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
-        <div class="stat-card"><div><div class="sc-label">⏳ متبقي للتحصيل</div><div class="sc-val" style="color:var(--red)" id="inv-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
+        <div class="stat-card" style="border-color:rgba(59,130,246,0.3)">
+          <div class="sc-label" style="color:#3B82F6">📅 اليوم</div>
+          <div style="font-size:20px;font-weight:900" id="rev-today">0</div>
+          <div style="font-size:11px;color:var(--gray)">جنيه دخل اليوم</div>
+        </div>
+        <div class="stat-card" style="border-color:rgba(168,85,247,0.3)">
+          <div class="sc-label" style="color:#A855F7">📅 هذا الأسبوع</div>
+          <div style="font-size:20px;font-weight:900" id="rev-week">0</div>
+          <div style="font-size:11px;color:var(--gray)">جنيه دخل الأسبوع</div>
+        </div>
+        <div class="stat-card" style="border-color:rgba(201,168,76,0.3)">
+          <div class="sc-label" style="color:var(--gold)">📅 هذا الشهر</div>
+          <div style="font-size:20px;font-weight:900" id="rev-month">0</div>
+          <div style="font-size:11px;color:var(--gray)">جنيه دخل الشهر</div>
+        </div>
       </div>
       <div class="panel">
         <div class="panel-header">
@@ -499,27 +518,130 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="page" id="page-attendance">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📋 حضور الموظفين والعمال</h3></div>
-        <input type="date" id="att-date-filter" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <input type="date" id="att-date-filter" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
+        </div>
       </div>
+
+      <!-- Today summary -->
       <div class="stats-row" style="grid-template-columns:repeat(2,1fr);margin-bottom:16px">
-        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">حاضرون اليوم</div><div class="sc-val" id="att-present">0</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">✅</div></div></div>
-        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">غائبون</div><div class="sc-val" id="att-absent">0</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">❌</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">✅ حاضرون اليوم</div><div class="sc-val" id="att-present">0</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">✅</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">❌ غائبون اليوم</div><div class="sc-val" id="att-absent">0</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">❌</div></div></div>
       </div>
-      <!-- Employees auto attendance -->
+
+      <!-- Daily attendance tables -->
       <div class="panel" style="margin-bottom:12px">
-        <div class="panel-header"><h3>👔 الموظفون (تلقائي)</h3></div>
+        <div class="panel-header"><h3>👔 الموظفون — حضور اليوم (تلقائي)</h3></div>
         <div style="overflow-x:auto"><table>
           <thead><tr><th>الموظف</th><th>الدور</th><th>وقت الحضور</th><th>وقت الانصراف</th><th>الساعات</th><th>الحالة</th></tr></thead>
           <tbody id="attendance-tbody"></tbody>
         </table></div>
       </div>
-      <!-- Workers manual attendance -->
-      <div class="panel">
-        <div class="panel-header"><h3>🪛 العمال (يدوي)</h3></div>
+
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-header"><h3>🪛 العمال — تسجيل يدوي</h3></div>
         <div style="overflow-x:auto"><table>
-          <thead><tr><th>العامل</th><th>الحالة اليوم</th><th>إجمالي حضور (الشهر)</th><th>إجمالي غياب (الشهر)</th><th>تسجيل</th></tr></thead>
+          <thead><tr><th>العامل</th><th>الحالة اليوم</th><th>حضور الشهر</th><th>غياب الشهر</th><th>تسجيل</th></tr></thead>
           <tbody id="workers-att-tbody"></tbody>
         </table></div>
+      </div>
+
+      <!-- Period Reports -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <h3 style="font-size:16px;font-weight:700">📊 تقرير الحضور بالفترة</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="stab active" id="att-rep-week" onclick="loadAttReport('week',this)">هذا الأسبوع</button>
+          <button class="stab" id="att-rep-2week" onclick="loadAttReport('2week',this)">أسبوعان</button>
+          <button class="stab" id="att-rep-month" onclick="loadAttReport('month',this)">هذا الشهر</button>
+          <button class="stab" id="att-rep-custom" onclick="showCustomRange()">فترة مخصصة</button>
+        </div>
+      </div>
+      <div id="att-custom-range" style="display:none;background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:14px;margin-bottom:12px">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <div class="ff" style="margin:0;flex:1;min-width:130px"><label style="font-size:12px">من</label><input type="date" id="att-from" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;width:100%"></div>
+          <div class="ff" style="margin:0;flex:1;min-width:130px"><label style="font-size:12px">لحد</label><input type="date" id="att-to" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;width:100%"></div>
+          <button class="btn-sm btn-primary" onclick="loadAttReport('custom',null)" style="margin-top:16px">عرض</button>
+        </div>
+      </div>
+
+      <!-- Report result: employees -->
+      <div class="panel" style="margin-bottom:12px">
+        <div class="panel-header"><h3 id="att-rep-label-emp">👔 تقرير الموظفين — هذا الأسبوع</h3></div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>الموظف</th><th>الدور</th><th>✅ أيام حضور</th><th>❌ أيام غياب</th><th>⏱️ إجمالي الساعات</th><th>نسبة الحضور</th></tr></thead>
+          <tbody id="att-report-emp-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- Report result: workers -->
+      <div class="panel">
+        <div class="panel-header"><h3 id="att-rep-label-wrk">🪛 تقرير العمال — هذا الأسبوع</h3></div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>العامل</th><th>✅ أيام حضور</th><th>❌ أيام غياب</th><th>📅 إجمالي أيام</th><th>نسبة الحضور</th></tr></thead>
+          <tbody id="att-report-wrk-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- FINANCIAL REPORTS PAGE -->
+    <div class="page" id="page-reports">
+      <div style="margin-bottom:16px">
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📈 تقارير الإيرادات</h3>
+        <p style="color:var(--gray);font-size:13px">الأموال الداخلة حسب الفترة الزمنية</p>
+      </div>
+
+      <!-- Period tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="stab active" onclick="loadRevenueReport('today',this)">📅 اليوم</button>
+        <button class="stab" onclick="loadRevenueReport('week',this)">📅 هذا الأسبوع</button>
+        <button class="stab" onclick="loadRevenueReport('month',this)">📅 هذا الشهر</button>
+        <button class="stab" onclick="loadRevenueReport('3month',this)">📅 3 أشهر</button>
+        <button class="stab" onclick="loadRevenueReport('year',this)">📅 هذه السنة</button>
+        <button class="stab" onclick="showRevenueCustomRange()">📅 فترة مخصصة</button>
+      </div>
+
+      <!-- Custom range -->
+      <div id="rev-custom-range" style="display:none;background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:14px;margin-bottom:16px">
+        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+          <div class="ff" style="margin:0;flex:1;min-width:130px"><label style="font-size:12px">من تاريخ</label><input type="date" id="rev-from" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;width:100%"></div>
+          <div class="ff" style="margin:0;flex:1;min-width:130px"><label style="font-size:12px">لحد تاريخ</label><input type="date" id="rev-to" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;width:100%"></div>
+          <button class="btn-sm btn-primary" onclick="loadRevenueReport('custom',null)">عرض</button>
+        </div>
+      </div>
+
+      <!-- Summary cards -->
+      <div id="rev-period-label" style="font-size:14px;color:var(--gray);margin-bottom:10px">عرض: اليوم</div>
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
+        <div class="revenue-card">
+          <div class="sc-label">💰 إجمالي الدفعات المستلمة</div>
+          <div style="font-size:28px;font-weight:900;color:var(--gold)" id="rep-collected">0</div>
+          <div style="font-size:12px;color:var(--gray);margin-top:4px">جنيه</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">🧾 عدد الفواتير</div>
+          <div class="sc-val" id="rep-inv-count">0</div>
+          <div style="font-size:12px;color:var(--gray)">فاتورة في هذه الفترة</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-label">📦 مشاريع جديدة</div>
+          <div class="sc-val" id="rep-new-proj">0</div>
+          <div style="font-size:12px;color:var(--gray)">مشروع تم إنشاؤه</div>
+        </div>
+      </div>
+
+      <!-- Payments breakdown table -->
+      <div class="panel">
+        <div class="panel-header"><h3 id="rep-table-title">💳 الدفعات المستلمة</h3></div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>العميل</th><th>المشروع</th><th>المبلغ المستلم</th><th>ملاحظة الدفعة</th><th>تاريخ الدفعة</th></tr></thead>
+          <tbody id="rep-payments-tbody"></tbody>
+        </table></div>
+      </div>
+
+      <!-- Monthly breakdown chart (text-based) -->
+      <div class="panel" style="margin-top:12px">
+        <div class="panel-header"><h3>📊 ملخص شهري</h3></div>
+        <div class="panel-content" id="rev-monthly-breakdown"></div>
       </div>
     </div>
 
@@ -898,6 +1020,7 @@ function setupUI(){
       <div class="nav-section-title">الإعدادات</div>
       <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🛠️</span> الإعدادات</button>
       <div class="nav-section-title">التقارير</div>
+      <button class="nav-item" onclick="goPage('reports',this)"><span class="ni">📈</span> تقارير الإيرادات</button>
       <button class="nav-item" onclick="goPage('attendance',this)"><span class="ni">📋</span> حضور الموظفين</button>
       <button class="nav-item" onclick="goPage('visitors',this)"><span class="ni">👁️</span> زوار الموقع</button>
       <div style="margin-top:12px"><a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> الموقع</a></div>`;
@@ -1292,12 +1415,241 @@ window.saveNewInvoice=async function(){
 // ===== INVOICE TABLE & STATS =====
 function calcRevenue(){
   let total=0,paid=0;
-  window._allInvoices.forEach(inv=>{total+=(inv.total||0);paid+=(inv.totalPaid||0);});
+  const now=new Date();
+  // period helpers
+  const todayStr=now.toISOString().slice(0,10);
+  const weekStart=new Date(now);weekStart.setDate(now.getDate()-now.getDay());weekStart.setHours(0,0,0,0);
+  const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+
+  let todayPaid=0,weekPaid=0,monthPaid=0;
+
+  window._allInvoices.forEach(inv=>{
+    total+=(inv.total||0);
+    paid+=(inv.totalPaid||0);
+    // sum payments by date
+    (inv.payments||[]).forEach(p=>{
+      const pDate=new Date(p.date);
+      const amt=p.amount||0;
+      if(pDate.toISOString().slice(0,10)===todayStr) todayPaid+=amt;
+      if(pDate>=weekStart) weekPaid+=amt;
+      if(pDate>=monthStart) monthPaid+=amt;
+    });
+  });
+
   const remaining=total-paid;
   ['ds-total-rev','inv-total-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=total.toLocaleString('ar-EG')+(id.includes('inv')?' جنيه':'');});
   ['ds-paid-rev','inv-paid-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=paid.toLocaleString('ar-EG');});
   ['ds-remaining-rev','inv-remaining-rev'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=remaining.toLocaleString('ar-EG');});
+  const elToday=document.getElementById('rev-today');if(elToday)elToday.textContent=todayPaid.toLocaleString('ar-EG');
+  const elWeek=document.getElementById('rev-week');if(elWeek)elWeek.textContent=weekPaid.toLocaleString('ar-EG');
+  const elMonth=document.getElementById('rev-month');if(elMonth)elMonth.textContent=monthPaid.toLocaleString('ar-EG');
 }
+
+// ===== FINANCIAL REPORTS =====
+window._revReportPeriod='today';
+window.showRevenueCustomRange=function(){
+  document.getElementById('rev-custom-range').style.display='block';
+};
+window.loadRevenueReport=function(period,btn){
+  window._revReportPeriod=period;
+  if(btn){document.querySelectorAll('#page-reports .stab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+  if(period!=='custom') document.getElementById('rev-custom-range').style.display='none';
+
+  const now=new Date();
+  let fromDate,toDate=new Date();toDate.setHours(23,59,59,999);
+  const labels={today:'اليوم',week:'هذا الأسبوع',month:'هذا الشهر','3month':'3 أشهر',year:'هذه السنة',custom:'فترة مخصصة'};
+
+  if(period==='today'){fromDate=new Date(now);fromDate.setHours(0,0,0,0);}
+  else if(period==='week'){fromDate=new Date(now);fromDate.setDate(now.getDate()-7);fromDate.setHours(0,0,0,0);}
+  else if(period==='month'){fromDate=new Date(now.getFullYear(),now.getMonth(),1);}
+  else if(period==='3month'){fromDate=new Date(now);fromDate.setMonth(now.getMonth()-3);fromDate.setHours(0,0,0,0);}
+  else if(period==='year'){fromDate=new Date(now.getFullYear(),0,1);}
+  else if(period==='custom'){
+    const f=document.getElementById('rev-from').value;const t=document.getElementById('rev-to').value;
+    if(!f||!t){alert('اختار الفترة');return;}
+    fromDate=new Date(f);toDate=new Date(t);toDate.setHours(23,59,59,999);
+  }
+
+  const label=labels[period]||'';
+  document.getElementById('rev-period-label').textContent='عرض: '+label;
+  document.getElementById('rep-table-title').textContent='💳 الدفعات المستلمة — '+label;
+
+  // Collect all payments in range
+  const payments=[];
+  let newProjects=0;
+  window._allInvoices.forEach(inv=>{
+    const created=new Date(inv.createdAt||0);
+    if(created>=fromDate&&created<=toDate) newProjects++;
+    (inv.payments||[]).forEach(p=>{
+      const pd=new Date(p.date);
+      if(pd>=fromDate&&pd<=toDate) payments.push({...p,clientName:inv.clientName,projectName:inv.projectName,invId:inv.id});
+    });
+  });
+  payments.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const totalCollected=payments.reduce((s,p)=>s+(p.amount||0),0);
+
+  document.getElementById('rep-collected').textContent=totalCollected.toLocaleString('ar-EG');
+  document.getElementById('rep-inv-count').textContent=payments.length;
+  document.getElementById('rep-new-proj').textContent=newProjects;
+
+  const tbody=document.getElementById('rep-payments-tbody');
+  tbody.innerHTML=payments.length?payments.map(p=>`<tr>
+    <td><strong>${p.clientName||'—'}</strong></td>
+    <td style="color:var(--gray)">${p.projectName||'—'}</td>
+    <td style="color:var(--green);font-weight:700">+${(p.amount||0).toLocaleString('ar-EG')} جنيه</td>
+    <td style="color:var(--gray)">${p.note||'دفعة'}</td>
+    <td style="color:var(--gray)">${fmtDate(p.date)} ${p.date?new Date(p.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):''}</td>
+  </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد دفعات في هذه الفترة</td></tr>';
+
+  // Monthly breakdown (always show last 6 months)
+  const monthly={};
+  window._allInvoices.forEach(inv=>{
+    (inv.payments||[]).forEach(p=>{
+      const pd=new Date(p.date);
+      const key=pd.toLocaleString('ar-EG',{year:'numeric',month:'long'});
+      monthly[key]=(monthly[key]||0)+(p.amount||0);
+    });
+  });
+  const monthKeys=Object.keys(monthly).slice(-6);
+  const maxVal=Math.max(...Object.values(monthly),1);
+  const breakdownEl=document.getElementById('rev-monthly-breakdown');
+  breakdownEl.innerHTML=monthKeys.length?monthKeys.map(k=>{
+    const val=monthly[k];const pct=Math.round(val/maxVal*100);
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="width:90px;font-size:12px;color:var(--gray);text-align:right;flex-shrink:0">${k}</div>
+      <div style="flex:1;background:rgba(255,255,255,0.05);border-radius:20px;height:10px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:linear-gradient(to left,var(--gold),var(--gold2));border-radius:20px"></div>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--gold);width:100px;text-align:left">${val.toLocaleString('ar-EG')} ج</div>
+    </div>`;
+  }).join(''):'<div style="color:var(--gray);text-align:center;padding:20px">لا يوجد بيانات</div>';
+};
+
+// ===== ATTENDANCE PERIOD REPORTS =====
+window.showCustomRange=function(){
+  document.getElementById('att-custom-range').style.display=
+    document.getElementById('att-custom-range').style.display==='none'?'block':'none';
+};
+
+window.loadAttReport=async function(period,btn){
+  if(btn){document.querySelectorAll('#page-attendance .stab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+  const now=new Date();
+  let fromDate,toDate=new Date();toDate.setHours(23,59,59,999);
+  const labels={week:'هذا الأسبوع','2week':'أسبوعان',month:'هذا الشهر',custom:'فترة مخصصة'};
+
+  if(period==='week'){fromDate=new Date(now);fromDate.setDate(now.getDate()-7);fromDate.setHours(0,0,0,0);}
+  else if(period==='2week'){fromDate=new Date(now);fromDate.setDate(now.getDate()-14);fromDate.setHours(0,0,0,0);}
+  else if(period==='month'){fromDate=new Date(now.getFullYear(),now.getMonth(),1);}
+  else if(period==='custom'){
+    const f=document.getElementById('att-from').value,t=document.getElementById('att-to').value;
+    if(!f||!t){alert('اختار الفترة');return;}
+    fromDate=new Date(f);toDate=new Date(t);toDate.setHours(23,59,59,999);
+  }
+
+  const label=labels[period]||'';
+  document.getElementById('att-rep-label-emp').textContent='👔 تقرير الموظفين — '+label;
+  document.getElementById('att-rep-label-wrk').textContent='🪛 تقرير العمال — '+label;
+
+  // Generate list of dates in range
+  const dates=[];
+  const cur=new Date(fromDate);
+  while(cur<=toDate){dates.push(cur.toISOString().slice(0,10));cur.setDate(cur.getDate()+1);}
+  const totalDays=dates.length;
+
+  // Employees report
+  const [userSnap,attSnap]=await Promise.all([
+    get(ref(db,'deltaart/users')),
+    get(ref(db,'deltaart/attendance'))
+  ]);
+  const users={};
+  if(userSnap.exists())userSnap.forEach(c=>{const u=c.val();if(u.role!=='worker')users[c.key]=u;});
+  // Build attendance map: uid -> {date: record}
+  const attMap={};
+  if(attSnap.exists()){
+    attSnap.forEach(dateNode=>{
+      if(dates.includes(dateNode.key)){
+        dateNode.forEach(userNode=>{
+          if(!attMap[userNode.key])attMap[userNode.key]={};
+          attMap[userNode.key][dateNode.key]=userNode.val();
+        });
+      }
+    });
+  }
+
+  const empTbody=document.getElementById('att-report-emp-tbody');
+  if(!Object.keys(users).length){empTbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">لا يوجد موظفون</td></tr>';}
+  else {
+    empTbody.innerHTML=Object.entries(users).map(([uid,u])=>{
+      const userRecs=attMap[uid]||{};
+      const presentDays=Object.keys(userRecs).length;
+      const absentDays=totalDays-presentDays;
+      const pct=totalDays>0?Math.round(presentDays/totalDays*100):0;
+      let totalMins=0;
+      Object.values(userRecs).forEach(r=>{
+        if(r.checkIn&&r.checkOut){totalMins+=(new Date(r.checkOut)-new Date(r.checkIn))/60000;}
+      });
+      const hrs=Math.floor(totalMins/60),mins=Math.round(totalMins%60);
+      return `<tr>
+        <td><strong>${u.name||'—'}</strong></td>
+        <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
+        <td style="color:var(--green);font-weight:700">${presentDays} يوم</td>
+        <td style="color:var(--red);font-weight:700">${absentDays} يوم</td>
+        <td style="color:var(--gold)">${hrs}س ${mins}د</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden;min-width:60px">
+              <div style="width:${pct}%;height:100%;background:${pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)'};border-radius:20px"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:${pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)'}">${pct}%</span>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Workers report
+  const [wkSnap,wkAttSnap]=await Promise.all([
+    get(ref(db,'deltaart/workers')),
+    get(ref(db,'deltaart/workers-attendance'))
+  ]);
+  const workers=[];if(wkSnap.exists())wkSnap.forEach(c=>workers.push({id:c.key,...c.val()}));
+  const wkAttMap={};
+  if(wkAttSnap.exists()){
+    wkAttSnap.forEach(dateNode=>{
+      if(dates.includes(dateNode.key)){
+        dateNode.forEach(wkNode=>{
+          if(!wkAttMap[wkNode.key])wkAttMap[wkNode.key]={};
+          wkAttMap[wkNode.key][dateNode.key]=wkNode.val();
+        });
+      }
+    });
+  }
+  const wrkTbody=document.getElementById('att-report-wrk-tbody');
+  if(!workers.length){wrkTbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:20px">لا يوجد عمال</td></tr>';}
+  else{
+    wrkTbody.innerHTML=workers.map(w=>{
+      const wRecs=wkAttMap[w.id]||{};
+      const presentDays=Object.values(wRecs).filter(r=>r.status==='present').length;
+      const absentDays=Object.values(wRecs).filter(r=>r.status==='absent').length;
+      const totalRecorded=presentDays+absentDays;
+      const pct=totalRecorded>0?Math.round(presentDays/totalRecorded*100):0;
+      return `<tr>
+        <td><strong>${w.name}</strong>${w.phone?`<div style="font-size:11px;color:var(--gray)">${w.phone}</div>`:''}</td>
+        <td style="color:var(--green);font-weight:700">${presentDays} يوم</td>
+        <td style="color:var(--red);font-weight:700">${absentDays} يوم</td>
+        <td style="color:var(--gray)">${totalRecorded} يوم مسجل / ${totalDays} يوم إجمالي</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden;min-width:60px">
+              <div style="width:${pct}%;height:100%;background:${pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)'};border-radius:20px"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:${pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)'}">${pct}%</span>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+};
 
 function renderDashInvoices(all){
   const tbody=document.getElementById('dash-inv-tbody');
@@ -1803,24 +2155,23 @@ function showAlert(el,type,text){el.className=`alert alert-${type==='success'?'s
 </script>
 
 <script>
-const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
+const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',reports:'📈 تقارير الإيرادات',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
 
 function goPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  // update both desktop and mobile titles
+  const pg=document.getElementById('page-'+name);
+  if(pg)pg.classList.add('active');
   const title=pageTitles[name]||name;
   document.getElementById('topbar-title').textContent=title;
   const mobTitle=document.getElementById('mob-page-title');
   if(mobTitle)mobTitle.textContent=title;
   if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
   // close mobile sidebar after nav
-  const sidebar=document.querySelector('.sidebar');
-  const overlay=document.getElementById('sidebar-overlay');
-  if(sidebar)sidebar.classList.remove('open');
-  if(overlay)overlay.classList.remove('open');
-  if(name==='attendance') loadAttendance();
+  document.querySelector('.sidebar')?.classList.remove('open');
+  document.getElementById('sidebar-overlay')?.classList.remove('open');
+  if(name==='attendance'){loadAttendance();setTimeout(()=>loadAttReport('week',document.getElementById('att-rep-week')),300);}
   if(name==='visitors') loadVisitors();
+  if(name==='reports') loadRevenueReport('today',document.querySelector('#page-reports .stab'));
 }
 
 function toggleMobSidebar(){
