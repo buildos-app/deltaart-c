@@ -4,51 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دلتا آرت — لوحة التحكم</title>
+<meta name="theme-color" content="#0A1628">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="دلتا آرت — أدمن">
+<link rel="manifest" href="manifest-admin.json">
+<link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/C9A84C/0A1628?text=DA">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0A1628;--navy2:#0F1F3D;--navy3:#162848;--gold:#C9A84C;--gold2:#E8C96A;--gold3:#A07830;--white:#FFFFFF;--gray:#8899AA;--green:#22C55E;--red:#EF4444;--blue:#3B82F6;--orange:#F97316;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);display:flex;height:100vh;overflow:hidden;}
-
-/* ===== RESPONSIVE — SIDEBAR OVERLAY ON MOBILE ===== */
 #mob-topbar{display:none;}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:800;}
-
 @media(max-width:900px){
-  /* body stays flex row always */
-  body{overflow:hidden;height:100vh;}
-
-  /* Sidebar slides in as overlay */
-  .sidebar{
-    position:fixed;right:0;top:0;height:100vh;z-index:900;
-    transform:translateX(100%);transition:transform 0.3s ease;
-    width:260px;overflow-y:auto;
-  }
+  body{overflow:hidden;height:100vh;flex-direction:column;}
+  .sidebar{position:fixed;right:0;top:0;height:100vh;z-index:900;transform:translateX(100%);transition:transform 0.3s ease;width:260px;overflow-y:auto;}
   .sidebar.open{transform:translateX(0);}
   #sidebar-overlay.open{display:block;}
-
-  /* Mobile topbar */
-  #mob-topbar{
-    display:flex;align-items:center;justify-content:space-between;
-    background:var(--navy2);border-bottom:1px solid rgba(201,168,76,0.15);
-    padding:0 16px;height:56px;flex-shrink:0;width:100%;
-  }
+  #mob-topbar{display:flex;align-items:center;justify-content:space-between;background:var(--navy2);border-bottom:1px solid rgba(201,168,76,0.15);padding:0 16px;height:56px;flex-shrink:0;width:100%;}
   #mob-topbar .mob-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;}
   #mob-topbar .mob-logo .li{width:32px;height:32px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:var(--navy);}
   #mob-menu-btn{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);color:var(--gold);width:38px;height:38px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
   #mob-page-title{font-size:14px;font-weight:700;color:var(--white);}
-
-  /* Main area fills remaining space */
-  .main{flex:1;width:100%;overflow:hidden;}
+  .main{flex:1;width:100%;overflow:hidden;display:flex;flex-direction:column;}
   .topbar{display:none;}
-  .content{padding:14px;overflow-y:auto;height:calc(100vh - 56px);}
-
-  /* Grids */
+  .content{flex:1;padding:14px;overflow-y:auto;height:calc(100vh - 56px);}
   .stats-row{grid-template-columns:repeat(2,1fr)!important;gap:10px;}
   .two-col{grid-template-columns:1fr!important;}
   .gal-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))!important;}
-
-  /* Tables scroll horizontally */
   table{font-size:12px;}
   td,th{padding:7px 6px;}
   .modal{padding:18px 14px;margin:10px;}
@@ -57,7 +42,6 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
   .payment-row{flex-direction:column;gap:8px;}
   .two-col[style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr!important;}
 }
-
 @media(max-width:480px){
   .stats-row{grid-template-columns:1fr 1fr!important;}
   .content{padding:10px;}
@@ -65,8 +49,6 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
   .stat-card .sc-val{font-size:18px!important;}
   .modal{padding:14px 12px;}
 }
-
-/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
 #login-screen.hide{display:none;}
 .login-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
@@ -81,8 +63,6 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--navy);padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.3s;width:100%;}
 .btn-gold:hover{opacity:0.85;}
 #login-err{background:rgba(239,68,68,0.15);color:#EF4444;padding:12px;border-radius:8px;text-align:center;font-size:14px;margin-top:12px;display:none;}
-
-/* SIDEBAR */
 .sidebar{width:240px;height:100vh;background:var(--navy2);border-left:1px solid rgba(201,168,76,0.15);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
 .sidebar-logo{padding:20px;border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;gap:10px;}
 .sidebar-logo .li{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--navy);}
@@ -107,15 +87,11 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .role-worker{background:rgba(136,153,170,0.2);color:var(--gray);}
 .logout-btn{margin-top:10px;width:100%;padding:9px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#EF4444;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .logout-btn:hover{background:rgba(239,68,68,0.2);}
-
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .topbar{height:60px;background:var(--navy2);border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;}
 .topbar h2{font-size:18px;font-weight:700;}
 .topbar-badge{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .content{flex:1;overflow-y:auto;padding:24px;}
-
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
 .stat-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;padding:20px;}
 .stat-card .sc-label{font-size:12px;color:var(--gray);font-weight:600;margin-bottom:8px;}
@@ -123,21 +99,15 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .stat-card .sc-change{font-size:12px;margin-top:4px;}
 .sc-change.up{color:var(--green);}
 .sc-icon{float:left;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
-
-/* PANEL */
 .panel{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;overflow:hidden;margin-bottom:16px;}
 .panel-header{padding:16px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:space-between;}
 .panel-header h3{font-size:15px;font-weight:700;}
 .panel-content{padding:20px;}
-
-/* TABLE */
 table{width:100%;border-collapse:collapse;}
 th{text-align:right;font-size:12px;font-weight:700;color:var(--gray);padding:8px 12px;border-bottom:1px solid rgba(201,168,76,0.1);}
 td{padding:12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(255,255,255,0.02);}
-
-/* BADGE */
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
 .badge-green{background:rgba(34,197,94,0.15);color:#22C55E;}
 .badge-yellow{background:rgba(201,168,76,0.15);color:var(--gold);}
@@ -146,8 +116,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .badge-gray{background:rgba(136,153,170,0.15);color:var(--gray);}
 .badge-purple{background:rgba(168,85,247,0.15);color:#A855F7;}
 .badge-orange{background:rgba(249,115,22,0.15);color:#F97316;}
-
-/* FORM */
 .ff{margin-bottom:16px;}
 .ff label{display:block;font-size:13px;font-weight:600;color:var(--gray);margin-bottom:7px;}
 .ff input,.ff select,.ff textarea{width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s;direction:rtl;}
@@ -161,37 +129,25 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .btn-warning{background:rgba(249,115,22,0.15);color:#F97316;border:1px solid rgba(249,115,22,0.3);}
 .btn-outline-sm{background:transparent;border:1px solid rgba(201,168,76,0.3);color:var(--gold);}
 .btn-blue{background:rgba(59,130,246,0.15);color:#3B82F6;border:1px solid rgba(59,130,246,0.3);}
-
-/* PASSWORD FIELD */
 .pass-field{position:relative;}
 .pass-field input{padding-left:40px;}
 .pass-toggle{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;padding:0;}
-
-/* UPLOAD */
 .upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.03);}
 .upload-zone:hover{border-color:var(--gold);background:rgba(201,168,76,0.08);}
 .upload-zone input[type=file]{display:none;}
 .upload-progress{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:10px;display:none;}
 .upload-progress-fill{height:100%;background:linear-gradient(to left,var(--gold),var(--gold2));border-radius:3px;transition:width 0.3s;width:0%;}
-
-/* PAGES */
 .page{display:none;}
 .page.active{display:block;}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:32px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
 .modal-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.1);border:none;color:var(--white);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .modal h3{margin-bottom:20px;font-size:18px;font-weight:700;}
-
-/* ALERT */
 .alert{padding:12px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-top:12px;display:none;}
 .alert.show{display:block;}
 .alert-success{background:rgba(34,197,94,0.15);color:#22C55E;}
 .alert-error{background:rgba(239,68,68,0.15);color:#EF4444;}
-
-/* GALLERY */
 .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
 .gal-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:12px;overflow:hidden;}
 .gal-card img{width:100%;height:140px;object-fit:cover;}
@@ -199,15 +155,11 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .gal-card .gal-title{font-size:13px;font-weight:600;margin-bottom:4px;}
 .gal-card .gal-cat{font-size:11px;color:var(--gray);}
 .gal-card .gal-actions{padding:8px 12px;border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;}
-
-/* SETTINGS TABS */
 .stabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
 .stab{padding:9px 20px;border-radius:8px;border:1px solid rgba(201,168,76,0.25);color:var(--gray);background:transparent;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .stab.active,.stab:hover{background:rgba(201,168,76,0.15);color:var(--gold);border-color:var(--gold);}
 .stab-panel{display:none;}
 .stab-panel.active{display:block;}
-
-/* SUPERADMIN TABLE */
 .sa-table-wrap{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;overflow:hidden;}
 .sa-search{padding:16px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;gap:10px;}
 .sa-search input{flex:1;background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:10px 14px;color:var(--white);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;}
@@ -215,18 +167,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:6px;}
 .status-active{background:var(--green);}
 .status-inactive{background:var(--red);}
-
-/* EMPTY */
 .empty-state{text-align:center;padding:48px 20px;color:var(--gray);}
 .empty-state .ei{font-size:48px;margin-bottom:12px;}
-
-/* ===== INVOICE ADVANCED STYLES ===== */
 .client-select-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;}
 .client-select-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.05);}
 .client-select-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.1);}
 .client-card-name{font-weight:700;font-size:14px;}
 .client-card-info{font-size:12px;color:var(--gray);margin-top:2px;}
-
 .inv-items-table{width:100%;border-collapse:collapse;margin-top:8px;}
 .inv-items-table th{text-align:right;font-size:12px;color:var(--gray);padding:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
 .inv-items-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;vertical-align:middle;}
@@ -237,30 +184,22 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .inv-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px;}
 .inv-total-row:last-child{margin-bottom:0;font-size:16px;font-weight:700;color:var(--gold);}
 .inv-total-label{color:var(--gray);}
-
 .payment-strip{background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
 .payment-strip .pm-info{font-size:13px;}
 .payment-strip .pm-amount{font-weight:700;color:var(--green);}
 .payment-strip .pm-date{font-size:11px;color:var(--gray);margin-top:2px;}
-
 .debt-bar-wrap{margin-top:8px;}
 .debt-bar-bg{background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden;}
 .debt-bar-fill{height:100%;border-radius:20px;background:linear-gradient(to left,var(--green),#16a34a);transition:width 0.4s;}
-
-/* Invoice detail view */
 .inv-detail-header{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(10,22,40,0));border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:16px;}
 .inv-stat-mini{text-align:center;padding:10px;}
 .inv-stat-mini .val{font-size:20px;font-weight:900;}
 .inv-stat-mini .lbl{font-size:11px;color:var(--gray);margin-top:2px;}
-
-/* Total revenue card */
 .revenue-card{background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(10,22,40,0));border:1px solid rgba(201,168,76,0.3);border-radius:14px;padding:20px;position:relative;overflow:hidden;}
 .revenue-card::before{content:'💰';position:absolute;left:-10px;bottom:-10px;font-size:80px;opacity:0.07;}
 </style>
 </head>
 <body>
-
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
@@ -280,16 +219,12 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div id="login-err">بيانات الدخول غلط، جرب تاني</div>
   </div>
 </div>
-
-<!-- MOBILE TOPBAR -->
 <div id="mob-topbar">
   <div class="mob-logo"><div class="li">DA</div><span>دلتا <span style="color:var(--gold)">آرت</span></span></div>
   <span id="mob-page-title">لوحة التحكم</span>
   <button id="mob-menu-btn" onclick="toggleMobSidebar()">☰</button>
 </div>
 <div id="sidebar-overlay" onclick="toggleMobSidebar()"></div>
-
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-logo">
     <div class="li">DA</div>
@@ -307,8 +242,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <button class="logout-btn" onclick="doLogout()">تسجيل الخروج</button>
   </div>
 </div>
-
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <h2 id="topbar-title">لوحة التحكم</h2>
@@ -316,7 +249,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
   <div class="content">
 
-    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="stats-row">
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">الحجوزات</div><div class="sc-val" id="ds-b">0</div><div class="sc-change up" id="ds-b-new">0 جديدة</div></div><div class="sc-icon" style="background:rgba(59,130,246,0.15);color:#3B82F6">📅</div></div></div>
@@ -324,7 +256,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">صور المعرض</div><div class="sc-val" id="ds-g">0</div><div class="sc-change" style="color:var(--gray)">صورة</div></div><div class="sc-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🖼️</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">الموظفون</div><div class="sc-val" id="ds-u">0</div><div class="sc-change" style="color:var(--gray)">مستخدم</div></div><div class="sc-icon" style="background:rgba(168,85,247,0.15);color:#A855F7">👥</div></div></div>
       </div>
-      <!-- Revenue Row -->
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
         <div class="revenue-card">
           <div class="sc-label" style="font-size:13px">💰 إجمالي الإيرادات</div>
@@ -361,7 +292,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- BOOKINGS -->
     <div class="page" id="page-bookings">
       <div class="panel">
         <div class="panel-header">
@@ -374,7 +304,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- MESSAGES -->
     <div class="page" id="page-messages">
       <div class="panel">
         <div class="panel-header">
@@ -387,7 +316,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- CLIENTS PAGE -->
     <div class="page" id="page-clients">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👤 العملاء</h3><p style="color:var(--gray);font-size:13px">إدارة بيانات العملاء</p></div>
@@ -404,19 +332,16 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- INVOICES PAGE -->
     <div class="page" id="page-invoices">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🧾 الفواتير والمشاريع</h3></div>
         <button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">➕ فاتورة جديدة</button>
       </div>
-      <!-- Revenue Period Cards -->
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:8px">
         <div class="revenue-card"><div class="sc-label">💰 إجمالي الإيرادات</div><div style="font-size:24px;font-weight:900;color:var(--gold)" id="inv-total-rev">0 جنيه</div></div>
         <div class="stat-card"><div><div class="sc-label">✅ تم تحصيله</div><div class="sc-val" style="color:var(--green);font-size:22px" id="inv-paid-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
         <div class="stat-card"><div><div class="sc-label">⏳ متبقي</div><div class="sc-val" style="color:var(--red);font-size:22px" id="inv-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
       </div>
-      <!-- Period breakdown -->
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
         <div class="stat-card" style="border-color:rgba(59,130,246,0.3)">
           <div class="sc-label" style="color:#3B82F6">📅 اليوم</div>
@@ -451,7 +376,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- GALLERY -->
     <div class="page" id="page-gallery">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🖼️ معرض الأعمال</h3><p style="color:var(--gray);font-size:13px">ارفع صور أعمالك</p></div>
@@ -467,7 +391,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <div class="gal-grid" id="gallery-admin-grid"></div>
     </div>
 
-    <!-- SERVICES -->
     <div class="page" id="page-services">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <h3 style="font-size:18px;font-weight:700">⚙️ الخدمات</h3>
@@ -476,7 +399,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <div class="panel"><table><thead><tr><th>الأيقونة</th><th>اسم الخدمة</th><th>الوصف</th><th>إجراء</th></tr></thead><tbody id="services-tbody"></tbody></table></div>
     </div>
 
-    <!-- TEAM -->
     <div class="page" id="page-team">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👥 فريق العمل</h3><p style="color:var(--gray);font-size:13px">إضافة وإدارة الموظفين والعمال</p></div>
@@ -485,13 +407,11 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <button class="btn-sm btn-primary" onclick="openModal('add-user-modal')">👔 إضافة موظف/مدير</button>
         </div>
       </div>
-      <!-- Employees with accounts -->
       <div class="panel" style="margin-bottom:12px">
         <div class="panel-header"><h3>👔 الموظفون والمديرون (لديهم أكونت)</h3></div>
         <table><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>تاريخ الإضافة</th></tr></thead>
         <tbody id="team-tbody"></tbody></table>
       </div>
-      <!-- Workers without accounts -->
       <div class="panel">
         <div class="panel-header"><h3>🪛 العمال (بدون أكونت)</h3><span style="font-size:12px;color:var(--gray)">يُسجَّل حضورهم يدوياً</span></div>
         <table><thead><tr><th>الاسم</th><th>رقم الهاتف</th><th>إجمالي الحضور</th><th>إجمالي الغياب</th><th>إجراء</th></tr></thead>
@@ -499,7 +419,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- SUPERADMIN -->
     <div class="page" id="page-superadmin">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔐 إدارة الأكونتات</h3><p style="color:var(--gray);font-size:13px">كل المستخدمين في النظام</p></div>
@@ -514,22 +433,18 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- ATTENDANCE -->
     <div class="page" id="page-attendance">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📋 حضور الموظفين والعمال</h3></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
           <input type="date" id="att-date-filter" onchange="loadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
+          <button class="btn-sm btn-primary" onclick="openManualAttModal()">➕ تسجيل حضور</button>
         </div>
       </div>
-
-      <!-- Today summary -->
       <div class="stats-row" style="grid-template-columns:repeat(2,1fr);margin-bottom:16px">
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">✅ حاضرون اليوم</div><div class="sc-val" id="att-present">0</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">✅</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">❌ غائبون اليوم</div><div class="sc-val" id="att-absent">0</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">❌</div></div></div>
       </div>
-
-      <!-- Daily attendance tables -->
       <div class="panel" style="margin-bottom:12px">
         <div class="panel-header"><h3>👔 الموظفون — حضور اليوم (تلقائي)</h3></div>
         <div style="overflow-x:auto"><table>
@@ -537,7 +452,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <tbody id="attendance-tbody"></tbody>
         </table></div>
       </div>
-
       <div class="panel" style="margin-bottom:20px">
         <div class="panel-header"><h3>🪛 العمال — تسجيل يدوي</h3></div>
         <div style="overflow-x:auto"><table>
@@ -545,8 +459,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <tbody id="workers-att-tbody"></tbody>
         </table></div>
       </div>
-
-      <!-- Period Reports -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
         <h3 style="font-size:16px;font-weight:700">📊 تقرير الحضور بالفترة</h3>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -563,8 +475,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <button class="btn-sm btn-primary" onclick="loadAttReport('custom',null)" style="margin-top:16px">عرض</button>
         </div>
       </div>
-
-      <!-- Report result: employees -->
       <div class="panel" style="margin-bottom:12px">
         <div class="panel-header"><h3 id="att-rep-label-emp">👔 تقرير الموظفين — هذا الأسبوع</h3></div>
         <div style="overflow-x:auto"><table>
@@ -572,8 +482,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <tbody id="att-report-emp-tbody"></tbody>
         </table></div>
       </div>
-
-      <!-- Report result: workers -->
       <div class="panel">
         <div class="panel-header"><h3 id="att-rep-label-wrk">🪛 تقرير العمال — هذا الأسبوع</h3></div>
         <div style="overflow-x:auto"><table>
@@ -583,14 +491,11 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- FINANCIAL REPORTS PAGE -->
     <div class="page" id="page-reports">
       <div style="margin-bottom:16px">
         <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📈 تقارير الإيرادات</h3>
         <p style="color:var(--gray);font-size:13px">الأموال الداخلة حسب الفترة الزمنية</p>
       </div>
-
-      <!-- Period tabs -->
       <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
         <button class="stab active" onclick="loadRevenueReport('today',this)">📅 اليوم</button>
         <button class="stab" onclick="loadRevenueReport('week',this)">📅 هذا الأسبوع</button>
@@ -599,8 +504,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <button class="stab" onclick="loadRevenueReport('year',this)">📅 هذه السنة</button>
         <button class="stab" onclick="showRevenueCustomRange()">📅 فترة مخصصة</button>
       </div>
-
-      <!-- Custom range -->
       <div id="rev-custom-range" style="display:none;background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:14px;margin-bottom:16px">
         <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
           <div class="ff" style="margin:0;flex:1;min-width:130px"><label style="font-size:12px">من تاريخ</label><input type="date" id="rev-from" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;width:100%"></div>
@@ -608,8 +511,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <button class="btn-sm btn-primary" onclick="loadRevenueReport('custom',null)">عرض</button>
         </div>
       </div>
-
-      <!-- Summary cards -->
       <div id="rev-period-label" style="font-size:14px;color:var(--gray);margin-bottom:10px">عرض: اليوم</div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
         <div class="revenue-card">
@@ -628,8 +529,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <div style="font-size:12px;color:var(--gray)">مشروع تم إنشاؤه</div>
         </div>
       </div>
-
-      <!-- Payments breakdown table -->
       <div class="panel">
         <div class="panel-header"><h3 id="rep-table-title">💳 الدفعات المستلمة</h3></div>
         <div style="overflow-x:auto"><table>
@@ -637,32 +536,39 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <tbody id="rep-payments-tbody"></tbody>
         </table></div>
       </div>
-
-      <!-- Monthly breakdown chart (text-based) -->
       <div class="panel" style="margin-top:12px">
         <div class="panel-header"><h3>📊 ملخص شهري</h3></div>
         <div class="panel-content" id="rev-monthly-breakdown"></div>
       </div>
     </div>
 
-    <!-- VISITORS -->
     <div class="page" id="page-visitors">
-      <div style="margin-bottom:16px"><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3><p style="color:var(--gray);font-size:13px">تتبع اهتمام الزوار بالموقع</p></div>
-      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟢 مهتمون جداً</div><div class="sc-val" id="vis-high">0</div><div class="sc-change" style="color:var(--green)">أكثر من 3 دقايق</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">🟢</div></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3><p style="color:var(--gray);font-size:13px">كل زيارة بتتسجل فور ما حد يفتح الموقع</p></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <input type="date" id="vis-date-filter" onchange="loadVisitors()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
+          <button class="btn-sm btn-outline-sm" onclick="document.getElementById('vis-date-filter').value='';loadVisitors()">📅 كل الأيام</button>
+          <button class="btn-sm btn-danger" onclick="clearVisitors()">🗑️ مسح الكل</button>
+        </div>
+      </div>
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:12px">
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">👁️ إجمالي الزوار</div><div class="sc-val" id="vis-total">0</div><div class="sc-change" style="color:var(--gray)" id="vis-date-label">اليوم</div></div><div class="sc-icon" style="background:rgba(59,130,246,0.15);color:#3B82F6">👁️</div></div></div>
+        <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟢 مهتمون جداً</div><div class="sc-val" id="vis-high">0</div><div class="sc-change" style="color:var(--green)">حجز / واتساب / حاسبة</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">🟢</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🟡 مهتمون شوية</div><div class="sc-val" id="vis-medium">0</div><div class="sc-change" style="color:var(--gold)">30 ث - 3 د</div></div><div class="sc-icon" style="background:rgba(201,168,76,0.15);color:var(--gold)">🟡</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">🔴 مش مهتمين</div><div class="sc-val" id="vis-low">0</div><div class="sc-change" style="color:var(--red)">أقل من 30 ث</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">🔴</div></div></div>
       </div>
-      <div class="panel" style="margin-top:16px">
-        <div class="panel-header"><h3>أحدث الزوار</h3><button class="btn-sm btn-danger" onclick="clearVisitors()">🗑️ مسح الكل</button></div>
+      <div class="panel" style="margin-top:8px">
+        <div class="panel-header">
+          <h3 id="vis-table-title">أحدث الزوار</h3>
+          <span style="font-size:12px;color:var(--gray)" id="vis-count-label"></span>
+        </div>
         <div style="overflow-x:auto"><table>
-          <thead><tr><th>الوقت</th><th>مدة الزيارة</th><th>مستوى الاهتمام</th><th>الجهاز</th></tr></thead>
+          <thead><tr><th>التاريخ والوقت</th><th>المدة</th><th>الصفحات اللي شافها</th><th>الإجراءات</th><th>الجهاز</th><th>مستوى الاهتمام</th></tr></thead>
           <tbody id="visitors-tbody"></tbody>
         </table></div>
       </div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <div class="stabs" id="settings-tabs"></div>
       <div class="stab-panel active" id="stab-password">
@@ -740,10 +646,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
   </div>
 </div>
-
-<!-- ========== MODALS ========== -->
-
-<!-- Add Client -->
 <div class="modal-overlay" id="add-client-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
@@ -760,13 +662,11 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- New Invoice / Project Modal -->
 <div class="modal-overlay" id="new-invoice-modal">
   <div class="modal" style="max-width:740px">
     <button class="modal-close" onclick="closeModal('new-invoice-modal')">✕</button>
     <h3>🧾 فاتورة / مشروع جديد</h3>
 
-    <!-- Step 1: Select client -->
     <div id="inv-step1">
       <div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:12px">الخطوة 1: اختار العميل</div>
       <div style="display:flex;gap:8px;margin-bottom:12px">
@@ -776,7 +676,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <div id="inv-client-list" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px"></div>
     </div>
 
-    <!-- Step 2: Project details & items -->
     <div id="inv-step2" style="display:none">
       <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
         <div>
@@ -788,7 +687,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
       <div class="ff"><label>اسم المشروع / وصفه *</label><input type="text" id="inv-project-name" placeholder="مثال: تشطيب شقة - المعادي"></div>
 
-      <!-- Project items table -->
       <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">📋 بنود المشروع</div>
       <table class="inv-items-table">
         <thead><tr><th>البند / الخدمة</th><th>الكمية / المساحة</th><th>الوحدة</th><th>سعر الوحدة</th><th>الإجمالي</th><th></th></tr></thead>
@@ -809,7 +707,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Invoice Detail Modal -->
 <div class="modal-overlay" id="invoice-detail-modal">
   <div class="modal" style="max-width:720px">
     <button class="modal-close" onclick="closeModal('invoice-detail-modal')">✕</button>
@@ -817,7 +714,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Gallery -->
 <div class="modal-overlay" id="add-gallery-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-gallery-modal')">✕</button>
@@ -848,7 +744,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Service -->
 <div class="modal-overlay" id="add-service-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-service-modal')">✕</button>
@@ -861,7 +756,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add User -->
 <div class="modal-overlay" id="add-user-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-user-modal')">✕</button>
@@ -875,7 +769,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Worker (no account) -->
 <div class="modal-overlay" id="add-worker-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-worker-modal')">✕</button>
@@ -888,7 +781,47 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- SuperAdmin Add -->
+<div class="modal-overlay" id="manual-att-modal">
+  <div class="modal" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('manual-att-modal')">✕</button>
+    <h3>📋 تسجيل حضور يدوي</h3>
+    <p style="color:var(--gray);font-size:13px;margin-bottom:20px">اختار الموظف أو العامل وسجل حضوره</p>
+
+    <div class="ff">
+      <label>التاريخ</label>
+      <input type="date" id="matt-date" style="width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;direction:rtl;">
+    </div>
+
+    <div class="ff">
+      <label>اختار الشخص</label>
+      <select id="matt-person" style="width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:Cairo,sans-serif;font-size:14px;outline:none;direction:rtl;">
+        <option value="">— اختار —</option>
+      </select>
+    </div>
+
+    <div class="ff">
+      <label>الحالة</label>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:12px 14px;">
+          <input type="radio" name="matt-status" value="present" style="accent-color:#22C55E;width:16px;height:16px">
+          <span style="font-size:14px;color:#22C55E;font-weight:700">✅ حاضر</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:12px 14px;">
+          <input type="radio" name="matt-status" value="absent" style="accent-color:#EF4444;width:16px;height:16px">
+          <span style="font-size:14px;color:#EF4444;font-weight:700">❌ غائب</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:12px 14px;">
+          <input type="radio" name="matt-status" value="half" style="accent-color:#C9A84C;width:16px;height:16px">
+          <span style="font-size:14px;color:var(--gold);font-weight:700">🌓 نص يوم</span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn-sm btn-primary" style="width:100%;padding:14px;font-size:15px" onclick="saveManualAtt()">💾 تسجيل الحضور</button>
+    <div id="matt-alert" class="alert"></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="sa-add-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('sa-add-modal')">✕</button>
@@ -902,7 +835,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Booking Detail -->
 <div class="modal-overlay" id="booking-detail-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('booking-detail-modal')">✕</button>
@@ -915,8 +847,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     </div>
   </div>
 </div>
-
-<!-- ========== FIREBASE ========== -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -948,7 +878,6 @@ window._allInvoices = [];
 window._invItems = [];
 window._invSelectedClient = null;
 
-// ===== AUTH =====
 onAuthStateChanged(auth, async user => {
   if(user){
     document.getElementById('login-screen').classList.add('hide');
@@ -984,7 +913,6 @@ window.doLogin = async function(){
 };
 window.doLogout=()=>signOut(auth);
 
-// ===== SETUP UI =====
 function setupUI(){
   const r=currentUserRole, d=currentUserData;
   document.getElementById('sidebar-avatar').textContent=(d.name||'A')[0].toUpperCase();
@@ -1030,7 +958,6 @@ function setupUI(){
       <button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button>
       <button class="stab" onclick="switchStab('prices',this)">💰 الأسعار</button>`;
   } else {
-    // manager/employee/worker — clients + invoices + messages, NO money stats on dashboard
     nav.innerHTML=`
       <div class="nav-section-title">الرئيسية</div>
       <button class="nav-item active" onclick="goPage('dashboard',this)"><span class="ni">📊</span> لوحة التحكم</button>
@@ -1042,23 +969,19 @@ function setupUI(){
       <div class="nav-section-title">الإعدادات</div>
       <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🔑</span> تغيير الباسورد</button>`;
     document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
-    // Hide revenue cards on dashboard for non-owners
     const revenueSection=document.querySelector('#page-dashboard .stats-row:nth-child(2)');
     if(revenueSection) revenueSection.style.display='none';
     const qa=document.getElementById('quick-actions-panel');
     if(qa) qa.querySelector('.panel-content').innerHTML=`
       <a href="index.html" target="_blank" class="btn-sm btn-success" style="text-decoration:none">🌐 الموقع</a>
       <button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">🧾 فاتورة جديدة</button>`;
-    // Also hide dash inv panel for employees
     const dashInv=document.querySelector('#page-dashboard .panel:last-of-type');
   }
 }
 
-// ===== INIT APP =====
 function initApp(){
   if(currentUserRole==='superadmin'){ loadSAAccounts(); return; }
 
-  // Bookings
   onValue(ref(db,'deltaart/bookings'), snap=>{
     const all=[];let nc=0;
     if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
@@ -1072,7 +995,6 @@ function initApp(){
     filterBookings();
   });
 
-  // Messages
   onValue(ref(db,'deltaart/messages'), snap=>{
     const all=[];let nc=0;
     if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
@@ -1086,7 +1008,6 @@ function initApp(){
     filterMessages();
   });
 
-  // Gallery
   onValue(ref(db,'deltaart/gallery'), snap=>{
     let c=0;const all=[];
     if(snap.exists()) snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
@@ -1095,17 +1016,14 @@ function initApp(){
     renderAdminGallery(all);
   });
 
-  // Users
   onValue(ref(db,'deltaart/users'), snap=>{
     let c=0;if(snap.exists()) snap.forEach(()=>c++);
     document.getElementById('ds-u').textContent=c;
     if(currentUserRole==='owner') renderTeamTable(snap);
   });
 
-  // Services
   onValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
 
-  // Clients
   onValue(ref(db,'deltaart/clients'), snap=>{
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
@@ -1113,7 +1031,6 @@ function initApp(){
     renderClientsTable();
   });
 
-  // Invoices
   onValue(ref(db,'deltaart/invoices'), snap=>{
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
@@ -1124,7 +1041,6 @@ function initApp(){
     renderDashInvoices(all);
   });
 
-  // Workers (no account)
   onValue(ref(db,'deltaart/workers'),snap=>{
     const all=[];if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allWorkers=all;
@@ -1135,7 +1051,6 @@ function initApp(){
   if(currentUserRole!=='superadmin') recordCheckIn();
 }
 
-// ===== CLIENTS =====
 window.addClient = async function(){
   const name=document.getElementById('cl-name').value.trim();
   const phone=document.getElementById('cl-phone').value.trim();
@@ -1195,7 +1110,6 @@ window.deleteClient=async id=>{
   const invs=window._allInvoices.filter(i=>i.clientId===id);
   for(const inv of invs) await remove(ref(db,`deltaart/invoices/${inv.id}`));
 };
-
 window.viewClientInvoices=function(clientId){
   const cl=window._allClients.find(c=>c.id===clientId);
   const invs=window._allInvoices.filter(i=>i.clientId===clientId);
@@ -1220,7 +1134,7 @@ window.viewClientInvoices=function(clientId){
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;margin-bottom:10px">
           <div><div style="color:var(--gray)">إجمالي المشروع</div><div style="font-weight:700;color:var(--gold)">${(inv.total||0).toLocaleString('ar-EG')} جنيه</div></div>
           <div><div style="color:var(--gray)">تم الدفع</div><div style="font-weight:700;color:var(--green)">${(inv.totalPaid||0).toLocaleString('ar-EG')} جنيه</div></div>
-          <div><div style="color:var(--gray)">المتبقي</div><div style="font-weight:700;color:${((inv.total||0)-(inv.totalPaid||0))>0?'var(--red)':'var(--green)'}"}>${((inv.total||0)-(inv.totalPaid||0)).toLocaleString('ar-EG')} جنيه</div></div>
+          <div><div style="color:var(--gray)">المتبقي</div><div style="font-weight:700;color:${((inv.total||0)-(inv.totalPaid||0))>0?'var(--red)':'var(--green)'}">${((inv.total||0)-(inv.totalPaid||0)).toLocaleString('ar-EG')} جنيه</div></div>
         </div>
         ${(inv.items||[]).length?`
         <div style="font-size:11px;color:var(--gray);margin-bottom:6px">بنود المشروع:</div>
@@ -1279,7 +1193,6 @@ window.addItemToExistingInv = async function(invId){
   setTimeout(()=>viewClientInvoices(inv.clientId),300);
 };
 
-// ===== PAYMENTS =====
 window.addPayment = async function(invId){
   const amountEl=document.getElementById('pay-amount-'+invId);
   const noteEl=document.getElementById('pay-note-'+invId);
@@ -1301,7 +1214,6 @@ window.removePayment = async function(invId, idx){
   setTimeout(()=>viewClientInvoices(inv.clientId),300);
 };
 
-// ===== NEW INVOICE =====
 window.openNewInvoiceModal = function(){
   window._invSelectedClient=null;
   window._invItems=[{name:'',qty:1,unit:'م²',price:0}];
@@ -1412,11 +1324,9 @@ window.saveNewInvoice=async function(){
   } catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
 };
 
-// ===== INVOICE TABLE & STATS =====
 function calcRevenue(){
   let total=0,paid=0;
   const now=new Date();
-  // period helpers
   const todayStr=now.toISOString().slice(0,10);
   const weekStart=new Date(now);weekStart.setDate(now.getDate()-now.getDay());weekStart.setHours(0,0,0,0);
   const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
@@ -1426,7 +1336,6 @@ function calcRevenue(){
   window._allInvoices.forEach(inv=>{
     total+=(inv.total||0);
     paid+=(inv.totalPaid||0);
-    // sum payments by date
     (inv.payments||[]).forEach(p=>{
       const pDate=new Date(p.date);
       const amt=p.amount||0;
@@ -1444,8 +1353,6 @@ function calcRevenue(){
   const elWeek=document.getElementById('rev-week');if(elWeek)elWeek.textContent=weekPaid.toLocaleString('ar-EG');
   const elMonth=document.getElementById('rev-month');if(elMonth)elMonth.textContent=monthPaid.toLocaleString('ar-EG');
 }
-
-// ===== FINANCIAL REPORTS =====
 window._revReportPeriod='today';
 window.showRevenueCustomRange=function(){
   document.getElementById('rev-custom-range').style.display='block';
@@ -1474,7 +1381,6 @@ window.loadRevenueReport=function(period,btn){
   document.getElementById('rev-period-label').textContent='عرض: '+label;
   document.getElementById('rep-table-title').textContent='💳 الدفعات المستلمة — '+label;
 
-  // Collect all payments in range
   const payments=[];
   let newProjects=0;
   window._allInvoices.forEach(inv=>{
@@ -1501,7 +1407,6 @@ window.loadRevenueReport=function(period,btn){
     <td style="color:var(--gray)">${fmtDate(p.date)} ${p.date?new Date(p.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):''}</td>
   </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد دفعات في هذه الفترة</td></tr>';
 
-  // Monthly breakdown (always show last 6 months)
   const monthly={};
   window._allInvoices.forEach(inv=>{
     (inv.payments||[]).forEach(p=>{
@@ -1525,7 +1430,6 @@ window.loadRevenueReport=function(period,btn){
   }).join(''):'<div style="color:var(--gray);text-align:center;padding:20px">لا يوجد بيانات</div>';
 };
 
-// ===== ATTENDANCE PERIOD REPORTS =====
 window.showCustomRange=function(){
   document.getElementById('att-custom-range').style.display=
     document.getElementById('att-custom-range').style.display==='none'?'block':'none';
@@ -1550,20 +1454,17 @@ window.loadAttReport=async function(period,btn){
   document.getElementById('att-rep-label-emp').textContent='👔 تقرير الموظفين — '+label;
   document.getElementById('att-rep-label-wrk').textContent='🪛 تقرير العمال — '+label;
 
-  // Generate list of dates in range
   const dates=[];
   const cur=new Date(fromDate);
   while(cur<=toDate){dates.push(cur.toISOString().slice(0,10));cur.setDate(cur.getDate()+1);}
   const totalDays=dates.length;
 
-  // Employees report
   const [userSnap,attSnap]=await Promise.all([
     get(ref(db,'deltaart/users')),
     get(ref(db,'deltaart/attendance'))
   ]);
   const users={};
   if(userSnap.exists())userSnap.forEach(c=>{const u=c.val();if(u.role!=='worker')users[c.key]=u;});
-  // Build attendance map: uid -> {date: record}
   const attMap={};
   if(attSnap.exists()){
     attSnap.forEach(dateNode=>{
@@ -1581,7 +1482,12 @@ window.loadAttReport=async function(period,btn){
   else {
     empTbody.innerHTML=Object.entries(users).map(([uid,u])=>{
       const userRecs=attMap[uid]||{};
-      const presentDays=Object.keys(userRecs).length;
+      let presentDays=0;
+      Object.values(userRecs).forEach(r=>{
+        if(r.status==='absent') return;
+        if(r.status==='half') presentDays+=0.5;
+        else presentDays+=1;
+      });
       const absentDays=totalDays-presentDays;
       const pct=totalDays>0?Math.round(presentDays/totalDays*100):0;
       let totalMins=0;
@@ -1607,7 +1513,6 @@ window.loadAttReport=async function(period,btn){
     }).join('');
   }
 
-  // Workers report
   const [wkSnap,wkAttSnap]=await Promise.all([
     get(ref(db,'deltaart/workers')),
     get(ref(db,'deltaart/workers-attendance'))
@@ -1629,8 +1534,12 @@ window.loadAttReport=async function(period,btn){
   else{
     wrkTbody.innerHTML=workers.map(w=>{
       const wRecs=wkAttMap[w.id]||{};
-      const presentDays=Object.values(wRecs).filter(r=>r.status==='present').length;
-      const absentDays=Object.values(wRecs).filter(r=>r.status==='absent').length;
+      let presentDays=0,absentDays=0;
+      Object.values(wRecs).forEach(r=>{
+        if(r.status==='present') presentDays++;
+        else if(r.status==='half'){presentDays+=0.5;absentDays+=0.5;}
+        else absentDays++;
+      });
       const totalRecorded=presentDays+absentDays;
       const pct=totalRecorded>0?Math.round(presentDays/totalRecorded*100):0;
       return `<tr>
@@ -1718,7 +1627,6 @@ function invPayLabel(inv){
   return 'لم يُدفع';
 }
 
-// ===== SUPERADMIN =====
 window._saAllAccounts=[];
 function loadSAAccounts(){
   onValue(ref(db,'deltaart/users'),snap=>{
@@ -1770,8 +1678,6 @@ window.saAddAccount=async function(){
     setTimeout(()=>closeModal('sa-add-modal'),1500);
   }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
 };
-
-// ===== BOOKINGS =====
 window._allBookings=[];
 window.filterBookings=function(){
   const f=document.getElementById('book-filter').value;
@@ -1808,7 +1714,6 @@ window.showBookingDetail=id=>{
   openModal('booking-detail-modal');
 };
 
-// ===== MESSAGES =====
 window._allMessages=[];
 window.filterMessages=function(){
   const f=document.getElementById('msg-filter').value;
@@ -1829,7 +1734,6 @@ window.filterMessages=function(){
 window.markRead=async id=>{await update(ref(db,`deltaart/messages/${id}`),{status:'read'});};
 window.delMsg=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/messages/${id}`));};
 
-// ===== GALLERY =====
 window._allGallery=[];window._galCurrentFile=null;
 window.handleFileSelect=function(input){
   const file=input.files[0];if(!file)return;
@@ -1889,7 +1793,6 @@ window.filterGalleryAdmin=function(cat,btn){
 };
 window.delGallery=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/gallery/${id}`));};
 
-// ===== SERVICES =====
 function renderServicesTable(snap){
   const tbody=document.getElementById('services-tbody');
   if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا توجد خدمات</td></tr>';return;}
@@ -1904,7 +1807,6 @@ window.addService=async function(){
 };
 window.delService=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/services/${id}`));};
 
-// ===== TEAM =====
 function renderTeamTable(snap){
   const tbody=document.getElementById('team-tbody');
   if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
@@ -1912,7 +1814,6 @@ function renderTeamTable(snap){
   tbody.innerHTML=html||'<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px">لا يوجد موظفون</td></tr>';
 }
 
-// ===== WORKERS (no account) =====
 window._allWorkers=[];
 window.addWorker=async function(){
   const name=document.getElementById('wk-name').value.trim();
@@ -1937,20 +1838,19 @@ function renderWorkersTable(workers){
     <td style="color:var(--red);font-weight:700" id="wk-total-absent-${w.id}">—</td>
     <td><button class="btn-sm btn-danger" onclick="deleteWorker('${w.id}')">🗑️</button></td>
   </tr>`).join('');
-  // Load monthly stats for each worker
   workers.forEach(w=>loadWorkerMonthStats(w));
 }
 
 async function loadWorkerMonthStats(w){
   const now=new Date();
-  const month=now.toISOString().slice(0,7); // YYYY-MM
+  const month=now.toISOString().slice(0,7);
   const snap=await get(ref(db,'deltaart/workers-attendance'));
   let present=0,absent=0;
   if(snap.exists()){
     snap.forEach(dateNode=>{
       if(dateNode.key.startsWith(month)){
         const rec=dateNode.child(w.id).val();
-        if(rec){if(rec.status==='present')present++;else absent++;}
+        if(rec){if(rec.status==='present')present++;else if(rec.status==='half'){present+=0.5;absent+=0.5;}else absent++;}
       }
     });
   }
@@ -1963,7 +1863,6 @@ async function loadWorkerMonthStats(w){
 function renderWorkersAttTable(workers,date){
   const tbody=document.getElementById('workers-att-tbody');
   if(!workers||!workers.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>';return;}
-  // Load their attendance for this date then render
   get(ref(db,`deltaart/workers-attendance/${date}`)).then(snap=>{
     const records={};if(snap.exists())snap.forEach(c=>{records[c.key]=c.val();});
     const now=new Date();const month=date.slice(0,7);
@@ -1972,23 +1871,23 @@ function renderWorkersAttTable(workers,date){
       const status=rec?.status;
       return `<tr>
         <td><strong>${w.name}</strong>${w.phone?`<div style="font-size:11px;color:var(--gray)">${w.phone}</div>`:''}</td>
-        <td>${status==='present'?'<span class="badge badge-green">✅ حاضر</span>':status==='absent'?'<span class="badge badge-red">❌ غائب</span>':'<span class="badge badge-gray">لم يُسجَّل</span>'}</td>
+        <td>${status==='present'?'<span class="badge badge-green">✅ حاضر</span>':status==='absent'?'<span class="badge badge-red">❌ غائب</span>':status==='half'?'<span class="badge badge-yellow">🌓 نص يوم</span>':'<span class="badge badge-gray">لم يُسجَّل</span>'}</td>
         <td style="color:var(--green)" id="wk-mp-${w.id}">—</td>
         <td style="color:var(--red)" id="wk-ma-${w.id}">—</td>
         <td>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             <button class="btn-sm btn-success" onclick="markWorkerAtt('${w.id}','present','${date}')">✅ حاضر</button>
             <button class="btn-sm btn-danger" onclick="markWorkerAtt('${w.id}','absent','${date}')">❌ غائب</button>
+            <button class="btn-sm btn-warning" onclick="markWorkerAtt('${w.id}','half','${date}')" style="background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.3)">🌓 نص</button>
             ${status?`<button class="btn-sm btn-gray" onclick="clearWorkerAtt('${w.id}','${date}')" style="background:rgba(136,153,170,0.15);color:var(--gray);border:1px solid rgba(136,153,170,0.2)">↩️ مسح</button>`:''}
           </div>
         </td>
       </tr>`;
     }).join('');
-    // Load monthly stats
     get(ref(db,'deltaart/workers-attendance')).then(allSnap=>{
       workers.forEach(w=>{
         let p=0,a=0;
-        if(allSnap.exists()){allSnap.forEach(dn=>{if(dn.key.startsWith(month)){const r=dn.child(w.id).val();if(r){if(r.status==='present')p++;else a++;}}});}
+        if(allSnap.exists()){allSnap.forEach(dn=>{if(dn.key.startsWith(month)){const r=dn.child(w.id).val();if(r){if(r.status==='present')p++;else if(r.status==='half'){p+=0.5;a+=0.5;}else a++;}}});}
         const ep=document.getElementById(`wk-mp-${w.id}`),ea=document.getElementById(`wk-ma-${w.id}`);
         if(ep)ep.textContent=p+' يوم';if(ea)ea.textContent=a+' يوم';
       });
@@ -2020,8 +1919,6 @@ window.addUser=async function(){
     setTimeout(()=>closeModal('add-user-modal'),1500);
   }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
 };
-
-// ===== SETTINGS =====
 async function loadSettings(){
   try{
     const snap=await get(ref(db,'deltaart/settings'));if(!snap.exists())return;
@@ -2048,7 +1945,6 @@ window.savePrices=async function(){
   try{await set(ref(db,'deltaart/settings/prices'),prices);showAlert(alertEl,'success','✅ تم حفظ الأسعار');}catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
 
-// ===== PASSWORD =====
 window.changePassword=async function(){
   const curPass=document.getElementById('cur-pass').value,newPass=document.getElementById('new-pass').value,confPass=document.getElementById('conf-pass').value,alertEl=document.getElementById('pass-alert');
   if(!curPass||!newPass||!confPass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
@@ -2068,18 +1964,16 @@ window.changePassword=async function(){
   }
 };
 
-// ===== ATTENDANCE =====
 function loadAttendance(){
   const dateEl=document.getElementById('att-date-filter');
   const selectedDate=dateEl.value||new Date().toISOString().split('T')[0];
   if(!dateEl.value)dateEl.value=selectedDate;
-  // employees
   get(ref(db,'deltaart/users')).then(userSnap=>{
     const users={};if(userSnap.exists())userSnap.forEach(c=>{const u=c.val();if(u.role!=='worker')users[c.key]=u;});
     get(ref(db,`deltaart/attendance/${selectedDate}`)).then(snap=>{
       const records={};if(snap.exists())snap.forEach(c=>{records[c.key]=c.val();});
       const totalUsers=Object.keys(users).length;
-      const presentCount=Object.keys(records).filter(uid=>users[uid]).length;
+      const presentCount=Object.keys(records).filter(uid=>users[uid]&&records[uid]?.status!=='absent').length;
       document.getElementById('att-present').textContent=presentCount;
       document.getElementById('att-absent').textContent=Math.max(0,totalUsers-presentCount);
       const tbody=document.getElementById('attendance-tbody');
@@ -2089,49 +1983,191 @@ function loadAttendance(){
         const checkIn=rec?.checkIn?new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
         const checkOut=rec?.checkOut?new Date(rec.checkOut).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
         let hours='—';if(rec?.checkIn&&rec?.checkOut){const diff=(new Date(rec.checkOut)-new Date(rec.checkIn))/3600000;hours=diff.toFixed(1)+' ساعة';}
-        const status=rec?'badge-green" >حاضر':'badge-red" >غائب';
-        return `<tr><td><strong>${u.name||'—'}</strong></td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td><span class="badge ${status}</span></td></tr>`;
+        let statusBadge='<span class="badge badge-red">غائب</span>';
+        if(rec){
+          if(rec.status==='absent') statusBadge='<span class="badge badge-red">غائب</span>';
+          else if(rec.status==='half') statusBadge='<span class="badge badge-yellow">🌓 نص يوم</span>';
+          else statusBadge='<span class="badge badge-green">حاضر</span>';
+        }
+        return `<tr><td><strong>${u.name||'—'}</strong></td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td>${statusBadge}</td></tr>`;
       }).join('');
     });
   });
-  // workers manual
   renderWorkersAttTable(window._allWorkers, selectedDate);
 }
 
-// ===== VISITORS — fixed to read from deltaart/visitors correctly =====
 function loadVisitors(){
-  get(ref(db,'deltaart/visitors')).then(snap=>{
-    let high=0,medium=0,low=0;const visits=[];
+  const dateFilter = document.getElementById('vis-date-filter');
+  const today = new Date().toISOString().split('T')[0];
+  if(dateFilter && !dateFilter.value) dateFilter.value = today;
+  const selectedDate = dateFilter ? dateFilter.value : today;
+
+  const visRef = selectedDate
+    ? ref(db, `deltaart/visitors/${selectedDate}`)
+    : ref(db, 'deltaart/visitors');
+
+  get(visRef).then(snap=>{
+    let high=0, medium=0, low=0;
+    const visits=[];
+
     if(snap.exists()){
-      snap.forEach(c=>{
-        const v=c.val();
-        // support both flat list and nested by session key
-        if(v && typeof v==='object'){
-          if(v.level){visits.push(v);if(v.level==='high')high++;else if(v.level==='medium')medium++;else low++;}
-          else{
-            // nested: each child is a session
-            Object.values(v).forEach(sv=>{if(sv&&sv.level){visits.push(sv);if(sv.level==='high')high++;else if(sv.level==='medium')medium++;else low++;}});
+      if(selectedDate){
+        snap.forEach(c=>{
+          const v=c.val();
+          if(v && typeof v==='object' && v.date){
+            visits.push(v);
+            if(v.level==='high') high++;
+            else if(v.level==='medium') medium++;
+            else low++;
+          } else if(v && typeof v==='object'){
+            Object.values(v).forEach(sv=>{
+              if(sv && sv.date){ visits.push(sv); if(sv.level==='high')high++; else if(sv.level==='medium')medium++; else low++; }
+            });
           }
-        }
-      });
+        });
+      } else {
+        snap.forEach(dateNode=>{
+          if(dateNode.val() && typeof dateNode.val()==='object'){
+            if(dateNode.val().date){ visits.push(dateNode.val()); const v=dateNode.val(); if(v.level==='high')high++; else if(v.level==='medium')medium++; else low++; }
+            else { dateNode.forEach(sessionNode=>{ const v=sessionNode.val(); if(v&&v.date){ visits.push(v); if(v.level==='high')high++; else if(v.level==='medium')medium++; else low++; } }); }
+          }
+        });
+      }
     }
+
+    const total = high+medium+low;
+    const totalEl=document.getElementById('vis-total'); if(totalEl) totalEl.textContent=total;
     document.getElementById('vis-high').textContent=high;
     document.getElementById('vis-medium').textContent=medium;
     document.getElementById('vis-low').textContent=low;
+    const dateLabelEl=document.getElementById('vis-date-label'); if(dateLabelEl) dateLabelEl.textContent=selectedDate?fmtDate(selectedDate):'كل الأيام';
+    const countEl=document.getElementById('vis-count-label'); if(countEl) countEl.textContent=total+' زيارة';
+    const titleEl=document.getElementById('vis-table-title'); if(titleEl) titleEl.textContent=selectedDate?'زوار يوم '+fmtDate(selectedDate):'كل الزوار';
+
     const tbody=document.getElementById('visitors-tbody');
-    if(!visits.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار مسجلون بعد</td></tr>';return;}
-    const sorted=visits.filter(v=>v.date).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+    if(!visits.length){
+      tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px">لا يوجد زوار في هذه الفترة</td></tr>';
+      return;
+    }
+
+    const sorted=visits.filter(v=>v.date).sort((a,b)=>new Date(b.date)-new Date(a.date));
     tbody.innerHTML=sorted.map(v=>{
+      const dur=v.duration!=null?(v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث'):'جاري...';
+      const deviceIcon=v.device==='موبايل'?'📱':v.device==='تابلت'?'📟':'💻';
+      const deviceLabel=`${deviceIcon} ${v.device||'—'}${v.browser?' · '+v.browser:''}`;
       const levelMap={high:'<span class="badge badge-green">🟢 مهتم جداً</span>',medium:'<span class="badge badge-yellow">🟡 مهتم شوية</span>',low:'<span class="badge badge-red">🔴 مش مهتم</span>'};
-      const dur=v.duration!=null?(v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث'):'—';
-      const device=/mobile|android|iphone/i.test(v.ua||'')?'📱 موبايل':'💻 كمبيوتر';
-      return `<tr><td style="color:var(--gray)">${fmtDate(v.date)} ${v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):''}</td><td style="color:var(--gold);font-weight:700">${dur}</td><td>${levelMap[v.level]||'—'}</td><td>${device}</td></tr>`;
+      const actions=[];
+      if(v.booked) actions.push('<span class="badge badge-green">📅 حجز</span>');
+      if(v.clickedWA) actions.push('<span class="badge badge-green">💬 واتساب</span>');
+      if(v.sentMessage) actions.push('<span class="badge badge-blue">✉️ رسالة</span>');
+      if(v.usedCalc) actions.push('<span class="badge badge-yellow">🧮 حاسبة</span>');
+      const actionsHtml=actions.length?actions.join(' '):'<span style="color:var(--gray);font-size:12px">تصفح فقط</span>';
+      const sections=v.sectionsViewed||'الرئيسية';
+      const dateStr=v.date?new Date(v.date).toLocaleDateString('ar-EG'):'—';
+      const timeStr=v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'';
+      return `<tr>
+        <td style="color:var(--gray);white-space:nowrap">${dateStr}<div style="font-size:11px;color:var(--gold)">${timeStr}</div></td>
+        <td style="color:var(--gold);font-weight:700;white-space:nowrap">${dur}</td>
+        <td style="font-size:12px;color:var(--gray)">${sections}</td>
+        <td style="white-space:nowrap">${actionsHtml}</td>
+        <td style="font-size:12px">${deviceLabel}</td>
+        <td>${levelMap[v.level]||'<span class="badge badge-gray">—</span>'}</td>
+      </tr>`;
     }).join('');
   });
 }
-window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));loadVisitors();};
+window.clearVisitors=async()=>{
+  const df=document.getElementById('vis-date-filter');
+  const sd=df?.value;
+  if(!confirm(sd?`مسح زوار يوم ${sd}؟`:'مسح كل بيانات الزوار؟'))return;
+  await remove(ref(db,sd?`deltaart/visitors/${sd}`:'deltaart/visitors'));
+  loadVisitors();
+};
 
-// ===== ATTENDANCE CHECKIN =====
+window.openManualAttModal = async function(){
+  const dateEl = document.getElementById('att-date-filter');
+  const today = dateEl?.value || new Date().toISOString().split('T')[0];
+  document.getElementById('matt-date').value = today;
+
+  document.querySelectorAll('input[name="matt-status"]').forEach(r=>r.checked=false);
+  document.getElementById('matt-alert').classList.remove('show');
+
+  const sel = document.getElementById('matt-person');
+  sel.innerHTML = '<option value="">— اختار —</option>';
+
+  try{
+    const uSnap = await get(ref(db,'deltaart/users'));
+    if(uSnap.exists()){
+      let grp = document.createElement('optgroup');
+      grp.label = '👔 الموظفون';
+      uSnap.forEach(c=>{
+        const u=c.val();
+        if(u.role==='worker') return;
+        const opt=document.createElement('option');
+        opt.value='emp:'+c.key;
+        opt.textContent=u.name||u.email||c.key;
+        grp.appendChild(opt);
+      });
+      if(grp.children.length) sel.appendChild(grp);
+    }
+  }catch(e){}
+
+  const workers = window._allWorkers||[];
+  if(workers.length){
+    let grp = document.createElement('optgroup');
+    grp.label = '🪛 العمال';
+    workers.forEach(w=>{
+      const opt=document.createElement('option');
+      opt.value='wkr:'+w.id;
+      opt.textContent=w.name;
+      grp.appendChild(opt);
+    });
+    sel.appendChild(grp);
+  }
+
+  openModal('manual-att-modal');
+};
+
+window.saveManualAtt = async function(){
+  const alertEl = document.getElementById('matt-alert');
+  const personVal = document.getElementById('matt-person').value;
+  const date = document.getElementById('matt-date').value;
+  const statusEl = document.querySelector('input[name="matt-status"]:checked');
+
+  if(!personVal){showAlert(alertEl,'error','اختار الموظف أو العامل أولاً');return;}
+  if(!date){showAlert(alertEl,'error','حدد التاريخ');return;}
+  if(!statusEl){showAlert(alertEl,'error','اختار الحالة (حاضر / غائب / نص يوم)');return;}
+
+  const status = statusEl.value;
+  const [type, id] = personVal.split(':');
+
+  try{
+    if(type==='emp'){
+      const attRef = ref(db,`deltaart/attendance/${date}/${id}`);
+      if(status==='absent'){
+        await set(attRef,{status:'absent',recordedAt:new Date().toISOString()});
+      } else if(status==='half'){
+        await set(attRef,{status:'half',recordedAt:new Date().toISOString()});
+      } else {
+        const snap = await get(attRef);
+        if(!snap.exists()){
+          const uSnap = await get(ref(db,`deltaart/users/${id}`));
+          const u = uSnap.val()||{};
+          await set(attRef,{checkIn:new Date().toISOString(),name:u.name||'',role:u.role||'employee',status:'present'});
+        } else {
+          await update(attRef,{status:'present'});
+        }
+      }
+    } else {
+      await set(ref(db,`deltaart/workers-attendance/${date}/${id}`),{status:status==='present'?'present':status==='half'?'half':'absent',recordedAt:new Date().toISOString()});
+    }
+    showAlert(alertEl,'success','✅ تم تسجيل الحضور بنجاح');
+    const dateFilter = document.getElementById('att-date-filter');
+    if(dateFilter) dateFilter.value = date;
+    setTimeout(()=>{loadAttendance();closeModal('manual-att-modal');},1000);
+  }catch(e){showAlert(alertEl,'error','حدث خطأ، جرب تاني');}
+};
+
 async function recordCheckIn(){
   const uid=currentUserData?.uid;if(!uid||uid==='owner-static')return;
   const today=new Date().toISOString().split('T')[0];
@@ -2145,7 +2181,6 @@ window.addEventListener('beforeunload',async()=>{
   try{await set(ref(db,`deltaart/attendance/${today}/${uid}/checkOut`),new Date().toISOString());}catch(e){}
 });
 
-// ===== HELPERS =====
 function statusClass(s){return{pending:'badge-yellow',confirmed:'badge-blue',done:'badge-green',cancelled:'badge-red'}[s]||'badge-gray';}
 function statusLabel(s){return{pending:'قيد الانتظار',confirmed:'مؤكدة',done:'منتهية',cancelled:'ملغية'}[s]||s;}
 function catLabel(c){return{ceiling:'أسقف',lighting:'إضاءة',partition:'فواصل','3d':'ثلاثي الأبعاد',other:'أخرى'}[c]||c;}
@@ -2153,7 +2188,6 @@ function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString(
 function roleLabelAr(r){return{superadmin:'SUPER ADMIN',owner:'صاحب الشركة',manager:'مدير',employee:'موظف',worker:'عامل'}[r]||r;}
 function showAlert(el,type,text){el.className=`alert alert-${type==='success'?'success':'error'} show`;el.textContent=text;setTimeout(()=>el.classList.remove('show'),3500);}
 </script>
-
 <script>
 const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',reports:'📈 تقارير الإيرادات',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
 
@@ -2166,7 +2200,6 @@ function goPage(name,btn){
   const mobTitle=document.getElementById('mob-page-title');
   if(mobTitle)mobTitle.textContent=title;
   if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
-  // close mobile sidebar after nav
   document.querySelector('.sidebar')?.classList.remove('open');
   document.getElementById('sidebar-overlay')?.classList.remove('open');
   if(name==='attendance'){loadAttendance();setTimeout(()=>loadAttReport('week',document.getElementById('att-rep-week')),300);}
@@ -2201,6 +2234,40 @@ function togglePass(id,btn){
   const input=document.getElementById(id);
   if(input.type==='password'){input.type='text';btn.textContent='🙈';}
   else{input.type='password';btn.textContent='👁️';}
+}
+</script>
+
+<div id="pwa-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9000;background:var(--navy2);border:1px solid rgba(201,168,76,0.4);border-radius:16px;padding:16px 20px;font-family:Cairo,sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.5);align-items:center;gap:14px;max-width:360px;width:90%">
+  <div style="width:44px;height:44px;background:linear-gradient(135deg,#C9A84C,#A07830);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0A1628;font-size:16px;flex-shrink:0">DA</div>
+  <div style="flex:1">
+    <div style="font-weight:700;font-size:14px;color:#fff">نزّل لوحة التحكم</div>
+    <div style="font-size:12px;color:#8899AA;margin-top:2px">شغّلها زي أي تطبيق من الشاشة الرئيسية</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0">
+    <button onclick="installAdminPWA()" style="background:linear-gradient(135deg,#C9A84C,#A07830);color:#0A1628;border:none;border-radius:8px;padding:8px 14px;font-family:Cairo,sans-serif;font-weight:700;font-size:13px;cursor:pointer">تحميل</button>
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:8px;padding:8px 10px;font-family:Cairo,sans-serif;cursor:pointer;font-size:16px">✕</button>
+  </div>
+</div>
+
+<script>
+let _adminDeferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _adminDeferredPrompt = e;
+  setTimeout(() => {
+    const banner = document.getElementById('pwa-banner');
+    if(banner) banner.style.display = 'flex';
+  }, 5000);
+});
+window.installAdminPWA = async function() {
+  if(!_adminDeferredPrompt) return;
+  _adminDeferredPrompt.prompt();
+  await _adminDeferredPrompt.userChoice;
+  _adminDeferredPrompt = null;
+  document.getElementById('pwa-banner').style.display = 'none';
+};
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw-admin.js').catch(()=>{});
 }
 </script>
 </body>
