@@ -1084,7 +1084,10 @@ function initApp(){
   onValue(ref(db,'deltaart/users'), snap=>{
     let c=0;if(snap.exists()) snap.forEach(()=>c++);
     document.getElementById('ds-u').textContent=c;
-    if(currentUserRole==='owner') renderTeamTable(snap);
+    window._usersSnap=snap;
+    if(currentUserRole==='owner'||currentUserRole==='manager'||currentUserRole==='employee'){
+      renderTeamTable(snap);
+    }
   });
 
   // Workers (no-account)
@@ -1092,18 +1095,19 @@ function initApp(){
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allWorkers=all;
-    if(currentUserRole==='owner') renderWorkersTable(all);
+    renderWorkersTable(all);
   });
 
   // Services
   onValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
 
-  // Clients
+  // Clients — onValue fires on every change including additions
   onValue(ref(db,'deltaart/clients'), snap=>{
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allClients=all;
     renderClientsTable();
+    renderInvClientList(); // also refresh invoice client picker
   });
 
   // Invoices — employees don't see financial totals on dashboard
@@ -1137,11 +1141,15 @@ window.addWorker = async function(){
   const alertEl=document.getElementById('wk-alert');
   if(!name){showAlert(alertEl,'error','ادخل اسم العامل');return;}
   try{
-    await push(ref(db,'deltaart/workers'),{name,phone,createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success','✅ تم إضافة العامل');
+    const newRef=await push(ref(db,'deltaart/workers'),{name,phone,createdAt:new Date().toISOString()});
+    // Immediately add to local array so table updates without waiting for onValue
+    const newWorker={id:newRef.key,name,phone,createdAt:new Date().toISOString()};
+    window._allWorkers=[...(window._allWorkers||[]),newWorker];
+    renderWorkersTable(window._allWorkers);
+    showAlert(alertEl,'success','✅ تم إضافة العامل: '+name);
     document.getElementById('wk-name').value='';document.getElementById('wk-phone').value='';
     setTimeout(()=>closeModal('add-worker-modal'),1200);
-  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
+  }catch(e){showAlert(alertEl,'error','خطأ: '+e.message);}
 };
 
 function renderWorkersTable(workers){
@@ -1155,6 +1163,15 @@ function renderWorkersTable(workers){
   </tr>`).join('');
 }
 window.deleteWorker=async id=>{if(confirm('حذف العامل؟'))await remove(ref(db,`deltaart/workers/${id}`));};
+
+// Render full team page — called when navigating to team page
+window.renderFullTeamPage = function(){
+  if(window._usersSnap) renderTeamTable(window._usersSnap);
+  else {
+    get(ref(db,'deltaart/users')).then(snap=>{window._usersSnap=snap;renderTeamTable(snap);});
+  }
+  renderWorkersTable(window._allWorkers||[]);
+};
 
 // ===== ATTENDANCE RECORD MODAL =====
 window.openAttendanceModal = function(){
@@ -1252,11 +1269,16 @@ window.addClient = async function(){
   const alertEl=document.getElementById('cl-alert');
   if(!name||!phone){showAlert(alertEl,'error','اسم ورقم الهاتف مطلوبان');return;}
   try{
-    await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success','✅ تم إضافة العميل');
+    const newRef=await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
+    // Immediately add to local cache so table updates even before onValue fires
+    const newClient={id:newRef.key,name,phone,phone2,address,notes,createdAt:new Date().toISOString()};
+    window._allClients=[...window._allClients,newClient];
+    renderClientsTable();
+    renderInvClientList();
+    showAlert(alertEl,'success','✅ تم إضافة العميل: '+name);
     ['cl-name','cl-phone','cl-phone2','cl-address','cl-notes'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>{closeModal('add-client-modal');renderInvClientList();renderClientsTable();},1200);
-  } catch(e){showAlert(alertEl,'error','حدث خطأ');}
+    setTimeout(()=>closeModal('add-client-modal'),1500);
+  } catch(e){showAlert(alertEl,'error','خطأ: '+e.message);}
 };
 
 function calcClientStats(clientId){
@@ -1856,36 +1878,82 @@ window.addGalleryItem=async function(){
   const title=document.getElementById('gal-title').value.trim();
   const category=document.getElementById('gal-cat').value;
   const alertEl=document.getElementById('gal-alert');
+
   if(isFile){
     if(!window._galCurrentFile){showAlert(alertEl,'error','اختار صورة أولاً');return;}
     const file=window._galCurrentFile;
-    const CLOUD='dlmda45sv';const PRESET='deltaart_c';
-    const formData=new FormData();
-    formData.append('file',file);formData.append('upload_preset',PRESET);formData.append('folder','deltaart/gallery');
+
+    // Convert to base64 for reliable upload
+    const toBase64=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result);r.onerror=rej;r.readAsDataURL(f);});
+
     const progressBar=document.getElementById('upload-progress-bar'),progressFill=document.getElementById('upload-progress-fill');
-    progressBar.style.display='block';
+    progressBar.style.display='block';progressFill.style.width='20%';
     showAlert(alertEl,'success','⏳ جاري رفع الصورة...');
+
     try{
-      const imgUrl=await new Promise((resolve,reject)=>{
-        const xhr=new XMLHttpRequest();
-        xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`);
-        xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=Math.round(e.loaded/e.total*100);progressFill.style.width=pct+'%';showAlert(alertEl,'success',`⏳ ${pct}%`);}};
-        xhr.onload=()=>{if(xhr.status===200)resolve(JSON.parse(xhr.responseText).secure_url);else reject(new Error('فشل الرفع'));};
-        xhr.onerror=()=>reject(new Error('خطأ في الاتصال'));
-        xhr.send(formData);
-      });
+      const b64=await toBase64(file);
+      progressFill.style.width='50%';
+
+      // Try Cloudinary upload with correct preset
+      const CLOUD='dlmda45sv';
+      // Try both preset variants
+      const presets=['deltaart_c','deltaart c','deltaart','ml_default'];
+      let imgUrl=null;
+
+      for(const PRESET of presets){
+        try{
+          const formData=new FormData();
+          formData.append('file',b64);
+          formData.append('upload_preset',PRESET);
+          const resp=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,{method:'POST',body:formData});
+          if(resp.ok){
+            const data=await resp.json();
+            if(data.secure_url){imgUrl=data.secure_url;break;}
+            else if(data.error){console.warn('Preset',PRESET,'failed:',data.error.message);continue;}
+          }
+        }catch(e2){console.warn('Preset',PRESET,'error:',e2);}
+      }
+
+      progressFill.style.width='80%';
+
+      if(!imgUrl){
+        // Fallback: store as base64 directly in Firebase (works for small images)
+        if(file.size<=800*1024){
+          imgUrl=b64;
+          showAlert(alertEl,'success','⏳ جاري الحفظ...');
+        } else {
+          throw new Error('فشل رفع الصورة على Cloudinary. تأكد من إعدادات الـ upload preset أو استخدم رابط URL');
+        }
+      }
+
       await push(ref(db,'deltaart/gallery'),{url:imgUrl,title,category,date:new Date().toISOString()});
+      progressFill.style.width='100%';
       showAlert(alertEl,'success','✅ تم رفع الصورة!');
+      setTimeout(()=>{
+        progressBar.style.display='none';progressFill.style.width='0%';
+        document.getElementById('file-preview-wrap').style.display='none';
+        window._galCurrentFile=null;
+        document.getElementById('gal-file-input').value='';
+        document.getElementById('gal-title').value='';
+        closeModal('add-gallery-modal');
+      },1500);
+
+    }catch(e){
+      showAlert(alertEl,'error',e.message||'فشل الرفع');
       progressBar.style.display='none';progressFill.style.width='0%';
-      document.getElementById('file-preview-wrap').style.display='none';
-      window._galCurrentFile=null;document.getElementById('gal-file-input').value='';document.getElementById('gal-title').value='';
-      setTimeout(()=>closeModal('add-gallery-modal'),1500);
-    }catch(e){showAlert(alertEl,'error',e.message||'فشل الرفع');progressBar.style.display='none';}
+    }
+
   } else {
     const url=document.getElementById('gal-url').value.trim();
     if(!url){showAlert(alertEl,'error','ادخل رابط الصورة');return;}
-    try{await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});showAlert(alertEl,'success','✅ تم الإضافة');document.getElementById('gal-url').value='';document.getElementById('gal-url-preview').style.display='none';document.getElementById('gal-title').value='';setTimeout(()=>closeModal('add-gallery-modal'),1500);}
-    catch(e){showAlert(alertEl,'error','حدث خطأ');}
+    try{
+      await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});
+      showAlert(alertEl,'success','✅ تم الإضافة');
+      document.getElementById('gal-url').value='';
+      document.getElementById('gal-url-preview').style.display='none';
+      document.getElementById('gal-title').value='';
+      setTimeout(()=>closeModal('add-gallery-modal'),1500);
+    }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
   }
 };
 function renderAdminGallery(all){
@@ -1931,10 +1999,12 @@ window.addUser=async function(){
   try{
     const cred=await createUserWithEmailAndPassword(auth,email,pass);
     await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,status:'active',createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success','✅ تم إضافة الموظف');
+    showAlert(alertEl,'success','✅ تم إضافة الموظف: '+name);
     ['usr-name','usr-email','usr-pass'].forEach(id=>document.getElementById(id).value='');
+    // Refresh team table immediately
+    get(ref(db,'deltaart/users')).then(snap=>{window._usersSnap=snap;renderTeamTable(snap);});
     setTimeout(()=>closeModal('add-user-modal'),1500);
-  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
+  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ: '+e.message);}
 };
 
 // ===== SETTINGS =====
@@ -2199,6 +2269,8 @@ function goPage(name,btn){
   if(name==='attendance'){if(typeof window._doLoadAttendance==='function')window._doLoadAttendance();}
   if(name==='visitors'){if(typeof window._doLoadVisitors==='function')window._doLoadVisitors();}
   if(name==='revenue'){if(typeof window.loadRevenueReport==='function')window.loadRevenueReport('today',null);}
+  if(name==='clients'){if(typeof window.renderClientsTable==='function')window.renderClientsTable();}
+  if(name==='team'){if(typeof window.renderFullTeamPage==='function')window.renderFullTeamPage();}
   closeMobileSidebar();
 }
 
