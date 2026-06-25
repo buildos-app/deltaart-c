@@ -498,13 +498,59 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
+
+    <!-- REVENUE REPORTS PAGE -->
+    <div class="page" id="page-revenue">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📊 تقارير الإيرادات</h3></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="stab active" id="rev-btn-today" onclick="loadRevenueReport('today',this)">📅 اليوم</button>
+          <button class="stab" id="rev-btn-week" onclick="loadRevenueReport('week',this)">📆 هذا الأسبوع</button>
+          <button class="stab" id="rev-btn-month" onclick="loadRevenueReport('month',this)">🗓️ هذا الشهر</button>
+          <button class="stab" id="rev-btn-3m" onclick="loadRevenueReport('3m',this)">📊 3 أشهر</button>
+          <button class="stab" id="rev-btn-year" onclick="loadRevenueReport('year',this)">📈 هذه السنة</button>
+          <button class="stab" id="rev-btn-custom" onclick="loadRevenueReport('custom',this)">🔎 فترة مخصصة</button>
+        </div>
+      </div>
+      <div id="rev-custom-range" style="display:none;background:var(--navy2);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:16px">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div><label style="font-size:12px;color:var(--gray);display:block;margin-bottom:4px">من</label><input type="date" id="rev-from" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none"></div>
+          <div><label style="font-size:12px;color:var(--gray);display:block;margin-bottom:4px">لحد</label><input type="date" id="rev-to" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:8px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none"></div>
+          <button class="btn-sm btn-primary" style="margin-top:16px" onclick="applyCustomRevRange()">عرض</button>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--gray);margin-bottom:12px" id="rev-period-label">عرض: اليوم</div>
+      <!-- Stats -->
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="revenue-card"><div class="sc-label">💰 إجمالي الدفعات المستلمة</div><div style="font-size:28px;font-weight:900;color:var(--gold)" id="rev-total">0</div><div style="font-size:12px;color:var(--gray)">جنيه</div></div>
+        <div class="stat-card"><div class="sc-label">🧾 عدد الفواتير</div><div class="sc-val" id="rev-count">0</div><div class="sc-change" style="color:var(--gray)">فاتورة في هذه الفترة</div></div>
+        <div class="stat-card"><div class="sc-label">🆕 مشاريع جديدة</div><div class="sc-val" id="rev-new">0</div><div class="sc-change" style="color:var(--gray)">مشروع تم إنشاؤه</div></div>
+      </div>
+      <!-- Payments table -->
+      <div class="panel" style="margin-top:16px">
+        <div class="panel-header"><h3>💳 الدفعات المستلمة — <span id="rev-tbl-period">اليوم</span></h3></div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>العميل</th><th>المشروع</th><th>المبلغ المستلم</th><th>ملاحظة الدفعة</th><th>تاريخ الدفعة</th></tr></thead>
+          <tbody id="rev-payments-tbody"></tbody>
+        </table></div>
+      </div>
+      <!-- Monthly summary -->
+      <div class="panel" style="margin-top:16px">
+        <div class="panel-header"><h3>📅 ملخص شهري</h3></div>
+        <div style="overflow-x:auto"><table>
+          <thead><tr><th>الشهر</th><th>إجمالي الدفعات</th><th>عدد الدفعات</th><th>مشاريع جديدة</th></tr></thead>
+          <tbody id="rev-monthly-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
     <!-- ATTENDANCE -->
     <div class="page" id="page-attendance">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📋 حضور الموظفين</h3><p style="color:var(--gray);font-size:13px">تسجيل الحضور والانصراف اليومي</p></div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <input type="date" id="att-date-filter" onchange="if(typeof window._doLoadAttendance==='function')window._doLoadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
-          <button class="btn-sm btn-primary" onclick="openModal('add-attendance-modal');if(typeof window.renderAttPersonList==='function')window.renderAttPersonList()">➕ تسجيل حضور</button>
+          <button class="btn-sm btn-primary" onclick="window.openAttendanceModal ? window.openAttendanceModal() : openModal('add-attendance-modal')">➕ تسجيل حضور</button>
         </div>
       </div>
       <div class="two-col" style="margin-bottom:16px">
@@ -517,6 +563,18 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <thead><tr><th>الموظف</th><th>الدور</th><th>وقت الحضور</th><th>وقت الانصراف</th><th>إجمالي الساعات</th><th>الحالة</th></tr></thead>
           <tbody id="attendance-tbody"></tbody>
         </table></div>
+      </div>
+      <!-- Weekly Report -->
+      <div class="panel" style="margin-top:16px">
+        <div class="panel-header">
+          <h3>📊 التقرير الأسبوعي</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-sm btn-outline-sm" onclick="loadWeeklyReport('this')">هذا الأسبوع</button>
+            <button class="btn-sm btn-outline-sm" onclick="loadWeeklyReport('last')">الأسبوع الماضي</button>
+            <button class="btn-sm btn-outline-sm" onclick="loadWeeklyReport('2weeks')">أسبوعان</button>
+          </div>
+        </div>
+        <div id="weekly-report-content" style="padding:16px;color:var(--gray);text-align:center">اضغط لعرض التقرير الأسبوعي</div>
       </div>
     </div>
 
@@ -927,6 +985,7 @@ function setupUI(){
       <div class="nav-section-title">الإعدادات</div>
       <button class="nav-item" onclick="goPage('settings',this);closeMobileSidebar()"><span class="ni">🛠️</span> الإعدادات</button>
       <div class="nav-section-title">التقارير</div>
+      <button class="nav-item" onclick="goPage('revenue',this);closeMobileSidebar()"><span class="ni">📊</span> تقارير الإيرادات</button>
       <button class="nav-item" onclick="goPage('attendance',this);closeMobileSidebar()"><span class="ni">📋</span> حضور الموظفين</button>
       <button class="nav-item" onclick="goPage('visitors',this);closeMobileSidebar()"><span class="ni">👁️</span> زوار الموقع</button>
       <div style="margin-top:12px"><a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> الموقع</a></div>`;
@@ -939,7 +998,7 @@ function setupUI(){
       {page:'dashboard',icon:'📊',label:'الرئيسية'},
       {page:'bookings',icon:'📅',label:'الحجوزات'},
       {page:'messages',icon:'💬',label:'الرسائل'},
-      {page:'invoices',icon:'🧾',label:'الفواتير'},
+      {page:'revenue',icon:'💰',label:'الإيرادات'},
       {page:'clients',icon:'👤',label:'العملاء'},
     ], true);
   } else {
@@ -1101,6 +1160,7 @@ window.deleteWorker=async id=>{if(confirm('حذف العامل؟'))await remove(
 window.openAttendanceModal = function(){
   window._attSelectedPerson=null;
   window._attSelectedStatus=null;
+  window._attPersonsCache=[];
   const today=new Date().toISOString().split('T')[0];
   document.getElementById('att-rec-date').value=today;
   document.getElementById('att-status-wrap').style.display='none';
@@ -1108,30 +1168,38 @@ window.openAttendanceModal = function(){
     const btn=document.getElementById(id);
     if(btn){btn.classList.remove('selected-present','selected-absent','selected-half');}
   });
-  renderAttPersonList();
+  if(typeof window.renderAttPersonList==='function') window.renderAttPersonList();
   openModal('add-attendance-modal');
 };
 
 window.renderAttPersonList = function renderAttPersonList(){
-  // Combine users + workers
   const list=document.getElementById('att-person-list');
-  const items=[];
-  // Get users from DB
-  get(ref(db,'deltaart/users')).then(snap=>{
-    if(snap.exists()) snap.forEach(c=>{const v=c.val();items.push({uid:c.key,name:v.name,role:v.role||'employee',type:'user'});});
-    // Add workers
-    window._allWorkers.forEach(w=>items.push({uid:'worker_'+w.id,name:w.name,role:'عامل',type:'worker',wid:w.id}));
+  list.innerHTML='<div style="color:var(--gray);text-align:center;padding:12px">⏳ جاري التحميل...</div>';
+  Promise.all([
+    get(ref(db,'deltaart/users')),
+    get(ref(db,'deltaart/workers'))
+  ]).then(([userSnap, workerSnap])=>{
+    const items=[];
+    if(userSnap.exists()) userSnap.forEach(c=>{const v=c.val();items.push({uid:c.key,name:v.name||'—',role:v.role||'employee',type:'user'});});
+    if(workerSnap.exists()) workerSnap.forEach(c=>{const v=c.val();items.push({uid:'worker_'+c.key,name:v.name||'—',role:'worker',type:'worker'});});
+    if(!items.length){list.innerHTML='<div style="color:var(--gray);text-align:center;padding:16px">لا يوجد موظفون أو عمال</div>';return;}
     list.innerHTML=items.map(p=>`
-      <div class="worker-select-card" id="atp-${p.uid}" onclick="selectAttPerson(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div class="worker-select-card" id="atp-${p.uid}" onclick="selectAttPersonById('${p.uid}')">
         <div>
           <div style="font-weight:700;font-size:14px">${p.name}</div>
-          <div style="font-size:12px;color:var(--gray)">${roleLabelAr(p.role)}</div>
+          <div style="font-size:12px;color:var(--gray)">${p.type==='worker'?'🔨 عامل':roleLabelAr(p.role)}</div>
         </div>
-        <span style="font-size:18px">${p.type==='worker'?'🔨':'👔'}</span>
-      </div>`).join('')||'<div style="color:var(--gray);text-align:center;padding:16px">لا يوجد موظفون</div>';
+        <span style="font-size:20px">${p.type==='worker'?'🔨':'👔'}</span>
+      </div>`).join('');
+    window._attPersonsCache=items;
   });
 }
 
+window.selectAttPersonById=function(uid){
+  const items=window._attPersonsCache||[];
+  const person=items.find(p=>p.uid===uid);
+  if(person) window.selectAttPerson(person);
+};
 window.selectAttPerson=function(person){
   window._attSelectedPerson=person;
   document.querySelectorAll('.worker-select-card').forEach(c=>c.classList.remove('selected'));
@@ -1187,7 +1255,7 @@ window.addClient = async function(){
     await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة العميل');
     ['cl-name','cl-phone','cl-phone2','cl-address','cl-notes'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>{closeModal('add-client-modal');renderInvClientList();},1200);
+    setTimeout(()=>{closeModal('add-client-modal');renderInvClientList();renderClientsTable();},1200);
   } catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
 
@@ -1530,6 +1598,137 @@ function invPayLabel(inv){
   return 'لم يُدفع';
 }
 
+
+// ===== REVENUE REPORTS =====
+window._revCurrentPeriod = 'today';
+window._revFrom = null;
+window._revTo = null;
+
+window.loadRevenueReport = function(period, btn){
+  window._revCurrentPeriod = period;
+  // Update active tab
+  ['today','week','month','3m','year','custom'].forEach(p=>{
+    const b=document.getElementById('rev-btn-'+p);
+    if(b) b.classList.toggle('active', p===period);
+  });
+  const customDiv=document.getElementById('rev-custom-range');
+  if(period==='custom'){
+    if(customDiv) customDiv.style.display='block';
+    return; // wait for user to pick dates
+  } else {
+    if(customDiv) customDiv.style.display='none';
+  }
+  const now=new Date();
+  let from, to=new Date(now);
+  to.setHours(23,59,59,999);
+  if(period==='today'){
+    from=new Date(now); from.setHours(0,0,0,0);
+    document.getElementById('rev-period-label').textContent='عرض: اليوم';
+    document.getElementById('rev-tbl-period').textContent='اليوم';
+  } else if(period==='week'){
+    from=new Date(now); from.setDate(now.getDate()-now.getDay()); from.setHours(0,0,0,0);
+    document.getElementById('rev-period-label').textContent='عرض: هذا الأسبوع';
+    document.getElementById('rev-tbl-period').textContent='هذا الأسبوع';
+  } else if(period==='month'){
+    from=new Date(now.getFullYear(),now.getMonth(),1,0,0,0,0);
+    document.getElementById('rev-period-label').textContent='عرض: هذا الشهر';
+    document.getElementById('rev-tbl-period').textContent='هذا الشهر';
+  } else if(period==='3m'){
+    from=new Date(now); from.setMonth(now.getMonth()-3); from.setHours(0,0,0,0);
+    document.getElementById('rev-period-label').textContent='عرض: آخر 3 أشهر';
+    document.getElementById('rev-tbl-period').textContent='آخر 3 أشهر';
+  } else if(period==='year'){
+    from=new Date(now.getFullYear(),0,1,0,0,0,0);
+    document.getElementById('rev-period-label').textContent='عرض: هذه السنة';
+    document.getElementById('rev-tbl-period').textContent='هذه السنة';
+  }
+  window._revFrom=from; window._revTo=to;
+  renderRevenueReport(from, to);
+};
+
+window.applyCustomRevRange = function(){
+  const fromEl=document.getElementById('rev-from');
+  const toEl=document.getElementById('rev-to');
+  if(!fromEl.value||!toEl.value){alert('اختار التاريخين');return;}
+  const from=new Date(fromEl.value+'T00:00:00');
+  const to=new Date(toEl.value+'T23:59:59');
+  document.getElementById('rev-period-label').textContent=`عرض: ${fromEl.value} — ${toEl.value}`;
+  document.getElementById('rev-tbl-period').textContent='الفترة المخصصة';
+  window._revFrom=from; window._revTo=to;
+  renderRevenueReport(from, to);
+};
+
+function renderRevenueReport(from, to){
+  const invoices=window._allInvoices||[];
+  // Payments within range
+  const payments=[];
+  let totalReceived=0;
+  invoices.forEach(inv=>{
+    (inv.payments||[]).forEach(p=>{
+      const d=new Date(p.date);
+      if(d>=from&&d<=to){
+        payments.push({...p, clientName:inv.clientName||'—', projectName:inv.projectName||'—'});
+        totalReceived+=(p.amount||0);
+      }
+    });
+  });
+  // New invoices/projects in range
+  const newProjects=invoices.filter(inv=>{const d=new Date(inv.createdAt);return d>=from&&d<=to;});
+  document.getElementById('rev-total').textContent=totalReceived.toLocaleString('ar-EG');
+  document.getElementById('rev-count').textContent=newProjects.length;
+  document.getElementById('rev-new').textContent=newProjects.length;
+
+  // Payments table
+  payments.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const ptbody=document.getElementById('rev-payments-tbody');
+  if(!payments.length){
+    ptbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد دفعات في هذه الفترة</td></tr>';
+  } else {
+    ptbody.innerHTML=payments.map(p=>`<tr>
+      <td><strong>${p.clientName}</strong></td>
+      <td style="color:var(--gray)">${p.projectName}</td>
+      <td style="color:var(--green);font-weight:700">${(p.amount||0).toLocaleString('ar-EG')} جنيه</td>
+      <td style="color:var(--gray)">${p.note||'دفعة'}</td>
+      <td style="color:var(--gray)">${fmtDate(p.date)}</td>
+    </tr>`).join('');
+  }
+
+  // Monthly summary (last 12 months)
+  const monthMap={};
+  invoices.forEach(inv=>{
+    // Payments
+    (inv.payments||[]).forEach(p=>{
+      const d=new Date(p.date);
+      const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      if(!monthMap[key]) monthMap[key]={total:0,count:0,projects:0};
+      monthMap[key].total+=(p.amount||0);
+      monthMap[key].count++;
+    });
+    // New projects
+    const d=new Date(inv.createdAt);
+    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    if(!monthMap[key]) monthMap[key]={total:0,count:0,projects:0};
+    monthMap[key].projects++;
+  });
+  const months=Object.keys(monthMap).sort().reverse().slice(0,12);
+  const mtbody=document.getElementById('rev-monthly-tbody');
+  if(!months.length){
+    mtbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد بيانات</td></tr>';
+  } else {
+    mtbody.innerHTML=months.map(m=>{
+      const [yr,mo]=m.split('-');
+      const monthName=new Date(+yr,+mo-1,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
+      const d=monthMap[m];
+      return `<tr>
+        <td><strong>${monthName}</strong></td>
+        <td style="color:var(--green);font-weight:700">${d.total.toLocaleString('ar-EG')} جنيه</td>
+        <td style="color:var(--gold)">${d.count}</td>
+        <td style="color:var(--blue)">${d.projects}</td>
+      </tr>`;
+    }).join('');
+  }
+}
+
 // ===== SUPERADMIN =====
 window._saAllAccounts=[];
 function loadSAAccounts(){
@@ -1660,7 +1859,7 @@ window.addGalleryItem=async function(){
   if(isFile){
     if(!window._galCurrentFile){showAlert(alertEl,'error','اختار صورة أولاً');return;}
     const file=window._galCurrentFile;
-    const CLOUD='dlmda45sv';const PRESET='deltaart c';
+    const CLOUD='dlmda45sv';const PRESET='deltaart_c';
     const formData=new FormData();
     formData.append('file',file);formData.append('upload_preset',PRESET);formData.append('folder','deltaart/gallery');
     const progressBar=document.getElementById('upload-progress-bar'),progressFill=document.getElementById('upload-progress-fill');
@@ -1717,11 +1916,13 @@ window.addService=async function(){
 window.delService=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/services/${id}`));};
 
 // ===== TEAM =====
+window._usersSnap = null;
 function renderTeamTable(snap){
+  window._usersSnap = snap;
   const tbody=document.getElementById('team-tbody');
   if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
   let html='';snap.forEach(c=>{const u=c.val();html+=`<tr><td><strong>${u.name||'—'}</strong></td><td style="color:var(--gray)">${u.email||'—'}</td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td><td style="color:var(--gray)">${fmtDate(u.createdAt)}</td></tr>`;});
-  tbody.innerHTML=html;
+  tbody.innerHTML=html||'<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px">لا يوجد موظفون</td></tr>';
 }
 window.addUser=async function(){
   const name=document.getElementById('usr-name').value.trim(),email=document.getElementById('usr-email').value.trim(),pass=document.getElementById('usr-pass').value,role=document.getElementById('usr-role').value,alertEl=document.getElementById('usr-alert');
@@ -1835,6 +2036,93 @@ window._doLoadAttendance = function loadAttendance(){
   });
 }
 
+
+// ===== WEEKLY ATTENDANCE REPORT =====
+window.loadWeeklyReport = async function(period){
+  const div=document.getElementById('weekly-report-content');
+  div.innerHTML='<div style="text-align:center;padding:20px;color:var(--gray)">⏳ جاري التحميل...</div>';
+  const now=new Date();
+  let startDate, endDate;
+  if(period==='this'){
+    const day=now.getDay();
+    startDate=new Date(now); startDate.setDate(now.getDate()-day); startDate.setHours(0,0,0,0);
+    endDate=new Date(startDate); endDate.setDate(startDate.getDate()+6); endDate.setHours(23,59,59,999);
+  } else if(period==='last'){
+    const day=now.getDay();
+    endDate=new Date(now); endDate.setDate(now.getDate()-day-1); endDate.setHours(23,59,59,999);
+    startDate=new Date(endDate); startDate.setDate(endDate.getDate()-6); startDate.setHours(0,0,0,0);
+  } else {
+    startDate=new Date(now); startDate.setDate(now.getDate()-13); startDate.setHours(0,0,0,0);
+    endDate=new Date(now); endDate.setHours(23,59,59,999);
+  }
+  // Build date list
+  const dates=[];
+  const d=new Date(startDate);
+  while(d<=endDate){dates.push(d.toISOString().split('T')[0]);d.setDate(d.getDate()+1);}
+
+  // Fetch all persons
+  const [userSnap, workerSnap] = await Promise.all([
+    get(ref(db,'deltaart/users')),
+    get(ref(db,'deltaart/workers'))
+  ]);
+  const persons=[];
+  if(userSnap.exists()) userSnap.forEach(c=>{const v=c.val();persons.push({uid:c.key,name:v.name||'—',type:'user',role:v.role});});
+  if(workerSnap.exists()) workerSnap.forEach(c=>{const v=c.val();persons.push({uid:'worker_'+c.key,name:v.name||'—',type:'worker',role:'worker'});});
+
+  if(!persons.length){div.innerHTML='<div style="text-align:center;padding:24px;color:var(--gray)">لا يوجد موظفون</div>';return;}
+
+  // Fetch attendance for each date
+  const attData={};
+  await Promise.all(dates.map(dt=>get(ref(db,'deltaart/attendance/'+dt)).then(s=>{attData[dt]={};if(s.exists())s.forEach(c=>{attData[dt][c.key]=c.val();});})));
+
+  // Build summary per person
+  const summary=persons.map(p=>{
+    let present=0,absent=0,half=0,notSet=0;
+    dates.forEach(dt=>{
+      const rec=attData[dt]?.[p.uid];
+      if(!rec) notSet++;
+      else if(rec.status==='absent') absent++;
+      else if(rec.status==='half') half++;
+      else present++;
+    });
+    return{...p,present,absent,half,notSet,total:dates.length};
+  });
+
+  const periodLabel=period==='this'?'هذا الأسبوع':period==='last'?'الأسبوع الماضي':'آخر أسبوعين';
+  div.innerHTML=`
+    <div style="font-size:13px;color:var(--gray);margin-bottom:12px">الفترة: ${startDate.toLocaleDateString('ar-EG')} — ${endDate.toLocaleDateString('ar-EG')} (${dates.length} أيام)</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">
+      <thead><tr>
+        <th style="text-align:right;padding:8px 12px;font-size:12px;color:var(--gray);border-bottom:1px solid rgba(201,168,76,0.1)">الموظف</th>
+        <th style="text-align:right;padding:8px 12px;font-size:12px;color:var(--gray);border-bottom:1px solid rgba(201,168,76,0.1)">الدور</th>
+        <th style="padding:8px 12px;font-size:12px;color:#22C55E;border-bottom:1px solid rgba(201,168,76,0.1)">✅ حاضر</th>
+        <th style="padding:8px 12px;font-size:12px;color:#EF4444;border-bottom:1px solid rgba(201,168,76,0.1)">❌ غائب</th>
+        <th style="padding:8px 12px;font-size:12px;color:#F97316;border-bottom:1px solid rgba(201,168,76,0.1)">🕐 نص يوم</th>
+        <th style="padding:8px 12px;font-size:12px;color:var(--gray);border-bottom:1px solid rgba(201,168,76,0.1)">نسبة الحضور</th>
+      </tr></thead>
+      <tbody>
+        ${summary.map(p=>{
+          const pct=p.total>0?Math.round((p.present+p.half*0.5)/p.total*100):0;
+          const pctColor=pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)';
+          return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+            <td style="padding:10px 12px"><strong>${p.name}</strong></td>
+            <td style="padding:10px 12px"><span class="badge role-badge role-${p.role||'worker'}" style="font-size:10px">${p.type==='worker'?'🔨 عامل':roleLabelAr(p.role)}</span></td>
+            <td style="padding:10px 12px;text-align:center;color:#22C55E;font-weight:700">${p.present}</td>
+            <td style="padding:10px 12px;text-align:center;color:#EF4444;font-weight:700">${p.absent+p.notSet}</td>
+            <td style="padding:10px 12px;text-align:center;color:#F97316;font-weight:700">${p.half}</td>
+            <td style="padding:10px 12px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${pctColor};border-radius:20px"></div></div>
+                <span style="font-size:12px;font-weight:700;color:${pctColor};min-width:32px">${pct}%</span>
+              </div>
+            </td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table></div>
+  `;
+};
+
 // ===== VISITORS — FIXED =====
 // The visitors data is stored under deltaart/visitors as a list
 // Each entry: { date, duration (seconds), level (high/medium/low), ua }
@@ -1897,7 +2185,7 @@ function showAlert(el,type,text){el.className=`alert alert-${type==='success'?'s
 </script>
 
 <script>
-const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات'};
+const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',messages:'الرسائل',clients:'العملاء',invoices:'الفواتير',gallery:'المعرض',services:'الخدمات',team:'فريق العمل',attendance:'حضور الموظفين',visitors:'زوار الموقع',superadmin:'إدارة الأكونتات',settings:'الإعدادات',revenue:'تقارير الإيرادات'};
 
 function goPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1910,6 +2198,7 @@ function goPage(name,btn){
   if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
   if(name==='attendance'){if(typeof window._doLoadAttendance==='function')window._doLoadAttendance();}
   if(name==='visitors'){if(typeof window._doLoadVisitors==='function')window._doLoadVisitors();}
+  if(name==='revenue'){if(typeof window.loadRevenueReport==='function')window.loadRevenueReport('today',null);}
   closeMobileSidebar();
 }
 
