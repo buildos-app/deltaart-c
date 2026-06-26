@@ -987,7 +987,13 @@ window.doLogin = async function(){
   try{ await signInWithEmailAndPassword(auth,email,pass); }
   catch(e){ document.getElementById('login-err').style.display='block'; }
 };
-window.doLogout=()=>signOut(auth);
+window.doLogout=()=>{
+  // Clear localStorage cache on logout
+  ['da_clients','da_workers','da_users','da_invoices'].forEach(k=>{
+    try{localStorage.removeItem(k);}catch(e){}
+  });
+  signOut(auth);
+};
 
 // ===== SETUP UI =====
 function setupUI(){
@@ -1087,6 +1093,14 @@ function buildBottomNav(items, hasMore=false){
 }
 
 // ===== INIT APP =====
+// ── SAFE onValue: never clears existing data if Firebase returns empty snap ──
+// This protects against the brief empty emission on page refresh
+function safeOnValue(dbRef, callback){
+  onValue(dbRef, snap=>{
+    callback(snap);
+  });
+}
+
 function initApp(){
   if(currentUserRole==='superadmin'){ loadSAAccounts(); return; }
 
@@ -1130,56 +1144,88 @@ function initApp(){
     renderAdminGallery(all);
   });
 
-  // ── SAFE onValue wrapper: never clears data if snap is empty ──
-  // Firebase can emit empty snap briefly on refresh before auth confirms
-  function safeOnValue(dbRef, callback){
-    onValue(dbRef, snap=>{
-      callback(snap);
-    });
-  }
-
-  // Users
+  // Users — with localStorage backup for team page
+  try{
+    const cached=localStorage.getItem('da_users');
+    if(cached){
+      window._cachedUsersData=JSON.parse(cached);
+    }
+  }catch(e){}
   safeOnValue(ref(db,'deltaart/users'), snap=>{
     if(!snap.exists() && window._usersSnap && window._usersSnap.exists()) return; // keep old data
     let c=0;if(snap.exists()) snap.forEach(()=>c++);
     const el=document.getElementById('ds-u');
     if(el) el.textContent=c;
     window._usersSnap=snap;
+    if(snap.exists()){
+      // Save to localStorage as array for backup
+      const arr=[];snap.forEach(c=>{arr.push({uid:c.key,...c.val()});});
+      try{localStorage.setItem('da_users',JSON.stringify(arr));}catch(e){}
+      window._teamLoaded=true;
+    }
     if(currentUserRole==='owner'||currentUserRole==='manager'||currentUserRole==='employee'){
       renderTeamTable(snap);
     }
   });
 
-  // Workers (no-account)
+  // Workers — with localStorage backup
+  try{
+    const cached=localStorage.getItem('da_workers');
+    if(cached){window._allWorkers=JSON.parse(cached);renderWorkersTable(window._allWorkers);}
+  }catch(e){}
   safeOnValue(ref(db,'deltaart/workers'), snap=>{
     if(!snap.exists() && window._allWorkers && window._allWorkers.length>0) return; // keep old data
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
+    if(all.length===0 && window._allWorkers.length>0) return;
     window._allWorkers=all;
+    if(all.length>0){try{localStorage.setItem('da_workers',JSON.stringify(all));}catch(e){}}
     renderWorkersTable(all);
   });
 
   // Services
   safeOnValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
 
-  // Clients
+  // Clients — with localStorage backup
+  try{
+    const cached=localStorage.getItem('da_clients');
+    if(cached){
+      window._allClients=JSON.parse(cached);
+      window._clientsLoaded=true;
+      renderClientsTable();
+    }
+  }catch(e){}
   safeOnValue(ref(db,'deltaart/clients'), snap=>{
     if(!snap.exists() && window._allClients && window._allClients.length>0) return; // keep old data
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
+    if(all.length===0 && window._allClients.length>0) return; // protect against false empty
     window._allClients=all;
-    if(all.length>0) window._clientsLoaded=true;
+    if(all.length>0){
+      window._clientsLoaded=true;
+      try{localStorage.setItem('da_clients',JSON.stringify(all));}catch(e){}
+    }
     renderClientsTable();
     renderInvClientList();
   });
 
-  // Invoices
+  // Invoices — with localStorage backup
+  try{
+    const cached=localStorage.getItem('da_invoices');
+    if(cached){
+      window._allInvoices=JSON.parse(cached);
+      if(currentUserRole==='owner'){calcRevenue();renderDashInvoices(window._allInvoices);}
+      renderInvoicesTable(window._allInvoices);
+      renderClientsTable();
+    }
+  }catch(e){}
   safeOnValue(ref(db,'deltaart/invoices'), snap=>{
     if(!snap.exists() && window._allInvoices && window._allInvoices.length>0) return; // keep old data
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
     window._allInvoices=all;
+    if(all.length>0){try{localStorage.setItem('da_invoices',JSON.stringify(all));}catch(e){}}
     // Also refresh clients table since it shows financial stats
     renderClientsTable();
     if(currentUserRole==='owner'){
@@ -1211,6 +1257,7 @@ window.addWorker = async function(){
     // Immediately add to local array so table updates without waiting for onValue
     const newWorker={id:newRef.key,name,phone,createdAt:new Date().toISOString()};
     window._allWorkers=[...(window._allWorkers||[]),newWorker];
+    try{localStorage.setItem('da_workers',JSON.stringify(window._allWorkers));}catch(e){}
     renderWorkersTable(window._allWorkers);
     showAlert(alertEl,'success','✅ تم إضافة العامل: '+name);
     document.getElementById('wk-name').value='';document.getElementById('wk-phone').value='';
@@ -1222,9 +1269,16 @@ function renderWorkersTable(workers){
   const tbody=document.getElementById('workers-tbody');
   if(!tbody)return; // page might not be active
   if(!workers||!workers.length){
+    try{
+      const cached=localStorage.getItem('da_workers');
+      if(cached){
+        const arr=JSON.parse(cached).filter(w=>!w.archived);
+        if(arr.length>0){window._allWorkers=arr;setTimeout(()=>renderWorkersTable(arr),50);return;}
+      }
+    }catch(e){}
     tbody.innerHTML=window._workersLoaded?
       '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>':
-      '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">⏳...</td></tr>';
+      '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">⏳ جاري التحميل...</td></tr>';
     return;
   }
   window._workersLoaded=true;
@@ -1374,6 +1428,7 @@ window.addClient = async function(){
     const newRef=await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
     const newClient={id:newRef.key,name,phone,phone2,address,notes,createdAt:new Date().toISOString()};
     window._allClients=[...window._allClients,newClient];
+    try{localStorage.setItem('da_clients',JSON.stringify(window._allClients));}catch(e){}
     renderClientsTable();
     renderInvClientList();
     showAlert(alertEl,'success','✅ تم الحفظ في قاعدة البيانات: '+name);
@@ -1410,6 +1465,20 @@ window.renderClientsTable = function(){
   });
   const tbody=document.getElementById('clients-tbody');
   if(!clients.length){
+    // Try localStorage cache before showing empty
+    try{
+      const cached=localStorage.getItem('da_clients');
+      if(cached){
+        const arr=JSON.parse(cached).filter(c=>!c.archived);
+        if(arr.length>0){
+          window._allClients=arr;
+          window._clientsLoaded=true;
+          // re-call self now that we have data
+          setTimeout(()=>window.renderClientsTable&&window.renderClientsTable(),50);
+          return;
+        }
+      }
+    }catch(e){}
     tbody.innerHTML=window._clientsLoaded?
       '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>':
       '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">⏳ جاري التحميل...</td></tr>';
@@ -2217,6 +2286,24 @@ function renderTeamTable(snap){
   window._usersSnap = snap;
   const tbody=document.getElementById('team-tbody');
   if(!snap||!snap.exists()){
+    // Try localStorage cache
+    try{
+      const cached=localStorage.getItem('da_users');
+      if(cached){
+        const arr=JSON.parse(cached);
+        if(arr.length>0){
+          tbody.innerHTML=arr.map(u=>`<tr>
+            <td><strong>${u.name||'—'}</strong></td>
+            <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
+            <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
+            <td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td>
+            <td style="color:var(--gray);font-size:12px">${fmtDate(u.createdAt)}</td>
+            <td><span style="color:var(--gray);font-size:11px">⏳</span></td>
+          </tr>`).join('');
+          return;
+        }
+      }
+    }catch(e){}
     tbody.innerHTML=window._teamLoaded?
       '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>':
       '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:16px">⏳ جاري التحميل...</td></tr>';
