@@ -2,12 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="دلتا آرت">
-<meta name="theme-color" content="#0A1628">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>دلتا آرت — لوحة التحكم</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -15,7 +10,6 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);display:flex;height:100vh;overflow:hidden;}
 
-/* ===== DESKTOP SIDEBAR ===== */
 .sidebar{width:240px;height:100vh;background:var(--navy2);border-left:1px solid rgba(201,168,76,0.15);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;transition:transform 0.3s;}
 .sidebar-logo{padding:20px;border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;gap:10px;}
 .sidebar-logo .li{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--navy);}
@@ -41,15 +35,13 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .logout-btn{margin-top:10px;width:100%;padding:9px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#EF4444;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .logout-btn:hover{background:rgba(239,68,68,0.2);}
 
-/* ===== MOBILE STYLES ===== */
+/* MOBILE */
 .mobile-topbar{display:none;height:56px;background:var(--navy2);border-bottom:1px solid rgba(201,168,76,0.15);align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0;position:sticky;top:0;z-index:100;}
 .mobile-topbar .mob-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;}
 .mobile-topbar .mob-logo .li{width:32px;height:32px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:var(--navy);}
 .hamburger{background:none;border:none;color:var(--white);font-size:22px;cursor:pointer;padding:4px 8px;}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:998;}
 .sidebar-overlay.open{display:block;}
-
-/* Mobile bottom nav */
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--navy2);border-top:1px solid rgba(201,168,76,0.2);z-index:200;padding:8px 4px;padding-bottom:calc(8px + env(safe-area-inset-bottom));}
 .bottom-nav-inner{display:flex;justify-content:space-around;align-items:center;}
 .bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:10px;cursor:pointer;background:none;border:none;font-family:'Cairo',sans-serif;color:var(--gray);font-size:10px;font-weight:600;transition:all 0.2s;min-width:52px;}
@@ -58,7 +50,6 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .bn-more-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:10px;cursor:pointer;background:none;border:none;font-family:'Cairo',sans-serif;color:var(--gray);font-size:10px;font-weight:600;}
 .bn-more-btn .bn-icon{font-size:20px;}
 
-/* Mobile drawer sidebar */
 @media(max-width:768px){
   body{flex-direction:column;overflow:auto;height:auto;min-height:100vh;}
   .sidebar{position:fixed;right:-260px;top:0;bottom:0;width:260px;z-index:999;transition:right 0.3s;height:100vh;overflow-y:auto;}
@@ -84,7 +75,6 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
   .sidebar-nav .nav-item{padding:9px 12px;font-size:13px;}
 }
 
-/* LOGIN */
 #login-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
 #login-screen.hide{display:none;}
 .login-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.5);}
@@ -100,14 +90,11 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .btn-gold:hover{opacity:0.85;}
 #login-err{background:rgba(239,68,68,0.15);color:#EF4444;padding:12px;border-radius:8px;text-align:center;font-size:14px;margin-top:12px;display:none;}
 
-/* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 .topbar{height:60px;background:var(--navy2);border-bottom:1px solid rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;}
 .topbar h2{font-size:18px;font-weight:700;}
 .topbar-badge{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .content{flex:1;overflow-y:auto;padding:24px;}
-
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
 .stat-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;padding:20px;}
 .stat-card .sc-label{font-size:12px;color:var(--gray);font-weight:600;margin-bottom:8px;}
@@ -115,21 +102,15 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .stat-card .sc-change{font-size:12px;margin-top:4px;}
 .sc-change.up{color:var(--green);}
 .sc-icon{float:left;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
-
-/* PANEL */
 .panel{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;overflow:hidden;margin-bottom:16px;}
 .panel-header{padding:16px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:space-between;}
 .panel-header h3{font-size:15px;font-weight:700;}
 .panel-content{padding:20px;}
-
-/* TABLE */
 table{width:100%;border-collapse:collapse;}
 th{text-align:right;font-size:12px;font-weight:700;color:var(--gray);padding:8px 12px;border-bottom:1px solid rgba(201,168,76,0.1);}
 td{padding:12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(255,255,255,0.02);}
-
-/* BADGE */
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
 .badge-green{background:rgba(34,197,94,0.15);color:#22C55E;}
 .badge-yellow{background:rgba(201,168,76,0.15);color:var(--gold);}
@@ -138,8 +119,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .badge-gray{background:rgba(136,153,170,0.15);color:var(--gray);}
 .badge-purple{background:rgba(168,85,247,0.15);color:#A855F7;}
 .badge-orange{background:rgba(249,115,22,0.15);color:#F97316;}
-
-/* FORM */
 .ff{margin-bottom:16px;}
 .ff label{display:block;font-size:13px;font-weight:600;color:var(--gray);margin-bottom:7px;}
 .ff input,.ff select,.ff textarea{width:100%;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:11px 14px;color:var(--white);font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s;direction:rtl;}
@@ -153,37 +132,25 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .btn-warning{background:rgba(249,115,22,0.15);color:#F97316;border:1px solid rgba(249,115,22,0.3);}
 .btn-outline-sm{background:transparent;border:1px solid rgba(201,168,76,0.3);color:var(--gold);}
 .btn-blue{background:rgba(59,130,246,0.15);color:#3B82F6;border:1px solid rgba(59,130,246,0.3);}
-
-/* PASSWORD FIELD */
 .pass-field{position:relative;}
 .pass-field input{padding-left:40px;}
 .pass-toggle{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray);cursor:pointer;font-size:16px;padding:0;}
-
-/* UPLOAD */
 .upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.03);}
 .upload-zone:hover{border-color:var(--gold);background:rgba(201,168,76,0.08);}
 .upload-zone input[type=file]{display:none;}
 .upload-progress{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:10px;display:none;}
 .upload-progress-fill{height:100%;background:linear-gradient(to left,var(--gold),var(--gold2));border-radius:3px;transition:width 0.3s;width:0%;}
-
-/* PAGES */
 .page{display:none;}
 .page.active{display:block;}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:5000;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:32px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
 .modal-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.1);border:none;color:var(--white);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .modal h3{margin-bottom:20px;font-size:18px;font-weight:700;}
-
-/* ALERT */
 .alert{padding:12px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-top:12px;display:none;}
 .alert.show{display:block;}
 .alert-success{background:rgba(34,197,94,0.15);color:#22C55E;}
 .alert-error{background:rgba(239,68,68,0.15);color:#EF4444;}
-
-/* GALLERY */
 .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
 .gal-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:12px;overflow:hidden;}
 .gal-card img{width:100%;height:140px;object-fit:cover;}
@@ -191,15 +158,11 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .gal-card .gal-title{font-size:13px;font-weight:600;margin-bottom:4px;}
 .gal-card .gal-cat{font-size:11px;color:var(--gray);}
 .gal-card .gal-actions{padding:8px 12px;border-top:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;}
-
-/* SETTINGS TABS */
 .stabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
 .stab{padding:9px 20px;border-radius:8px;border:1px solid rgba(201,168,76,0.25);color:var(--gray);background:transparent;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .stab.active,.stab:hover{background:rgba(201,168,76,0.15);color:var(--gold);border-color:var(--gold);}
 .stab-panel{display:none;}
 .stab-panel.active{display:block;}
-
-/* SUPERADMIN TABLE */
 .sa-table-wrap{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);border-radius:14px;overflow:hidden;}
 .sa-search{padding:16px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;gap:10px;}
 .sa-search input{flex:1;background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:10px 14px;color:var(--white);font-family:'Cairo',sans-serif;font-size:14px;outline:none;direction:rtl;}
@@ -207,18 +170,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-left:6px;}
 .status-active{background:var(--green);}
 .status-inactive{background:var(--red);}
-
-/* EMPTY */
 .empty-state{text-align:center;padding:48px 20px;color:var(--gray);}
 .empty-state .ei{font-size:48px;margin-bottom:12px;}
-
-/* ===== INVOICE ADVANCED STYLES ===== */
 .client-select-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;}
 .client-select-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.05);}
 .client-select-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.1);}
 .client-card-name{font-weight:700;font-size:14px;}
 .client-card-info{font-size:12px;color:var(--gray);margin-top:2px;}
-
 .inv-items-table{width:100%;border-collapse:collapse;margin-top:8px;}
 .inv-items-table th{text-align:right;font-size:12px;color:var(--gray);padding:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
 .inv-items-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;vertical-align:middle;}
@@ -229,25 +187,15 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .inv-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:14px;}
 .inv-total-row:last-child{margin-bottom:0;font-size:16px;font-weight:700;color:var(--gold);}
 .inv-total-label{color:var(--gray);}
-
 .payment-strip{background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
 .payment-strip .pm-info{font-size:13px;}
 .payment-strip .pm-amount{font-weight:700;color:var(--green);}
 .payment-strip .pm-date{font-size:11px;color:var(--gray);margin-top:2px;}
-
 .debt-bar-wrap{margin-top:8px;}
 .debt-bar-bg{background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden;}
 .debt-bar-fill{height:100%;border-radius:20px;background:linear-gradient(to left,var(--green),#16a34a);transition:width 0.4s;}
-
-.inv-detail-header{background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(10,22,40,0));border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:16px;margin-bottom:16px;}
-.inv-stat-mini{text-align:center;padding:10px;}
-.inv-stat-mini .val{font-size:20px;font-weight:900;}
-.inv-stat-mini .lbl{font-size:11px;color:var(--gray);margin-top:2px;}
-
 .revenue-card{background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(10,22,40,0));border:1px solid rgba(201,168,76,0.3);border-radius:14px;padding:20px;position:relative;overflow:hidden;}
 .revenue-card::before{content:'💰';position:absolute;left:-10px;bottom:-10px;font-size:80px;opacity:0.07;}
-
-/* Attendance record buttons */
 .att-status-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid transparent;font-family:'Cairo',sans-serif;transition:all 0.2s;}
 .att-status-btn.present{background:rgba(34,197,94,0.15);color:#22C55E;border-color:rgba(34,197,94,0.3);}
 .att-status-btn.absent{background:rgba(239,68,68,0.15);color:#EF4444;border-color:rgba(239,68,68,0.3);}
@@ -255,16 +203,13 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .att-status-btn.selected-present{background:#22C55E;color:#fff;border-color:#22C55E;}
 .att-status-btn.selected-absent{background:#EF4444;color:#fff;border-color:#EF4444;}
 .att-status-btn.selected-half{background:#F97316;color:#fff;border-color:#F97316;}
-
-/* Worker select card */
-.worker-select-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:12px 16px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:space-between;}
+.worker-select-card{background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:12px 16px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
 .worker-select-card:hover{border-color:var(--gold);}
 .worker-select-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.08);}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
@@ -285,7 +230,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- MOBILE TOPBAR -->
 <div class="mobile-topbar" id="mobile-topbar">
   <div class="mob-logo">
     <div class="li">DA</div>
@@ -297,10 +241,8 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- SIDEBAR OVERLAY -->
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <div class="li">DA</div>
@@ -319,7 +261,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <h2 id="topbar-title">لوحة التحكم</h2>
@@ -327,7 +268,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
   <div class="content">
 
-    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="stats-row">
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">الحجوزات</div><div class="sc-val" id="ds-b">0</div><div class="sc-change up" id="ds-b-new">0 جديدة</div></div><div class="sc-icon" style="background:rgba(59,130,246,0.15);color:#3B82F6">📅</div></div></div>
@@ -336,28 +276,17 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">الموظفون</div><div class="sc-val" id="ds-u">0</div><div class="sc-change" style="color:var(--gray)">مستخدم</div></div><div class="sc-icon" style="background:rgba(168,85,247,0.15);color:#A855F7">👥</div></div></div>
       </div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
-        <div class="revenue-card">
-          <div class="sc-label" style="font-size:13px">💰 إجمالي الإيرادات</div>
-          <div style="font-size:32px;font-weight:900;color:var(--gold)" id="ds-total-rev">0</div>
-          <div style="font-size:12px;color:var(--gray);margin-top:4px">جنيه — كل الفواتير</div>
-        </div>
+        <div class="revenue-card"><div class="sc-label" style="font-size:13px">💰 إجمالي الإيرادات</div><div style="font-size:32px;font-weight:900;color:var(--gold)" id="ds-total-rev">0</div><div style="font-size:12px;color:var(--gray);margin-top:4px">جنيه — كل الفواتير</div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">✅ تم تحصيله</div><div class="sc-val" style="color:var(--green)" id="ds-paid-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div><div class="sc-icon" style="background:rgba(34,197,94,0.15);color:#22C55E">✅</div></div></div>
         <div class="stat-card"><div style="display:flex;justify-content:space-between"><div><div class="sc-label">⏳ متبقي للتحصيل</div><div class="sc-val" style="color:var(--red)" id="ds-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div><div class="sc-icon" style="background:rgba(239,68,68,0.15);color:#EF4444">⏳</div></div></div>
       </div>
       <div class="two-col" style="margin-bottom:16px">
-        <div class="panel">
-          <div class="panel-header"><h3>📅 آخر الحجوزات</h3><button class="btn-sm btn-outline-sm" onclick="goPage('bookings',null)">الكل</button></div>
-          <table><tbody id="dash-book-tbody"></tbody></table>
-        </div>
-        <div class="panel">
-          <div class="panel-header"><h3>💬 آخر الرسائل</h3><button class="btn-sm btn-outline-sm" onclick="goPage('messages',null)">الكل</button></div>
-          <table><tbody id="dash-msg-tbody"></tbody></table>
-        </div>
+        <div class="panel"><div class="panel-header"><h3>📅 آخر الحجوزات</h3><button class="btn-sm btn-outline-sm" onclick="goPage('bookings',null)">الكل</button></div><table><tbody id="dash-book-tbody"></tbody></table></div>
+        <div class="panel"><div class="panel-header"><h3>💬 آخر الرسائل</h3><button class="btn-sm btn-outline-sm" onclick="goPage('messages',null)">الكل</button></div><table><tbody id="dash-msg-tbody"></tbody></table></div>
       </div>
       <div class="panel">
         <div class="panel-header"><h3>🧾 آخر الفواتير</h3><button class="btn-sm btn-outline-sm" onclick="goPage('invoices',null)">الكل</button></div>
-        <table><thead><tr><th>العميل</th><th>إجمالي المشروع</th><th>تم الدفع</th><th>المتبقي</th><th>الحالة</th></tr></thead>
-        <tbody id="dash-inv-tbody"></tbody></table>
+        <table><thead><tr><th>العميل</th><th>إجمالي المشروع</th><th>تم الدفع</th><th>المتبقي</th><th>الحالة</th></tr></thead><tbody id="dash-inv-tbody"></tbody></table>
       </div>
       <div class="panel" id="quick-actions-panel">
         <div class="panel-header"><h3>⚡ إجراءات سريعة</h3></div>
@@ -371,12 +300,10 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- BOOKINGS -->
     <div class="page" id="page-bookings">
       <div class="panel">
-        <div class="panel-header">
-          <h3>📅 الحجوزات</h3>
-          <select id="book-filter" onchange="filterBookings()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;cursor:pointer;">
+        <div class="panel-header"><h3>📅 الحجوزات</h3>
+          <select id="book-filter" onchange="filterBookings()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;">
             <option value="all">الكل</option><option value="pending">قيد الانتظار</option><option value="confirmed">مؤكدة</option><option value="done">منتهية</option><option value="cancelled">ملغية</option>
           </select>
         </div>
@@ -384,12 +311,10 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- MESSAGES -->
     <div class="page" id="page-messages">
       <div class="panel">
-        <div class="panel-header">
-          <h3>💬 الرسائل</h3>
-          <select id="msg-filter" onchange="filterMessages()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;cursor:pointer;">
+        <div class="panel-header"><h3>💬 الرسائل</h3>
+          <select id="msg-filter" onchange="filterMessages()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;">
             <option value="all">الكل</option><option value="new">جديدة</option><option value="read">مقروءة</option>
           </select>
         </div>
@@ -397,14 +322,10 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- CLIENTS PAGE -->
     <div class="page" id="page-clients">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👤 العملاء</h3><p style="color:var(--gray);font-size:13px">إدارة بيانات العملاء</p></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn-sm btn-outline-sm" onclick="window.toggleArchivedClients&&window.toggleArchivedClients()" id="archived-toggle-btn">📦 عرض المؤرشفين</button>
-          <button class="btn-sm btn-primary" onclick="openModal('add-client-modal')">➕ عميل جديد</button>
-        </div>
+        <button class="btn-sm btn-primary" onclick="openModal('add-client-modal')">➕ عميل جديد</button>
       </div>
       <div class="panel">
         <div style="padding:12px 20px;border-bottom:1px solid rgba(201,168,76,0.1)">
@@ -417,7 +338,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- INVOICES PAGE -->
     <div class="page" id="page-invoices">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🧾 الفواتير والمشاريع</h3></div>
@@ -429,13 +349,9 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <div class="stat-card"><div><div class="sc-label">⏳ متبقي للتحصيل</div><div class="sc-val" style="color:var(--red)" id="inv-remaining-rev">0</div><div class="sc-change" style="color:var(--gray)">جنيه</div></div></div>
       </div>
       <div class="panel">
-        <div class="panel-header">
-          <h3>كل الفواتير</h3>
+        <div class="panel-header"><h3>كل الفواتير</h3>
           <select id="inv-filter" onchange="filterInvoices()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;">
-            <option value="all">الكل</option>
-            <option value="partial">دفع جزئي</option>
-            <option value="paid">مدفوعة بالكامل</option>
-            <option value="unpaid">لم يُدفع</option>
+            <option value="all">الكل</option><option value="partial">دفع جزئي</option><option value="paid">مدفوعة بالكامل</option><option value="unpaid">لم يُدفع</option>
           </select>
         </div>
         <div style="overflow-x:auto"><table>
@@ -445,7 +361,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- GALLERY -->
     <div class="page" id="page-gallery">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🖼️ معرض الأعمال</h3><p style="color:var(--gray);font-size:13px">ارفع صور أعمالك</p></div>
@@ -461,7 +376,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <div class="gal-grid" id="gallery-admin-grid"></div>
     </div>
 
-    <!-- SERVICES -->
     <div class="page" id="page-services">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <h3 style="font-size:18px;font-weight:700">⚙️ الخدمات</h3>
@@ -470,10 +384,9 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       <div class="panel"><table><thead><tr><th>الأيقونة</th><th>اسم الخدمة</th><th>الوصف</th><th>إجراء</th></tr></thead><tbody id="services-tbody"></tbody></table></div>
     </div>
 
-    <!-- TEAM -->
     <div class="page" id="page-team">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👥 فريق العمل</h3><p style="color:var(--gray);font-size:13px">إضافة وإدارة الموظفين</p></div>
+        <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👥 فريق العمل</h3><p style="color:var(--gray);font-size:13px">إضافة وإدارة الموظفين والعمال</p></div>
         <div style="display:flex;gap:8px">
           <button class="btn-sm btn-warning" onclick="openModal('add-worker-modal')">🔨 إضافة عامل</button>
           <button class="btn-sm btn-primary" onclick="openModal('add-user-modal')">➕ إضافة موظف</button>
@@ -481,7 +394,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
       <div class="panel" style="margin-bottom:16px">
         <div class="panel-header"><h3>👥 الموظفون (بأكونت)</h3></div>
-        <table><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
+        <table><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>تاريخ الإضافة</th><th>حذف</th></tr></thead>
         <tbody id="team-tbody"></tbody></table>
       </div>
       <div class="panel">
@@ -491,7 +404,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- SUPERADMIN -->
     <div class="page" id="page-superadmin">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">🔐 إدارة الأكونتات</h3><p style="color:var(--gray);font-size:13px">كل المستخدمين في النظام</p></div>
@@ -506,8 +418,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-
-    <!-- REVENUE REPORTS PAGE -->
     <div class="page" id="page-revenue">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📊 تقارير الإيرادات</h3></div>
@@ -528,13 +438,11 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         </div>
       </div>
       <div style="font-size:13px;color:var(--gray);margin-bottom:12px" id="rev-period-label">عرض: اليوم</div>
-      <!-- Stats -->
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
         <div class="revenue-card"><div class="sc-label">💰 إجمالي الدفعات المستلمة</div><div style="font-size:28px;font-weight:900;color:var(--gold)" id="rev-total">0</div><div style="font-size:12px;color:var(--gray)">جنيه</div></div>
         <div class="stat-card"><div class="sc-label">🧾 عدد الفواتير</div><div class="sc-val" id="rev-count">0</div><div class="sc-change" style="color:var(--gray)">فاتورة في هذه الفترة</div></div>
         <div class="stat-card"><div class="sc-label">🆕 مشاريع جديدة</div><div class="sc-val" id="rev-new">0</div><div class="sc-change" style="color:var(--gray)">مشروع تم إنشاؤه</div></div>
       </div>
-      <!-- Payments table -->
       <div class="panel" style="margin-top:16px">
         <div class="panel-header"><h3>💳 الدفعات المستلمة — <span id="rev-tbl-period">اليوم</span></h3></div>
         <div style="overflow-x:auto"><table>
@@ -542,7 +450,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <tbody id="rev-payments-tbody"></tbody>
         </table></div>
       </div>
-      <!-- Monthly summary -->
       <div class="panel" style="margin-top:16px">
         <div class="panel-header"><h3>📅 ملخص شهري</h3></div>
         <div style="overflow-x:auto"><table>
@@ -552,13 +459,12 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- ATTENDANCE -->
     <div class="page" id="page-attendance">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">📋 حضور الموظفين</h3><p style="color:var(--gray);font-size:13px">تسجيل الحضور والانصراف اليومي</p></div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <input type="date" id="att-date-filter" onchange="if(typeof window._doLoadAttendance==='function')window._doLoadAttendance()" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
-          <button class="btn-sm btn-primary" onclick="window.openAttendanceModal ? window.openAttendanceModal() : openModal('add-attendance-modal')">➕ تسجيل حضور</button>
+          <button class="btn-sm btn-primary" onclick="window.openAttendanceModal?window.openAttendanceModal():openModal('add-attendance-modal')">➕ تسجيل حضور</button>
         </div>
       </div>
       <div class="two-col" style="margin-bottom:16px">
@@ -572,7 +478,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
           <tbody id="attendance-tbody"></tbody>
         </table></div>
       </div>
-      <!-- Weekly Report -->
       <div class="panel" style="margin-top:16px">
         <div class="panel-header">
           <h3>📊 التقرير الأسبوعي</h3>
@@ -586,7 +491,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- VISITORS -->
     <div class="page" id="page-visitors">
       <div style="margin-bottom:16px"><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👁️ زوار الموقع</h3><p style="color:var(--gray);font-size:13px">تتبع اهتمام الزوار بالموقع</p></div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
@@ -603,12 +507,10 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <div class="stabs" id="settings-tabs"></div>
       <div class="stab-panel active" id="stab-password">
-        <div class="panel">
-          <div class="panel-header"><h3>🔑 تغيير كلمة المرور</h3></div>
+        <div class="panel"><div class="panel-header"><h3>🔑 تغيير كلمة المرور</h3></div>
           <div class="panel-content" style="max-width:400px">
             <div class="ff"><label>كلمة المرور الحالية</label><div class="pass-field"><input type="password" id="cur-pass" placeholder="••••••••"><button class="pass-toggle" onclick="togglePass('cur-pass',this)">👁️</button></div></div>
             <div class="ff"><label>كلمة المرور الجديدة</label><div class="pass-field"><input type="password" id="new-pass" placeholder="8 حروف على الأقل"><button class="pass-toggle" onclick="togglePass('new-pass',this)">👁️</button></div></div>
@@ -619,8 +521,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         </div>
       </div>
       <div class="stab-panel" id="stab-contact">
-        <div class="panel">
-          <div class="panel-header"><h3>📞 معلومات التواصل</h3></div>
+        <div class="panel"><div class="panel-header"><h3>📞 معلومات التواصل</h3></div>
           <div class="panel-content">
             <p style="color:var(--gray);font-size:13px;margin-bottom:20px">بتظهر على الموقع تلقائياً</p>
             <div class="two-col">
@@ -638,8 +539,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         </div>
       </div>
       <div class="stab-panel" id="stab-stats">
-        <div class="panel">
-          <div class="panel-header"><h3>📊 إحصائيات الـ Hero</h3></div>
+        <div class="panel"><div class="panel-header"><h3>📊 إحصائيات الـ Hero</h3></div>
           <div class="panel-content">
             <div class="two-col">
               <div class="ff"><label>عدد المشاريع</label><input type="number" id="set-projects" placeholder="500"></div>
@@ -653,8 +553,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         </div>
       </div>
       <div class="stab-panel" id="stab-prices">
-        <div class="panel">
-          <div class="panel-header"><h3>💰 أسعار الباقات (جنيه/م²)</h3></div>
+        <div class="panel"><div class="panel-header"><h3>💰 أسعار الباقات (جنيه/م²)</h3></div>
           <div class="panel-content">
             <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:20px;margin-bottom:16px">
               <div style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--gold)">🏢 باقات الفلات</div>
@@ -682,14 +581,9 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- MOBILE BOTTOM NAV -->
-<div class="bottom-nav" id="bottom-nav">
-  <div class="bottom-nav-inner" id="bottom-nav-inner"></div>
-</div>
+<div class="bottom-nav" id="bottom-nav"><div class="bottom-nav-inner" id="bottom-nav-inner"></div></div>
 
-<!-- ========== MODALS ========== -->
-
-<!-- Add Client -->
+<!-- MODALS -->
 <div class="modal-overlay" id="add-client-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-client-modal')">✕</button>
@@ -706,7 +600,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Worker (no account) -->
 <div class="modal-overlay" id="add-worker-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-worker-modal')">✕</button>
@@ -719,7 +612,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Attendance Modal -->
 <div class="modal-overlay" id="add-attendance-modal">
   <div class="modal" style="max-width:500px">
     <button class="modal-close" onclick="closeModal('add-attendance-modal')">✕</button>
@@ -730,7 +622,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     </div>
     <div class="ff">
       <label>اختار الشخص</label>
-      <div style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-top:8px" id="att-person-list"></div>
+      <div style="max-height:220px;overflow-y:auto;margin-top:8px" id="att-person-list"></div>
     </div>
     <div class="ff" id="att-status-wrap" style="display:none">
       <label>الحالة</label>
@@ -745,7 +637,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- New Invoice / Project Modal -->
 <div class="modal-overlay" id="new-invoice-modal">
   <div class="modal" style="max-width:740px">
     <button class="modal-close" onclick="closeModal('new-invoice-modal')">✕</button>
@@ -773,7 +664,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <tbody id="inv-items-tbody"></tbody>
       </table>
       <button class="btn-sm btn-outline-sm" style="margin-top:8px;width:100%" onclick="addInvItem()">➕ إضافة بند</button>
-      <div class="inv-total-box" id="inv-total-box">
+      <div class="inv-total-box">
         <div class="inv-total-row"><span class="inv-total-label">مجموع البنود</span><span id="inv-subtotal">0 جنيه</span></div>
         <div class="inv-total-row"><span class="inv-total-label">خصم</span><span><input type="number" id="inv-discount" value="0" min="0" oninput="recalcInvTotal()" style="width:80px;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:4px 8px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;text-align:center"> جنيه</span></div>
         <div class="inv-total-row"><span>💰 إجمالي المشروع</span><span id="inv-grand-total">0 جنيه</span></div>
@@ -785,7 +676,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Invoice Detail Modal -->
 <div class="modal-overlay" id="invoice-detail-modal">
   <div class="modal" style="max-width:720px">
     <button class="modal-close" onclick="closeModal('invoice-detail-modal')">✕</button>
@@ -793,7 +683,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Gallery -->
 <div class="modal-overlay" id="add-gallery-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-gallery-modal')">✕</button>
@@ -824,7 +713,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add Service -->
 <div class="modal-overlay" id="add-service-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-service-modal')">✕</button>
@@ -837,7 +725,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Add User -->
 <div class="modal-overlay" id="add-user-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('add-user-modal')">✕</button>
@@ -851,7 +738,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- SuperAdmin Add -->
 <div class="modal-overlay" id="sa-add-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('sa-add-modal')">✕</button>
@@ -865,7 +751,6 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- Booking Detail -->
 <div class="modal-overlay" id="booking-detail-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('booking-detail-modal')">✕</button>
@@ -879,148 +764,69 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
-<!-- ========== FIREBASE ========== -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, set, get, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword, updatePassword, reauthenticateWithCredential, EmailAuthProvider, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-const firebaseConfig = {
-  apiKey:"AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",
-  authDomain:"delta-art-26007.firebaseapp.com",
-  databaseURL:"https://delta-art-26007-default-rtdb.firebaseio.com",
-  projectId:"delta-art-26007",
-  storageBucket:"delta-art-26007.firebasestorage.app",
-  messagingSenderId:"892254712139",
-  appId:"1:892254712139:web:54f53b61ff7083ca2d38ce"
-};
+const firebaseConfig={apiKey:"AIzaSyDWm-0rQzhdHnsM0A8FYzSx6s9cZo1vGAQ",authDomain:"delta-art-26007.firebaseapp.com",databaseURL:"https://delta-art-26007-default-rtdb.firebaseio.com",projectId:"delta-art-26007",storageBucket:"delta-art-26007.firebasestorage.app",messagingSenderId:"892254712139",appId:"1:892254712139:web:54f53b61ff7083ca2d38ce"};
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const auth=getAuth(app);
+setPersistence(auth,browserLocalPersistence).catch(()=>{});
 
+const SUPERADMIN_EMAIL='superadmin@deltaart.com';
+const OWNER_EMAIL='admin@deltaart.com';
+let currentUserRole=null;
+let currentUserData=null;
+window._allClients=[];
+window._allInvoices=[];
+window._invItems=[];
+window._invSelectedClient=null;
+window._allWorkers=[];
+window._attSelectedPerson=null;
+window._attSelectedStatus=null;
 
-// ============================================================
-// FIREBASE RULES — IMPORTANT FOR DATA PERSISTENCE
-// Go to: https://console.firebase.google.com
-// Project: delta-art-26007 → Realtime Database → Rules
-// Set these rules (copy exactly):
-// {
-//   "rules": {
-//     ".read": "auth != null",
-//     ".write": "auth != null"
-//   }
-// }
-// These rules keep ALL data forever for authenticated users.
-// WITHOUT this, Firebase test rules expire after 30 days!
-// ============================================================
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const auth = getAuth(app);
-setPersistence(auth, browserLocalPersistence).catch(()=>{});
-
-// Monitor connection state — show offline warning
-onValue(ref(db,'.info/connected'), snap=>{
-  const connected=snap.val();
-  let indicator=document.getElementById('connection-indicator');
-  if(!indicator){
-    indicator=document.createElement('div');
-    indicator.id='connection-indicator';
-    indicator.style.cssText='position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9999;padding:8px 20px;border-radius:20px;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;transition:all 0.3s;pointer-events:none';
-    document.body.appendChild(indicator);
-  }
-  if(connected){
-    indicator.textContent='🟢 متصل بالإنترنت';
-    indicator.style.background='rgba(34,197,94,0.9)';
-    indicator.style.color='#fff';
-    indicator.style.opacity='1';
-    setTimeout(()=>{indicator.style.opacity='0';},2000);
-  } else {
-    indicator.textContent='🔴 غير متصل — البيانات لن تُحفظ';
-    indicator.style.background='rgba(239,68,68,0.95)';
-    indicator.style.color='#fff';
-    indicator.style.opacity='1';
-  }
-});
-
-const SUPERADMIN_EMAIL = 'superadmin@deltaart.com';
-const OWNER_EMAIL = 'admin@deltaart.com';
-
-let currentUserRole = null;
-let currentUserData = null;
-window._allClients = [];
-window._allInvoices = [];
-window._invItems = [];
-window._invSelectedClient = null;
-window._allWorkers = [];
-window._attSelectedPerson = null;
-window._attSelectedStatus = null;
-
-// ===== AUTH =====
-onAuthStateChanged(auth, async user => {
+onAuthStateChanged(auth,async user=>{
   if(user){
     document.getElementById('login-screen').classList.add('hide');
-    if(user.email === SUPERADMIN_EMAIL){
-      currentUserRole='superadmin';
-      currentUserData={name:'Super Admin',email:user.email,role:'superadmin'};
+    if(user.email===SUPERADMIN_EMAIL){
+      currentUserRole='superadmin';currentUserData={name:'Super Admin',email:user.email,role:'superadmin'};
     } else {
-      const snap = await get(ref(db,`deltaart/users/${user.uid}`));
-      if(snap.exists()){
-        currentUserData={...snap.val(),uid:user.uid,email:user.email};
-        currentUserRole=currentUserData.role||'employee';
-      } else if(user.email===OWNER_EMAIL){
-        currentUserRole='owner';
-        currentUserData={name:'صاحب الشركة',email:user.email,role:'owner',uid:user.uid};
-      } else {
-        currentUserRole='employee';
-        currentUserData={name:user.email.split('@')[0],email:user.email,role:'employee',uid:user.uid};
-      }
+      const snap=await get(ref(db,`deltaart/users/${user.uid}`));
+      if(snap.exists()){currentUserData={...snap.val(),uid:user.uid,email:user.email};currentUserRole=currentUserData.role||'employee';}
+      else if(user.email===OWNER_EMAIL){currentUserRole='owner';currentUserData={name:'صاحب الشركة',email:user.email,role:'owner',uid:user.uid};}
+      else{currentUserRole='employee';currentUserData={name:user.email.split('@')[0],email:user.email,role:'employee',uid:user.uid};}
     }
-    setupUI();
-    initApp();
-  } else {
-    document.getElementById('login-screen').classList.remove('hide');
-  }
+    setupUI();initApp();
+  } else {document.getElementById('login-screen').classList.remove('hide');}
 });
 
-window.doLogin = async function(){
+window.doLogin=async function(){
   const email=document.getElementById('login-email').value.trim();
   const pass=document.getElementById('login-pass').value;
   document.getElementById('login-err').style.display='none';
-  try{ await signInWithEmailAndPassword(auth,email,pass); }
-  catch(e){ document.getElementById('login-err').style.display='block'; }
+  try{await signInWithEmailAndPassword(auth,email,pass);}
+  catch(e){document.getElementById('login-err').style.display='block';}
 };
-window.doLogout=()=>{
-  // Clear localStorage cache on logout
-  ['da_clients','da_workers','da_users','da_invoices'].forEach(k=>{
-    try{localStorage.removeItem(k);}catch(e){}
-  });
-  signOut(auth);
-};
+window.doLogout=()=>signOut(auth);
 
-// ===== SETUP UI =====
 function setupUI(){
-  const r=currentUserRole, d=currentUserData;
+  const r=currentUserRole,d=currentUserData;
   document.getElementById('sidebar-avatar').textContent=(d.name||'A')[0].toUpperCase();
   document.getElementById('sidebar-name').textContent=d.name||d.email;
   document.getElementById('sidebar-role-badge').innerHTML=`<span class="role-badge role-${r}">${roleLabelAr(r)}</span>`;
   const dateStr=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   document.getElementById('today-date').textContent=dateStr;
   const mobDate=document.getElementById('today-date-mob');
-  if(mobDate) mobDate.textContent=new Date().toLocaleDateString('ar-EG',{month:'short',day:'numeric'});
-
-  const nav=document.getElementById('sidebar-nav');
-  nav.innerHTML='';
+  if(mobDate)mobDate.textContent=new Date().toLocaleDateString('ar-EG',{month:'short',day:'numeric'});
+  const nav=document.getElementById('sidebar-nav');nav.innerHTML='';
 
   if(r==='superadmin'){
-    nav.innerHTML=`
-      <div class="nav-section-title">الإدارة</div>
-      <button class="nav-item active" onclick="goPage('superadmin',this)"><span class="ni">🔐</span> الأكونتات</button>
-      <div class="nav-section-title">الإعدادات</div>
-      <button class="nav-item" onclick="goPage('settings',this)"><span class="ni">🔑</span> تغيير الباسورد</button>`;
+    nav.innerHTML=`<div class="nav-section-title">الإدارة</div><button class="nav-item active" onclick="goPage('superadmin',this);closeMobileSidebar()"><span class="ni">🔐</span> الأكونتات</button><div class="nav-section-title">الإعدادات</div><button class="nav-item" onclick="goPage('settings',this);closeMobileSidebar()"><span class="ni">🔑</span> تغيير الباسورد</button>`;
     document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
     goPage('superadmin',null);
-    buildBottomNav([
-      {page:'superadmin',icon:'🔐',label:'الأكونتات'},
-      {page:'settings',icon:'🔑',label:'الإعدادات'},
-    ]);
+    buildBottomNav([{page:'superadmin',icon:'🔐',label:'الأكونتات'},{page:'settings',icon:'🔑',label:'الإعدادات'}]);
   } else if(r==='owner'){
     nav.innerHTML=`
       <div class="nav-section-title">الرئيسية</div>
@@ -1042,20 +848,9 @@ function setupUI(){
       <button class="nav-item" onclick="goPage('attendance',this);closeMobileSidebar()"><span class="ni">📋</span> حضور الموظفين</button>
       <button class="nav-item" onclick="goPage('visitors',this);closeMobileSidebar()"><span class="ni">👁️</span> زوار الموقع</button>
       <div style="margin-top:12px"><a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> الموقع</a></div>`;
-    document.getElementById('settings-tabs').innerHTML=`
-      <button class="stab active" onclick="switchStab('password',this)">🔑 كلمة المرور</button>
-      <button class="stab" onclick="switchStab('contact',this)">📞 التواصل</button>
-      <button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button>
-      <button class="stab" onclick="switchStab('prices',this)">💰 الأسعار</button>`;
-    buildBottomNav([
-      {page:'dashboard',icon:'📊',label:'الرئيسية'},
-      {page:'bookings',icon:'📅',label:'الحجوزات'},
-      {page:'messages',icon:'💬',label:'الرسائل'},
-      {page:'revenue',icon:'💰',label:'الإيرادات'},
-      {page:'clients',icon:'👤',label:'العملاء'},
-    ], true);
+    document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 كلمة المرور</button><button class="stab" onclick="switchStab('contact',this)">📞 التواصل</button><button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button><button class="stab" onclick="switchStab('prices',this)">💰 الأسعار</button>`;
+    buildBottomNav([{page:'dashboard',icon:'📊',label:'الرئيسية'},{page:'bookings',icon:'📅',label:'الحجوزات'},{page:'messages',icon:'💬',label:'الرسائل'},{page:'revenue',icon:'💰',label:'الإيرادات'},{page:'clients',icon:'👤',label:'العملاء'}],true);
   } else {
-    // Employee — NO financial pages
     nav.innerHTML=`
       <div class="nav-section-title">الرئيسية</div>
       <button class="nav-item active" onclick="goPage('dashboard',this);closeMobileSidebar()"><span class="ni">📊</span> لوحة التحكم</button>
@@ -1068,47 +863,26 @@ function setupUI(){
       <button class="nav-item" onclick="goPage('settings',this);closeMobileSidebar()"><span class="ni">🔑</span> تغيير الباسورد</button>`;
     document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 تغيير الباسورد</button>`;
     const qa=document.getElementById('quick-actions-panel');
-    if(qa) qa.querySelector('.panel-content').innerHTML=`
-      <a href="index.html" target="_blank" class="btn-sm btn-success" style="text-decoration:none">🌐 الموقع</a>
-      <button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">🧾 فاتورة جديدة</button>`;
-    buildBottomNav([
-      {page:'dashboard',icon:'📊',label:'الرئيسية'},
-      {page:'bookings',icon:'📅',label:'الحجوزات'},
-      {page:'messages',icon:'💬',label:'الرسائل'},
-      {page:'clients',icon:'👤',label:'العملاء'},
-    ], true);
+    if(qa)qa.querySelector('.panel-content').innerHTML=`<a href="index.html" target="_blank" class="btn-sm btn-success" style="text-decoration:none">🌐 الموقع</a><button class="btn-sm btn-primary" onclick="openNewInvoiceModal()">🧾 فاتورة جديدة</button>`;
+    // Hide revenue section for employees
+    const revRow=document.querySelector('#page-dashboard .stats-row:nth-child(2)');
+    if(revRow)revRow.style.display='none';
+    buildBottomNav([{page:'dashboard',icon:'📊',label:'الرئيسية'},{page:'bookings',icon:'📅',label:'الحجوزات'},{page:'messages',icon:'💬',label:'الرسائل'},{page:'clients',icon:'👤',label:'العملاء'}],true);
   }
 }
 
-function buildBottomNav(items, hasMore=false){
+function buildBottomNav(items,hasMore=false){
   const inner=document.getElementById('bottom-nav-inner');
   if(!inner)return;
-  inner.innerHTML=items.map(it=>`
-    <button class="bn-item ${it.page==='dashboard'?'active':''}" id="bn-${it.page}" onclick="goPage('${it.page}',null);document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));document.getElementById('bn-${it.page}')?.classList.add('active')">
-      <span class="bn-icon">${it.icon}</span>${it.label}
-    </button>`).join('')+(hasMore?`
-    <button class="bn-more-btn" onclick="toggleMobileSidebar()">
-      <span class="bn-icon">☰</span>المزيد
-    </button>`:'');
-}
-
-// ===== INIT APP =====
-// ── SAFE onValue: never clears existing data if Firebase returns empty snap ──
-// This protects against the brief empty emission on page refresh
-function safeOnValue(dbRef, callback){
-  onValue(dbRef, snap=>{
-    callback(snap);
-  });
+  inner.innerHTML=items.map(it=>`<button class="bn-item ${it.page==='dashboard'?'active':''}" id="bn-${it.page}" onclick="goPage('${it.page}',null);document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));document.getElementById('bn-${it.page}')?.classList.add('active')"><span class="bn-icon">${it.icon}</span>${it.label}</button>`).join('')+(hasMore?`<button class="bn-more-btn" onclick="toggleMobileSidebar()"><span class="bn-icon">☰</span>المزيد</button>`:'');
 }
 
 function initApp(){
-  if(currentUserRole==='superadmin'){ loadSAAccounts(); return; }
+  if(currentUserRole==='superadmin'){loadSAAccounts();return;}
 
-  // Bookings
-  safeOnValue(ref(db,'deltaart/bookings'), snap=>{
-    if(!snap.exists() && window._allBookings && window._allBookings.length>0) return;
+  onValue(ref(db,'deltaart/bookings'),snap=>{
     const all=[];let nc=0;
-    if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
+    if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
     all.sort((a,b)=>new Date(b.date)-new Date(a.date));
     window._allBookings=all;
     document.getElementById('ds-b').textContent=all.length;
@@ -1119,11 +893,9 @@ function initApp(){
     filterBookings();
   });
 
-  // Messages
-  safeOnValue(ref(db,'deltaart/messages'), snap=>{
-    if(!snap.exists() && window._allMessages && window._allMessages.length>0) return;
+  onValue(ref(db,'deltaart/messages'),snap=>{
     const all=[];let nc=0;
-    if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
+    if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
     all.sort((a,b)=>new Date(b.date)-new Date(a.date));
     window._allMessages=all;
     document.getElementById('ds-m').textContent=all.length;
@@ -1134,255 +906,134 @@ function initApp(){
     filterMessages();
   });
 
-  // Gallery
-  safeOnValue(ref(db,'deltaart/gallery'), snap=>{
-    if(!snap.exists() && window._allGallery && window._allGallery.length>0) return;
+  onValue(ref(db,'deltaart/gallery'),snap=>{
     let c=0;const all=[];
-    if(snap.exists()) snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
+    if(snap.exists())snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
     window._allGallery=all;
     document.getElementById('ds-g').textContent=c;
     renderAdminGallery(all);
   });
 
-  // Users — with localStorage backup for team page
-  try{
-    const cached=localStorage.getItem('da_users');
-    if(cached){
-      window._cachedUsersData=JSON.parse(cached);
-    }
-  }catch(e){}
-  safeOnValue(ref(db,'deltaart/users'), snap=>{
-    if(!snap.exists() && window._usersSnap && window._usersSnap.exists()) return; // keep old data
-    let c=0;if(snap.exists()) snap.forEach(()=>c++);
-    const el=document.getElementById('ds-u');
-    if(el) el.textContent=c;
-    window._usersSnap=snap;
-    if(snap.exists()){
-      // Save to localStorage as array for backup
-      const arr=[];snap.forEach(c=>{arr.push({uid:c.key,...c.val()});});
-      try{localStorage.setItem('da_users',JSON.stringify(arr));}catch(e){}
-      window._teamLoaded=true;
-    }
-    if(currentUserRole==='owner'||currentUserRole==='manager'||currentUserRole==='employee'){
-      renderTeamTable(snap);
-    }
+  // FIX 2 & 3: onValue for users — always render team table regardless of role check, show count
+  onValue(ref(db,'deltaart/users'),snap=>{
+    let c=0;if(snap.exists())snap.forEach(()=>c++);
+    document.getElementById('ds-u').textContent=c;
+    renderTeamTable(snap); // FIX: always render, not just for owner
   });
 
-  // Workers — with localStorage backup
-  try{
-    const cached=localStorage.getItem('da_workers');
-    if(cached){window._allWorkers=JSON.parse(cached);renderWorkersTable(window._allWorkers);}
-  }catch(e){}
-  safeOnValue(ref(db,'deltaart/workers'), snap=>{
-    if(!snap.exists() && window._allWorkers && window._allWorkers.length>0) return; // keep old data
+  // FIX 3: onValue for workers — always render
+  onValue(ref(db,'deltaart/workers'),snap=>{
     const all=[];
-    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    if(all.length===0 && window._allWorkers.length>0) return;
+    if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allWorkers=all;
-    if(all.length>0){try{localStorage.setItem('da_workers',JSON.stringify(all));}catch(e){}}
-    renderWorkersTable(all);
+    renderWorkersTable(all); // FIX: always render
   });
 
-  // Services
-  safeOnValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
+  onValue(ref(db,'deltaart/services'),snap=>renderServicesTable(snap));
 
-  // Clients — with localStorage backup
-  try{
-    const cached=localStorage.getItem('da_clients');
-    if(cached){
-      window._allClients=JSON.parse(cached);
-      window._clientsLoaded=true;
-      renderClientsTable();
-    }
-  }catch(e){}
-  safeOnValue(ref(db,'deltaart/clients'), snap=>{
-    if(!snap.exists() && window._allClients && window._allClients.length>0) return; // keep old data
+  // FIX 2: onValue for clients — always update and re-render
+  onValue(ref(db,'deltaart/clients'),snap=>{
     const all=[];
-    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    if(all.length===0 && window._allClients.length>0) return; // protect against false empty
+    if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allClients=all;
-    if(all.length>0){
-      window._clientsLoaded=true;
-      try{localStorage.setItem('da_clients',JSON.stringify(all));}catch(e){}
-    }
-    renderClientsTable();
-    renderInvClientList();
+    renderClientsTable(); // auto-refresh whenever data changes
   });
 
-  // Invoices — with localStorage backup
-  try{
-    const cached=localStorage.getItem('da_invoices');
-    if(cached){
-      window._allInvoices=JSON.parse(cached);
-      if(currentUserRole==='owner'){calcRevenue();renderDashInvoices(window._allInvoices);}
-      renderInvoicesTable(window._allInvoices);
-      renderClientsTable();
-    }
-  }catch(e){}
-  safeOnValue(ref(db,'deltaart/invoices'), snap=>{
-    if(!snap.exists() && window._allInvoices && window._allInvoices.length>0) return; // keep old data
+  onValue(ref(db,'deltaart/invoices'),snap=>{
     const all=[];
-    if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
+    if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
     all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
     window._allInvoices=all;
-    if(all.length>0){try{localStorage.setItem('da_invoices',JSON.stringify(all));}catch(e){}}
-    // Also refresh clients table since it shows financial stats
-    renderClientsTable();
     if(currentUserRole==='owner'){
       calcRevenue();
       renderDashInvoices(all);
-    } else {
-      // Hide revenue cards for employees
-      ['ds-total-rev','ds-paid-rev','ds-remaining-rev'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){ el.textContent='—'; el.closest('.stat-card,.revenue-card').style.display='none'; }
-      });
-      document.getElementById('dash-inv-tbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px">—</td></tr>';
     }
     renderInvoicesTable(all);
   });
 
-  if(currentUserRole==='owner') loadSettings();
-  if(currentUserRole!=='superadmin') recordCheckIn();
+  if(currentUserRole==='owner')loadSettings();
+  if(currentUserRole!=='superadmin')recordCheckIn();
 }
 
 // ===== WORKERS =====
-window.addWorker = async function(){
+window.addWorker=async function(){
   const name=document.getElementById('wk-name').value.trim();
   const phone=document.getElementById('wk-phone').value.trim();
   const alertEl=document.getElementById('wk-alert');
   if(!name){showAlert(alertEl,'error','ادخل اسم العامل');return;}
   try{
-    const newRef=await push(ref(db,'deltaart/workers'),{name,phone,createdAt:new Date().toISOString()});
-    // Immediately add to local array so table updates without waiting for onValue
-    const newWorker={id:newRef.key,name,phone,createdAt:new Date().toISOString()};
-    window._allWorkers=[...(window._allWorkers||[]),newWorker];
-    try{localStorage.setItem('da_workers',JSON.stringify(window._allWorkers));}catch(e){}
-    renderWorkersTable(window._allWorkers);
-    showAlert(alertEl,'success','✅ تم إضافة العامل: '+name);
+    await push(ref(db,'deltaart/workers'),{name,phone,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success','✅ تم إضافة العامل');
     document.getElementById('wk-name').value='';document.getElementById('wk-phone').value='';
     setTimeout(()=>closeModal('add-worker-modal'),1200);
-  }catch(e){showAlert(alertEl,'error','خطأ: '+e.message);}
+  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
 
+// FIX 3: render workers table always
 function renderWorkersTable(workers){
   const tbody=document.getElementById('workers-tbody');
-  if(!tbody)return; // page might not be active
-  if(!workers||!workers.length){
-    try{
-      const cached=localStorage.getItem('da_workers');
-      if(cached){
-        const arr=JSON.parse(cached).filter(w=>!w.archived);
-        if(arr.length>0){window._allWorkers=arr;setTimeout(()=>renderWorkersTable(arr),50);return;}
-      }
-    }catch(e){}
-    tbody.innerHTML=window._workersLoaded?
-      '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>':
-      '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">⏳ جاري التحميل...</td></tr>';
-    return;
-  }
-  window._workersLoaded=true;
-  tbody.innerHTML=workers.filter(w=>!w.archived).map(w=>`<tr>
+  if(!tbody)return;
+  if(!workers||!workers.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال — أضف عاملاً من زر "إضافة عامل"</td></tr>';return;}
+  tbody.innerHTML=workers.map(w=>`<tr>
     <td><strong>${w.name}</strong></td>
     <td style="color:var(--gray)">${w.phone||'—'}</td>
     <td style="color:var(--gray)">${fmtDate(w.createdAt)}</td>
-    <td><button class="btn-sm btn-danger" onclick="archiveWorker('${w.id}','${(w.name||'').replace(/'/g,'')}')" title="إزالة">🗑️</button></td>
-  </tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد عمال</td></tr>';
+    <td><button class="btn-sm btn-danger" onclick="deleteWorker('${w.id}')">🗑️</button></td>
+  </tr>`).join('');
 }
-
-window.archiveWorker=async function(id,name){
-  if(!confirm(`إزالة "${name}" من القائمة؟
-(سجل حضوره هيفضل محفوظ)`))return;
-  await update(ref(db,`deltaart/workers/${id}`),{archived:true,archivedAt:new Date().toISOString()});
-};
 window.deleteWorker=async id=>{if(confirm('حذف العامل؟'))await remove(ref(db,`deltaart/workers/${id}`));};
 
-// Render full team page — called when navigating to team page
-window.renderFullTeamPage = function(){
-  if(window._usersSnap) renderTeamTable(window._usersSnap);
-  else {
-    get(ref(db,'deltaart/users')).then(snap=>{window._usersSnap=snap;renderTeamTable(snap);});
-  }
-  renderWorkersTable(window._allWorkers||[]);
-};
-
-// ===== ATTENDANCE RECORD MODAL =====
-window.openAttendanceModal = function(){
-  window._attSelectedPerson=null;
-  window._attSelectedStatus=null;
-  window._attPersonsCache=[];
+// ===== ATTENDANCE MODAL =====
+window.openAttendanceModal=function(){
+  window._attSelectedPerson=null;window._attSelectedStatus=null;
   const today=new Date().toISOString().split('T')[0];
   document.getElementById('att-rec-date').value=today;
   document.getElementById('att-status-wrap').style.display='none';
   ['att-btn-present','att-btn-absent','att-btn-half'].forEach(id=>{
     const btn=document.getElementById(id);
-    if(btn){btn.classList.remove('selected-present','selected-absent','selected-half');}
+    if(btn)btn.className=btn.className.replace(/selected-\w+/,'').trim();
   });
-  if(typeof window.renderAttPersonList==='function') window.renderAttPersonList();
+  window.renderAttPersonList();
   openModal('add-attendance-modal');
 };
 
-window.renderAttPersonList = function renderAttPersonList(){
+window.renderAttPersonList=function(){
   const list=document.getElementById('att-person-list');
-  if(!list)return;
   list.innerHTML='<div style="color:var(--gray);text-align:center;padding:12px">⏳ جاري التحميل...</div>';
-  
-  // Use cached data first for instant display on mobile
-  const cachedUsers=window._usersSnap;
-  const cachedWorkers=window._allWorkers||[];
-  
-  function buildList(userSnap, workers){
+  Promise.all([get(ref(db,'deltaart/users')),get(ref(db,'deltaart/workers'))]).then(([userSnap,workerSnap])=>{
     const items=[];
-    if(userSnap&&userSnap.exists()) userSnap.forEach(c=>{const v=c.val();items.push({uid:c.key,name:v.name||'—',role:v.role||'employee',type:'user'});});
-    workers.forEach(w=>items.push({uid:'worker_'+w.id,name:w.name||'—',role:'worker',type:'worker'}));
-    if(!items.length){list.innerHTML='<div style="color:var(--gray);text-align:center;padding:16px">لا يوجد موظفون أو عمال<br><small>أضف من فريق العمل أولاً</small></div>';return;}
+    if(userSnap.exists())userSnap.forEach(c=>{const v=c.val();items.push({uid:c.key,name:v.name||'—',role:v.role||'employee',type:'user'});});
+    if(workerSnap.exists())workerSnap.forEach(c=>{const v=c.val();items.push({uid:'worker_'+c.key,name:v.name||'—',role:'worker',type:'worker'});});
+    if(!items.length){list.innerHTML='<div style="color:var(--gray);text-align:center;padding:16px">لا يوجد موظفون أو عمال</div>';return;}
+    window._attPersonsCache=items;
     list.innerHTML=items.map(p=>`
       <div class="worker-select-card" id="atp-${p.uid}" onclick="selectAttPersonById('${p.uid}')">
-        <div>
-          <div style="font-weight:700;font-size:14px">${p.name}</div>
-          <div style="font-size:12px;color:var(--gray)">${p.type==='worker'?'🔨 عامل':roleLabelAr(p.role)}</div>
-        </div>
+        <div><div style="font-weight:700;font-size:14px">${p.name}</div><div style="font-size:12px;color:var(--gray)">${p.type==='worker'?'🔨 عامل':roleLabelAr(p.role)}</div></div>
         <span style="font-size:20px">${p.type==='worker'?'🔨':'👔'}</span>
       </div>`).join('');
-    window._attPersonsCache=items;
-  }
-  
-  if(cachedUsers){
-    buildList(cachedUsers, cachedWorkers);
-  }
-  
-  // Always fetch fresh from DB too
-  Promise.all([get(ref(db,'deltaart/users')),get(ref(db,'deltaart/workers'))])
-    .then(([uSnap,wSnap])=>{
-      window._usersSnap=uSnap;
-      const workers=[];
-      if(wSnap.exists()) wSnap.forEach(c=>workers.push({id:c.key,...c.val()}));
-      window._allWorkers=workers;
-      buildList(uSnap, workers);
-    })
-    .catch(e=>{
-      if(!cachedUsers) list.innerHTML='<div style="color:var(--red);text-align:center;padding:16px">خطأ في التحميل — تأكد من الاتصال</div>';
-    });
-}
+  });
+};
 
 window.selectAttPersonById=function(uid){
   const items=window._attPersonsCache||[];
   const person=items.find(p=>p.uid===uid);
-  if(person) window.selectAttPerson(person);
-};
-window.selectAttPerson=function(person){
-  window._attSelectedPerson=person;
-  document.querySelectorAll('.worker-select-card').forEach(c=>c.classList.remove('selected'));
-  const card=document.getElementById('atp-'+person.uid);
-  if(card) card.classList.add('selected');
-  document.getElementById('att-status-wrap').style.display='block';
+  if(person){
+    window._attSelectedPerson=person;
+    document.querySelectorAll('.worker-select-card').forEach(c=>c.classList.remove('selected'));
+    const card=document.getElementById('atp-'+person.uid);
+    if(card)card.classList.add('selected');
+    document.getElementById('att-status-wrap').style.display='block';
+  }
 };
 
 window.selectAttStatus=function(status){
   window._attSelectedStatus=status;
   ['present','absent','half'].forEach(s=>{
     const btn=document.getElementById('att-btn-'+s);
-    if(btn){btn.classList.remove('selected-'+s);if(s===status)btn.classList.add('selected-'+s);}
+    if(btn){
+      btn.className=btn.className.replace(/selected-\w+/,'').trim();
+      if(s===status)btn.classList.add('selected-'+s);
+    }
   });
 };
 
@@ -1393,19 +1044,10 @@ window.saveAttendanceRecord=async function(){
   const date=document.getElementById('att-rec-date').value;
   if(!date){showAlert(alertEl,'error','اختار التاريخ');return;}
   const p=window._attSelectedPerson;
-  const key=p.uid;
   const now=new Date().toISOString();
-  const record={
-    name:p.name,
-    role:p.role,
-    type:p.type,
-    status:window._attSelectedStatus,
-    checkIn:window._attSelectedStatus!=='absent'?now:null,
-    manualEntry:true,
-    recordedAt:now
-  };
+  const record={name:p.name,role:p.role,type:p.type,status:window._attSelectedStatus,checkIn:window._attSelectedStatus!=='absent'?now:null,manualEntry:true,recordedAt:now};
   try{
-    await set(ref(db,`deltaart/attendance/${date}/${key}`),record);
+    await set(ref(db,`deltaart/attendance/${date}/${p.uid}`),record);
     showAlert(alertEl,'success','✅ تم تسجيل الحضور');
     window._attSelectedPerson=null;window._attSelectedStatus=null;
     setTimeout(()=>{closeModal('add-attendance-modal');if(typeof window._doLoadAttendance==='function')window._doLoadAttendance();},1200);
@@ -1413,7 +1055,7 @@ window.saveAttendanceRecord=async function(){
 };
 
 // ===== CLIENTS =====
-window.addClient = async function(){
+window.addClient=async function(){
   const name=document.getElementById('cl-name').value.trim();
   const phone=document.getElementById('cl-phone').value.trim();
   const phone2=document.getElementById('cl-phone2').value.trim();
@@ -1421,24 +1063,13 @@ window.addClient = async function(){
   const notes=document.getElementById('cl-notes').value.trim();
   const alertEl=document.getElementById('cl-alert');
   if(!name||!phone){showAlert(alertEl,'error','اسم ورقم الهاتف مطلوبان');return;}
-  // Disable button to prevent double-tap on mobile
-  const saveBtn=alertEl.previousElementSibling;
-  if(saveBtn) saveBtn.disabled=true;
   try{
-    const newRef=await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
-    const newClient={id:newRef.key,name,phone,phone2,address,notes,createdAt:new Date().toISOString()};
-    window._allClients=[...window._allClients,newClient];
-    try{localStorage.setItem('da_clients',JSON.stringify(window._allClients));}catch(e){}
-    renderClientsTable();
-    renderInvClientList();
-    showAlert(alertEl,'success','✅ تم الحفظ في قاعدة البيانات: '+name);
+    await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
+    showAlert(alertEl,'success','✅ تم إضافة العميل');
     ['cl-name','cl-phone','cl-phone2','cl-address','cl-notes'].forEach(id=>document.getElementById(id).value='');
-    if(saveBtn) saveBtn.disabled=false;
-    setTimeout(()=>closeModal('add-client-modal'),1800);
-  } catch(e){
-    showAlert(alertEl,'error','خطأ في الحفظ: '+e.message);
-    if(saveBtn) saveBtn.disabled=false;
-  }
+    // FIX 2: onValue will auto-update _allClients and call renderClientsTable
+    setTimeout(()=>closeModal('add-client-modal'),1200);
+  }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
 };
 
 function calcClientStats(clientId){
@@ -1448,47 +1079,15 @@ function calcClientStats(clientId){
   return{count:invs.length,total,paid,remaining:total-paid};
 }
 
-window.restoreClient=async id=>{
-  await update(ref(db,`deltaart/clients/${id}`),{archived:false,archivedAt:null});
-};
-window._showArchivedClients=false;
-window.toggleArchivedClients=function(){
-  window._showArchivedClients=!window._showArchivedClients;
-  renderClientsTable();
-};
-window.renderClientsTable = function(){
+window.renderClientsTable=function(){
   const q=(document.getElementById('client-search')?.value||'').toLowerCase();
-  const showArchived=window._showArchivedClients||false;
-  const clients=window._allClients.filter(c=>{
-    if(!showArchived && c.archived) return false; // hide archived unless toggled
-    return !q||(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q);
-  });
+  const clients=window._allClients.filter(c=>!q||(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q));
   const tbody=document.getElementById('clients-tbody');
-  if(!clients.length){
-    // Try localStorage cache before showing empty
-    try{
-      const cached=localStorage.getItem('da_clients');
-      if(cached){
-        const arr=JSON.parse(cached).filter(c=>!c.archived);
-        if(arr.length>0){
-          window._allClients=arr;
-          window._clientsLoaded=true;
-          // re-call self now that we have data
-          setTimeout(()=>window.renderClientsTable&&window.renderClientsTable(),50);
-          return;
-        }
-      }
-    }catch(e){}
-    tbody.innerHTML=window._clientsLoaded?
-      '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>':
-      '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">⏳ جاري التحميل...</td></tr>';
-    return;
-  }
-  window._clientsLoaded=true;
+  if(!clients.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>';return;}
   const showMoney=currentUserRole==='owner';
   tbody.innerHTML=clients.map(cl=>{
     const st=calcClientStats(cl.id);
-    return `<tr>
+    return`<tr>
       <td><strong>${cl.name}</strong>${cl.address?`<div style="font-size:11px;color:var(--gray)">${cl.address}</div>`:''}</td>
       <td><a href="tel:${cl.phone}" style="color:var(--gold)">${cl.phone}</a>${cl.phone2?`<br><a href="tel:${cl.phone2}" style="color:var(--gray);font-size:11px">${cl.phone2}</a>`:''}</td>
       <td style="color:var(--gray);font-size:12px">${cl.address||'—'}</td>
@@ -1500,9 +1099,7 @@ window.renderClientsTable = function(){
         <div style="display:flex;gap:4px">
           <button class="btn-sm btn-primary" onclick="openNewInvoiceForClient('${cl.id}')">➕ فاتورة</button>
           <button class="btn-sm btn-outline-sm" onclick="viewClientInvoices('${cl.id}')">👁️</button>
-          ${showMoney?(cl.archived?
-            `<button class="btn-sm btn-success" onclick="restoreClient('${cl.id}')">↩️ استعادة</button>`:
-            `<button class="btn-sm btn-danger" onclick="deleteClient('${cl.id}')">📦 أرشفة</button>`):''}
+          ${showMoney?`<button class="btn-sm btn-danger" onclick="deleteClient('${cl.id}')">🗑️</button>`:''}
         </div>
       </td>
     </tr>`;
@@ -1512,10 +1109,13 @@ window.filterClients=window.renderClientsTable;
 
 window.deleteClient=async id=>{
   const cl=window._allClients.find(c=>c.id===id);
-  if(!confirm(`هل تريد أرشفة "${cl?.name||'العميل'}"؟
-(مش هيتمسح — هيتخفى بس وتقدر ترجعه)`))return;
-  // Archive only — never delete from Firebase
-  await update(ref(db,`deltaart/clients/${id}`),{archived:true,archivedAt:new Date().toISOString()});
+  const invCount=window._allInvoices.filter(i=>i.clientId===id).length;
+  if(!confirm('تحذير: حذف العميل "'+( cl?.name||'')+ '" وكل فواتيره ('+invCount+' فاتورة)؟\nالبيانات مش هترجع بعد كده.'))return;
+  const typed=prompt('اكتب اسم العميل للتأكيد:');
+  if(!typed||typed.trim()!==(cl?.name||'').trim()){alert('الاسم غلط، الحذف اتلغى');return;}
+  await remove(ref(db,'deltaart/clients/'+id));
+  const invs=window._allInvoices.filter(i=>i.clientId===id);
+  for(const inv of invs)await remove(ref(db,'deltaart/invoices/'+inv.id));
 };
 
 window.viewClientInvoices=function(clientId){
@@ -1524,202 +1124,107 @@ window.viewClientInvoices=function(clientId){
   const st=calcClientStats(clientId);
   const pct=st.total>0?Math.round(st.paid/st.total*100):0;
   const showMoney=currentUserRole==='owner';
-
-  let html=`
-    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-      <div>
-        <div style="font-size:20px;font-weight:900">${cl?.name||'—'}</div>
-        <div style="color:var(--gray);font-size:13px;margin-top:4px">
-          📞 <a href="tel:${cl?.phone}" style="color:var(--gold)">${cl?.phone||''}</a>
-          ${cl?.phone2?` &nbsp;|&nbsp; <a href="tel:${cl?.phone2}" style="color:var(--gray)">${cl.phone2}</a>`:''}
-          ${cl?.address?` &nbsp;|&nbsp; 📍 ${cl.address}`:''}
-        </div>
-      </div>
-      <button class="btn-sm btn-primary" onclick="openNewInvoiceForClient('${clientId}');closeModal('invoice-detail-modal')">➕ مشروع جديد</button>
-    </div>`;
-
-  if(showMoney){
-    const remColor=st.remaining>0?'var(--red)':'var(--green)';
-    html+=`
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
-      <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:14px;text-align:center">
-        <div style="font-size:11px;color:var(--gray);margin-bottom:4px">💰 إجمالي العقود</div>
-        <div style="font-size:20px;font-weight:900;color:var(--gold)">${st.total.toLocaleString('ar-EG')}</div>
-        <div style="font-size:11px;color:var(--gray)">جنيه</div>
-      </div>
-      <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px;text-align:center">
-        <div style="font-size:11px;color:var(--gray);margin-bottom:4px">✅ تم الدفع</div>
-        <div style="font-size:20px;font-weight:900;color:var(--green)">${st.paid.toLocaleString('ar-EG')}</div>
-        <div style="font-size:11px;color:var(--gray)">جنيه</div>
-      </div>
-      <div style="background:${st.remaining>0?'rgba(239,68,68,0.1)':'rgba(34,197,94,0.1)'};border:1px solid ${st.remaining>0?'rgba(239,68,68,0.25)':'rgba(34,197,94,0.25)'};border-radius:12px;padding:14px;text-align:center">
-        <div style="font-size:11px;color:var(--gray);margin-bottom:4px">⏳ المتبقي</div>
-        <div style="font-size:20px;font-weight:900;color:${remColor}">${st.remaining.toLocaleString('ar-EG')}</div>
-        <div style="font-size:11px;color:var(--gray)">جنيه</div>
-      </div>
+  document.getElementById('invoice-detail-content').innerHTML=`
+    <div style="font-size:18px;font-weight:900;margin-bottom:4px">${cl?.name||'—'}</div>
+    <div style="color:var(--gray);font-size:13px;margin-bottom:16px">${cl?.phone||''} ${cl?.address?'• '+cl.address:''}</div>
+    ${showMoney?`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+      <div class="stat-card" style="text-align:center"><div class="sc-label">إجمالي العقود</div><div style="font-size:20px;font-weight:900;color:var(--gold)">${st.total.toLocaleString('ar-EG')}</div></div>
+      <div class="stat-card" style="text-align:center"><div class="sc-label">تم الدفع</div><div style="font-size:20px;font-weight:900;color:var(--green)">${st.paid.toLocaleString('ar-EG')}</div></div>
+      <div class="stat-card" style="text-align:center"><div class="sc-label">المتبقي</div><div style="font-size:20px;font-weight:900;color:var(--red)">${(st.total-st.paid).toLocaleString('ar-EG')}</div></div>
     </div>
-    <div style="margin-bottom:16px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-bottom:5px">
-        <span>نسبة التحصيل</span><span style="font-weight:700;color:${pct>=100?'var(--green)':pct>=50?'var(--gold)':'var(--red)'}">${pct}%</span>
-      </div>
-      <div style="background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden">
-        <div style="height:100%;width:${pct}%;background:${pct>=100?'var(--green)':pct>=50?'var(--gold)':'var(--red)'};border-radius:20px;transition:width 0.4s"></div>
-      </div>
-    </div>`;
-  }
-
-  if(!invs.length){
-    html+=`<div style="text-align:center;color:var(--gray);padding:32px">لا يوجد مشاريع بعد</div>`;
-  } else {
-    html+=`<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--gold)">📋 المشاريع (${invs.length})</div>`;
-    invs.forEach(inv=>{
-      const rem=(inv.total||0)-(inv.totalPaid||0);
-      const invPct=inv.total>0?Math.round((inv.totalPaid||0)/inv.total*100):0;
-      html+=`
-      <div style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:12px;margin-bottom:12px;overflow:hidden">
-        <!-- Project Header -->
-        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-          <div>
-            <div style="font-weight:700;font-size:15px">${inv.projectName||'مشروع'}</div>
-            <div style="font-size:11px;color:var(--gray);margin-top:2px">📅 ${fmtDate(inv.createdAt)} ${inv.createdBy?'• بواسطة: '+inv.createdBy:''}</div>
-          </div>
-          ${showMoney?`<span class="badge ${invPayStatus(inv)}" style="font-size:12px;padding:5px 12px">${invPayLabel(inv)}</span>`:''}
+    <div class="debt-bar-wrap" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-bottom:4px"><span>نسبة التحصيل</span><span>${pct}%</span></div><div class="debt-bar-bg"><div class="debt-bar-fill" style="width:${pct}%"></div></div></div>`:''}
+    <div style="font-weight:700;font-size:14px;margin-bottom:8px">المشاريع والفواتير (${invs.length})</div>
+    ${invs.map(inv=>`
+      <div style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+          <div><div style="font-weight:700">${inv.projectName||'مشروع'}</div><div style="font-size:12px;color:var(--gray)">${fmtDate(inv.createdAt)}</div></div>
+          ${showMoney?`<span class="badge ${invPayStatus(inv)}">${invPayLabel(inv)}</span>`:''}
         </div>
         ${showMoney?`
-        <!-- Financial Summary -->
-        <div style="padding:12px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06)">
-          <div style="text-align:center">
-            <div style="font-size:10px;color:var(--gray)">إجمالي المشروع</div>
-            <div style="font-weight:700;color:var(--gold);font-size:15px">${(inv.total||0).toLocaleString('ar-EG')}</div>
-          </div>
-          <div style="text-align:center">
-            <div style="font-size:10px;color:var(--gray)">تم الدفع</div>
-            <div style="font-weight:700;color:var(--green);font-size:15px">${(inv.totalPaid||0).toLocaleString('ar-EG')}</div>
-          </div>
-          <div style="text-align:center">
-            <div style="font-size:10px;color:var(--gray)">المتبقي</div>
-            <div style="font-weight:700;color:${rem>0?'var(--red)':'var(--green)'};font-size:15px">${rem.toLocaleString('ar-EG')}</div>
-          </div>
-        </div>
-        <div style="padding:0 16px 10px">
-          <div style="background:rgba(255,255,255,0.06);border-radius:20px;height:5px;overflow:hidden;margin-top:8px">
-            <div style="height:100%;width:${invPct}%;background:${invPct>=100?'var(--green)':invPct>=50?'var(--gold)':'var(--red)'};border-radius:20px"></div>
-          </div>
-        </div>
-        `:''}
-        <!-- Items -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;margin-bottom:10px">
+          <div><div style="color:var(--gray)">إجمالي المشروع</div><div style="font-weight:700;color:var(--gold)">${(inv.total||0).toLocaleString('ar-EG')} جنيه</div></div>
+          <div><div style="color:var(--gray)">تم الدفع</div><div style="font-weight:700;color:var(--green)">${(inv.totalPaid||0).toLocaleString('ar-EG')} جنيه</div></div>
+          <div><div style="color:var(--gray)">المتبقي</div><div style="font-weight:700;color:${((inv.total||0)-(inv.totalPaid||0))>0?'var(--red)':'var(--green)'}">${((inv.total||0)-(inv.totalPaid||0)).toLocaleString('ar-EG')} جنيه</div></div>
+        </div>`:''}
         ${(inv.items||[]).length?`
-        <div style="padding:0 16px 10px">
-          <div style="font-size:11px;color:var(--gray);margin-bottom:6px;font-weight:600">بنود المشروع:</div>
-          <table style="width:100%;border-collapse:collapse;font-size:12px">
-            <tr style="color:var(--gray)">
-              <th style="text-align:right;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">البند</th>
-              <th style="text-align:center;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">الكمية</th>
-              ${showMoney?`<th style="text-align:center;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">سعر الوحدة</th>
-              <th style="text-align:center;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">الإجمالي</th>`:''}
-              <th style="padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)"></th>
-            </tr>
-            ${(inv.items||[]).map((item,idx)=>`<tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
-              <td style="padding:5px 4px"><input type="text" value="${(item.name||'').replace(/"/g,'&quot;')}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.15);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;outline:none;padding:2px"></td>
-              <td style="padding:5px 4px;text-align:center"><input type="number" value="${item.qty||0}" onchange="updateInvItem('${inv.id}',${idx},'qty',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.15);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:55px;outline:none;padding:2px;text-align:center"> ${item.unit||''}</td>
-              ${showMoney?`<td style="padding:5px 4px;text-align:center"><input type="number" value="${item.price||0}" onchange="updateInvItem('${inv.id}',${idx},'price',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.15);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:70px;outline:none;padding:2px;text-align:center"></td>
-              <td style="padding:5px 4px;text-align:center;color:var(--gold);font-weight:700">${((item.qty||0)*(item.price||0)).toLocaleString('ar-EG')}</td>`:''}
-              <td style="padding:5px 4px;text-align:center"><button onclick="removeInvItem('${inv.id}',${idx})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:4px;cursor:pointer;padding:2px 7px;font-size:12px">✕</button></td>
-            </tr>`).join('')}
-          </table>
-          <button onclick="addItemToExistingInv('${inv.id}')" style="margin-top:6px;background:transparent;border:1px dashed rgba(201,168,76,0.3);color:var(--gold);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:Cairo,sans-serif;font-size:12px;width:100%">➕ إضافة بند</button>
-        </div>`:''}
+        <div style="font-size:11px;color:var(--gray);margin-bottom:6px">بنود المشروع:</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <tr style="color:var(--gray)"><th style="text-align:right;padding:4px">البند</th><th style="text-align:right;padding:4px">الكمية</th><th style="text-align:right;padding:4px">سعر الوحدة</th><th style="text-align:right;padding:4px">الإجمالي</th><th style="padding:4px"></th></tr>
+          ${(inv.items||[]).map((item,idx)=>`<tr>
+            <td style="padding:4px"><input type="text" value="${item.name||''}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;outline:none;padding:2px"></td>
+            <td style="padding:4px"><input type="number" value="${item.qty||0}" onchange="updateInvItem('${inv.id}',${idx},'qty',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:60px;outline:none;padding:2px;text-align:center"></td>
+            <td style="padding:4px">${showMoney?`<input type="number" value="${item.price||0}" onchange="updateInvItem('${inv.id}',${idx},'price',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:80px;outline:none;padding:2px;text-align:center">`:'—'}</td>
+            <td style="padding:4px;color:var(--gold);font-weight:700">${showMoney?((item.qty||0)*(item.price||0)).toLocaleString('ar-EG'):'—'}</td>
+            <td style="padding:4px"><button onclick="removeInvItem('${inv.id}',${idx})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:4px;cursor:pointer;padding:2px 6px;font-size:11px">✕</button></td>
+          </tr>`).join('')}
+        </table>
+        <button onclick="addItemToExistingInv('${inv.id}')" class="btn-sm btn-outline-sm" style="margin-top:6px;font-size:11px;padding:4px 10px">➕ إضافة بند</button>`:''}
         ${showMoney?`
-        <!-- Payments Section -->
-        <div style="padding:12px 16px;background:rgba(34,197,94,0.04);border-top:1px solid rgba(34,197,94,0.1)">
-          <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">💳 سجل الدفعات</div>
-          ${(inv.payments||[]).length===0?`<div style="font-size:12px;color:var(--gray);margin-bottom:8px">لا يوجد دفعات مسجلة</div>`:''}
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-top:10px">
+          <div style="font-size:12px;color:var(--gray);margin-bottom:6px">💳 المدفوعات:</div>
           ${(inv.payments||[]).map((p,pi)=>`
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:8px 12px;margin-bottom:6px;flex-wrap:wrap;gap:6px">
-            <div>
-              <span style="color:var(--green);font-weight:700;font-size:14px">+${(p.amount||0).toLocaleString('ar-EG')} جنيه</span>
-              <span style="color:var(--gray);font-size:11px;margin-right:8px">${p.note||'دفعة'}</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <span style="font-size:11px;color:var(--gray)">${fmtDate(p.date)}</span>
-              <button onclick="removePayment('${inv.id}',${pi})" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);color:#EF4444;border-radius:6px;cursor:pointer;padding:3px 8px;font-size:11px;font-family:Cairo,sans-serif">✕ حذف</button>
-            </div>
-          </div>`).join('')}
-          <!-- Add Payment -->
-          <div style="background:rgba(34,197,94,0.06);border:2px dashed rgba(34,197,94,0.3);border-radius:10px;padding:12px;margin-top:8px">
-            <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">➕ تسجيل دفعة جديدة</div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <input type="number" id="pay-amount-${inv.id}" placeholder="المبلغ بالجنيه" style="flex:1;min-width:100px;background:var(--navy2);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
-              <input type="text" id="pay-note-${inv.id}" placeholder="ملاحظة (مقدم / تسليم / ...)" style="flex:2;min-width:130px;background:var(--navy2);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
-              <button onclick="addPayment('${inv.id}')" style="background:linear-gradient(135deg,#22C55E,#16a34a);border:none;color:#fff;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;white-space:nowrap">✅ تسجيل الدفع</button>
-            </div>
+            <div class="payment-strip">
+              <div class="pm-info"><div class="pm-amount">+${(p.amount||0).toLocaleString('ar-EG')} جنيه</div><div class="pm-date">${fmtDate(p.date)} — ${p.note||'دفعة'}</div></div>
+              <button onclick="removePayment('${inv.id}',${pi})" class="btn-sm btn-danger" style="padding:4px 8px;font-size:11px">✕</button>
+            </div>`).join('')}
+          <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap" class="payment-row">
+            <input type="number" id="pay-amount-${inv.id}" placeholder="المبلغ" style="flex:1;min-width:80px;background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
+            <input type="text" id="pay-note-${inv.id}" placeholder="بعد الاستلام / دفعة أولى..." style="flex:2;min-width:120px;background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
+            <button onclick="addPayment('${inv.id}')" class="btn-sm btn-success">➕ إضافة دفعة</button>
           </div>
         </div>`:''}
-      </div>`;
-    });
-  }
-
-  document.getElementById('invoice-detail-content').innerHTML=html;
+      </div>`).join('')||'<div style="text-align:center;color:var(--gray);padding:24px">لا يوجد مشاريع</div>'}
+    <button class="btn-sm btn-primary" style="width:100%;margin-top:12px" onclick="openNewInvoiceForClient('${clientId}');closeModal('invoice-detail-modal')">➕ إضافة مشروع جديد</button>
+  `;
   openModal('invoice-detail-modal');
 };
 
-window.updateInvItem = async function(invId, idx, field, val){
-  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+window.updateInvItem=async function(invId,idx,field,val){
+  const inv=window._allInvoices.find(i=>i.id===invId);if(!inv)return;
   const items=[...(inv.items||[])];
   items[idx]={...items[idx],[field]:field==='name'?val:parseFloat(val)||0};
   const total=items.reduce((s,it)=>s+(it.qty||0)*(it.price||0),0)-(inv.discount||0);
   await update(ref(db,`deltaart/invoices/${invId}`),{items,total:Math.max(0,total)});
 };
 
-window.removeInvItem = async function(invId, idx){
-  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+window.removeInvItem=async function(invId,idx){
+  const inv=window._allInvoices.find(i=>i.id===invId);if(!inv)return;
   const items=(inv.items||[]).filter((_,i)=>i!==idx);
   const total=items.reduce((s,it)=>s+(it.qty||0)*(it.price||0),0)-(inv.discount||0);
-  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
-  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],items,total:Math.max(0,total)};
   await update(ref(db,`deltaart/invoices/${invId}`),{items,total:Math.max(0,total)});
-  if(inv.clientId) setTimeout(()=>viewClientInvoices(inv.clientId),150);
+  if(inv.clientId)setTimeout(()=>viewClientInvoices(inv.clientId),300);
 };
 
-window.addItemToExistingInv = async function(invId){
-  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+window.addItemToExistingInv=async function(invId){
+  const inv=window._allInvoices.find(i=>i.id===invId);if(!inv)return;
   const items=[...(inv.items||[]),{name:'بند جديد',qty:1,unit:'م²',price:0}];
-  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
-  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],items};
   await update(ref(db,`deltaart/invoices/${invId}`),{items});
-  setTimeout(()=>viewClientInvoices(inv.clientId),150);
+  setTimeout(()=>viewClientInvoices(inv.clientId),300);
 };
 
-// ===== PAYMENTS =====
-window.addPayment = async function(invId){
+window.addPayment=async function(invId){
   const amountEl=document.getElementById('pay-amount-'+invId);
   const noteEl=document.getElementById('pay-note-'+invId);
   const amount=parseFloat(amountEl?.value)||0;
-  const note=(noteEl?.value||'دفعة').trim();
+  const note=noteEl?.value||'دفعة';
   if(!amount||amount<=0){alert('ادخل مبلغ صحيح');return;}
-  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+  const inv=window._allInvoices.find(i=>i.id===invId);if(!inv)return;
   const payments=[...(inv.payments||[]),{amount,note,date:new Date().toISOString()}];
   const totalPaid=payments.reduce((s,p)=>s+(p.amount||0),0);
-  // Update local cache immediately
-  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
-  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],payments,totalPaid};
   await update(ref(db,`deltaart/invoices/${invId}`),{payments,totalPaid});
-  // Re-render modal with updated data
-  setTimeout(()=>viewClientInvoices(inv.clientId),150);
+  setTimeout(()=>viewClientInvoices(inv.clientId),300);
 };
 
-window.removePayment = async function(invId, idx){
-  const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
+window.removePayment=async function(invId,idx){
+  const inv=window._allInvoices.find(i=>i.id===invId);if(!inv)return;
   const payments=(inv.payments||[]).filter((_,i)=>i!==idx);
   const totalPaid=payments.reduce((s,p)=>s+(p.amount||0),0);
-  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
-  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],payments,totalPaid};
   await update(ref(db,`deltaart/invoices/${invId}`),{payments,totalPaid});
-  setTimeout(()=>viewClientInvoices(inv.clientId),150);
+  setTimeout(()=>viewClientInvoices(inv.clientId),300);
 };
 
-// ===== NEW INVOICE =====
-window.openNewInvoiceModal = function(){
+window.openNewInvoiceModal=function(){
   window._invSelectedClient=null;
   window._invItems=[{name:'',qty:1,unit:'م²',price:0}];
   document.getElementById('inv-step1').style.display='block';
@@ -1727,12 +1232,11 @@ window.openNewInvoiceModal = function(){
   document.getElementById('inv-project-name').value='';
   document.getElementById('inv-discount').value=0;
   document.getElementById('inv-project-notes').value='';
-  renderInvClientList();
-  renderInvItemsTable();
+  renderInvClientList();renderInvItemsTable();
   openModal('new-invoice-modal');
 };
 
-window.openNewInvoiceForClient = function(clientId){
+window.openNewInvoiceForClient=function(clientId){
   openNewInvoiceModal();
   setTimeout(()=>selectInvClient(clientId),100);
 };
@@ -1747,15 +1251,11 @@ function renderInvClientList(q=''){
       <div class="client-card-info">📞 ${cl.phone} ${cl.address?'• '+cl.address:''}</div>
     </div>`).join('');
 }
-window.renderInvClientList = renderInvClientList;
+window.renderInvClientList=renderInvClientList;
+window.filterInvClients=function(){renderInvClientList(document.getElementById('inv-client-search').value);};
 
-window.filterInvClients = function(){
-  renderInvClientList(document.getElementById('inv-client-search').value);
-};
-
-window.selectInvClient = function(clientId){
-  const cl=window._allClients.find(c=>c.id===clientId);
-  if(!cl)return;
+window.selectInvClient=function(clientId){
+  const cl=window._allClients.find(c=>c.id===clientId);if(!cl)return;
   window._invSelectedClient=cl;
   document.getElementById('inv-selected-client-name').textContent=cl.name;
   document.getElementById('inv-selected-client-phone').textContent=`📞 ${cl.phone}`;
@@ -1765,17 +1265,12 @@ window.selectInvClient = function(clientId){
 };
 
 function renderInvItemsTable(){
-  const tbody=document.getElementById('inv-items-tbody');
-  if(!tbody)return;
+  const tbody=document.getElementById('inv-items-tbody');if(!tbody)return;
   tbody.innerHTML=(window._invItems||[]).map((item,i)=>`
     <tr>
       <td><input type="text" value="${item.name||''}" placeholder="اسم البند / الخدمة" oninput="updateTempItem(${i},'name',this.value)"></td>
       <td><input type="number" value="${item.qty||1}" min="0" step="0.1" oninput="updateTempItem(${i},'qty',this.value)" style="text-align:center"></td>
-      <td>
-        <select onchange="updateTempItem(${i},'unit',this.value)" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:6px;padding:6px 8px;color:var(--white);font-family:Cairo,sans-serif;font-size:12px;outline:none">
-          ${['م²','م طولي','قطعة','وحدة','مجموعة'].map(u=>`<option ${item.unit===u?'selected':''}>${u}</option>`).join('')}
-        </select>
-      </td>
+      <td><select onchange="updateTempItem(${i},'unit',this.value)" style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:6px;padding:6px 8px;color:var(--white);font-family:Cairo,sans-serif;font-size:12px;outline:none">${['م²','م طولي','قطعة','وحدة','مجموعة'].map(u=>`<option ${item.unit===u?'selected':''}>${u}</option>`).join('')}</select></td>
       <td><input type="number" value="${item.price||0}" min="0" placeholder="0" oninput="updateTempItem(${i},'price',this.value)" style="text-align:center"></td>
       <td style="color:var(--gold);font-weight:700;white-space:nowrap">${((item.qty||0)*(item.price||0)).toLocaleString('ar-EG')}</td>
       <td><button onclick="removeTempItem(${i})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:6px;cursor:pointer;padding:4px 8px;font-size:14px">✕</button></td>
@@ -1787,7 +1282,7 @@ window.updateTempItem=function(i,field,val){
   if(!window._invItems[i])return;
   window._invItems[i][field]=field==='name'||field==='unit'?val:parseFloat(val)||0;
   const row=document.getElementById('inv-items-tbody').rows[i];
-  if(row) row.cells[4].textContent=((window._invItems[i].qty||0)*(window._invItems[i].price||0)).toLocaleString('ar-EG');
+  if(row)row.cells[4].textContent=((window._invItems[i].qty||0)*(window._invItems[i].price||0)).toLocaleString('ar-EG');
   recalcInvTotal();
 };
 window.removeTempItem=function(i){window._invItems.splice(i,1);renderInvItemsTable();};
@@ -1797,10 +1292,9 @@ window.recalcInvTotal=function(){
   const subtotal=(window._invItems||[]).reduce((s,it)=>s+(it.qty||0)*(it.price||0),0);
   const disc=parseFloat(document.getElementById('inv-discount')?.value)||0;
   const grand=Math.max(0,subtotal-disc);
-  const el1=document.getElementById('inv-subtotal');
-  const el2=document.getElementById('inv-grand-total');
-  if(el1) el1.textContent=subtotal.toLocaleString('ar-EG')+' جنيه';
-  if(el2) el2.textContent=grand.toLocaleString('ar-EG')+' جنيه';
+  const el1=document.getElementById('inv-subtotal');const el2=document.getElementById('inv-grand-total');
+  if(el1)el1.textContent=subtotal.toLocaleString('ar-EG')+' جنيه';
+  if(el2)el2.textContent=grand.toLocaleString('ar-EG')+' جنيه';
 };
 
 window.saveNewInvoice=async function(){
@@ -1814,32 +1308,13 @@ window.saveNewInvoice=async function(){
   const discount=parseFloat(document.getElementById('inv-discount').value)||0;
   const total=Math.max(0,subtotal-discount);
   const notes=document.getElementById('inv-project-notes').value.trim();
-  const saveInvBtn=document.querySelector('#new-invoice-modal .btn-primary');
-  if(saveInvBtn) saveInvBtn.disabled=true;
   try{
-    const newInvRef=await push(ref(db,'deltaart/invoices'),{
-      clientId:window._invSelectedClient.id,
-      clientName:window._invSelectedClient.name,
-      clientPhone:window._invSelectedClient.phone,
-      projectName,items,subtotal,discount,total,notes,
-      totalPaid:0,payments:[],
-      createdAt:new Date().toISOString(),
-      createdBy:currentUserData.name||'—'
-    });
-    // Add to local cache immediately
-    const newInv={id:newInvRef.key,clientId:window._invSelectedClient.id,clientName:window._invSelectedClient.name,clientPhone:window._invSelectedClient.phone,projectName,items,subtotal,discount,total,notes,totalPaid:0,payments:[],createdAt:new Date().toISOString(),createdBy:currentUserData.name||'—'};
-    window._allInvoices=[newInv,...window._allInvoices];
-    renderClientsTable();
-    showAlert(alertEl,'success','✅ تم حفظ الفاتورة في قاعدة البيانات');
-    if(saveInvBtn) saveInvBtn.disabled=false;
-    setTimeout(()=>closeModal('new-invoice-modal'),1800);
-  } catch(e){
-    showAlert(alertEl,'error','خطأ في الحفظ: '+e.message);
-    if(saveInvBtn) saveInvBtn.disabled=false;
-  }
+    await push(ref(db,'deltaart/invoices'),{clientId:window._invSelectedClient.id,clientName:window._invSelectedClient.name,clientPhone:window._invSelectedClient.phone,projectName,items,subtotal,discount,total,notes,totalPaid:0,payments:[],createdAt:new Date().toISOString(),createdBy:currentUserData.name||'—'});
+    showAlert(alertEl,'success','✅ تم حفظ الفاتورة');
+    setTimeout(()=>closeModal('new-invoice-modal'),1200);
+  }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
 };
 
-// ===== INVOICE TABLE & STATS =====
 function calcRevenue(){
   let total=0,paid=0;
   window._allInvoices.forEach(inv=>{total+=(inv.total||0);paid+=(inv.totalPaid||0);});
@@ -1862,190 +1337,89 @@ function renderDashInvoices(all){
 }
 
 window._invFilterValue='all';
-window.filterInvoices=function(){
-  window._invFilterValue=document.getElementById('inv-filter')?.value||'all';
-  renderInvoicesTable(window._allInvoices);
-};
+window.filterInvoices=function(){window._invFilterValue=document.getElementById('inv-filter')?.value||'all';renderInvoicesTable(window._allInvoices);};
 
 function renderInvoicesTable(all){
   const f=window._invFilterValue||'all';
   const filtered=all.filter(inv=>{
     if(f==='all')return true;
     const rem=(inv.total||0)-(inv.totalPaid||0);
-    if(f==='paid')return rem<=0;
-    if(f==='unpaid')return (inv.totalPaid||0)===0;
-    if(f==='partial')return (inv.totalPaid||0)>0&&rem>0;
+    if(f==='paid')return rem<=0;if(f==='unpaid')return(inv.totalPaid||0)===0;if(f==='partial')return(inv.totalPaid||0)>0&&rem>0;
     return true;
   });
-  if(currentUserRole==='owner') calcRevenue();
+  if(currentUserRole==='owner')calcRevenue();
   const tbody=document.getElementById('invoices-tbody');
   const showMoney=currentUserRole==='owner';
   if(!filtered.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد فواتير</td></tr>';return;}
   tbody.innerHTML=filtered.map((inv,i)=>{
     const rem=(inv.total||0)-(inv.totalPaid||0);
     const pct=inv.total>0?Math.round((inv.totalPaid||0)/inv.total*100):0;
-    return `<tr>
+    return`<tr>
       <td style="color:var(--gray);font-size:12px">#${String(i+1).padStart(3,'0')}</td>
       <td><strong>${inv.clientName||'—'}</strong><div style="font-size:11px;color:var(--gray)">${inv.clientPhone||''}</div></td>
       <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${inv.projectName||'—'}</td>
       <td style="color:var(--gold);font-weight:700">${showMoney?(inv.total||0).toLocaleString('ar-EG'):'—'}</td>
-      <td>
-        <div style="color:var(--green);font-weight:700">${showMoney?(inv.totalPaid||0).toLocaleString('ar-EG'):'—'}</div>
-        ${showMoney?`<div class="debt-bar-bg" style="margin-top:4px;width:80px"><div class="debt-bar-fill" style="width:${pct}%"></div></div>`:''}
-      </td>
+      <td><div style="color:var(--green);font-weight:700">${showMoney?(inv.totalPaid||0).toLocaleString('ar-EG'):'—'}</div>${showMoney?`<div class="debt-bar-bg" style="margin-top:4px;width:80px"><div class="debt-bar-fill" style="width:${pct}%"></div></div>`:''}</td>
       <td style="color:${rem>0?'var(--red)':'var(--green)'};font-weight:700">${showMoney?rem.toLocaleString('ar-EG'):'—'}</td>
       <td>${showMoney?`<span class="badge ${invPayStatus(inv)}">${invPayLabel(inv)}</span>`:''}</td>
-      <td>
-        <div style="display:flex;gap:4px">
-          <button class="btn-sm btn-blue" onclick="viewClientInvoices('${inv.clientId}')">👁️</button>
-        </div>
-      </td>
+      <td><button class="btn-sm btn-blue" onclick="viewClientInvoices('${inv.clientId}')">👁️</button></td>
     </tr>`;
   }).join('');
 }
 
-function invPayStatus(inv){
-  const rem=(inv.total||0)-(inv.totalPaid||0);
-  if(rem<=0)return 'badge-green';
-  if((inv.totalPaid||0)>0)return 'badge-orange';
-  return 'badge-red';
-}
-function invPayLabel(inv){
-  const rem=(inv.total||0)-(inv.totalPaid||0);
-  if(rem<=0)return 'مدفوعة بالكامل ✅';
-  if((inv.totalPaid||0)>0)return `دفع جزئي (${Math.round((inv.totalPaid/inv.total)*100)}%)`;
-  return 'لم يُدفع';
-}
-
+function invPayStatus(inv){const rem=(inv.total||0)-(inv.totalPaid||0);if(rem<=0)return'badge-green';if((inv.totalPaid||0)>0)return'badge-orange';return'badge-red';}
+function invPayLabel(inv){const rem=(inv.total||0)-(inv.totalPaid||0);if(rem<=0)return'مدفوعة بالكامل ✅';if((inv.totalPaid||0)>0)return`دفع جزئي (${Math.round((inv.totalPaid/inv.total)*100)}%)`;return'لم يُدفع';}
 
 // ===== REVENUE REPORTS =====
-window._revCurrentPeriod = 'today';
-window._revFrom = null;
-window._revTo = null;
-
-window.loadRevenueReport = function(period, btn){
-  window._revCurrentPeriod = period;
-  // Update active tab
-  ['today','week','month','3m','year','custom'].forEach(p=>{
-    const b=document.getElementById('rev-btn-'+p);
-    if(b) b.classList.toggle('active', p===period);
-  });
+window.loadRevenueReport=function(period,btn){
+  ['today','week','month','3m','year','custom'].forEach(p=>{const b=document.getElementById('rev-btn-'+p);if(b)b.classList.toggle('active',p===period);});
   const customDiv=document.getElementById('rev-custom-range');
-  if(period==='custom'){
-    if(customDiv) customDiv.style.display='block';
-    return; // wait for user to pick dates
-  } else {
-    if(customDiv) customDiv.style.display='none';
-  }
-  const now=new Date();
-  let from, to=new Date(now);
-  to.setHours(23,59,59,999);
-  if(period==='today'){
-    from=new Date(now); from.setHours(0,0,0,0);
-    document.getElementById('rev-period-label').textContent='عرض: اليوم';
-    document.getElementById('rev-tbl-period').textContent='اليوم';
-  } else if(period==='week'){
-    from=new Date(now); from.setDate(now.getDate()-now.getDay()); from.setHours(0,0,0,0);
-    document.getElementById('rev-period-label').textContent='عرض: هذا الأسبوع';
-    document.getElementById('rev-tbl-period').textContent='هذا الأسبوع';
-  } else if(period==='month'){
-    from=new Date(now.getFullYear(),now.getMonth(),1,0,0,0,0);
-    document.getElementById('rev-period-label').textContent='عرض: هذا الشهر';
-    document.getElementById('rev-tbl-period').textContent='هذا الشهر';
-  } else if(period==='3m'){
-    from=new Date(now); from.setMonth(now.getMonth()-3); from.setHours(0,0,0,0);
-    document.getElementById('rev-period-label').textContent='عرض: آخر 3 أشهر';
-    document.getElementById('rev-tbl-period').textContent='آخر 3 أشهر';
-  } else if(period==='year'){
-    from=new Date(now.getFullYear(),0,1,0,0,0,0);
-    document.getElementById('rev-period-label').textContent='عرض: هذه السنة';
-    document.getElementById('rev-tbl-period').textContent='هذه السنة';
-  }
-  window._revFrom=from; window._revTo=to;
-  renderRevenueReport(from, to);
+  if(period==='custom'){if(customDiv)customDiv.style.display='block';return;}
+  else{if(customDiv)customDiv.style.display='none';}
+  const now=new Date();let from,to=new Date(now);to.setHours(23,59,59,999);
+  if(period==='today'){from=new Date(now);from.setHours(0,0,0,0);document.getElementById('rev-period-label').textContent='عرض: اليوم';document.getElementById('rev-tbl-period').textContent='اليوم';}
+  else if(period==='week'){from=new Date(now);from.setDate(now.getDate()-now.getDay());from.setHours(0,0,0,0);document.getElementById('rev-period-label').textContent='عرض: هذا الأسبوع';document.getElementById('rev-tbl-period').textContent='هذا الأسبوع';}
+  else if(period==='month'){from=new Date(now.getFullYear(),now.getMonth(),1);document.getElementById('rev-period-label').textContent='عرض: هذا الشهر';document.getElementById('rev-tbl-period').textContent='هذا الشهر';}
+  else if(period==='3m'){from=new Date(now);from.setMonth(now.getMonth()-3);from.setHours(0,0,0,0);document.getElementById('rev-period-label').textContent='عرض: آخر 3 أشهر';document.getElementById('rev-tbl-period').textContent='آخر 3 أشهر';}
+  else if(period==='year'){from=new Date(now.getFullYear(),0,1);document.getElementById('rev-period-label').textContent='عرض: هذه السنة';document.getElementById('rev-tbl-period').textContent='هذه السنة';}
+  renderRevenueReport(from,to);
 };
 
-window.applyCustomRevRange = function(){
-  const fromEl=document.getElementById('rev-from');
-  const toEl=document.getElementById('rev-to');
+window.applyCustomRevRange=function(){
+  const fromEl=document.getElementById('rev-from');const toEl=document.getElementById('rev-to');
   if(!fromEl.value||!toEl.value){alert('اختار التاريخين');return;}
-  const from=new Date(fromEl.value+'T00:00:00');
-  const to=new Date(toEl.value+'T23:59:59');
+  const from=new Date(fromEl.value+'T00:00:00');const to=new Date(toEl.value+'T23:59:59');
   document.getElementById('rev-period-label').textContent=`عرض: ${fromEl.value} — ${toEl.value}`;
   document.getElementById('rev-tbl-period').textContent='الفترة المخصصة';
-  window._revFrom=from; window._revTo=to;
-  renderRevenueReport(from, to);
+  renderRevenueReport(from,to);
 };
 
-function renderRevenueReport(from, to){
+function renderRevenueReport(from,to){
   const invoices=window._allInvoices||[];
-  // Payments within range
-  const payments=[];
-  let totalReceived=0;
+  const payments=[];let totalReceived=0;
   invoices.forEach(inv=>{
     (inv.payments||[]).forEach(p=>{
       const d=new Date(p.date);
-      if(d>=from&&d<=to){
-        payments.push({...p, clientName:inv.clientName||'—', projectName:inv.projectName||'—'});
-        totalReceived+=(p.amount||0);
-      }
+      if(d>=from&&d<=to){payments.push({...p,clientName:inv.clientName||'—',projectName:inv.projectName||'—'});totalReceived+=(p.amount||0);}
     });
   });
-  // New invoices/projects in range
   const newProjects=invoices.filter(inv=>{const d=new Date(inv.createdAt);return d>=from&&d<=to;});
   document.getElementById('rev-total').textContent=totalReceived.toLocaleString('ar-EG');
   document.getElementById('rev-count').textContent=newProjects.length;
   document.getElementById('rev-new').textContent=newProjects.length;
-
-  // Payments table
   payments.sort((a,b)=>new Date(b.date)-new Date(a.date));
   const ptbody=document.getElementById('rev-payments-tbody');
-  if(!payments.length){
-    ptbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد دفعات في هذه الفترة</td></tr>';
-  } else {
-    ptbody.innerHTML=payments.map(p=>`<tr>
-      <td><strong>${p.clientName}</strong></td>
-      <td style="color:var(--gray)">${p.projectName}</td>
-      <td style="color:var(--green);font-weight:700">${(p.amount||0).toLocaleString('ar-EG')} جنيه</td>
-      <td style="color:var(--gray)">${p.note||'دفعة'}</td>
-      <td style="color:var(--gray)">${fmtDate(p.date)}</td>
-    </tr>`).join('');
-  }
-
-  // Monthly summary (last 12 months)
+  if(!payments.length){ptbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد دفعات في هذه الفترة</td></tr>';}
+  else{ptbody.innerHTML=payments.map(p=>`<tr><td><strong>${p.clientName}</strong></td><td style="color:var(--gray)">${p.projectName}</td><td style="color:var(--green);font-weight:700">${(p.amount||0).toLocaleString('ar-EG')} جنيه</td><td style="color:var(--gray)">${p.note||'دفعة'}</td><td style="color:var(--gray)">${fmtDate(p.date)}</td></tr>`).join('');}
   const monthMap={};
   invoices.forEach(inv=>{
-    // Payments
-    (inv.payments||[]).forEach(p=>{
-      const d=new Date(p.date);
-      const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      if(!monthMap[key]) monthMap[key]={total:0,count:0,projects:0};
-      monthMap[key].total+=(p.amount||0);
-      monthMap[key].count++;
-    });
-    // New projects
-    const d=new Date(inv.createdAt);
-    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-    if(!monthMap[key]) monthMap[key]={total:0,count:0,projects:0};
-    monthMap[key].projects++;
+    (inv.payments||[]).forEach(p=>{const d=new Date(p.date);const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;if(!monthMap[key])monthMap[key]={total:0,count:0,projects:0};monthMap[key].total+=(p.amount||0);monthMap[key].count++;});
+    const d=new Date(inv.createdAt);const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;if(!monthMap[key])monthMap[key]={total:0,count:0,projects:0};monthMap[key].projects++;
   });
   const months=Object.keys(monthMap).sort().reverse().slice(0,12);
   const mtbody=document.getElementById('rev-monthly-tbody');
-  if(!months.length){
-    mtbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد بيانات</td></tr>';
-  } else {
-    mtbody.innerHTML=months.map(m=>{
-      const [yr,mo]=m.split('-');
-      const monthName=new Date(+yr,+mo-1,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});
-      const d=monthMap[m];
-      return `<tr>
-        <td><strong>${monthName}</strong></td>
-        <td style="color:var(--green);font-weight:700">${d.total.toLocaleString('ar-EG')} جنيه</td>
-        <td style="color:var(--gold)">${d.count}</td>
-        <td style="color:var(--blue)">${d.projects}</td>
-      </tr>`;
-    }).join('');
-  }
+  if(!months.length){mtbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد بيانات</td></tr>';}
+  else{mtbody.innerHTML=months.map(m=>{const[yr,mo]=m.split('-');const monthName=new Date(+yr,+mo-1,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const d=monthMap[m];return`<tr><td><strong>${monthName}</strong></td><td style="color:var(--green);font-weight:700">${d.total.toLocaleString('ar-EG')} جنيه</td><td style="color:var(--gold)">${d.count}</td><td style="color:var(--blue)">${d.projects}</td></tr>`;}).join('');}
 }
 
 // ===== SUPERADMIN =====
@@ -2053,40 +1427,23 @@ window._saAllAccounts=[];
 function loadSAAccounts(){
   onValue(ref(db,'deltaart/users'),snap=>{
     const all=[{uid:'owner-static',name:'صاحب الشركة',email:OWNER_EMAIL,role:'owner',status:'active',password:'DeltaArt@2025!'}];
-    if(snap.exists()) snap.forEach(c=>{const v={uid:c.key,...c.val()};all.push(v);});
-    window._saAllAccounts=all;
-    renderSATable(all);
+    if(snap.exists())snap.forEach(c=>{const v={uid:c.key,...c.val()};all.push(v);});
+    window._saAllAccounts=all;renderSATable(all);
   });
 }
 function renderSATable(accounts){
   const tbody=document.getElementById('sa-tbody');
   if(!accounts.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد أكونتات</td></tr>';return;}
   tbody.innerHTML=accounts.map(u=>`<tr>
-    <td><strong>${u.name||'—'}</strong></td>
-    <td style="color:var(--gray)">${u.email||'—'}</td>
+    <td><strong>${u.name||'—'}</strong></td><td style="color:var(--gray)">${u.email||'—'}</td>
     <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
-    <td><div style="display:flex;align-items:center;gap:6px">
-      <span id="pw-dots-${u.uid}">••••••••</span>
-      <span id="pw-text-${u.uid}" style="display:none;color:var(--gold);font-family:monospace">${u.password||'—'}</span>
-      <button class="btn-sm" style="padding:4px 8px;font-size:11px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:var(--gold);border-radius:6px" onclick="toggleSAPass('${u.uid}')">إظهار</button>
-    </div></td>
+    <td><div style="display:flex;align-items:center;gap:6px"><span id="pw-dots-${u.uid}">••••••••</span><span id="pw-text-${u.uid}" style="display:none;color:var(--gold);font-family:monospace">${u.password||'—'}</span><button class="btn-sm" style="padding:4px 8px;font-size:11px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);color:var(--gold);border-radius:6px" onclick="toggleSAPass('${u.uid}')">إظهار</button></div></td>
     <td><span class="status-dot ${u.status==='inactive'?'status-inactive':'status-active'}"></span>${u.status==='inactive'?'معطل':'نشط'}</td>
-    <td><div style="display:flex;gap:4px">${u.uid==='owner-static'?'':`
-      <button class="btn-sm ${u.status==='inactive'?'btn-success':'btn-warning'}" onclick="toggleSAStatus('${u.uid}','${u.status}')">${u.status==='inactive'?'تفعيل':'تعطيل'}</button>
-      <button class="btn-sm btn-danger" onclick="deleteSAAccount('${u.uid}')">🗑️</button>`}
-    </div></td>
+    <td><div style="display:flex;gap:4px">${u.uid==='owner-static'?'':`<button class="btn-sm ${u.status==='inactive'?'btn-success':'btn-warning'}" onclick="toggleSAStatus('${u.uid}','${u.status}')">${u.status==='inactive'?'تفعيل':'تعطيل'}</button><button class="btn-sm btn-danger" onclick="deleteSAAccount('${u.uid}')">🗑️</button>`}</div></td>
   </tr>`).join('');
 }
-window.toggleSAPass=function(uid){
-  const dots=document.getElementById('pw-dots-'+uid),text=document.getElementById('pw-text-'+uid);
-  const btn=dots.nextElementSibling.nextElementSibling;
-  if(text.style.display==='none'){text.style.display='inline';dots.style.display='none';btn.textContent='إخفاء';}
-  else{text.style.display='none';dots.style.display='inline';btn.textContent='إظهار';}
-};
-window.filterSATable=function(){
-  const q=document.getElementById('sa-search-input').value.toLowerCase();
-  renderSATable(window._saAllAccounts.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)));
-};
+window.toggleSAPass=function(uid){const dots=document.getElementById('pw-dots-'+uid),text=document.getElementById('pw-text-'+uid);const btn=dots.nextElementSibling.nextElementSibling;if(text.style.display==='none'){text.style.display='inline';dots.style.display='none';btn.textContent='إخفاء';}else{text.style.display='none';dots.style.display='inline';btn.textContent='إظهار';}};
+window.filterSATable=function(){const q=document.getElementById('sa-search-input').value.toLowerCase();renderSATable(window._saAllAccounts.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)));};
 window.toggleSAStatus=async(uid,s)=>{await update(ref(db,`deltaart/users/${uid}`),{status:s==='inactive'?'active':'inactive'});};
 window.deleteSAAccount=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/users/${id}`));};
 window.saAddAccount=async function(){
@@ -2107,8 +1464,7 @@ window.filterBookings=function(){
   const f=document.getElementById('book-filter').value;
   const items=f==='all'?window._allBookings:window._allBookings.filter(b=>b.status===f);
   document.getElementById('bookings-tbody').innerHTML=items.map(b=>`<tr>
-    <td><strong>${b.name}</strong></td>
-    <td><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></td>
+    <td><strong>${b.name}</strong></td><td><a href="tel:${b.phone}" style="color:var(--gold)">${b.phone}</a></td>
     <td>${b.type||'—'}</td><td style="color:var(--gray)">${b.time||'—'}</td>
     <td style="color:var(--gray);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${b.address||'—'}</td>
     <td style="color:var(--gray)">${fmtDate(b.date)}</td>
@@ -2144,16 +1500,12 @@ window.filterMessages=function(){
   const f=document.getElementById('msg-filter').value;
   const items=f==='all'?window._allMessages:window._allMessages.filter(m=>m.status===f);
   document.getElementById('messages-tbody').innerHTML=items.map(m=>`<tr>
-    <td><strong>${m.name}</strong></td>
-    <td><a href="tel:${m.phone}" style="color:var(--gold)">${m.phone}</a></td>
+    <td><strong>${m.name}</strong></td><td><a href="tel:${m.phone}" style="color:var(--gold)">${m.phone}</a></td>
     <td>${m.service||'—'}</td>
     <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||'—'}</td>
     <td style="color:var(--gray)">${fmtDate(m.date)}</td>
     <td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td>
-    <td><div style="display:flex;gap:4px">
-      <button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓</button>
-      <button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button>
-    </div></td>
+    <td><div style="display:flex;gap:4px"><button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓</button><button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button></div></td>
   </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد رسائل</td></tr>';
 };
 window.markRead=async id=>{await update(ref(db,`deltaart/messages/${id}`),{status:'read'});};
@@ -2170,89 +1522,51 @@ window.handleFileSelect=function(input){
   reader.readAsDataURL(file);
 };
 window.previewGalUrl=function(){const url=document.getElementById('gal-url').value.trim();const img=document.getElementById('gal-url-preview');if(url){img.src=url;img.style.display='block';}};
+
 window.addGalleryItem=async function(){
   const isFile=document.getElementById('gal-file-panel').style.display!=='none';
   const title=document.getElementById('gal-title').value.trim();
   const category=document.getElementById('gal-cat').value;
   const alertEl=document.getElementById('gal-alert');
-
   if(isFile){
     if(!window._galCurrentFile){showAlert(alertEl,'error','اختار صورة أولاً');return;}
     const file=window._galCurrentFile;
-
-    // Convert to base64 for reliable upload
-    const toBase64=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result);r.onerror=rej;r.readAsDataURL(f);});
-
+    const CLOUD='dlmda45sv';
+    // FIX 1: Cloudinary preset name with SPACE not underscore
+    const PRESET='deltaart c';
+    const formData=new FormData();
+    formData.append('file',file);formData.append('upload_preset',PRESET);formData.append('folder','deltaart/gallery');
     const progressBar=document.getElementById('upload-progress-bar'),progressFill=document.getElementById('upload-progress-fill');
-    progressBar.style.display='block';progressFill.style.width='20%';
+    progressBar.style.display='block';
     showAlert(alertEl,'success','⏳ جاري رفع الصورة...');
-
     try{
-      const b64=await toBase64(file);
-      progressFill.style.width='50%';
-
-      // Try Cloudinary upload with correct preset
-      const CLOUD='dlmda45sv';
-      // Try both preset variants
-      const presets=['deltaart_c','deltaart c','deltaart','ml_default'];
-      let imgUrl=null;
-
-      for(const PRESET of presets){
-        try{
-          const formData=new FormData();
-          formData.append('file',b64);
-          formData.append('upload_preset',PRESET);
-          const resp=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,{method:'POST',body:formData});
-          if(resp.ok){
-            const data=await resp.json();
-            if(data.secure_url){imgUrl=data.secure_url;break;}
-            else if(data.error){console.warn('Preset',PRESET,'failed:',data.error.message);continue;}
-          }
-        }catch(e2){console.warn('Preset',PRESET,'error:',e2);}
-      }
-
-      progressFill.style.width='80%';
-
-      if(!imgUrl){
-        // Fallback: store as base64 directly in Firebase (works for small images)
-        if(file.size<=800*1024){
-          imgUrl=b64;
-          showAlert(alertEl,'success','⏳ جاري الحفظ...');
-        } else {
-          throw new Error('فشل رفع الصورة على Cloudinary. تأكد من إعدادات الـ upload preset أو استخدم رابط URL');
-        }
-      }
-
+      const imgUrl=await new Promise((resolve,reject)=>{
+        const xhr=new XMLHttpRequest();
+        xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`);
+        xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=Math.round(e.loaded/e.total*100);progressFill.style.width=pct+'%';showAlert(alertEl,'success',`⏳ ${pct}%`);}};
+        xhr.onload=()=>{if(xhr.status===200)resolve(JSON.parse(xhr.responseText).secure_url);else reject(new Error('فشل الرفع — تأكد من إعدادات Cloudinary'));};
+        xhr.onerror=()=>reject(new Error('خطأ في الاتصال'));
+        xhr.send(formData);
+      });
       await push(ref(db,'deltaart/gallery'),{url:imgUrl,title,category,date:new Date().toISOString()});
-      progressFill.style.width='100%';
       showAlert(alertEl,'success','✅ تم رفع الصورة!');
-      setTimeout(()=>{
-        progressBar.style.display='none';progressFill.style.width='0%';
-        document.getElementById('file-preview-wrap').style.display='none';
-        window._galCurrentFile=null;
-        document.getElementById('gal-file-input').value='';
-        document.getElementById('gal-title').value='';
-        closeModal('add-gallery-modal');
-      },1500);
-
-    }catch(e){
-      showAlert(alertEl,'error',e.message||'فشل الرفع');
       progressBar.style.display='none';progressFill.style.width='0%';
-    }
-
+      document.getElementById('file-preview-wrap').style.display='none';
+      window._galCurrentFile=null;document.getElementById('gal-file-input').value='';document.getElementById('gal-title').value='';
+      setTimeout(()=>closeModal('add-gallery-modal'),1500);
+    }catch(e){showAlert(alertEl,'error',e.message||'فشل الرفع');progressBar.style.display='none';}
   } else {
     const url=document.getElementById('gal-url').value.trim();
     if(!url){showAlert(alertEl,'error','ادخل رابط الصورة');return;}
     try{
       await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});
       showAlert(alertEl,'success','✅ تم الإضافة');
-      document.getElementById('gal-url').value='';
-      document.getElementById('gal-url-preview').style.display='none';
-      document.getElementById('gal-title').value='';
+      document.getElementById('gal-url').value='';document.getElementById('gal-url-preview').style.display='none';document.getElementById('gal-title').value='';
       setTimeout(()=>closeModal('add-gallery-modal'),1500);
-    }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
+    }catch(e){showAlert(alertEl,'error','حدث خطأ');}
   }
 };
+
 function renderAdminGallery(all){
   const grid=document.getElementById('gallery-admin-grid');
   if(!all.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ei">🖼️</div><p>لا توجد صور</p></div>';return;}
@@ -2280,71 +1594,19 @@ window.addService=async function(){
 };
 window.delService=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/services/${id}`));};
 
-// ===== TEAM =====
-window._usersSnap = null;
+// ===== TEAM — FIX 3: render always =====
 function renderTeamTable(snap){
-  window._usersSnap = snap;
   const tbody=document.getElementById('team-tbody');
-  if(!snap||!snap.exists()){
-    // Try localStorage cache
-    try{
-      const cached=localStorage.getItem('da_users');
-      if(cached){
-        const arr=JSON.parse(cached);
-        if(arr.length>0){
-          tbody.innerHTML=arr.map(u=>`<tr>
-            <td><strong>${u.name||'—'}</strong></td>
-            <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
-            <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
-            <td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td>
-            <td style="color:var(--gray);font-size:12px">${fmtDate(u.createdAt)}</td>
-            <td><span style="color:var(--gray);font-size:11px">⏳</span></td>
-          </tr>`).join('');
-          return;
-        }
-      }
-    }catch(e){}
-    tbody.innerHTML=window._teamLoaded?
-      '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>':
-      '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:16px">⏳ جاري التحميل...</td></tr>';
-    return;
-  }
-  window._teamLoaded=true;
+  if(!tbody)return;
+  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
   let html='';
   snap.forEach(c=>{
     const u=c.val();
-    const uid=c.key;
-    html+=`<tr>
-      <td><strong>${u.name||'—'}</strong></td>
-      <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
-      <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
-      <td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td>
-      <td style="color:var(--gray);font-size:12px">${fmtDate(u.createdAt)}</td>
-      <td>
-        <div style="display:flex;gap:4px">
-          <button class="btn-sm ${u.status==='inactive'?'btn-success':'btn-warning'}" onclick="toggleUserStatus('${uid}','${u.status||'active'}')">${u.status==='inactive'?'✅ تفعيل':'⏸ تعطيل'}</button>
-          <button class="btn-sm btn-danger" onclick="deleteUserAccount('${uid}','${u.name||'هذا الموظف'}')">🗑️</button>
-        </div>
-      </td>
-    </tr>`;
+    html+=`<tr><td><strong>${u.name||'—'}</strong></td><td style="color:var(--gray)">${u.email||'—'}</td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td><td style="color:var(--gray)">${fmtDate(u.createdAt)}</td><td><button class="btn-sm btn-danger" onclick="deleteUserAccount('${c.key}','${(u.name||'').replace(/'/g,'')}')">🗑️</button></td></tr>`;
   });
   tbody.innerHTML=html||'<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:16px">لا يوجد موظفون</td></tr>';
 }
 
-window.toggleUserStatus=async function(uid,currentStatus){
-  const newStatus=currentStatus==='inactive'?'active':'inactive';
-  await update(ref(db,`deltaart/users/${uid}`),{status:newStatus});
-};
-
-window.deleteUserAccount=async function(uid,name){
-  if(!confirm(`إزالة "${name}" من فريق العمل؟
-(مش هيقدر يدخل بعد كده — بس بياناته هتفضل محفوظة)`))return;
-  try{
-    // Disable account instead of delete — data stays forever
-    await update(ref(db,`deltaart/users/${uid}`),{status:'inactive',removedAt:new Date().toISOString()});
-    alert('تم تعطيل الأكونت. بياناته وسجل حضوره لسه محفوظين.');
-  }catch(e){alert('خطأ: '+e.message);}
-};
 window.addUser=async function(){
   const name=document.getElementById('usr-name').value.trim(),email=document.getElementById('usr-email').value.trim(),pass=document.getElementById('usr-pass').value,role=document.getElementById('usr-role').value,alertEl=document.getElementById('usr-alert');
   if(!name||!email||!pass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
@@ -2352,12 +1614,18 @@ window.addUser=async function(){
   try{
     const cred=await createUserWithEmailAndPassword(auth,email,pass);
     await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,status:'active',createdAt:new Date().toISOString()});
-    showAlert(alertEl,'success','✅ تم إضافة الموظف: '+name);
+    showAlert(alertEl,'success','✅ تم إضافة الموظف');
     ['usr-name','usr-email','usr-pass'].forEach(id=>document.getElementById(id).value='');
-    // Refresh team table immediately
-    get(ref(db,'deltaart/users')).then(snap=>{window._usersSnap=snap;renderTeamTable(snap);});
     setTimeout(()=>closeModal('add-user-modal'),1500);
-  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ: '+e.message);}
+  }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
+};
+
+window.deleteUserAccount=async function(uid,name){
+  if(!confirm('حذف حساب "'+name+'"؟ مينفعش يدخل على اللوحة بعد كده.'))return;
+  try{
+    await remove(ref(db,'deltaart/users/'+uid));
+    showAlert(document.querySelector('.alert')||document.createElement('div'),'success','تم الحذف');
+  }catch(e){alert('حدث خطأ في الحذف');}
 };
 
 // ===== SETTINGS =====
@@ -2387,7 +1655,6 @@ window.savePrices=async function(){
   try{await set(ref(db,'deltaart/settings/prices'),prices);showAlert(alertEl,'success','✅ تم حفظ الأسعار');}catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
 
-// ===== PASSWORD =====
 window.changePassword=async function(){
   const curPass=document.getElementById('cur-pass').value,newPass=document.getElementById('new-pass').value,confPass=document.getElementById('conf-pass').value,alertEl=document.getElementById('pass-alert');
   if(!curPass||!newPass||!confPass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
@@ -2398,7 +1665,7 @@ window.changePassword=async function(){
     const cred=EmailAuthProvider.credential(user.email,curPass);
     await reauthenticateWithCredential(user,cred);
     await updatePassword(user,newPass);
-    if(currentUserData.uid&&currentUserData.uid!=='owner-static') await update(ref(db,`deltaart/users/${currentUserData.uid}`),{password:newPass});
+    if(currentUserData.uid&&currentUserData.uid!=='owner-static')await update(ref(db,`deltaart/users/${currentUserData.uid}`),{password:newPass});
     showAlert(alertEl,'success','✅ تم تغيير كلمة المرور');
     ['cur-pass','new-pass','conf-pass'].forEach(id=>document.getElementById(id).value='');
   }catch(e){
@@ -2408,110 +1675,51 @@ window.changePassword=async function(){
 };
 
 // ===== ATTENDANCE =====
-window._doLoadAttendance = function loadAttendance(){
+window._doLoadAttendance=function loadAttendance(){
   const dateEl=document.getElementById('att-date-filter');
   const selectedDate=dateEl.value||new Date().toISOString().split('T')[0];
   if(!dateEl.value)dateEl.value=selectedDate;
   get(ref(db,`deltaart/attendance/${selectedDate}`)).then(snap=>{
-    get(ref(db,'deltaart/users')).then(userSnap=>{
-      get(ref(db,'deltaart/workers')).then(workerSnap=>{
-        const records={};
-        if(snap.exists()) snap.forEach(c=>{records[c.key]=c.val();});
-
-        const allPersons=[];
-        if(userSnap.exists()) userSnap.forEach(c=>{allPersons.push({uid:c.key,...c.val(),ptype:'user'});});
-        if(workerSnap.exists()) workerSnap.forEach(c=>{allPersons.push({uid:'worker_'+c.key,...c.val(),ptype:'worker'});});
-
-        const presentCount=Object.keys(records).filter(k=>records[k].status!=='absent').length;
-        const absentCount=Object.keys(records).filter(k=>records[k].status==='absent').length;
-        const totalPersons=allPersons.length;
-        document.getElementById('att-present').textContent=presentCount;
-        document.getElementById('att-absent').textContent=Math.max(0,totalPersons-presentCount);
-
-        const tbody=document.getElementById('attendance-tbody');
-        if(!allPersons.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون أو عمال</td></tr>';return;}
-        tbody.innerHTML=allPersons.map(p=>{
-          const rec=records[p.uid];
-          const checkIn=rec?.checkIn?new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
-          const checkOut=rec?.checkOut?new Date(rec.checkOut).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
-          let hours='—';
-          if(rec?.checkIn&&rec?.checkOut){const diff=(new Date(rec.checkOut)-new Date(rec.checkIn))/3600000;hours=diff.toFixed(1)+' ساعة';}
-          else if(rec?.status==='half'){hours='نص يوم';}
-
-          let statusBadge='<span class="badge badge-gray">غير مسجل</span>';
-          if(rec){
-            if(rec.status==='present'||(!rec.status&&rec.checkIn)) statusBadge='<span class="badge badge-green">حاضر ✅</span>';
-            else if(rec.status==='absent') statusBadge='<span class="badge badge-red">غائب ❌</span>';
-            else if(rec.status==='half') statusBadge='<span class="badge badge-orange">نص يوم 🕐</span>';
-          }
-          const roleLabel=p.ptype==='worker'?'🔨 عامل':roleLabelAr(p.role);
-          return `<tr>
-            <td><strong>${p.name||'—'}</strong></td>
-            <td><span class="badge role-badge role-${p.role||'worker'}" style="font-size:11px">${roleLabel}</span></td>
-            <td style="color:var(--green)">${checkIn}</td>
-            <td style="color:var(--red)">${checkOut}</td>
-            <td style="color:var(--gold)">${hours}</td>
-            <td>${statusBadge}</td>
-          </tr>`;
-        }).join('');
-      });
+    Promise.all([get(ref(db,'deltaart/users')),get(ref(db,'deltaart/workers'))]).then(([userSnap,workerSnap])=>{
+      const records={};if(snap.exists())snap.forEach(c=>{records[c.key]=c.val();});
+      const allPersons=[];
+      if(userSnap.exists())userSnap.forEach(c=>{allPersons.push({uid:c.key,...c.val(),ptype:'user'});});
+      if(workerSnap.exists())workerSnap.forEach(c=>{allPersons.push({uid:'worker_'+c.key,...c.val(),ptype:'worker'});});
+      const presentCount=Object.keys(records).filter(k=>records[k].status!=='absent').length;
+      document.getElementById('att-present').textContent=presentCount;
+      document.getElementById('att-absent').textContent=Math.max(0,allPersons.length-presentCount);
+      const tbody=document.getElementById('attendance-tbody');
+      if(!allPersons.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون أو عمال</td></tr>';return;}
+      tbody.innerHTML=allPersons.map(p=>{
+        const rec=records[p.uid];
+        const checkIn=rec?.checkIn?new Date(rec.checkIn).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
+        const checkOut=rec?.checkOut?new Date(rec.checkOut).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—';
+        let hours='—';if(rec?.checkIn&&rec?.checkOut){const diff=(new Date(rec.checkOut)-new Date(rec.checkIn))/3600000;hours=diff.toFixed(1)+' ساعة';}else if(rec?.status==='half'){hours='نص يوم';}
+        let statusBadge='<span class="badge badge-gray">غير مسجل</span>';
+        if(rec){if(rec.status==='present'||(!rec.status&&rec.checkIn))statusBadge='<span class="badge badge-green">حاضر ✅</span>';else if(rec.status==='absent')statusBadge='<span class="badge badge-red">غائب ❌</span>';else if(rec.status==='half')statusBadge='<span class="badge badge-orange">نص يوم 🕐</span>';}
+        const roleLabel=p.ptype==='worker'?'🔨 عامل':roleLabelAr(p.role);
+        return`<tr><td><strong>${p.name||'—'}</strong></td><td><span class="badge role-badge role-${p.role||'worker'}">${roleLabel}</span></td><td style="color:var(--green)">${checkIn}</td><td style="color:var(--red)">${checkOut}</td><td style="color:var(--gold)">${hours}</td><td>${statusBadge}</td></tr>`;
+      }).join('');
     });
   });
-}
+};
 
-
-// ===== WEEKLY ATTENDANCE REPORT =====
-window.loadWeeklyReport = async function(period){
+window.loadWeeklyReport=async function(period){
   const div=document.getElementById('weekly-report-content');
   div.innerHTML='<div style="text-align:center;padding:20px;color:var(--gray)">⏳ جاري التحميل...</div>';
-  const now=new Date();
-  let startDate, endDate;
-  if(period==='this'){
-    const day=now.getDay();
-    startDate=new Date(now); startDate.setDate(now.getDate()-day); startDate.setHours(0,0,0,0);
-    endDate=new Date(startDate); endDate.setDate(startDate.getDate()+6); endDate.setHours(23,59,59,999);
-  } else if(period==='last'){
-    const day=now.getDay();
-    endDate=new Date(now); endDate.setDate(now.getDate()-day-1); endDate.setHours(23,59,59,999);
-    startDate=new Date(endDate); startDate.setDate(endDate.getDate()-6); startDate.setHours(0,0,0,0);
-  } else {
-    startDate=new Date(now); startDate.setDate(now.getDate()-13); startDate.setHours(0,0,0,0);
-    endDate=new Date(now); endDate.setHours(23,59,59,999);
-  }
-  // Build date list
-  const dates=[];
-  const d=new Date(startDate);
-  while(d<=endDate){dates.push(d.toISOString().split('T')[0]);d.setDate(d.getDate()+1);}
-
-  // Fetch all persons
-  const [userSnap, workerSnap] = await Promise.all([
-    get(ref(db,'deltaart/users')),
-    get(ref(db,'deltaart/workers'))
-  ]);
+  const now=new Date();let startDate,endDate;
+  if(period==='this'){const day=now.getDay();startDate=new Date(now);startDate.setDate(now.getDate()-day);startDate.setHours(0,0,0,0);endDate=new Date(startDate);endDate.setDate(startDate.getDate()+6);endDate.setHours(23,59,59,999);}
+  else if(period==='last'){const day=now.getDay();endDate=new Date(now);endDate.setDate(now.getDate()-day-1);endDate.setHours(23,59,59,999);startDate=new Date(endDate);startDate.setDate(endDate.getDate()-6);startDate.setHours(0,0,0,0);}
+  else{startDate=new Date(now);startDate.setDate(now.getDate()-13);startDate.setHours(0,0,0,0);endDate=new Date(now);endDate.setHours(23,59,59,999);}
+  const dates=[];const d=new Date(startDate);while(d<=endDate){dates.push(d.toISOString().split('T')[0]);d.setDate(d.getDate()+1);}
+  const [userSnap,workerSnap]=await Promise.all([get(ref(db,'deltaart/users')),get(ref(db,'deltaart/workers'))]);
   const persons=[];
-  if(userSnap.exists()) userSnap.forEach(c=>{const v=c.val();persons.push({uid:c.key,name:v.name||'—',type:'user',role:v.role});});
-  if(workerSnap.exists()) workerSnap.forEach(c=>{const v=c.val();persons.push({uid:'worker_'+c.key,name:v.name||'—',type:'worker',role:'worker'});});
-
+  if(userSnap.exists())userSnap.forEach(c=>{const v=c.val();persons.push({uid:c.key,name:v.name||'—',type:'user',role:v.role});});
+  if(workerSnap.exists())workerSnap.forEach(c=>{const v=c.val();persons.push({uid:'worker_'+c.key,name:v.name||'—',type:'worker',role:'worker'});});
   if(!persons.length){div.innerHTML='<div style="text-align:center;padding:24px;color:var(--gray)">لا يوجد موظفون</div>';return;}
-
-  // Fetch attendance for each date
   const attData={};
   await Promise.all(dates.map(dt=>get(ref(db,'deltaart/attendance/'+dt)).then(s=>{attData[dt]={};if(s.exists())s.forEach(c=>{attData[dt][c.key]=c.val();});})));
-
-  // Build summary per person
-  const summary=persons.map(p=>{
-    let present=0,absent=0,half=0,notSet=0;
-    dates.forEach(dt=>{
-      const rec=attData[dt]?.[p.uid];
-      if(!rec) notSet++;
-      else if(rec.status==='absent') absent++;
-      else if(rec.status==='half') half++;
-      else present++;
-    });
-    return{...p,present,absent,half,notSet,total:dates.length};
-  });
-
-  const periodLabel=period==='this'?'هذا الأسبوع':period==='last'?'الأسبوع الماضي':'آخر أسبوعين';
+  const summary=persons.map(p=>{let present=0,absent=0,half=0,notSet=0;dates.forEach(dt=>{const rec=attData[dt]?.[p.uid];if(!rec)notSet++;else if(rec.status==='absent')absent++;else if(rec.status==='half')half++;else present++;});return{...p,present,absent,half,notSet,total:dates.length};});
   div.innerHTML=`
     <div style="font-size:13px;color:var(--gray);margin-bottom:12px">الفترة: ${startDate.toLocaleDateString('ar-EG')} — ${endDate.toLocaleDateString('ar-EG')} (${dates.length} أيام)</div>
     <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse">
@@ -2523,42 +1731,35 @@ window.loadWeeklyReport = async function(period){
         <th style="padding:8px 12px;font-size:12px;color:#F97316;border-bottom:1px solid rgba(201,168,76,0.1)">🕐 نص يوم</th>
         <th style="padding:8px 12px;font-size:12px;color:var(--gray);border-bottom:1px solid rgba(201,168,76,0.1)">نسبة الحضور</th>
       </tr></thead>
-      <tbody>
-        ${summary.map(p=>{
-          const pct=p.total>0?Math.round((p.present+p.half*0.5)/p.total*100):0;
-          const pctColor=pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)';
-          return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
-            <td style="padding:10px 12px"><strong>${p.name}</strong></td>
-            <td style="padding:10px 12px"><span class="badge role-badge role-${p.role||'worker'}" style="font-size:10px">${p.type==='worker'?'🔨 عامل':roleLabelAr(p.role)}</span></td>
-            <td style="padding:10px 12px;text-align:center;color:#22C55E;font-weight:700">${p.present}</td>
-            <td style="padding:10px 12px;text-align:center;color:#EF4444;font-weight:700">${p.absent+p.notSet}</td>
-            <td style="padding:10px 12px;text-align:center;color:#F97316;font-weight:700">${p.half}</td>
-            <td style="padding:10px 12px">
-              <div style="display:flex;align-items:center;gap:8px">
-                <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${pctColor};border-radius:20px"></div></div>
-                <span style="font-size:12px;font-weight:700;color:${pctColor};min-width:32px">${pct}%</span>
-              </div>
-            </td>
-          </tr>`;
-        }).join('')}
-      </tbody>
-    </table></div>
-  `;
+      <tbody>${summary.map(p=>{const pct=p.total>0?Math.round((p.present+p.half*0.5)/p.total*100):0;const pctColor=pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--red)';return`<tr style="border-bottom:1px solid rgba(255,255,255,0.04)"><td style="padding:10px 12px"><strong>${p.name}</strong></td><td style="padding:10px 12px"><span class="badge role-badge role-${p.role||'worker'}">${p.type==='worker'?'🔨 عامل':roleLabelAr(p.role)}</span></td><td style="padding:10px 12px;text-align:center;color:#22C55E;font-weight:700">${p.present}</td><td style="padding:10px 12px;text-align:center;color:#EF4444;font-weight:700">${p.absent+p.notSet}</td><td style="padding:10px 12px;text-align:center;color:#F97316;font-weight:700">${p.half}</td><td style="padding:10px 12px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:20px;height:6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${pctColor};border-radius:20px"></div></div><span style="font-size:12px;font-weight:700;color:${pctColor};min-width:32px">${pct}%</span></div></td></tr>`;}).join('')}</tbody>
+    </table></div>`;
 };
 
-// ===== VISITORS — FIXED =====
-// The visitors data is stored under deltaart/visitors as a list
-// Each entry: { date, duration (seconds), level (high/medium/low), ua }
-window._doLoadVisitors = function loadVisitors(){
-  onValue(ref(db,'deltaart/visitors'), snap=>{
+// ===== VISITORS — FIXED: reads flat list OR date-partitioned =====
+window._doLoadVisitors=function loadVisitors(){
+  onValue(ref(db,'deltaart/visitors'),snap=>{
     let high=0,medium=0,low=0;const visits=[];
     if(snap.exists()){
       snap.forEach(c=>{
-        const v={id:c.key,...c.val()};
-        visits.push(v);
-        if(v.level==='high'||v.duration>=180)high++;
-        else if(v.level==='medium'||(v.duration>=30&&v.duration<180))medium++;
-        else low++;
+        const v=c.val();
+        // Support both flat list {date,duration,level,...} and date-partitioned {date:{sessionId:{...}}}
+        if(v&&typeof v==='object'){
+          if(v.date){
+            // flat entry
+            visits.push({id:c.key,...v});
+            const level=v.level||(v.duration>=180?'high':v.duration>=30?'medium':'low');
+            if(level==='high')high++;else if(level==='medium')medium++;else low++;
+          } else {
+            // date partition — iterate sessions under this date
+            Object.entries(v).forEach(([sid,sv])=>{
+              if(sv&&sv.date){
+                visits.push({id:sid,...sv});
+                const level=sv.level||(sv.duration>=180?'high':sv.duration>=30?'medium':'low');
+                if(level==='high')high++;else if(level==='medium')medium++;else low++;
+              }
+            });
+          }
+        }
       });
     }
     document.getElementById('vis-high').textContent=high;
@@ -2566,25 +1767,20 @@ window._doLoadVisitors = function loadVisitors(){
     document.getElementById('vis-low').textContent=low;
     const tbody=document.getElementById('visitors-tbody');
     if(!visits.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد زوار بعد — تأكد من ربط كود التتبع بالموقع</td></tr>';return;}
-    const sorted=visits.sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+    const sorted=visits.filter(v=>v.date).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
     tbody.innerHTML=sorted.map(v=>{
       const level=v.level||(v.duration>=180?'high':v.duration>=30?'medium':'low');
       const levelMap={high:'<span class="badge badge-green">🟢 مهتم جداً</span>',medium:'<span class="badge badge-yellow">🟡 مهتم شوية</span>',low:'<span class="badge badge-red">🔴 مش مهتم</span>'};
       const dur=!v.duration?'—':v.duration<60?v.duration+' ث':Math.floor(v.duration/60)+' د '+(v.duration%60)+' ث';
       const device=/mobile|android|iphone/i.test(v.ua||'')?'📱 موبايل':'💻 كمبيوتر';
       const timeStr=v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'';
-      return `<tr>
-        <td style="color:var(--gray)">${v.date?fmtDate(v.date):''} ${timeStr}</td>
-        <td style="color:var(--gold);font-weight:700">${dur}</td>
-        <td>${levelMap[level]||'—'}</td>
-        <td>${device}</td>
-      </tr>`;
+      return`<tr><td style="color:var(--gray)">${v.date?fmtDate(v.date):''} ${timeStr}</td><td style="color:var(--gold);font-weight:700">${dur}</td><td>${levelMap[level]||'—'}</td><td>${device}</td></tr>`;
     }).join('');
   });
-}
+};
 window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));};
 
-// ===== ATTENDANCE CHECKIN (auto) =====
+// ===== AUTO CHECK-IN =====
 async function recordCheckIn(){
   const uid=currentUserData?.uid;if(!uid||uid==='owner-static')return;
   const today=new Date().toISOString().split('T')[0];
@@ -2613,17 +1809,12 @@ const pageTitles={dashboard:'لوحة التحكم',bookings:'الحجوزات',
 function goPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const page=document.getElementById('page-'+name);
-  if(page) page.classList.add('active');
+  if(page)page.classList.add('active');
   document.getElementById('topbar-title').textContent=pageTitles[name]||name;
-  // update mobile topbar title
-  const mTopbar=document.querySelector('.mobile-topbar .mob-logo span');
-  if(mTopbar) mTopbar.innerHTML=`دلتا <span style="color:var(--gold)">آرت</span>`;
   if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
-  if(name==='attendance'){if(typeof window._doLoadAttendance==='function')window._doLoadAttendance();}
-  if(name==='visitors'){if(typeof window._doLoadVisitors==='function')window._doLoadVisitors();}
-  if(name==='revenue'){if(typeof window.loadRevenueReport==='function')window.loadRevenueReport('today',null);}
-  if(name==='clients'){if(typeof window.renderClientsTable==='function')window.renderClientsTable();}
-  if(name==='team'){if(typeof window.renderFullTeamPage==='function')window.renderFullTeamPage();}
+  if(name==='attendance')setTimeout(()=>{if(typeof window._doLoadAttendance==='function')window._doLoadAttendance();},100);
+  if(name==='visitors')setTimeout(()=>{if(typeof window._doLoadVisitors==='function')window._doLoadVisitors();},100);
+  if(name==='revenue')setTimeout(()=>{if(typeof window.loadRevenueReport==='function')window.loadRevenueReport('today',null);},100);
   closeMobileSidebar();
 }
 
@@ -2649,96 +1840,14 @@ function togglePass(id,btn){
   if(input.type==='password'){input.type='text';btn.textContent='🙈';}
   else{input.type='password';btn.textContent='👁️';}
 }
-
-// Mobile sidebar
 function toggleMobileSidebar(){
   const sidebar=document.getElementById('sidebar');
   const overlay=document.getElementById('sidebar-overlay');
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('open');
+  sidebar.classList.toggle('open');overlay.classList.toggle('open');
 }
 function closeMobileSidebar(){
   document.getElementById('sidebar')?.classList.remove('open');
   document.getElementById('sidebar-overlay')?.classList.remove('open');
-}
-
-// Attendance modal open — delegates to module-scope function
-function loadAttendance(){
-  if(typeof window._doLoadAttendance==='function') window._doLoadAttendance();
-}
-</script>
-
-<script>
-// ===== SERVICE WORKER — للتخزين المؤقت وسرعة التحميل =====
-if('serviceWorker' in navigator){
-  // Inline service worker as blob
-  const swCode = `
-const CACHE_NAME = 'deltaart-admin-v3';
-const CACHE_URLS = [
-  self.location.pathname, // cache this page itself
-];
-
-self.addEventListener('install', e=>{
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(cache=>cache.addAll(CACHE_URLS))
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', e=>{
-  e.waitUntil(
-    caches.keys().then(keys=>Promise.all(
-      keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k))
-    ))
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', e=>{
-  const url = new URL(e.request.url);
-  
-  // Always fetch Firebase, Google APIs from network
-  if(url.hostname.includes('firebase') || 
-     url.hostname.includes('google') || 
-     url.hostname.includes('googleapis') ||
-     url.hostname.includes('cloudinary') ||
-     url.hostname.includes('gstatic')){
-    e.respondWith(fetch(e.request).catch(()=>new Response('', {status: 503})));
-    return;
-  }
-  
-  // For the app itself: serve from cache, update in background
-  e.respondWith(
-    caches.match(e.request).then(cached=>{
-      const fetchPromise = fetch(e.request).then(response=>{
-        if(response && response.status === 200 && response.type === 'basic'){
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache=>cache.put(e.request, clone));
-        }
-        return response;
-      }).catch(()=>null);
-      return cached || fetchPromise;
-    })
-  );
-});
-`;
-
-  const blob = new Blob([swCode], {type:'application/javascript'});
-  const swUrl = URL.createObjectURL(blob);
-  
-  navigator.serviceWorker.register(swUrl, {scope: '/'})
-    .then(reg=>{
-      console.log('SW registered');
-      reg.addEventListener('updatefound',()=>{
-        const newWorker=reg.installing;
-        newWorker.addEventListener('statechange',()=>{
-          if(newWorker.state==='installed'&&navigator.serviceWorker.controller){
-            console.log('New SW installed');
-          }
-        });
-      });
-    })
-    .catch(err=>console.log('SW failed (normal on localhost):', err));
 }
 </script>
 </body>
