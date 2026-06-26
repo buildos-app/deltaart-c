@@ -394,9 +394,12 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 
     <!-- CLIENTS PAGE -->
     <div class="page" id="page-clients">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
         <div><h3 style="font-size:18px;font-weight:700;margin-bottom:4px">👤 العملاء</h3><p style="color:var(--gray);font-size:13px">إدارة بيانات العملاء</p></div>
-        <button class="btn-sm btn-primary" onclick="openModal('add-client-modal')">➕ عميل جديد</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-sm btn-outline-sm" onclick="window.toggleArchivedClients&&window.toggleArchivedClients()" id="archived-toggle-btn">📦 عرض المؤرشفين</button>
+          <button class="btn-sm btn-primary" onclick="openModal('add-client-modal')">➕ عميل جديد</button>
+        </div>
       </div>
       <div class="panel">
         <div style="padding:12px 20px;border-bottom:1px solid rgba(201,168,76,0.1)">
@@ -473,7 +476,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
       <div class="panel" style="margin-bottom:16px">
         <div class="panel-header"><h3>👥 الموظفون (بأكونت)</h3></div>
-        <table><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>تاريخ الإضافة</th></tr></thead>
+        <table><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
         <tbody id="team-tbody"></tbody></table>
       </div>
       <div class="panel">
@@ -888,10 +891,49 @@ const firebaseConfig = {
   appId:"1:892254712139:web:54f53b61ff7083ca2d38ce"
 };
 
+
+// ============================================================
+// FIREBASE RULES — IMPORTANT FOR DATA PERSISTENCE
+// Go to: https://console.firebase.google.com
+// Project: delta-art-26007 → Realtime Database → Rules
+// Set these rules (copy exactly):
+// {
+//   "rules": {
+//     ".read": "auth != null",
+//     ".write": "auth != null"
+//   }
+// }
+// These rules keep ALL data forever for authenticated users.
+// WITHOUT this, Firebase test rules expire after 30 days!
+// ============================================================
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence).catch(()=>{});
+
+// Monitor connection state — show offline warning
+onValue(ref(db,'.info/connected'), snap=>{
+  const connected=snap.val();
+  let indicator=document.getElementById('connection-indicator');
+  if(!indicator){
+    indicator=document.createElement('div');
+    indicator.id='connection-indicator';
+    indicator.style.cssText='position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:9999;padding:8px 20px;border-radius:20px;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;transition:all 0.3s;pointer-events:none';
+    document.body.appendChild(indicator);
+  }
+  if(connected){
+    indicator.textContent='🟢 متصل بالإنترنت';
+    indicator.style.background='rgba(34,197,94,0.9)';
+    indicator.style.color='#fff';
+    indicator.style.opacity='1';
+    setTimeout(()=>{indicator.style.opacity='0';},2000);
+  } else {
+    indicator.textContent='🔴 غير متصل — البيانات لن تُحفظ';
+    indicator.style.background='rgba(239,68,68,0.95)';
+    indicator.style.color='#fff';
+    indicator.style.opacity='1';
+  }
+});
 
 const SUPERADMIN_EMAIL = 'superadmin@deltaart.com';
 const OWNER_EMAIL = 'admin@deltaart.com';
@@ -1090,12 +1132,12 @@ function initApp(){
     }
   });
 
-  // Workers (no-account)
+  // Workers (no-account) — always load and render
   onValue(ref(db,'deltaart/workers'), snap=>{
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allWorkers=all;
-    renderWorkersTable(all);
+    renderWorkersTable(all); // always render, fn checks if element exists
   });
 
   // Services
@@ -1116,6 +1158,8 @@ function initApp(){
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
     window._allInvoices=all;
+    // Also refresh clients table since it shows financial stats
+    renderClientsTable();
     if(currentUserRole==='owner'){
       calcRevenue();
       renderDashInvoices(all);
@@ -1154,14 +1198,21 @@ window.addWorker = async function(){
 
 function renderWorkersTable(workers){
   const tbody=document.getElementById('workers-tbody');
-  if(!workers.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>';return;}
-  tbody.innerHTML=workers.map(w=>`<tr>
+  if(!tbody)return; // page might not be active
+  if(!workers||!workers.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>';return;}
+  tbody.innerHTML=workers.filter(w=>!w.archived).map(w=>`<tr>
     <td><strong>${w.name}</strong></td>
     <td style="color:var(--gray)">${w.phone||'—'}</td>
     <td style="color:var(--gray)">${fmtDate(w.createdAt)}</td>
-    <td><button class="btn-sm btn-danger" onclick="deleteWorker('${w.id}')">🗑️</button></td>
-  </tr>`).join('');
+    <td><button class="btn-sm btn-danger" onclick="archiveWorker('${w.id}','${(w.name||'').replace(/'/g,'')}')" title="إزالة">🗑️</button></td>
+  </tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد عمال</td></tr>';
 }
+
+window.archiveWorker=async function(id,name){
+  if(!confirm(`إزالة "${name}" من القائمة؟
+(سجل حضوره هيفضل محفوظ)`))return;
+  await update(ref(db,`deltaart/workers/${id}`),{archived:true,archivedAt:new Date().toISOString()});
+};
 window.deleteWorker=async id=>{if(confirm('حذف العامل؟'))await remove(ref(db,`deltaart/workers/${id}`));};
 
 // Render full team page — called when navigating to team page
@@ -1191,15 +1242,18 @@ window.openAttendanceModal = function(){
 
 window.renderAttPersonList = function renderAttPersonList(){
   const list=document.getElementById('att-person-list');
+  if(!list)return;
   list.innerHTML='<div style="color:var(--gray);text-align:center;padding:12px">⏳ جاري التحميل...</div>';
-  Promise.all([
-    get(ref(db,'deltaart/users')),
-    get(ref(db,'deltaart/workers'))
-  ]).then(([userSnap, workerSnap])=>{
+  
+  // Use cached data first for instant display on mobile
+  const cachedUsers=window._usersSnap;
+  const cachedWorkers=window._allWorkers||[];
+  
+  function buildList(userSnap, workers){
     const items=[];
-    if(userSnap.exists()) userSnap.forEach(c=>{const v=c.val();items.push({uid:c.key,name:v.name||'—',role:v.role||'employee',type:'user'});});
-    if(workerSnap.exists()) workerSnap.forEach(c=>{const v=c.val();items.push({uid:'worker_'+c.key,name:v.name||'—',role:'worker',type:'worker'});});
-    if(!items.length){list.innerHTML='<div style="color:var(--gray);text-align:center;padding:16px">لا يوجد موظفون أو عمال</div>';return;}
+    if(userSnap&&userSnap.exists()) userSnap.forEach(c=>{const v=c.val();items.push({uid:c.key,name:v.name||'—',role:v.role||'employee',type:'user'});});
+    workers.forEach(w=>items.push({uid:'worker_'+w.id,name:w.name||'—',role:'worker',type:'worker'}));
+    if(!items.length){list.innerHTML='<div style="color:var(--gray);text-align:center;padding:16px">لا يوجد موظفون أو عمال<br><small>أضف من فريق العمل أولاً</small></div>';return;}
     list.innerHTML=items.map(p=>`
       <div class="worker-select-card" id="atp-${p.uid}" onclick="selectAttPersonById('${p.uid}')">
         <div>
@@ -1209,7 +1263,24 @@ window.renderAttPersonList = function renderAttPersonList(){
         <span style="font-size:20px">${p.type==='worker'?'🔨':'👔'}</span>
       </div>`).join('');
     window._attPersonsCache=items;
-  });
+  }
+  
+  if(cachedUsers){
+    buildList(cachedUsers, cachedWorkers);
+  }
+  
+  // Always fetch fresh from DB too
+  Promise.all([get(ref(db,'deltaart/users')),get(ref(db,'deltaart/workers'))])
+    .then(([uSnap,wSnap])=>{
+      window._usersSnap=uSnap;
+      const workers=[];
+      if(wSnap.exists()) wSnap.forEach(c=>workers.push({id:c.key,...c.val()}));
+      window._allWorkers=workers;
+      buildList(uSnap, workers);
+    })
+    .catch(e=>{
+      if(!cachedUsers) list.innerHTML='<div style="color:var(--red);text-align:center;padding:16px">خطأ في التحميل — تأكد من الاتصال</div>';
+    });
 }
 
 window.selectAttPersonById=function(uid){
@@ -1268,17 +1339,23 @@ window.addClient = async function(){
   const notes=document.getElementById('cl-notes').value.trim();
   const alertEl=document.getElementById('cl-alert');
   if(!name||!phone){showAlert(alertEl,'error','اسم ورقم الهاتف مطلوبان');return;}
+  // Disable button to prevent double-tap on mobile
+  const saveBtn=alertEl.previousElementSibling;
+  if(saveBtn) saveBtn.disabled=true;
   try{
     const newRef=await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
-    // Immediately add to local cache so table updates even before onValue fires
     const newClient={id:newRef.key,name,phone,phone2,address,notes,createdAt:new Date().toISOString()};
     window._allClients=[...window._allClients,newClient];
     renderClientsTable();
     renderInvClientList();
-    showAlert(alertEl,'success','✅ تم إضافة العميل: '+name);
+    showAlert(alertEl,'success','✅ تم الحفظ في قاعدة البيانات: '+name);
     ['cl-name','cl-phone','cl-phone2','cl-address','cl-notes'].forEach(id=>document.getElementById(id).value='');
-    setTimeout(()=>closeModal('add-client-modal'),1500);
-  } catch(e){showAlert(alertEl,'error','خطأ: '+e.message);}
+    if(saveBtn) saveBtn.disabled=false;
+    setTimeout(()=>closeModal('add-client-modal'),1800);
+  } catch(e){
+    showAlert(alertEl,'error','خطأ في الحفظ: '+e.message);
+    if(saveBtn) saveBtn.disabled=false;
+  }
 };
 
 function calcClientStats(clientId){
@@ -1288,9 +1365,21 @@ function calcClientStats(clientId){
   return{count:invs.length,total,paid,remaining:total-paid};
 }
 
+window.restoreClient=async id=>{
+  await update(ref(db,`deltaart/clients/${id}`),{archived:false,archivedAt:null});
+};
+window._showArchivedClients=false;
+window.toggleArchivedClients=function(){
+  window._showArchivedClients=!window._showArchivedClients;
+  renderClientsTable();
+};
 window.renderClientsTable = function(){
   const q=(document.getElementById('client-search')?.value||'').toLowerCase();
-  const clients=window._allClients.filter(c=>!q||(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q));
+  const showArchived=window._showArchivedClients||false;
+  const clients=window._allClients.filter(c=>{
+    if(!showArchived && c.archived) return false; // hide archived unless toggled
+    return !q||(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q);
+  });
   const tbody=document.getElementById('clients-tbody');
   if(!clients.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>';return;}
   const showMoney=currentUserRole==='owner';
@@ -1308,7 +1397,9 @@ window.renderClientsTable = function(){
         <div style="display:flex;gap:4px">
           <button class="btn-sm btn-primary" onclick="openNewInvoiceForClient('${cl.id}')">➕ فاتورة</button>
           <button class="btn-sm btn-outline-sm" onclick="viewClientInvoices('${cl.id}')">👁️</button>
-          ${showMoney?`<button class="btn-sm btn-danger" onclick="deleteClient('${cl.id}')">🗑️</button>`:''}
+          ${showMoney?(cl.archived?
+            `<button class="btn-sm btn-success" onclick="restoreClient('${cl.id}')">↩️ استعادة</button>`:
+            `<button class="btn-sm btn-danger" onclick="deleteClient('${cl.id}')">📦 أرشفة</button>`):''}
         </div>
       </td>
     </tr>`;
@@ -1317,10 +1408,11 @@ window.renderClientsTable = function(){
 window.filterClients=window.renderClientsTable;
 
 window.deleteClient=async id=>{
-  if(!confirm('حذف العميل وكل فواتيره؟'))return;
-  await remove(ref(db,`deltaart/clients/${id}`));
-  const invs=window._allInvoices.filter(i=>i.clientId===id);
-  for(const inv of invs) await remove(ref(db,`deltaart/invoices/${inv.id}`));
+  const cl=window._allClients.find(c=>c.id===id);
+  if(!confirm(`هل تريد أرشفة "${cl?.name||'العميل'}"؟
+(مش هيتمسح — هيتخفى بس وتقدر ترجعه)`))return;
+  // Archive only — never delete from Firebase
+  await update(ref(db,`deltaart/clients/${id}`),{archived:true,archivedAt:new Date().toISOString()});
 };
 
 window.viewClientInvoices=function(clientId){
@@ -1329,60 +1421,142 @@ window.viewClientInvoices=function(clientId){
   const st=calcClientStats(clientId);
   const pct=st.total>0?Math.round(st.paid/st.total*100):0;
   const showMoney=currentUserRole==='owner';
-  document.getElementById('invoice-detail-content').innerHTML=`
-    <div style="font-size:18px;font-weight:900;margin-bottom:4px">${cl?.name||'—'}</div>
-    <div style="color:var(--gray);font-size:13px;margin-bottom:16px">${cl?.phone||''} ${cl?.address?'• '+cl.address:''}</div>
-    ${showMoney?`
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
-      <div class="stat-card" style="text-align:center"><div class="sc-label">إجمالي العقود</div><div style="font-size:20px;font-weight:900;color:var(--gold)">${st.total.toLocaleString('ar-EG')}</div></div>
-      <div class="stat-card" style="text-align:center"><div class="sc-label">تم الدفع</div><div style="font-size:20px;font-weight:900;color:var(--green)">${st.paid.toLocaleString('ar-EG')}</div></div>
-      <div class="stat-card" style="text-align:center"><div class="sc-label">المتبقي</div><div style="font-size:20px;font-weight:900;color:var(--red)">${(st.total-st.paid).toLocaleString('ar-EG')}</div></div>
+
+  let html=`
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <div>
+        <div style="font-size:20px;font-weight:900">${cl?.name||'—'}</div>
+        <div style="color:var(--gray);font-size:13px;margin-top:4px">
+          📞 <a href="tel:${cl?.phone}" style="color:var(--gold)">${cl?.phone||''}</a>
+          ${cl?.phone2?` &nbsp;|&nbsp; <a href="tel:${cl?.phone2}" style="color:var(--gray)">${cl.phone2}</a>`:''}
+          ${cl?.address?` &nbsp;|&nbsp; 📍 ${cl.address}`:''}
+        </div>
+      </div>
+      <button class="btn-sm btn-primary" onclick="openNewInvoiceForClient('${clientId}');closeModal('invoice-detail-modal')">➕ مشروع جديد</button>
+    </div>`;
+
+  if(showMoney){
+    const remColor=st.remaining>0?'var(--red)':'var(--green)';
+    html+=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+      <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:11px;color:var(--gray);margin-bottom:4px">💰 إجمالي العقود</div>
+        <div style="font-size:20px;font-weight:900;color:var(--gold)">${st.total.toLocaleString('ar-EG')}</div>
+        <div style="font-size:11px;color:var(--gray)">جنيه</div>
+      </div>
+      <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:11px;color:var(--gray);margin-bottom:4px">✅ تم الدفع</div>
+        <div style="font-size:20px;font-weight:900;color:var(--green)">${st.paid.toLocaleString('ar-EG')}</div>
+        <div style="font-size:11px;color:var(--gray)">جنيه</div>
+      </div>
+      <div style="background:${st.remaining>0?'rgba(239,68,68,0.1)':'rgba(34,197,94,0.1)'};border:1px solid ${st.remaining>0?'rgba(239,68,68,0.25)':'rgba(34,197,94,0.25)'};border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:11px;color:var(--gray);margin-bottom:4px">⏳ المتبقي</div>
+        <div style="font-size:20px;font-weight:900;color:${remColor}">${st.remaining.toLocaleString('ar-EG')}</div>
+        <div style="font-size:11px;color:var(--gray)">جنيه</div>
+      </div>
     </div>
-    <div class="debt-bar-wrap" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-bottom:4px"><span>نسبة التحصيل</span><span>${pct}%</span></div><div class="debt-bar-bg"><div class="debt-bar-fill" style="width:${pct}%"></div></div></div>`:''}
-    <div style="font-weight:700;font-size:14px;margin-bottom:8px">المشاريع والفواتير (${invs.length})</div>
-    ${invs.map(inv=>`
-      <div style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px;margin-bottom:8px">
-        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
-          <div><div style="font-weight:700">${inv.projectName||'مشروع'}</div><div style="font-size:12px;color:var(--gray)">${fmtDate(inv.createdAt)}</div></div>
-          ${showMoney?`<span class="badge ${invPayStatus(inv)}">${invPayLabel(inv)}</span>`:''}
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-bottom:5px">
+        <span>نسبة التحصيل</span><span style="font-weight:700;color:${pct>=100?'var(--green)':pct>=50?'var(--gold)':'var(--red)'}">${pct}%</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:20px;height:8px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${pct>=100?'var(--green)':pct>=50?'var(--gold)':'var(--red)'};border-radius:20px;transition:width 0.4s"></div>
+      </div>
+    </div>`;
+  }
+
+  if(!invs.length){
+    html+=`<div style="text-align:center;color:var(--gray);padding:32px">لا يوجد مشاريع بعد</div>`;
+  } else {
+    html+=`<div style="font-weight:700;font-size:14px;margin-bottom:10px;color:var(--gold)">📋 المشاريع (${invs.length})</div>`;
+    invs.forEach(inv=>{
+      const rem=(inv.total||0)-(inv.totalPaid||0);
+      const invPct=inv.total>0?Math.round((inv.totalPaid||0)/inv.total*100):0;
+      html+=`
+      <div style="background:var(--navy3);border:1px solid rgba(201,168,76,0.15);border-radius:12px;margin-bottom:12px;overflow:hidden">
+        <!-- Project Header -->
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-weight:700;font-size:15px">${inv.projectName||'مشروع'}</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:2px">📅 ${fmtDate(inv.createdAt)} ${inv.createdBy?'• بواسطة: '+inv.createdBy:''}</div>
+          </div>
+          ${showMoney?`<span class="badge ${invPayStatus(inv)}" style="font-size:12px;padding:5px 12px">${invPayLabel(inv)}</span>`:''}
         </div>
         ${showMoney?`
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;margin-bottom:10px">
-          <div><div style="color:var(--gray)">إجمالي المشروع</div><div style="font-weight:700;color:var(--gold)">${(inv.total||0).toLocaleString('ar-EG')} جنيه</div></div>
-          <div><div style="color:var(--gray)">تم الدفع</div><div style="font-weight:700;color:var(--green)">${(inv.totalPaid||0).toLocaleString('ar-EG')} جنيه</div></div>
-          <div><div style="color:var(--gray)">المتبقي</div><div style="font-weight:700;color:${((inv.total||0)-(inv.totalPaid||0))>0?'var(--red)':'var(--green)'}"}>${((inv.total||0)-(inv.totalPaid||0)).toLocaleString('ar-EG')} جنيه</div></div>
-        </div>`:''}
-        ${(inv.items||[]).length?`
-        <div style="font-size:11px;color:var(--gray);margin-bottom:6px">بنود المشروع:</div>
-        <table style="width:100%;border-collapse:collapse;font-size:12px">
-          <tr style="color:var(--gray)"><th style="text-align:right;padding:4px">البند</th><th style="text-align:right;padding:4px">الكمية</th><th style="text-align:right;padding:4px">سعر الوحدة</th><th style="text-align:right;padding:4px">الإجمالي</th><th style="padding:4px"></th></tr>
-          ${(inv.items||[]).map((item,idx)=>`<tr>
-            <td style="padding:4px"><input type="text" value="${item.name||''}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;outline:none;padding:2px"></td>
-            <td style="padding:4px"><input type="number" value="${item.qty||0}" onchange="updateInvItem('${inv.id}',${idx},'qty',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:60px;outline:none;padding:2px;text-align:center"></td>
-            <td style="padding:4px">${showMoney?`<input type="number" value="${item.price||0}" onchange="updateInvItem('${inv.id}',${idx},'price',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:80px;outline:none;padding:2px;text-align:center">`:'—'}</td>
-            <td style="padding:4px;color:var(--gold);font-weight:700">${showMoney?((item.qty||0)*(item.price||0)).toLocaleString('ar-EG'):'—'}</td>
-            <td style="padding:4px"><button onclick="removeInvItem('${inv.id}',${idx})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:4px;cursor:pointer;padding:2px 6px;font-size:11px">✕</button></td>
-          </tr>`).join('')}
-        </table>
-        <button onclick="addItemToExistingInv('${inv.id}')" class="btn-sm btn-outline-sm" style="margin-top:6px;font-size:11px;padding:4px 10px">➕ إضافة بند</button>
+        <!-- Financial Summary -->
+        <div style="padding:12px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="text-align:center">
+            <div style="font-size:10px;color:var(--gray)">إجمالي المشروع</div>
+            <div style="font-weight:700;color:var(--gold);font-size:15px">${(inv.total||0).toLocaleString('ar-EG')}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:10px;color:var(--gray)">تم الدفع</div>
+            <div style="font-weight:700;color:var(--green);font-size:15px">${(inv.totalPaid||0).toLocaleString('ar-EG')}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:10px;color:var(--gray)">المتبقي</div>
+            <div style="font-weight:700;color:${rem>0?'var(--red)':'var(--green)'};font-size:15px">${rem.toLocaleString('ar-EG')}</div>
+          </div>
+        </div>
+        <div style="padding:0 16px 10px">
+          <div style="background:rgba(255,255,255,0.06);border-radius:20px;height:5px;overflow:hidden;margin-top:8px">
+            <div style="height:100%;width:${invPct}%;background:${invPct>=100?'var(--green)':invPct>=50?'var(--gold)':'var(--red)'};border-radius:20px"></div>
+          </div>
+        </div>
         `:''}
+        <!-- Items -->
+        ${(inv.items||[]).length?`
+        <div style="padding:0 16px 10px">
+          <div style="font-size:11px;color:var(--gray);margin-bottom:6px;font-weight:600">بنود المشروع:</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr style="color:var(--gray)">
+              <th style="text-align:right;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">البند</th>
+              <th style="text-align:center;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">الكمية</th>
+              ${showMoney?`<th style="text-align:center;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">سعر الوحدة</th>
+              <th style="text-align:center;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">الإجمالي</th>`:''}
+              <th style="padding:5px 4px;border-bottom:1px solid rgba(255,255,255,0.06)"></th>
+            </tr>
+            ${(inv.items||[]).map((item,idx)=>`<tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
+              <td style="padding:5px 4px"><input type="text" value="${(item.name||'').replace(/"/g,'&quot;')}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.15);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;outline:none;padding:2px"></td>
+              <td style="padding:5px 4px;text-align:center"><input type="number" value="${item.qty||0}" onchange="updateInvItem('${inv.id}',${idx},'qty',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.15);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:55px;outline:none;padding:2px;text-align:center"> ${item.unit||''}</td>
+              ${showMoney?`<td style="padding:5px 4px;text-align:center"><input type="number" value="${item.price||0}" onchange="updateInvItem('${inv.id}',${idx},'price',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.15);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:70px;outline:none;padding:2px;text-align:center"></td>
+              <td style="padding:5px 4px;text-align:center;color:var(--gold);font-weight:700">${((item.qty||0)*(item.price||0)).toLocaleString('ar-EG')}</td>`:''}
+              <td style="padding:5px 4px;text-align:center"><button onclick="removeInvItem('${inv.id}',${idx})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:4px;cursor:pointer;padding:2px 7px;font-size:12px">✕</button></td>
+            </tr>`).join('')}
+          </table>
+          <button onclick="addItemToExistingInv('${inv.id}')" style="margin-top:6px;background:transparent;border:1px dashed rgba(201,168,76,0.3);color:var(--gold);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:Cairo,sans-serif;font-size:12px;width:100%">➕ إضافة بند</button>
+        </div>`:''}
         ${showMoney?`
-        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-top:10px">
-          <div style="font-size:12px;color:var(--gray);margin-bottom:6px">💳 المدفوعات:</div>
+        <!-- Payments Section -->
+        <div style="padding:12px 16px;background:rgba(34,197,94,0.04);border-top:1px solid rgba(34,197,94,0.1)">
+          <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">💳 سجل الدفعات</div>
+          ${(inv.payments||[]).length===0?`<div style="font-size:12px;color:var(--gray);margin-bottom:8px">لا يوجد دفعات مسجلة</div>`:''}
           ${(inv.payments||[]).map((p,pi)=>`
-            <div class="payment-strip">
-              <div class="pm-info"><div class="pm-amount">+${(p.amount||0).toLocaleString('ar-EG')} جنيه</div><div class="pm-date">${fmtDate(p.date)} — ${p.note||'دفعة'}</div></div>
-              <button onclick="removePayment('${inv.id}',${pi})" class="btn-sm btn-danger" style="padding:4px 8px;font-size:11px">✕</button>
-            </div>`).join('')}
-          <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap" class="payment-row">
-            <input type="number" id="pay-amount-${inv.id}" placeholder="المبلغ" style="flex:1;min-width:80px;background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
-            <input type="text" id="pay-note-${inv.id}" placeholder="بعد الاستلام / دفعة أولى..." style="flex:2;min-width:120px;background:var(--navy3);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:8px 10px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
-            <button onclick="addPayment('${inv.id}')" class="btn-sm btn-success">➕ إضافة دفعة</button>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:8px 12px;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+            <div>
+              <span style="color:var(--green);font-weight:700;font-size:14px">+${(p.amount||0).toLocaleString('ar-EG')} جنيه</span>
+              <span style="color:var(--gray);font-size:11px;margin-right:8px">${p.note||'دفعة'}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;color:var(--gray)">${fmtDate(p.date)}</span>
+              <button onclick="removePayment('${inv.id}',${pi})" style="background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);color:#EF4444;border-radius:6px;cursor:pointer;padding:3px 8px;font-size:11px;font-family:Cairo,sans-serif">✕ حذف</button>
+            </div>
+          </div>`).join('')}
+          <!-- Add Payment -->
+          <div style="background:rgba(34,197,94,0.06);border:2px dashed rgba(34,197,94,0.3);border-radius:10px;padding:12px;margin-top:8px">
+            <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">➕ تسجيل دفعة جديدة</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <input type="number" id="pay-amount-${inv.id}" placeholder="المبلغ بالجنيه" style="flex:1;min-width:100px;background:var(--navy2);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
+              <input type="text" id="pay-note-${inv.id}" placeholder="ملاحظة (مقدم / تسليم / ...)" style="flex:2;min-width:130px;background:var(--navy2);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:9px 12px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;direction:rtl">
+              <button onclick="addPayment('${inv.id}')" style="background:linear-gradient(135deg,#22C55E,#16a34a);border:none;color:#fff;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;white-space:nowrap">✅ تسجيل الدفع</button>
+            </div>
           </div>
         </div>`:''}
-      </div>`).join('')||'<div style="text-align:center;color:var(--gray);padding:24px">لا يوجد مشاريع</div>'}
-    <button class="btn-sm btn-primary" style="width:100%;margin-top:12px" onclick="openNewInvoiceForClient('${clientId}');closeModal('invoice-detail-modal')">➕ إضافة مشروع جديد</button>
-  `;
+      </div>`;
+    });
+  }
+
+  document.getElementById('invoice-detail-content').innerHTML=html;
   openModal('invoice-detail-modal');
 };
 
@@ -1398,15 +1572,19 @@ window.removeInvItem = async function(invId, idx){
   const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
   const items=(inv.items||[]).filter((_,i)=>i!==idx);
   const total=items.reduce((s,it)=>s+(it.qty||0)*(it.price||0),0)-(inv.discount||0);
+  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
+  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],items,total:Math.max(0,total)};
   await update(ref(db,`deltaart/invoices/${invId}`),{items,total:Math.max(0,total)});
-  if(inv.clientId) setTimeout(()=>viewClientInvoices(inv.clientId),300);
+  if(inv.clientId) setTimeout(()=>viewClientInvoices(inv.clientId),150);
 };
 
 window.addItemToExistingInv = async function(invId){
   const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
   const items=[...(inv.items||[]),{name:'بند جديد',qty:1,unit:'م²',price:0}];
+  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
+  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],items};
   await update(ref(db,`deltaart/invoices/${invId}`),{items});
-  setTimeout(()=>viewClientInvoices(inv.clientId),300);
+  setTimeout(()=>viewClientInvoices(inv.clientId),150);
 };
 
 // ===== PAYMENTS =====
@@ -1414,21 +1592,27 @@ window.addPayment = async function(invId){
   const amountEl=document.getElementById('pay-amount-'+invId);
   const noteEl=document.getElementById('pay-note-'+invId);
   const amount=parseFloat(amountEl?.value)||0;
-  const note=noteEl?.value||'دفعة';
+  const note=(noteEl?.value||'دفعة').trim();
   if(!amount||amount<=0){alert('ادخل مبلغ صحيح');return;}
   const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
   const payments=[...(inv.payments||[]),{amount,note,date:new Date().toISOString()}];
   const totalPaid=payments.reduce((s,p)=>s+(p.amount||0),0);
+  // Update local cache immediately
+  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
+  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],payments,totalPaid};
   await update(ref(db,`deltaart/invoices/${invId}`),{payments,totalPaid});
-  setTimeout(()=>viewClientInvoices(inv.clientId),300);
+  // Re-render modal with updated data
+  setTimeout(()=>viewClientInvoices(inv.clientId),150);
 };
 
 window.removePayment = async function(invId, idx){
   const inv=window._allInvoices.find(i=>i.id===invId); if(!inv)return;
   const payments=(inv.payments||[]).filter((_,i)=>i!==idx);
   const totalPaid=payments.reduce((s,p)=>s+(p.amount||0),0);
+  const invIdx=window._allInvoices.findIndex(i=>i.id===invId);
+  if(invIdx>=0) window._allInvoices[invIdx]={...window._allInvoices[invIdx],payments,totalPaid};
   await update(ref(db,`deltaart/invoices/${invId}`),{payments,totalPaid});
-  setTimeout(()=>viewClientInvoices(inv.clientId),300);
+  setTimeout(()=>viewClientInvoices(inv.clientId),150);
 };
 
 // ===== NEW INVOICE =====
@@ -1527,8 +1711,10 @@ window.saveNewInvoice=async function(){
   const discount=parseFloat(document.getElementById('inv-discount').value)||0;
   const total=Math.max(0,subtotal-discount);
   const notes=document.getElementById('inv-project-notes').value.trim();
+  const saveInvBtn=document.querySelector('#new-invoice-modal .btn-primary');
+  if(saveInvBtn) saveInvBtn.disabled=true;
   try{
-    await push(ref(db,'deltaart/invoices'),{
+    const newInvRef=await push(ref(db,'deltaart/invoices'),{
       clientId:window._invSelectedClient.id,
       clientName:window._invSelectedClient.name,
       clientPhone:window._invSelectedClient.phone,
@@ -1537,9 +1723,17 @@ window.saveNewInvoice=async function(){
       createdAt:new Date().toISOString(),
       createdBy:currentUserData.name||'—'
     });
-    showAlert(alertEl,'success','✅ تم حفظ الفاتورة');
-    setTimeout(()=>closeModal('new-invoice-modal'),1200);
-  } catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
+    // Add to local cache immediately
+    const newInv={id:newInvRef.key,clientId:window._invSelectedClient.id,clientName:window._invSelectedClient.name,clientPhone:window._invSelectedClient.phone,projectName,items,subtotal,discount,total,notes,totalPaid:0,payments:[],createdAt:new Date().toISOString(),createdBy:currentUserData.name||'—'};
+    window._allInvoices=[newInv,...window._allInvoices];
+    renderClientsTable();
+    showAlert(alertEl,'success','✅ تم حفظ الفاتورة في قاعدة البيانات');
+    if(saveInvBtn) saveInvBtn.disabled=false;
+    setTimeout(()=>closeModal('new-invoice-modal'),1800);
+  } catch(e){
+    showAlert(alertEl,'error','خطأ في الحفظ: '+e.message);
+    if(saveInvBtn) saveInvBtn.disabled=false;
+  }
 };
 
 // ===== INVOICE TABLE & STATS =====
@@ -1988,10 +2182,42 @@ window._usersSnap = null;
 function renderTeamTable(snap){
   window._usersSnap = snap;
   const tbody=document.getElementById('team-tbody');
-  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
-  let html='';snap.forEach(c=>{const u=c.val();html+=`<tr><td><strong>${u.name||'—'}</strong></td><td style="color:var(--gray)">${u.email||'—'}</td><td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td><td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td><td style="color:var(--gray)">${fmtDate(u.createdAt)}</td></tr>`;});
-  tbody.innerHTML=html||'<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:16px">لا يوجد موظفون</td></tr>';
+  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
+  let html='';
+  snap.forEach(c=>{
+    const u=c.val();
+    const uid=c.key;
+    html+=`<tr>
+      <td><strong>${u.name||'—'}</strong></td>
+      <td style="color:var(--gray);font-size:12px">${u.email||'—'}</td>
+      <td><span class="badge role-badge role-${u.role||'employee'}">${roleLabelAr(u.role)}</span></td>
+      <td><span class="badge ${u.status==='inactive'?'badge-red':'badge-green'}">${u.status==='inactive'?'معطل':'نشط'}</span></td>
+      <td style="color:var(--gray);font-size:12px">${fmtDate(u.createdAt)}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn-sm ${u.status==='inactive'?'btn-success':'btn-warning'}" onclick="toggleUserStatus('${uid}','${u.status||'active'}')">${u.status==='inactive'?'✅ تفعيل':'⏸ تعطيل'}</button>
+          <button class="btn-sm btn-danger" onclick="deleteUserAccount('${uid}','${u.name||'هذا الموظف'}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  });
+  tbody.innerHTML=html||'<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:16px">لا يوجد موظفون</td></tr>';
 }
+
+window.toggleUserStatus=async function(uid,currentStatus){
+  const newStatus=currentStatus==='inactive'?'active':'inactive';
+  await update(ref(db,`deltaart/users/${uid}`),{status:newStatus});
+};
+
+window.deleteUserAccount=async function(uid,name){
+  if(!confirm(`إزالة "${name}" من فريق العمل؟
+(مش هيقدر يدخل بعد كده — بس بياناته هتفضل محفوظة)`))return;
+  try{
+    // Disable account instead of delete — data stays forever
+    await update(ref(db,`deltaart/users/${uid}`),{status:'inactive',removedAt:new Date().toISOString()});
+    alert('تم تعطيل الأكونت. بياناته وسجل حضوره لسه محفوظين.');
+  }catch(e){alert('خطأ: '+e.message);}
+};
 window.addUser=async function(){
   const name=document.getElementById('usr-name').value.trim(),email=document.getElementById('usr-email').value.trim(),pass=document.getElementById('usr-pass').value,role=document.getElementById('usr-role').value,alertEl=document.getElementById('usr-alert');
   if(!name||!email||!pass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
