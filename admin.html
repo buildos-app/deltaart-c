@@ -1091,7 +1091,8 @@ function initApp(){
   if(currentUserRole==='superadmin'){ loadSAAccounts(); return; }
 
   // Bookings
-  onValue(ref(db,'deltaart/bookings'), snap=>{
+  safeOnValue(ref(db,'deltaart/bookings'), snap=>{
+    if(!snap.exists() && window._allBookings && window._allBookings.length>0) return;
     const all=[];let nc=0;
     if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
     all.sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -1105,7 +1106,8 @@ function initApp(){
   });
 
   // Messages
-  onValue(ref(db,'deltaart/messages'), snap=>{
+  safeOnValue(ref(db,'deltaart/messages'), snap=>{
+    if(!snap.exists() && window._allMessages && window._allMessages.length>0) return;
     const all=[];let nc=0;
     if(snap.exists()) snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
     all.sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -1119,7 +1121,8 @@ function initApp(){
   });
 
   // Gallery
-  onValue(ref(db,'deltaart/gallery'), snap=>{
+  safeOnValue(ref(db,'deltaart/gallery'), snap=>{
+    if(!snap.exists() && window._allGallery && window._allGallery.length>0) return;
     let c=0;const all=[];
     if(snap.exists()) snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
     window._allGallery=all;
@@ -1127,38 +1130,52 @@ function initApp(){
     renderAdminGallery(all);
   });
 
+  // ── SAFE onValue wrapper: never clears data if snap is empty ──
+  // Firebase can emit empty snap briefly on refresh before auth confirms
+  function safeOnValue(dbRef, callback){
+    onValue(dbRef, snap=>{
+      callback(snap);
+    });
+  }
+
   // Users
-  onValue(ref(db,'deltaart/users'), snap=>{
+  safeOnValue(ref(db,'deltaart/users'), snap=>{
+    if(!snap.exists() && window._usersSnap && window._usersSnap.exists()) return; // keep old data
     let c=0;if(snap.exists()) snap.forEach(()=>c++);
-    document.getElementById('ds-u').textContent=c;
+    const el=document.getElementById('ds-u');
+    if(el) el.textContent=c;
     window._usersSnap=snap;
     if(currentUserRole==='owner'||currentUserRole==='manager'||currentUserRole==='employee'){
       renderTeamTable(snap);
     }
   });
 
-  // Workers (no-account) — always load and render
-  onValue(ref(db,'deltaart/workers'), snap=>{
+  // Workers (no-account)
+  safeOnValue(ref(db,'deltaart/workers'), snap=>{
+    if(!snap.exists() && window._allWorkers && window._allWorkers.length>0) return; // keep old data
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allWorkers=all;
-    renderWorkersTable(all); // always render, fn checks if element exists
+    renderWorkersTable(all);
   });
 
   // Services
-  onValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
+  safeOnValue(ref(db,'deltaart/services'), snap=>renderServicesTable(snap));
 
-  // Clients — onValue fires on every change including additions
-  onValue(ref(db,'deltaart/clients'), snap=>{
+  // Clients
+  safeOnValue(ref(db,'deltaart/clients'), snap=>{
+    if(!snap.exists() && window._allClients && window._allClients.length>0) return; // keep old data
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     window._allClients=all;
+    if(all.length>0) window._clientsLoaded=true;
     renderClientsTable();
-    renderInvClientList(); // also refresh invoice client picker
+    renderInvClientList();
   });
 
-  // Invoices — employees don't see financial totals on dashboard
-  onValue(ref(db,'deltaart/invoices'), snap=>{
+  // Invoices
+  safeOnValue(ref(db,'deltaart/invoices'), snap=>{
+    if(!snap.exists() && window._allInvoices && window._allInvoices.length>0) return; // keep old data
     const all=[];
     if(snap.exists()) snap.forEach(c=>all.push({id:c.key,...c.val()}));
     all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
@@ -1204,7 +1221,13 @@ window.addWorker = async function(){
 function renderWorkersTable(workers){
   const tbody=document.getElementById('workers-tbody');
   if(!tbody)return; // page might not be active
-  if(!workers||!workers.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>';return;}
+  if(!workers||!workers.length){
+    tbody.innerHTML=window._workersLoaded?
+      '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عمال</td></tr>':
+      '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">⏳...</td></tr>';
+    return;
+  }
+  window._workersLoaded=true;
   tbody.innerHTML=workers.filter(w=>!w.archived).map(w=>`<tr>
     <td><strong>${w.name}</strong></td>
     <td style="color:var(--gray)">${w.phone||'—'}</td>
@@ -1386,7 +1409,13 @@ window.renderClientsTable = function(){
     return !q||(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q);
   });
   const tbody=document.getElementById('clients-tbody');
-  if(!clients.length){tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>';return;}
+  if(!clients.length){
+    tbody.innerHTML=window._clientsLoaded?
+      '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد عملاء</td></tr>':
+      '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">⏳ جاري التحميل...</td></tr>';
+    return;
+  }
+  window._clientsLoaded=true;
   const showMoney=currentUserRole==='owner';
   tbody.innerHTML=clients.map(cl=>{
     const st=calcClientStats(cl.id);
@@ -2187,7 +2216,13 @@ window._usersSnap = null;
 function renderTeamTable(snap){
   window._usersSnap = snap;
   const tbody=document.getElementById('team-tbody');
-  if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>';return;}
+  if(!snap||!snap.exists()){
+    tbody.innerHTML=window._teamLoaded?
+      '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:24px">لا يوجد موظفون</td></tr>':
+      '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:16px">⏳ جاري التحميل...</td></tr>';
+    return;
+  }
+  window._teamLoaded=true;
   let html='';
   snap.forEach(c=>{
     const u=c.val();
