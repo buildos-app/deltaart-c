@@ -914,30 +914,40 @@ function initApp(){
     renderAdminGallery(all);
   });
 
-  // FIX 2 & 3: onValue for users — always render team table regardless of role check, show count
-  onValue(ref(db,'deltaart/users'),snap=>{
-    let c=0;if(snap.exists())snap.forEach(()=>c++);
-    document.getElementById('ds-u').textContent=c;
-    renderTeamTable(snap); // FIX: always render, not just for owner
-  });
+  window._reloadUsers = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/users'));
+      let c=0;if(snap.exists())snap.forEach(()=>c++);
+      document.getElementById('ds-u').textContent=c;
+      renderTeamTable(snap);
+    }catch(e){console.error('users load:',e);}
+  };
+  window._reloadUsers();
 
-  // FIX 3: onValue for workers — always render
-  onValue(ref(db,'deltaart/workers'),snap=>{
-    const all=[];
-    if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    window._allWorkers=all;
-    renderWorkersTable(all); // FIX: always render
-  });
+  window._reloadWorkers = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/workers'));
+      const all=[];
+      if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
+      window._allWorkers=all;
+      renderWorkersTable(all);
+    }catch(e){console.error('workers load:',e);}
+  };
+  window._reloadWorkers();
 
   onValue(ref(db,'deltaart/services'),snap=>renderServicesTable(snap));
 
-  // FIX 2: onValue for clients — always update and re-render
-  onValue(ref(db,'deltaart/clients'),snap=>{
-    const all=[];
-    if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    window._allClients=all;
-    renderClientsTable(); // auto-refresh whenever data changes
-  });
+  // RELIABLE: Use get() instead of onValue - works even on unstable connections
+  window._reloadClients = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/clients'));
+      const all=[];
+      if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
+      window._allClients=all;
+      renderClientsTable();
+    }catch(e){console.error('clients load:',e);}
+  };
+  window._reloadClients();
 
   onValue(ref(db,'deltaart/invoices'),snap=>{
     const all=[];
@@ -965,6 +975,7 @@ window.addWorker=async function(){
     await push(ref(db,'deltaart/workers'),{name,phone,createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة العامل');
     document.getElementById('wk-name').value='';document.getElementById('wk-phone').value='';
+    if(typeof window._reloadWorkers==='function') await window._reloadWorkers();
     setTimeout(()=>closeModal('add-worker-modal'),1200);
   }catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
@@ -981,7 +992,11 @@ function renderWorkersTable(workers){
     <td><button class="btn-sm btn-danger" onclick="deleteWorker('${w.id}')">🗑️</button></td>
   </tr>`).join('');
 }
-window.deleteWorker=async id=>{if(confirm('حذف العامل؟'))await remove(ref(db,`deltaart/workers/${id}`));};
+window.deleteWorker=async function(id){
+  if(!confirm('حذف العامل؟'))return;
+  await remove(ref(db,'deltaart/workers/'+id));
+  if(typeof window._reloadWorkers==='function') await window._reloadWorkers();
+};
 
 // ===== ATTENDANCE MODAL =====
 window.openAttendanceModal=function(){
@@ -1067,7 +1082,7 @@ window.addClient=async function(){
     await push(ref(db,'deltaart/clients'),{name,phone,phone2,address,notes,createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة العميل');
     ['cl-name','cl-phone','cl-phone2','cl-address','cl-notes'].forEach(id=>document.getElementById(id).value='');
-    // FIX 2: onValue will auto-update _allClients and call renderClientsTable
+    if(typeof window._reloadClients==='function') await window._reloadClients();
     setTimeout(()=>closeModal('add-client-modal'),1200);
   }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
 };
@@ -1116,6 +1131,7 @@ window.deleteClient=async id=>{
   await remove(ref(db,'deltaart/clients/'+id));
   const invs=window._allInvoices.filter(i=>i.clientId===id);
   for(const inv of invs)await remove(ref(db,'deltaart/invoices/'+inv.id));
+  if(typeof window._reloadClients==='function') await window._reloadClients();
 };
 
 window.viewClientInvoices=function(clientId){
@@ -1425,11 +1441,16 @@ function renderRevenueReport(from,to){
 // ===== SUPERADMIN =====
 window._saAllAccounts=[];
 function loadSAAccounts(){
-  onValue(ref(db,'deltaart/users'),snap=>{
-    const all=[{uid:'owner-static',name:'صاحب الشركة',email:OWNER_EMAIL,role:'owner',status:'active',password:'DeltaArt@2025!'}];
-    if(snap.exists())snap.forEach(c=>{const v={uid:c.key,...c.val()};all.push(v);});
-    window._saAllAccounts=all;renderSATable(all);
-  });
+  const doLoad = async () => {
+    try{
+      const snap=await get(ref(db,'deltaart/users'));
+      const all=[{uid:'owner-static',name:'صاحب الشركة',email:OWNER_EMAIL,role:'owner',status:'active',password:'DeltaArt@2025!'}];
+      if(snap.exists())snap.forEach(c=>{const v={uid:c.key,...c.val()};all.push(v);});
+      window._saAllAccounts=all;renderSATable(all);
+    }catch(e){console.error('sa load:',e);}
+  };
+  window._reloadSA=doLoad;
+  doLoad();
 }
 function renderSATable(accounts){
   const tbody=document.getElementById('sa-tbody');
@@ -1444,8 +1465,8 @@ function renderSATable(accounts){
 }
 window.toggleSAPass=function(uid){const dots=document.getElementById('pw-dots-'+uid),text=document.getElementById('pw-text-'+uid);const btn=dots.nextElementSibling.nextElementSibling;if(text.style.display==='none'){text.style.display='inline';dots.style.display='none';btn.textContent='إخفاء';}else{text.style.display='none';dots.style.display='inline';btn.textContent='إظهار';}};
 window.filterSATable=function(){const q=document.getElementById('sa-search-input').value.toLowerCase();renderSATable(window._saAllAccounts.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)));};
-window.toggleSAStatus=async(uid,s)=>{await update(ref(db,`deltaart/users/${uid}`),{status:s==='inactive'?'active':'inactive'});};
-window.deleteSAAccount=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/users/${id}`));};
+window.toggleSAStatus=async(uid,s)=>{await update(ref(db,'deltaart/users/'+uid),{status:s==='inactive'?'active':'inactive'});if(typeof window._reloadSA==='function')await window._reloadSA();};
+window.deleteSAAccount=async function(id){if(!confirm('حذف؟'))return;await remove(ref(db,'deltaart/users/'+id));if(typeof window._reloadSA==='function')await window._reloadSA();};
 window.saAddAccount=async function(){
   const name=document.getElementById('sa-name').value.trim(),email=document.getElementById('sa-email').value.trim(),pass=document.getElementById('sa-pass').value,role=document.getElementById('sa-role').value,alertEl=document.getElementById('sa-add-alert');
   if(!name||!email||!pass){showAlert(alertEl,'error','ادخل كل البيانات');return;}
@@ -1454,6 +1475,7 @@ window.saAddAccount=async function(){
     await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,status:'active',createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة الأكونت');
     ['sa-name','sa-email','sa-pass'].forEach(id=>document.getElementById(id).value='');
+    if(typeof window._reloadSA==='function') await window._reloadSA();
     setTimeout(()=>closeModal('sa-add-modal'),1500);
   }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
 };
@@ -1616,6 +1638,7 @@ window.addUser=async function(){
     await set(ref(db,`deltaart/users/${cred.user.uid}`),{name,email,role,password:pass,status:'active',createdAt:new Date().toISOString()});
     showAlert(alertEl,'success','✅ تم إضافة الموظف');
     ['usr-name','usr-email','usr-pass'].forEach(id=>document.getElementById(id).value='');
+    if(typeof window._reloadUsers==='function') await window._reloadUsers();
     setTimeout(()=>closeModal('add-user-modal'),1500);
   }catch(e){showAlert(alertEl,'error',e.code==='auth/email-already-in-use'?'البريد مستخدم':'حدث خطأ');}
 };
@@ -1624,7 +1647,7 @@ window.deleteUserAccount=async function(uid,name){
   if(!confirm('حذف حساب "'+name+'"؟ مينفعش يدخل على اللوحة بعد كده.'))return;
   try{
     await remove(ref(db,'deltaart/users/'+uid));
-    showAlert(document.querySelector('.alert')||document.createElement('div'),'success','تم الحذف');
+    if(typeof window._reloadUsers==='function') await window._reloadUsers();
   }catch(e){alert('حدث خطأ في الحذف');}
 };
 
