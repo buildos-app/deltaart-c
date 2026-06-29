@@ -880,39 +880,51 @@ function buildBottomNav(items,hasMore=false){
 function initApp(){
   if(currentUserRole==='superadmin'){loadSAAccounts();return;}
 
-  onValue(ref(db,'deltaart/bookings'),snap=>{
-    const all=[];let nc=0;
-    if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
-    all.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    window._allBookings=all;
-    document.getElementById('ds-b').textContent=all.length;
-    document.getElementById('ds-b-new').textContent=nc+' جديدة';
-    const badge=document.getElementById('badge-bookings');
-    if(badge){if(nc>0){badge.textContent=nc;badge.style.display='inline-block';}else badge.style.display='none';}
-    document.getElementById('dash-book-tbody').innerHTML=all.slice(0,5).map(b=>`<tr><td><strong>${b.name}</strong></td><td style="color:var(--gray)">${b.phone}</td><td>${b.type||''}</td><td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد حجوزات</td></tr>';
-    filterBookings();
-  });
+  window._reloadBookings = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/bookings'));
+      const all=[];let nc=0;
+      if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
+      all.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      window._allBookings=all;
+      document.getElementById('ds-b').textContent=all.length;
+      document.getElementById('ds-b-new').textContent=nc+' جديدة';
+      const badge=document.getElementById('badge-bookings');
+      if(badge){if(nc>0){badge.textContent=nc;badge.style.display='inline-block';}else badge.style.display='none';}
+      document.getElementById('dash-book-tbody').innerHTML=all.slice(0,5).map(b=>`<tr><td><strong>${b.name}</strong></td><td style="color:var(--gray)">${b.phone}</td><td>${b.type||''}</td><td><span class="badge ${statusClass(b.status)}">${statusLabel(b.status)}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد حجوزات</td></tr>';
+      filterBookings();
+    }catch(e){console.error('bookings:',e);}
+  };
+  window._reloadBookings();
 
-  onValue(ref(db,'deltaart/messages'),snap=>{
-    const all=[];let nc=0;
-    if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
-    all.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    window._allMessages=all;
-    document.getElementById('ds-m').textContent=all.length;
-    document.getElementById('ds-m-new').textContent=nc+' جديدة';
-    const badge=document.getElementById('badge-messages');
-    if(badge){if(nc>0){badge.textContent=nc;badge.style.display='inline-block';}else badge.style.display='none';}
-    document.getElementById('dash-msg-tbody').innerHTML=all.slice(0,5).map(m=>`<tr><td><strong>${m.name}</strong></td><td style="color:var(--gray)">${m.phone}</td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||''}</td><td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد رسائل</td></tr>';
-    filterMessages();
-  });
+  window._reloadMessages = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/messages'));
+      const all=[];let nc=0;
+      if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
+      all.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      window._allMessages=all;
+      document.getElementById('ds-m').textContent=all.length;
+      document.getElementById('ds-m-new').textContent=nc+' جديدة';
+      const badge=document.getElementById('badge-messages');
+      if(badge){if(nc>0){badge.textContent=nc;badge.style.display='inline-block';}else badge.style.display='none';}
+      document.getElementById('dash-msg-tbody').innerHTML=all.slice(0,5).map(m=>`<tr><td><strong>${m.name}</strong></td><td style="color:var(--gray)">${m.phone}</td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--gray)">${m.text||''}</td><td><span class="badge ${m.status==='new'?'badge-red':'badge-green'}">${m.status==='new'?'جديدة':'مقروءة'}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:16px">لا يوجد رسائل</td></tr>';
+      filterMessages();
+    }catch(e){console.error('messages:',e);}
+  };
+  window._reloadMessages();
 
-  onValue(ref(db,'deltaart/gallery'),snap=>{
-    let c=0;const all=[];
-    if(snap.exists())snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
-    window._allGallery=all;
-    document.getElementById('ds-g').textContent=c;
-    renderAdminGallery(all);
-  });
+  window._reloadGallery = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/gallery'));
+      let c=0;const all=[];
+      if(snap.exists())snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
+      window._allGallery=all;
+      document.getElementById('ds-g').textContent=c;
+      renderAdminGallery(all);
+    }catch(e){console.error('gallery:',e);}
+  };
+  window._reloadGallery();
 
   window._reloadUsers = async function(){
     try{
@@ -935,7 +947,11 @@ function initApp(){
   };
   window._reloadWorkers();
 
-  onValue(ref(db,'deltaart/services'),snap=>renderServicesTable(snap));
+  window._reloadServices = async function(){
+    try{const snap=await get(ref(db,'deltaart/services'));renderServicesTable(snap);}
+    catch(e){console.error('services:',e);}
+  };
+  window._reloadServices();
 
   // RELIABLE: Use get() instead of onValue - works even on unstable connections
   window._reloadClients = async function(){
@@ -949,20 +965,35 @@ function initApp(){
   };
   window._reloadClients();
 
-  onValue(ref(db,'deltaart/invoices'),snap=>{
-    const all=[];
-    if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
-    all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-    window._allInvoices=all;
-    if(currentUserRole==='owner'){
-      calcRevenue();
-      renderDashInvoices(all);
-    }
-    renderInvoicesTable(all);
-  });
+  window._reloadInvoices = async function(){
+    try{
+      const snap=await get(ref(db,'deltaart/invoices'));
+      const all=[];
+      if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
+      all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      window._allInvoices=all;
+      if(currentUserRole==='owner'){calcRevenue();renderDashInvoices(all);}
+      renderInvoicesTable(all);
+    }catch(e){console.error('invoices:',e);}
+  };
+  window._reloadInvoices();
 
   if(currentUserRole==='owner')loadSettings();
   if(currentUserRole!=='superadmin')recordCheckIn();
+
+  // Global refresh - reloads all data
+  window._refreshAll = async function(){
+    await Promise.all([
+      window._reloadBookings?.(),
+      window._reloadMessages?.(),
+      window._reloadGallery?.(),
+      window._reloadServices?.(),
+      window._reloadClients?.(),
+      window._reloadInvoices?.(),
+      window._reloadWorkers?.(),
+      window._reloadUsers?.(),
+    ]);
+  };
 }
 
 // ===== WORKERS =====
@@ -1326,6 +1357,8 @@ window.saveNewInvoice=async function(){
   const notes=document.getElementById('inv-project-notes').value.trim();
   try{
     await push(ref(db,'deltaart/invoices'),{clientId:window._invSelectedClient.id,clientName:window._invSelectedClient.name,clientPhone:window._invSelectedClient.phone,projectName,items,subtotal,discount,total,notes,totalPaid:0,payments:[],createdAt:new Date().toISOString(),createdBy:currentUserData.name||'—'});
+    if(typeof window._reloadInvoices==='function')await window._reloadInvoices();
+    if(typeof window._reloadClients==='function')await window._reloadClients();
     showAlert(alertEl,'success','✅ تم حفظ الفاتورة');
     setTimeout(()=>closeModal('new-invoice-modal'),1200);
   }catch(e){showAlert(alertEl,'error','حدث خطأ: '+e.message);}
@@ -1499,7 +1532,7 @@ window.filterBookings=function(){
     </div></td>
   </tr>`).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:24px">لا يوجد حجوزات</td></tr>';
 };
-window.updateBookingStatus=async(id,status)=>{await update(ref(db,`deltaart/bookings/${id}`),{status});closeModal('booking-detail-modal');};
+window.updateBookingStatus=async function(id,status){await update(ref(db,'deltaart/bookings/'+id),{status});closeModal('booking-detail-modal');if(typeof window._reloadBookings==='function')await window._reloadBookings();};
 window.showBookingDetail=id=>{
   const b=window._allBookings.find(x=>x.id===id);if(!b)return;
   window._detailId=id;
@@ -1530,8 +1563,8 @@ window.filterMessages=function(){
     <td><div style="display:flex;gap:4px"><button class="btn-sm btn-success" onclick="markRead('${m.id}')">✓</button><button class="btn-sm btn-danger" onclick="delMsg('${m.id}')">🗑️</button></div></td>
   </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">لا يوجد رسائل</td></tr>';
 };
-window.markRead=async id=>{await update(ref(db,`deltaart/messages/${id}`),{status:'read'});};
-window.delMsg=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/messages/${id}`));};
+window.markRead=async function(id){await update(ref(db,'deltaart/messages/'+id),{status:'read'});if(typeof window._reloadMessages==='function')await window._reloadMessages();};
+window.delMsg=async function(id){if(!confirm('حذف؟'))return;await remove(ref(db,'deltaart/messages/'+id));if(typeof window._reloadMessages==='function')await window._reloadMessages();};
 
 // ===== GALLERY =====
 window._allGallery=[];window._galCurrentFile=null;
@@ -1571,6 +1604,7 @@ window.addGalleryItem=async function(){
         xhr.send(formData);
       });
       await push(ref(db,'deltaart/gallery'),{url:imgUrl,title,category,date:new Date().toISOString()});
+      if(typeof window._reloadGallery==='function')await window._reloadGallery();
       showAlert(alertEl,'success','✅ تم رفع الصورة!');
       progressBar.style.display='none';progressFill.style.width='0%';
       document.getElementById('file-preview-wrap').style.display='none';
@@ -1582,6 +1616,7 @@ window.addGalleryItem=async function(){
     if(!url){showAlert(alertEl,'error','ادخل رابط الصورة');return;}
     try{
       await push(ref(db,'deltaart/gallery'),{url,title,category,date:new Date().toISOString()});
+      if(typeof window._reloadGallery==='function')await window._reloadGallery();
       showAlert(alertEl,'success','✅ تم الإضافة');
       document.getElementById('gal-url').value='';document.getElementById('gal-url-preview').style.display='none';document.getElementById('gal-title').value='';
       setTimeout(()=>closeModal('add-gallery-modal'),1500);
@@ -1599,7 +1634,7 @@ window.filterGalleryAdmin=function(cat,btn){
   btn.classList.add('active');
   renderAdminGallery(cat==='all'?window._allGallery:window._allGallery.filter(i=>i.category===cat));
 };
-window.delGallery=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/gallery/${id}`));};
+window.delGallery=async function(id){if(!confirm('حذف؟'))return;await remove(ref(db,'deltaart/gallery/'+id));if(typeof window._reloadGallery==='function')await window._reloadGallery();};
 
 // ===== SERVICES =====
 function renderServicesTable(snap){
@@ -1611,10 +1646,10 @@ function renderServicesTable(snap){
 window.addService=async function(){
   const icon=document.getElementById('svc-icon').value||'🏛️',name=document.getElementById('svc-name').value.trim(),description=document.getElementById('svc-desc').value.trim(),alertEl=document.getElementById('svc-alert');
   if(!name||!description){showAlert(alertEl,'error','ادخل الاسم والوصف');return;}
-  try{await push(ref(db,'deltaart/services'),{icon,name,description});showAlert(alertEl,'success','✅ تمت الإضافة');['svc-icon','svc-name','svc-desc'].forEach(id=>document.getElementById(id).value='');setTimeout(()=>closeModal('add-service-modal'),1500);}
+  try{await push(ref(db,'deltaart/services'),{icon,name,description});showAlert(alertEl,'success','✅ تمت الإضافة');['svc-icon','svc-name','svc-desc'].forEach(id=>document.getElementById(id).value='');if(typeof window._reloadServices==='function')await window._reloadServices();setTimeout(()=>closeModal('add-service-modal'),1500);}
   catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
-window.delService=async id=>{if(confirm('حذف؟'))await remove(ref(db,`deltaart/services/${id}`));};
+window.delService=async function(id){if(!confirm('حذف؟'))return;await remove(ref(db,'deltaart/services/'+id));if(typeof window._reloadServices==='function')await window._reloadServices();};
 
 // ===== TEAM — FIX 3: render always =====
 function renderTeamTable(snap){
@@ -1759,8 +1794,8 @@ window.loadWeeklyReport=async function(period){
 };
 
 // ===== VISITORS — FIXED: reads flat list OR date-partitioned =====
-window._doLoadVisitors=function loadVisitors(){
-  onValue(ref(db,'deltaart/visitors'),snap=>{
+window._doLoadVisitors=async function loadVisitors(){
+  try{const snap=await get(ref(db,'deltaart/visitors'));{
     let high=0,medium=0,low=0;const visits=[];
     if(snap.exists()){
       snap.forEach(c=>{
@@ -1799,7 +1834,7 @@ window._doLoadVisitors=function loadVisitors(){
       const timeStr=v.date?new Date(v.date).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'';
       return`<tr><td style="color:var(--gray)">${v.date?fmtDate(v.date):''} ${timeStr}</td><td style="color:var(--gold);font-weight:700">${dur}</td><td>${levelMap[level]||'—'}</td><td>${device}</td></tr>`;
     }).join('');
-  });
+  }}catch(e){console.error('visitors:',e);}
 };
 window.clearVisitors=async()=>{if(!confirm('مسح كل بيانات الزوار؟'))return;await remove(ref(db,'deltaart/visitors'));};
 
