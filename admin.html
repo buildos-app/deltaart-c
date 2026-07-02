@@ -897,7 +897,7 @@ function initApp(){
       filterBookings();
     }catch(e){console.error('bookings:',e);}
   };
-  window._reloadBookings();
+  setTimeout(()=>window._reloadBookings(),500);
 
   window._reloadMessages = async function(){
     try{
@@ -914,7 +914,7 @@ function initApp(){
       filterMessages();
     }catch(e){console.error('messages:',e);}
   };
-  window._reloadMessages();
+  setTimeout(()=>window._reloadMessages(),500);
 
   window._reloadGallery = async function(){
     try{
@@ -926,7 +926,7 @@ function initApp(){
       renderAdminGallery(all);
     }catch(e){console.error('gallery:',e);}
   };
-  window._reloadGallery();
+  setTimeout(()=>window._reloadGallery(),500);
 
   window._reloadUsers = async function(){
     try{
@@ -936,7 +936,7 @@ function initApp(){
       renderTeamTable(snap);
     }catch(e){console.error('users load:',e);}
   };
-  window._reloadUsers();
+  setTimeout(()=>window._reloadUsers(),800);
 
   window._reloadWorkers = async function(){
     try{
@@ -947,13 +947,13 @@ function initApp(){
       renderWorkersTable(all);
     }catch(e){console.error('workers load:',e);}
   };
-  window._reloadWorkers();
+  setTimeout(()=>window._reloadWorkers(),800);
 
   window._reloadServices = async function(){
     try{const snap=await get(ref(db,'deltaart/services'));renderServicesTable(snap);}
     catch(e){console.error('services:',e);}
   };
-  window._reloadServices();
+  setTimeout(()=>window._reloadServices(),500);
 
   // RELIABLE: Use get() instead of onValue - works even on unstable connections
   window._reloadClients = async function(){
@@ -961,12 +961,12 @@ function initApp(){
       const snap=await get(ref(db,'deltaart/clients'));
       const all=[];
       if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
-      console.log('_reloadClients got',all.length,'clients');
       window._allClients=all;
       renderClientsTable();
     }catch(e){console.error('clients load error:',e);}
   };
-  window._reloadClients();
+  // Small delay to ensure auth token is ready before reading database
+  setTimeout(()=>window._reloadClients(),800);
 
   window._reloadInvoices = async function(){
     try{
@@ -979,7 +979,7 @@ function initApp(){
       renderInvoicesTable(all);
     }catch(e){console.error('invoices:',e);}
   };
-  window._reloadInvoices();
+  setTimeout(()=>window._reloadInvoices(),800);
 
   if(currentUserRole==='owner')loadSettings();
   if(currentUserRole!=='superadmin')recordCheckIn();
