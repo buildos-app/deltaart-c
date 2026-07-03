@@ -884,7 +884,8 @@ function initApp(){
 
   window._reloadBookings = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/bookings'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/bookings'));
       const all=[];let nc=0;
       if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
       all.sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -901,7 +902,8 @@ function initApp(){
 
   window._reloadMessages = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/messages'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/messages'));
       const all=[];let nc=0;
       if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
       all.sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -918,7 +920,8 @@ function initApp(){
 
   window._reloadGallery = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/gallery'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/gallery'));
       let c=0;const all=[];
       if(snap.exists())snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
       window._allGallery=all;
@@ -930,7 +933,8 @@ function initApp(){
 
   window._reloadUsers = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/users'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/users'));
       let c=0;if(snap.exists())snap.forEach(()=>c++);
       document.getElementById('ds-u').textContent=c;
       renderTeamTable(snap);
@@ -940,7 +944,8 @@ function initApp(){
 
   window._reloadWorkers = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/workers'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/workers'));
       const all=[];
       if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
       window._allWorkers=all;
@@ -950,7 +955,7 @@ function initApp(){
   setTimeout(()=>window._reloadWorkers(),800);
 
   window._reloadServices = async function(){
-    try{const snap=await get(ref(db,'deltaart/services'));renderServicesTable(snap);}
+    try{const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');const snap=await g2(r2(window._db,'deltaart/services'));renderServicesTable(snap);}
     catch(e){console.error('services:',e);}
   };
   setTimeout(()=>window._reloadServices(),500);
@@ -958,19 +963,20 @@ function initApp(){
   // RELIABLE: Use get() instead of onValue - works even on unstable connections
   window._reloadClients = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/clients'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/clients'));
       const all=[];
       if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
       window._allClients=all;
       renderClientsTable();
     }catch(e){console.error('clients load error:',e);}
   };
-  // Small delay to ensure auth token is ready before reading database
   setTimeout(()=>window._reloadClients(),800);
 
   window._reloadInvoices = async function(){
     try{
-      const snap=await get(ref(db,'deltaart/invoices'));
+      const {ref:r2,get:g2}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
+      const snap=await g2(r2(window._db,'deltaart/invoices'));
       const all=[];
       if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
       all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
