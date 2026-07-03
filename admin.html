@@ -1879,6 +1879,9 @@ function goPage(name,btn){
   if(page)page.classList.add('active');
   document.getElementById('topbar-title').textContent=pageTitles[name]||name;
   if(btn){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));btn.classList.add('active');}
+  if(name==='clients')setTimeout(()=>{if(typeof window._reloadClients==='function')window._reloadClients();},100);
+  if(name==='team')setTimeout(()=>{if(typeof window._reloadWorkers==='function')window._reloadWorkers();if(typeof window._reloadUsers==='function')window._reloadUsers();},100);
+  if(name==='invoices')setTimeout(()=>{if(typeof window._reloadInvoices==='function')window._reloadInvoices();},100);
   if(name==='attendance')setTimeout(()=>{if(typeof window._doLoadAttendance==='function')window._doLoadAttendance();},100);
   if(name==='visitors')setTimeout(()=>{if(typeof window._doLoadVisitors==='function')window._doLoadVisitors();},100);
   if(name==='revenue')setTimeout(()=>{if(typeof window.loadRevenueReport==='function')window.loadRevenueReport('today',null);},100);
