@@ -777,6 +777,12 @@ window._db=db;
 const auth=getAuth(app);
 setPersistence(auth,browserLocalPersistence).catch(()=>{});
 
+window._getAuthToken = async function(){
+  const user=auth.currentUser;
+  if(!user)return '';
+  try{return await user.getIdToken();}catch(e){return '';}
+};
+
 const SUPERADMIN_EMAIL='superadmin@deltaart.com';
 const OWNER_EMAIL='admin@deltaart.com';
 let currentUserRole=null;
@@ -933,21 +939,28 @@ function initApp(){
 
   window._reloadUsers = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/users'));
-      let c=0;if(snap.exists())snap.forEach(()=>c++);
+      const token=await window._getAuthToken();
+      const url='https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/users.json?auth='+token;
+      const res=await fetch(url);
+      const data=await res.json();
+      let c=0;const usersSnap={exists:()=>!!data,forEach:(fn)=>{if(data)Object.entries(data).forEach(([k,v])=>{c++;fn({key:k,val:()=>v});});}};
+      usersSnap.forEach(()=>{});
       document.getElementById('ds-u').textContent=c;
-      renderTeamTable(snap);
+      // Build a fake snap for renderTeamTable
+      const fakeSnap={exists:()=>!!data,forEach:(fn)=>{if(data)Object.entries(data).forEach(([k,v])=>fn({key:k,val:()=>v}));}};
+      renderTeamTable(fakeSnap);
     }catch(e){console.error('users load:',e);}
   };
   setTimeout(()=>window._reloadUsers(),1000);
 
   window._reloadWorkers = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/workers'));
+      const token=await window._getAuthToken();
+      const url='https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/workers.json?auth='+token;
+      const res=await fetch(url);
+      const data=await res.json();
       const all=[];
-      if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
+      if(data&&typeof data==='object'){Object.entries(data).forEach(([k,v])=>{if(v&&typeof v==='object')all.push({id:k,...v});});}
       window._allWorkers=all;
       renderWorkersTable(all);
     }catch(e){console.error('workers load:',e);}
@@ -963,10 +976,12 @@ function initApp(){
   // RELIABLE: Use get() instead of onValue - works even on unstable connections
   window._reloadClients = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/clients'));
+      const token=await window._getAuthToken();
+      const url='https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/clients.json?auth='+token;
+      const res=await fetch(url);
+      const data=await res.json();
       const all=[];
-      if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
+      if(data&&typeof data==='object'){Object.entries(data).forEach(([k,v])=>{if(v&&typeof v==='object')all.push({id:k,...v});});}
       window._allClients=all;
       renderClientsTable();
     }catch(e){console.error('clients load error:',e);}
