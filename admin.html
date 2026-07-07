@@ -558,17 +558,17 @@ tr:hover td{background:rgba(255,255,255,0.02);}
             <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:20px;margin-bottom:16px">
               <div style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--gold)">🏢 باقات الفلات</div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
-                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥉 راحة</div><div class="ff"><label>من</label><input type="number" id="pr-flat-basic-min" placeholder="120"></div><div class="ff"><label>لحد</label><input type="number" id="pr-flat-basic-max" placeholder="160"></div></div>
-                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥈 تميز</div><div class="ff"><label>من</label><input type="number" id="pr-flat-mid-min" placeholder="180"></div><div class="ff"><label>لحد</label><input type="number" id="pr-flat-mid-max" placeholder="240"></div></div>
-                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥇 فخامة</div><div class="ff"><label>من</label><input type="number" id="pr-flat-prem-min" placeholder="280"></div><div class="ff"><label>لحد</label><input type="number" id="pr-flat-prem-max" placeholder="380"></div></div>
+                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥉 Basic</div><div class="ff"><label>من</label><input type="number" id="pr-flat-basic-min" placeholder="120"></div><div class="ff"><label>لحد</label><input type="number" id="pr-flat-basic-max" placeholder="160"></div></div>
+                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥈 Premium</div><div class="ff"><label>من</label><input type="number" id="pr-flat-mid-min" placeholder="180"></div><div class="ff"><label>لحد</label><input type="number" id="pr-flat-mid-max" placeholder="240"></div></div>
+                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥇 Platinum</div><div class="ff"><label>من</label><input type="number" id="pr-flat-prem-min" placeholder="280"></div><div class="ff"><label>لحد</label><input type="number" id="pr-flat-prem-max" placeholder="380"></div></div>
               </div>
             </div>
             <div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:12px;padding:20px;margin-bottom:20px">
               <div style="font-size:15px;font-weight:700;margin-bottom:16px;color:#3B82F6">💡 باقات بيت النور</div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
-                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥉 راحة</div><div class="ff"><label>من</label><input type="number" id="pr-nur-basic-min" placeholder="150"></div><div class="ff"><label>لحد</label><input type="number" id="pr-nur-basic-max" placeholder="200"></div></div>
-                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥈 تميز</div><div class="ff"><label>من</label><input type="number" id="pr-nur-mid-min" placeholder="220"></div><div class="ff"><label>لحد</label><input type="number" id="pr-nur-mid-max" placeholder="300"></div></div>
-                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥇 فخامة</div><div class="ff"><label>من</label><input type="number" id="pr-nur-prem-min" placeholder="320"></div><div class="ff"><label>لحد</label><input type="number" id="pr-nur-prem-max" placeholder="450"></div></div>
+                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥉 Basic</div><div class="ff"><label>من</label><input type="number" id="pr-nur-basic-min" placeholder="150"></div><div class="ff"><label>لحد</label><input type="number" id="pr-nur-basic-max" placeholder="200"></div></div>
+                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥈 Premium</div><div class="ff"><label>من</label><input type="number" id="pr-nur-mid-min" placeholder="220"></div><div class="ff"><label>لحد</label><input type="number" id="pr-nur-mid-max" placeholder="300"></div></div>
+                <div><div style="font-size:12px;font-weight:700;color:var(--gray);margin-bottom:10px">🥇 Platinum</div><div class="ff"><label>من</label><input type="number" id="pr-nur-prem-min" placeholder="320"></div><div class="ff"><label>لحد</label><input type="number" id="pr-nur-prem-max" placeholder="450"></div></div>
               </div>
             </div>
             <button class="btn-sm btn-primary" onclick="savePrices()">💾 حفظ الأسعار</button>
@@ -751,6 +751,19 @@ tr:hover td{background:rgba(255,255,255,0.02);}
   </div>
 </div>
 
+<div class="modal-overlay" id="edit-service-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('edit-service-modal')">✕</button>
+    <h3>✏️ تعديل خدمة</h3>
+    <input type="hidden" id="edit-svc-id">
+    <div class="ff"><label>أيقونة</label><input type="text" id="edit-svc-icon" maxlength="4"></div>
+    <div class="ff"><label>اسم الخدمة *</label><input type="text" id="edit-svc-name"></div>
+    <div class="ff"><label>وصف *</label><textarea id="edit-svc-desc"></textarea></div>
+    <button class="btn-sm btn-primary" style="width:100%" onclick="saveEditService()">💾 حفظ التعديلات</button>
+    <div id="edit-svc-alert" class="alert"></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="booking-detail-modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('booking-detail-modal')">✕</button>
@@ -890,11 +903,12 @@ function initApp(){
 
   window._reloadBookings = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/bookings'));
+      const token=await window._getAuthToken();
+      const res=await fetch('https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/bookings.json?auth='+token);
+      const data=await res.json();
       const all=[];let nc=0;
-      if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='pending')nc++;});
-      all.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      if(data&&typeof data==='object'){Object.entries(data).forEach(([k,v])=>{if(v&&typeof v==='object'){const item={id:k,...v};all.push(item);if(item.status==='pending')nc++;}});}
+      all.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
       window._allBookings=all;
       document.getElementById('ds-b').textContent=all.length;
       document.getElementById('ds-b-new').textContent=nc+' جديدة';
@@ -908,11 +922,12 @@ function initApp(){
 
   window._reloadMessages = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/messages'));
+      const token=await window._getAuthToken();
+      const res=await fetch('https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/messages.json?auth='+token);
+      const data=await res.json();
       const all=[];let nc=0;
-      if(snap.exists())snap.forEach(c=>{const v={id:c.key,...c.val()};all.push(v);if(v.status==='new')nc++;});
-      all.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      if(data&&typeof data==='object'){Object.entries(data).forEach(([k,v])=>{if(v&&typeof v==='object'){const item={id:k,...v};all.push(item);if(item.status==='new')nc++;}});}
+      all.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
       window._allMessages=all;
       document.getElementById('ds-m').textContent=all.length;
       document.getElementById('ds-m-new').textContent=nc+' جديدة';
@@ -926,12 +941,13 @@ function initApp(){
 
   window._reloadGallery = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/gallery'));
-      let c=0;const all=[];
-      if(snap.exists())snap.forEach(ch=>{c++;all.push({id:ch.key,...ch.val()});});
+      const token=await window._getAuthToken();
+      const res=await fetch('https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/gallery.json?auth='+token);
+      const data=await res.json();
+      const all=[];
+      if(data&&typeof data==='object'){Object.entries(data).forEach(([k,v])=>{if(v&&typeof v==='object')all.push({id:k,...v});});}
       window._allGallery=all;
-      document.getElementById('ds-g').textContent=c;
+      document.getElementById('ds-g').textContent=all.length;
       renderAdminGallery(all);
     }catch(e){console.error('gallery:',e);}
   };
@@ -968,7 +984,13 @@ function initApp(){
   setTimeout(()=>window._reloadWorkers(),1000);
 
   window._reloadServices = async function(){
-    try{const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');const snap=await _g(_r(window._db,'deltaart/services'));renderServicesTable(snap);}
+    try{
+      const token=await window._getAuthToken();
+      const res=await fetch('https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/services.json?auth='+token);
+      const data=await res.json();
+      const fakeSnap={exists:()=>!!data&&typeof data==='object',forEach:(fn)=>{if(data&&typeof data==='object')Object.entries(data).forEach(([k,v])=>fn({key:k,val:()=>v}));}};
+      renderServicesTable(fakeSnap);
+    }
     catch(e){console.error('services:',e);}
   };
   setTimeout(()=>window._reloadServices(),500);
@@ -990,11 +1012,12 @@ function initApp(){
 
   window._reloadInvoices = async function(){
     try{
-      const {ref:_r,get:_g}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-      const snap=await _g(_r(window._db,'deltaart/invoices'));
+      const token=await window._getAuthToken();
+      const res=await fetch('https://delta-art-26007-default-rtdb.firebaseio.com/deltaart/invoices.json?auth='+token);
+      const data=await res.json();
       const all=[];
-      if(snap.exists())snap.forEach(c=>all.push({id:c.key,...c.val()}));
-      all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      if(data&&typeof data==='object'){Object.entries(data).forEach(([k,v])=>{if(v&&typeof v==='object')all.push({id:k,...v});});}
+      all.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
       window._allInvoices=all;
       if(currentUserRole==='owner'){calcRevenue();renderDashInvoices(all);}
       renderInvoicesTable(all);
@@ -1671,7 +1694,7 @@ window.delGallery=async function(id){if(!confirm('حذف؟'))return;await remove
 function renderServicesTable(snap){
   const tbody=document.getElementById('services-tbody');
   if(!snap||!snap.exists()){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:24px">لا توجد خدمات</td></tr>';return;}
-  let html='';snap.forEach(c=>{const s=c.val();html+=`<tr><td style="font-size:24px">${s.icon||'🏛️'}</td><td><strong>${s.name}</strong></td><td style="color:var(--gray);max-width:300px">${s.description||''}</td><td><button class="btn-sm btn-danger" onclick="delService('${c.key}')">🗑️</button></td></tr>`;});
+  let html='';snap.forEach(c=>{const s=c.val();const eid=c.key;window['_svc_'+eid]={icon:s.icon||'🏛️',name:s.name||'',description:s.description||''};html+=`<tr><td style="font-size:24px">${s.icon||'🏛️'}</td><td><strong>${s.name}</strong></td><td style="color:var(--gray);max-width:300px">${s.description||''}</td><td><div style="display:flex;gap:4px"><button class="btn-sm btn-outline-sm" onclick="editService('${eid}')">✏️</button><button class="btn-sm btn-danger" onclick="delService('${eid}')">🗑️</button></div></td></tr>`;});
   tbody.innerHTML=html;
 }
 window.addService=async function(){
@@ -1681,6 +1704,31 @@ window.addService=async function(){
   catch(e){showAlert(alertEl,'error','حدث خطأ');}
 };
 window.delService=async function(id){if(!confirm('حذف؟'))return;await remove(ref(db,'deltaart/services/'+id));if(typeof window._reloadServices==='function')await window._reloadServices();};
+
+window.editService=function(id){
+  const s=window['_svc_'+id]||{};
+  document.getElementById('edit-svc-id').value=id;
+  document.getElementById('edit-svc-icon').value=s.icon||'🏛️';
+  document.getElementById('edit-svc-name').value=s.name||'';
+  document.getElementById('edit-svc-desc').value=s.description||'';
+  document.getElementById('edit-svc-alert').className='alert';
+  openModal('edit-service-modal');
+};
+
+window.saveEditService=async function(){
+  const id=document.getElementById('edit-svc-id').value;
+  const icon=document.getElementById('edit-svc-icon').value||'🏛️';
+  const name=document.getElementById('edit-svc-name').value.trim();
+  const description=document.getElementById('edit-svc-desc').value.trim();
+  const alertEl=document.getElementById('edit-svc-alert');
+  if(!name||!description){showAlert(alertEl,'error','ادخل الاسم والوصف');return;}
+  try{
+    await update(ref(db,'deltaart/services/'+id),{icon,name,description});
+    showAlert(alertEl,'success','✅ تم التعديل');
+    if(typeof window._reloadServices==='function')await window._reloadServices();
+    setTimeout(()=>closeModal('edit-service-modal'),1200);
+  }catch(e){showAlert(alertEl,'error','حدث خطأ');}
+};
 
 // ===== TEAM — FIX 3: render always =====
 function renderTeamTable(snap){
