@@ -215,6 +215,82 @@
   .gallery-empty {
     grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--gray);
   }
+  .gallery-item.tour-item { border-color:rgba(201,168,76,0.4); }
+  .tour-badge {
+    position:absolute; top:12px; left:12px; background:rgba(10,22,40,0.85);
+    border:1px solid rgba(201,168,76,0.5); color:var(--gold); font-size:12px; font-weight:700;
+    padding:6px 12px; border-radius:20px; display:flex; align-items:center; gap:6px; z-index:2;
+    backdrop-filter:blur(4px);
+  }
+  .tour-badge .play-dot {
+    width:8px; height:8px; border-radius:50%; background:var(--gold);
+  }
+
+  /* ===== IMMERSIVE TOUR VIEWER ===== */
+  .tour-viewer {
+    position:fixed; inset:0; background:#000; z-index:9998; display:none;
+    align-items:center; justify-content:center; overflow:hidden;
+  }
+  .tour-viewer.open { display:flex; }
+  .tour-viewer-stage { position:absolute; inset:0; }
+  .tour-slide {
+    position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease;
+  }
+  .tour-slide.active { opacity:1; z-index:1; }
+  .tour-slide img {
+    width:100%; height:100%; object-fit:cover;
+    animation:tourKenBurns 7s ease-in-out forwards;
+  }
+  .tour-slide.kb-alt img { animation-name:tourKenBurnsAlt; }
+  @keyframes tourKenBurns {
+    0%   { transform:scale(1) translate(0,0); }
+    100% { transform:scale(1.18) translate(-2%,-2%); }
+  }
+  @keyframes tourKenBurnsAlt {
+    0%   { transform:scale(1.15) translate(-2%,1%); }
+    100% { transform:scale(1) translate(0,0); }
+  }
+  .tour-vignette {
+    position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.55) 100%),
+               linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 25%);
+  }
+  .tour-topbar {
+    position:absolute; top:0; left:0; right:0; z-index:5; padding:20px 24px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .tour-title { color:var(--white); font-weight:800; font-size:18px; text-shadow:0 2px 8px rgba(0,0,0,0.6); }
+  .tour-title span { color:var(--gold); }
+  .tour-close {
+    width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2); color:var(--white); font-size:18px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px);
+    transition:background 0.2s;
+  }
+  .tour-close:hover { background:rgba(255,255,255,0.2); }
+  .tour-dots {
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%); z-index:5;
+    display:flex; gap:8px;
+  }
+  .tour-dot {
+    width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.35);
+    cursor:pointer; transition:all 0.3s; border:none; padding:0;
+  }
+  .tour-dot.active { background:var(--gold); width:24px; border-radius:6px; }
+  .tour-arrow {
+    position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+    width:48px; height:48px; border-radius:50%; background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.18); color:var(--white); font-size:20px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px);
+    transition:background 0.2s;
+  }
+  .tour-arrow:hover { background:rgba(255,255,255,0.2); }
+  .tour-arrow.prev { right:20px; }
+  .tour-arrow.next { left:20px; }
+  @media(max-width:640px){
+    .tour-arrow { width:38px; height:38px; font-size:16px; }
+    .tour-title { font-size:14px; }
+  }
 
   /* ===== WHY US ===== */
   .why-section { padding:80px 5%; background:rgba(15,31,61,0.4); }
@@ -576,12 +652,12 @@
     <div class="calc-field">
       <label>نوع الخدمة</label>
       <select id="calc-type">
-        <option value="flat_basic">🥉 باقة الفلات  Basic</option>
-        <option value="flat_mid">🥈 باقة الفلات  Premium</option>
-        <option value="flat_prem">🥇 باقة الفلات Platinum</option>
-        <option value="nur_basic">🥉 باقة بيت النور  Basic</option>
-        <option value="nur_mid">🥈 باقة بيت النور  Premium</option>
-        <option value="nur_prem">🥇 باقة بيت النور Platinum</option>
+        <option value="flat_basic">🥉 باقة الفلات راحة</option>
+        <option value="flat_mid">🥈 باقة الفلات تميز</option>
+        <option value="flat_prem">🥇 باقة الفلات فخامة</option>
+        <option value="nur_basic">🥉 باقة بيت النور راحة</option>
+        <option value="nur_mid">🥈 باقة بيت النور تميز</option>
+        <option value="nur_prem">🥇 باقة بيت النور فخامة</option>
       </select>
     </div>
     <div class="calc-result" id="calc-result">
@@ -622,6 +698,18 @@
     </div>
   </div>
 </section>
+
+<div class="tour-viewer" id="tour-viewer">
+  <div class="tour-viewer-stage" id="tour-stage"></div>
+  <div class="tour-vignette"></div>
+  <div class="tour-topbar">
+    <div class="tour-title">دلتا <span>آرت</span> — <span id="tour-title-text"></span></div>
+    <button class="tour-close" onclick="closeTour()">✕</button>
+  </div>
+  <button class="tour-arrow prev" onclick="tourPrev()">›</button>
+  <button class="tour-arrow next" onclick="tourNext()">‹</button>
+  <div class="tour-dots" id="tour-dots"></div>
+</div>
 
 <!-- Why Us -->
 <section class="why-section" id="about">
@@ -883,7 +971,16 @@ async function loadStats() {
 // Load gallery
 let allGalleryItems = [];
 function loadGallery() {
+  // Safety net: if the real-time connection never responds (dead network, etc.)
+  // don't leave the visitor staring at an infinite spinner — show a retry option.
+  const galleryTimeout = setTimeout(() => {
+    const grid = document.getElementById('gallery-grid');
+    if (grid && grid.querySelector('#gallery-loading')) {
+      grid.innerHTML = `<div class="gallery-empty"><p style="font-size:15px">تعذر تحميل الأعمال — تأكد من اتصال الإنترنت</p><button onclick="location.reload()" style="margin-top:12px;background:var(--gold);color:var(--navy);border:none;padding:10px 24px;border-radius:8px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif">🔄 إعادة المحاولة</button></div>`;
+    }
+  }, 10000);
   onValue(ref(db, 'deltaart/gallery'), (snap) => {
+    clearTimeout(galleryTimeout);
     const grid = document.getElementById('gallery-grid');
     grid.innerHTML = '';
     if (!snap.exists()) {
@@ -906,13 +1003,115 @@ window.renderGallery = function(items) {
     grid.innerHTML = `<div class="gallery-empty"><p>لا توجد صور في هذه الفئة</p></div>`;
     return;
   }
-  grid.innerHTML = items.map(item => `
-    <div class="gallery-item">
-      <img src="${item.url}" alt="${item.title||''}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F1F3D/C9A84C?text=دلتا+آرت'">
-      <div class="gallery-overlay"><span>${item.title||''}</span></div>
-    </div>
-  `).join('');
+  // Group items that share a non-empty "project" field into one tour card
+  const groups = [];
+  const seenProjects = {};
+  items.forEach(item => {
+    const proj = (item.project || '').trim();
+    if (proj) {
+      if (seenProjects[proj] === undefined) {
+        seenProjects[proj] = groups.length;
+        groups.push({ isTour: true, project: proj, items: [item] });
+      } else {
+        groups[seenProjects[proj]].items.push(item);
+      }
+    } else {
+      groups.push({ isTour: false, items: [item] });
+    }
+  });
+  window._tourGroups = groups;
+  grid.innerHTML = groups.map((g, gi) => {
+    const cover = g.items[0];
+    if (g.isTour && g.items.length > 1) {
+      return `
+      <div class="gallery-item tour-item" onclick="openTour(${gi})">
+        <img src="${cover.url}" alt="${g.project||''}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F1F3D/C9A84C?text=دلتا+آرت'">
+        <div class="tour-badge"><span class="play-dot"></span> ${g.items.length} صور — جولة داخل المكان</div>
+        <div class="gallery-overlay"><span>${g.project}</span></div>
+      </div>`;
+    }
+    return `
+      <div class="gallery-item">
+        <img src="${cover.url}" alt="${cover.title||''}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/0F1F3D/C9A84C?text=دلتا+آرت'">
+        <div class="gallery-overlay"><span>${cover.title||''}</span></div>
+      </div>`;
+  }).join('');
 }
+
+// ===== IMMERSIVE TOUR VIEWER =====
+window._tourIndex = 0;
+window._tourItems = [];
+window._tourAutoplayTimer = null;
+
+window.openTour = function(groupIndex) {
+  const group = (window._tourGroups || [])[groupIndex];
+  if (!group) return;
+  window._tourItems = group.items;
+  window._tourIndex = 0;
+  document.getElementById('tour-title-text').textContent = group.project || '';
+  renderTourDots();
+  showTourSlide(0);
+  document.getElementById('tour-viewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  startTourAutoplay();
+};
+
+window.closeTour = function() {
+  document.getElementById('tour-viewer').classList.remove('open');
+  document.body.style.overflow = '';
+  stopTourAutoplay();
+  document.getElementById('tour-stage').innerHTML = '';
+};
+
+function renderTourDots() {
+  const dotsEl = document.getElementById('tour-dots');
+  dotsEl.innerHTML = window._tourItems.map((_, i) =>
+    `<button class="tour-dot ${i===0?'active':''}" onclick="tourGoTo(${i})"></button>`
+  ).join('');
+}
+
+function showTourSlide(idx) {
+  const stage = document.getElementById('tour-stage');
+  const item = window._tourItems[idx];
+  if (!item) return;
+  const kbClass = idx % 2 === 0 ? '' : 'kb-alt';
+  stage.innerHTML = `<div class="tour-slide active"><img src="${item.url}" class="${kbClass}" alt="${item.title||''}"></div>`;
+  document.querySelectorAll('.tour-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  window._tourIndex = idx;
+}
+
+window.tourGoTo = function(idx) {
+  showTourSlide(idx);
+  restartTourAutoplay();
+};
+window.tourNext = function() {
+  const next = (window._tourIndex + 1) % window._tourItems.length;
+  showTourSlide(next);
+  restartTourAutoplay();
+};
+window.tourPrev = function() {
+  const prev = (window._tourIndex - 1 + window._tourItems.length) % window._tourItems.length;
+  showTourSlide(prev);
+  restartTourAutoplay();
+};
+function startTourAutoplay() {
+  stopTourAutoplay();
+  window._tourAutoplayTimer = setInterval(() => {
+    const next = (window._tourIndex + 1) % window._tourItems.length;
+    showTourSlide(next);
+  }, 5000);
+}
+function restartTourAutoplay() { startTourAutoplay(); }
+function stopTourAutoplay() {
+  if (window._tourAutoplayTimer) { clearInterval(window._tourAutoplayTimer); window._tourAutoplayTimer = null; }
+}
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('tour-viewer').classList.contains('open')) return;
+  if (e.key === 'Escape') closeTour();
+  if (e.key === 'ArrowLeft') tourNext();
+  if (e.key === 'ArrowRight') tourPrev();
+});
+
 
 window.filterGallery = function(cat, btn) {
   document.querySelectorAll('.gallery-tab').forEach(b => b.classList.remove('active'));
@@ -942,6 +1141,15 @@ async function loadServices() {
 }
 
 // Send message
+// Safety net: don't let a stalled connection leave a form stuck forever —
+// if a write takes too long, surface an error so the visitor can retry.
+function withTimeout(promise, ms=15000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+  ]);
+}
+
 window.sendMessage = async function() {
   const name = document.getElementById('msg-name').value.trim();
   const phone = document.getElementById('msg-phone').value.trim();
@@ -950,10 +1158,10 @@ window.sendMessage = async function() {
   const msgEl = document.getElementById('form-msg');
   if (!name || !phone) { showMsg(msgEl,'error','يرجى إدخال الاسم ورقم الهاتف'); return; }
   try {
-    await push(ref(db,'deltaart/messages'), { name, phone, service, text, date: new Date().toISOString(), status:'new' });
+    await withTimeout(push(ref(db,'deltaart/messages'), { name, phone, service, text, date: new Date().toISOString(), status:'new' }));
     showMsg(msgEl,'success','✅ تم إرسال رسالتك! سنتواصل معك قريباً');
     ['msg-name','msg-phone','msg-text'].forEach(id => document.getElementById(id).value='');
-  } catch(e) { showMsg(msgEl,'error','حدث خطأ، حاول مجدداً'); }
+  } catch(e) { showMsg(msgEl,'error','حدث خطأ، تأكد من الإنترنت وحاول مجدداً'); }
 }
 
 // Submit booking
@@ -967,10 +1175,10 @@ window.submitBooking = async function() {
   const msgEl = document.getElementById('book-msg');
   if (!name || !phone) { showMsg(msgEl,'error','يرجى إدخال الاسم ورقم الهاتف'); return; }
   try {
-    await push(ref(db,'deltaart/bookings'), { name, phone, address, type, time, notes, date: new Date().toISOString(), status:'pending' });
+    await withTimeout(push(ref(db,'deltaart/bookings'), { name, phone, address, type, time, notes, date: new Date().toISOString(), status:'pending' }));
     showMsg(msgEl,'success','✅ تم تسجيل حجزك! سنتصل بك لتأكيد الموعد');
     setTimeout(()=>closeModal('booking-modal'), 2000);
-  } catch(e) { showMsg(msgEl,'error','حدث خطأ، حاول مجدداً'); }
+  } catch(e) { showMsg(msgEl,'error','حدث خطأ، تأكد من الإنترنت وحاول مجدداً'); }
 }
 
 function showMsg(el, type, text) {
