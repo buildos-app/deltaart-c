@@ -32,6 +32,7 @@ body{font-family:'Cairo',sans-serif;background:var(--navy);color:var(--white);di
 .role-manager{background:rgba(59,130,246,0.2);color:#3B82F6;}
 .role-employee{background:rgba(34,197,94,0.2);color:#22C55E;}
 .role-worker{background:rgba(136,153,170,0.2);color:var(--gray);}
+.role-content_manager{background:rgba(168,85,247,0.2);color:#A855F7;}
 .logout-btn{margin-top:10px;width:100%;padding:9px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#EF4444;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.3s;}
 .logout-btn:hover{background:rgba(239,68,68,0.2);}
 
@@ -399,7 +400,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
       </div>
       <div class="panel">
         <div class="panel-header"><h3>🔨 العمال (بدون أكونت)</h3><span style="font-size:12px;color:var(--gray)">للحضور والغياب فقط</span></div>
-        <table><thead><tr><th>الاسم</th><th>الهاتف</th><th>الراتب الشهري</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
+        <table><thead><tr><th>الاسم</th><th>الهاتف</th><th>الراتب الأسبوعي</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
         <tbody id="workers-tbody"></tbody></table>
       </div>
     </div>
@@ -607,7 +608,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <p style="color:var(--gray);font-size:13px;margin-bottom:20px">العامل ده هيتسجل في الحضور والغياب بس — مش هيقدر يدخل على اللوحة</p>
     <div class="ff"><label>اسم العامل *</label><input type="text" id="wk-name" placeholder="اسم العامل"></div>
     <div class="ff"><label>رقم الهاتف (اختياري)</label><input type="tel" id="wk-phone" placeholder="01XXXXXXXXX"></div>
-    <div class="ff"><label>الراتب الشهري المتفق عليه (اختياري)</label><input type="number" id="wk-salary" placeholder="0" min="0"></div>
+    <div class="ff"><label>الراتب الأسبوعي المتفق عليه (اختياري)</label><input type="number" id="wk-salary" placeholder="0" min="0"></div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="addWorker()">➕ إضافة العامل</button>
     <div id="wk-alert" class="alert"></div>
   </div>
@@ -618,7 +619,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <button class="modal-close" onclick="closeModal('worker-advances-modal')">✕</button>
     <h3>💰 سلف <span id="wa-worker-name"></span></h3>
     <div class="two-col" style="margin-bottom:16px">
-      <div class="ff"><label>الراتب الشهري المتفق عليه</label><input type="number" id="wa-salary" min="0" placeholder="0" oninput="renderWorkerAdvancesList()"></div>
+      <div class="ff"><label>الراتب الأسبوعي المتفق عليه</label><input type="number" id="wa-salary" min="0" placeholder="0" oninput="renderWorkerAdvancesList()"></div>
       <div style="display:flex;align-items:flex-end"><button class="btn-sm btn-outline-sm" style="width:100%" onclick="saveWorkerSalary()">💾 حفظ الراتب</button></div>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
@@ -644,7 +645,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     </div>
     <div style="max-height:260px;overflow-y:auto;margin-bottom:16px" id="wa-list"></div>
     <div class="inv-total-box">
-      <div class="inv-total-row"><span class="inv-total-label">الراتب الشهري</span><span id="wa-total-salary">0 جنيه</span></div>
+      <div class="inv-total-row"><span class="inv-total-label">الراتب الأسبوعي</span><span id="wa-total-salary">0 جنيه</span></div>
       <div class="inv-total-row"><span class="inv-total-label">إجمالي السلف في الفترة</span><span id="wa-total-taken" style="color:var(--red)">0 جنيه</span></div>
       <div class="inv-total-row"><span>💰 المتبقي</span><span id="wa-remaining">0 جنيه</span></div>
     </div>
@@ -708,10 +709,12 @@ tr:hover td{background:rgba(255,255,255,0.02);}
         <button class="btn-sm btn-primary" onclick="addInvServiceItem()">➕ إضافة الخدمة</button>
         <button class="btn-sm btn-outline-sm" onclick="addInvItem()">➕ بند مخصص</button>
       </div>
+      <div style="overflow-x:auto">
       <table class="inv-items-table">
         <thead><tr><th>البند / الخدمة</th><th>الكمية / المساحة</th><th>الوحدة</th><th>سعر الوحدة</th><th>الإجمالي</th><th></th></tr></thead>
         <tbody id="inv-items-tbody"></tbody>
       </table>
+      </div>
       <div class="inv-total-box">
         <div class="inv-total-row"><span class="inv-total-label">مجموع البنود</span><span id="inv-subtotal">0 جنيه</span></div>
         <div class="inv-total-row"><span class="inv-total-label">خصم</span><span><input type="number" id="inv-discount" value="0" min="0" oninput="recalcInvTotal()" style="width:80px;background:var(--navy3);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:4px 8px;color:var(--white);font-family:Cairo,sans-serif;font-size:13px;outline:none;text-align:center"> جنيه</span></div>
@@ -785,7 +788,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="ff"><label>الاسم الكامل *</label><input type="text" id="usr-name" placeholder="اسم الموظف"></div>
     <div class="ff"><label>البريد الإلكتروني *</label><input type="email" id="usr-email" placeholder="user@deltaart.com"></div>
     <div class="ff"><label>كلمة المرور *</label><div class="pass-field"><input type="password" id="usr-pass" placeholder="8 حروف على الأقل"><button class="pass-toggle" onclick="togglePass('usr-pass',this)">👁️</button></div></div>
-    <div class="ff"><label>الدور</label><select id="usr-role"><option value="manager">مدير</option><option value="employee">موظف</option></select></div>
+    <div class="ff"><label>الدور</label><select id="usr-role"><option value="manager">مدير</option><option value="employee">موظف</option><option value="content_manager">مسؤول المحتوى</option></select></div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="addUser()">➕ إضافة</button>
     <div id="usr-alert" class="alert"></div>
   </div>
@@ -798,7 +801,7 @@ tr:hover td{background:rgba(255,255,255,0.02);}
     <div class="ff"><label>الاسم الكامل *</label><input type="text" id="sa-name" placeholder="الاسم"></div>
     <div class="ff"><label>البريد الإلكتروني *</label><input type="email" id="sa-email" placeholder="email@deltaart.com"></div>
     <div class="ff"><label>كلمة المرور *</label><div class="pass-field"><input type="password" id="sa-pass" placeholder="••••••••"><button class="pass-toggle" onclick="togglePass('sa-pass',this)">👁️</button></div></div>
-    <div class="ff"><label>الدور</label><select id="sa-role"><option value="owner">صاحب الشركة</option><option value="manager">مدير</option><option value="employee">موظف</option><option value="worker">عامل</option></select></div>
+    <div class="ff"><label>الدور</label><select id="sa-role"><option value="owner">صاحب الشركة</option><option value="manager">مدير</option><option value="employee">موظف</option><option value="content_manager">مسؤول المحتوى</option><option value="worker">عامل</option></select></div>
     <button class="btn-sm btn-primary" style="width:100%" onclick="saAddAccount()">➕ إضافة</button>
     <div id="sa-add-alert" class="alert"></div>
   </div>
@@ -969,6 +972,16 @@ function setupUI(){
       <div style="margin-top:12px"><a href="index.html" target="_blank" class="nav-item" style="text-decoration:none"><span class="ni">🌐</span> الموقع</a></div>`;
     document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 كلمة المرور</button><button class="stab" onclick="switchStab('contact',this)">📞 التواصل</button><button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button><button class="stab" onclick="switchStab('prices',this)">💰 الأسعار</button>`;
     buildBottomNav([{page:'dashboard',icon:'📊',label:'الرئيسية'},{page:'bookings',icon:'📅',label:'الحجوزات'},{page:'messages',icon:'💬',label:'الرسائل'},{page:'revenue',icon:'💰',label:'الإيرادات'},{page:'clients',icon:'👤',label:'العملاء'}],true);
+  } else if(r==='content_manager'){
+    nav.innerHTML=`
+      <div class="nav-section-title">المحتوى</div>
+      <button class="nav-item active" onclick="goPage('gallery',this);closeMobileSidebar()"><span class="ni">🖼️</span> المعرض</button>
+      <button class="nav-item" onclick="goPage('visitors',this);closeMobileSidebar()"><span class="ni">👁️</span> زوار الموقع</button>
+      <div class="nav-section-title">الإعدادات</div>
+      <button class="nav-item" onclick="goPage('settings',this);closeMobileSidebar()"><span class="ni">🛠️</span> الإعدادات</button>`;
+    document.getElementById('settings-tabs').innerHTML=`<button class="stab active" onclick="switchStab('password',this)">🔑 كلمة المرور</button><button class="stab" onclick="switchStab('stats',this)">📊 الإحصائيات</button>`;
+    goPage('gallery',null);
+    buildBottomNav([{page:'gallery',icon:'🖼️',label:'المعرض'},{page:'visitors',icon:'👁️',label:'الزوار'},{page:'settings',icon:'🛠️',label:'الإعدادات'}]);
   } else {
     nav.innerHTML=`
       <div class="nav-section-title">الرئيسية</div>
@@ -1123,7 +1136,7 @@ function initApp(){
   };
   window._reloadInvoices();
 
-  if(currentUserRole==='owner')loadSettings();
+  if(currentUserRole==='owner'||currentUserRole==='content_manager')loadSettings();
   if(currentUserRole!=='superadmin')recordCheckIn();
 
   // Global refresh - reloads all data
@@ -1391,7 +1404,7 @@ tbody td{font-size:13px}
       <tbody>${rows||'<tr><td colspan="4" style="padding:16px;text-align:center;color:#999">لا يوجد سلف في هذه الفترة</td></tr>'}</tbody>
     </table>
     <div class="totals">
-      <div class="trow"><span>الراتب الشهري المتفق عليه</span><span>${salary.toLocaleString('ar-EG')} جنيه</span></div>
+      <div class="trow"><span>الراتب الأسبوعي المتفق عليه</span><span>${salary.toLocaleString('ar-EG')} جنيه</span></div>
       <div class="trow"><span>إجمالي السلف المأخوذة</span><span style="color:#dc2626">${totalTaken.toLocaleString('ar-EG')} جنيه</span></div>
       <div class="trow grand"><span>المتبقي</span><span style="color:${remaining<0?'#dc2626':'#16a34a'}">${remaining.toLocaleString('ar-EG')} جنيه</span></div>
     </div>
@@ -1583,16 +1596,18 @@ window.viewClientInvoices=function(clientId){
         </div>`:''}
         ${(inv.items||[]).length?`
         <div style="font-size:11px;color:var(--gray);margin-bottom:6px">بنود المشروع:</div>
+        <div style="overflow-x:auto">
         <table style="width:100%;border-collapse:collapse;font-size:12px">
           <tr style="color:var(--gray)"><th style="text-align:right;padding:4px">البند</th><th style="text-align:right;padding:4px">الكمية</th><th style="text-align:right;padding:4px">سعر الوحدة</th><th style="text-align:right;padding:4px">الإجمالي</th><th style="padding:4px"></th></tr>
           ${(inv.items||[]).map((item,idx)=>`<tr>
-            <td style="padding:4px"><input type="text" value="${item.name||''}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;outline:none;padding:2px"></td>
+            <td style="padding:4px"><input type="text" value="${item.name||''}" onchange="updateInvItem('${inv.id}',${idx},'name',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:100%;min-width:90px;outline:none;padding:2px"></td>
             <td style="padding:4px"><input type="number" value="${item.qty||0}" onchange="updateInvItem('${inv.id}',${idx},'qty',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:60px;outline:none;padding:2px;text-align:center"></td>
             <td style="padding:4px">${showMoney?`<input type="number" value="${item.price||0}" onchange="updateInvItem('${inv.id}',${idx},'price',this.value)" style="background:transparent;border:none;border-bottom:1px solid rgba(201,168,76,0.2);color:var(--white);font-family:Cairo,sans-serif;font-size:12px;width:80px;outline:none;padding:2px;text-align:center">`:'—'}</td>
             <td style="padding:4px;color:var(--gold);font-weight:700">${showMoney?((item.qty||0)*(item.price||0)).toLocaleString('ar-EG'):'—'}</td>
             <td style="padding:4px"><button onclick="removeInvItem('${inv.id}',${idx})" style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;border-radius:4px;cursor:pointer;padding:2px 6px;font-size:11px">✕</button></td>
           </tr>`).join('')}
         </table>
+        </div>
         <button onclick="addItemToExistingInv('${inv.id}')" class="btn-sm btn-outline-sm" style="margin-top:6px;font-size:11px;padding:4px 10px">➕ إضافة بند</button>`:''}
         ${showMoney?`
         <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-top:10px">
@@ -1849,7 +1864,12 @@ window.updateTempItem=function(i,field,val){
   if(!window._invItems[i])return;
   if(window._invItems[i].fromService&&(field==='name'||field==='price'||field==='unit'))return; // locked fields
   window._invItems[i][field]=field==='name'||field==='unit'?val:parseFloat(val)||0;
-  renderInvItemsTable();
+  const row=document.getElementById('inv-items-tbody').rows[i];
+  if(row){
+    const totalCell=row.cells[4];
+    if(totalCell)totalCell.textContent=((window._invItems[i].qty||0)*(window._invItems[i].price||0)).toLocaleString('ar-EG');
+  }
+  recalcInvTotal();
 };
 window.removeTempItem=function(i){window._invItems.splice(i,1);renderInvItemsTable();};
 window.addInvItem=function(){window._invItems.push({name:'',qty:1,unit:'م²',price:0,fromService:false});renderInvItemsTable();};
@@ -2443,7 +2463,7 @@ function statusClass(s){return{pending:'badge-yellow',confirmed:'badge-blue',don
 function statusLabel(s){return{pending:'قيد الانتظار',confirmed:'مؤكدة',done:'منتهية',cancelled:'ملغية'}[s]||s;}
 function catLabel(c){return{ceiling:'أسقف',lighting:'إضاءة',partition:'فواصل','3d':'ثلاثي الأبعاد',other:'أخرى'}[c]||c;}
 function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('ar-EG');}catch(e){return d;}}
-function roleLabelAr(r){return{superadmin:'SUPER ADMIN',owner:'صاحب الشركة',manager:'مدير',employee:'موظف',worker:'عامل'}[r]||r;}
+function roleLabelAr(r){return{superadmin:'SUPER ADMIN',owner:'صاحب الشركة',manager:'مدير',employee:'موظف',worker:'عامل',content_manager:'مسؤول المحتوى'}[r]||r;}
 function showAlert(el,type,text){el.className=`alert alert-${type==='success'?'success':'error'} show`;el.textContent=text;setTimeout(()=>el.classList.remove('show'),3500);}
 </script>
 
