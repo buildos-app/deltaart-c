@@ -226,47 +226,34 @@
     width:8px; height:8px; border-radius:50%; background:var(--gold);
   }
 
-  /* ===== IMMERSIVE INTERACTIVE VIEWER ===== */
+  /* ===== IMMERSIVE TOUR VIEWER ===== */
   .tour-viewer {
     position:fixed; inset:0; background:#000; z-index:9998; display:none;
-    align-items:center; justify-content:center; overflow:hidden; touch-action:none;
+    align-items:center; justify-content:center; overflow:hidden;
   }
   .tour-viewer.open { display:flex; }
-  .tour-viewer-stage { position:absolute; inset:0; overflow:hidden; }
+  .tour-viewer-stage { position:absolute; inset:0; }
   .tour-slide {
-    position:absolute; inset:0; opacity:0; transition:opacity 0.6s ease; overflow:hidden;
+    position:absolute; inset:0; opacity:0; transition:opacity 1.4s ease;
   }
   .tour-slide.active { opacity:1; z-index:1; }
-  /* Regular photo: zoomed in, image itself is translated (not scaled by CSS animation) —
-     movement is driven live by JS to track mouse position / device tilt. */
-  .tour-slide.type-regular img {
-    position:absolute; top:50%; left:50%; width:132%; height:132%; max-width:none;
-    object-fit:cover; transform:translate(-50%,-50%);
-    will-change:transform;
+  .tour-slide img {
+    width:100%; height:100%; object-fit:cover;
+    animation:tourKenBurns 7s ease-in-out forwards;
   }
-  /* Panorama photo: wide strip, panned horizontally to simulate looking around a full space. */
-  .tour-slide.type-panorama img {
-    position:absolute; top:50%; left:50%; height:135%; width:auto; max-width:none;
-    object-fit:cover; transform:translate(-50%,-50%);
-    will-change:transform;
+  .tour-slide.kb-alt img { animation-name:tourKenBurnsAlt; }
+  @keyframes tourKenBurns {
+    0%   { transform:scale(1) translate(0,0); }
+    100% { transform:scale(1.18) translate(-2%,-2%); }
   }
-  .tour-hint {
-    position:absolute; bottom:80px; left:50%; transform:translateX(-50%); z-index:6;
-    background:rgba(10,22,40,0.75); border:1px solid rgba(201,168,76,0.3); color:var(--white);
-    font-size:13px; padding:10px 20px; border-radius:30px; backdrop-filter:blur(6px);
-    display:flex; align-items:center; gap:8px; transition:opacity 0.6s ease; pointer-events:none;
-  }
-  .tour-hint.hidden { opacity:0; }
-  .tour-enable-motion {
-    position:absolute; bottom:80px; left:50%; transform:translateX(-50%); z-index:6;
-    background:var(--gold); color:var(--navy); font-weight:700; font-size:13px; padding:10px 22px;
-    border-radius:30px; border:none; cursor:pointer; display:none; align-items:center; gap:8px;
-    font-family:'Cairo',sans-serif;
+  @keyframes tourKenBurnsAlt {
+    0%   { transform:scale(1.15) translate(-2%,1%); }
+    100% { transform:scale(1) translate(0,0); }
   }
   .tour-vignette {
     position:absolute; inset:0; z-index:2; pointer-events:none;
-    background:radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.5) 100%),
-               linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 22%);
+    background:radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.55) 100%),
+               linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 25%);
   }
   .tour-topbar {
     position:absolute; top:0; left:0; right:0; z-index:5; padding:20px 24px;
@@ -722,8 +709,6 @@
   <button class="tour-arrow prev" onclick="tourPrev()">›</button>
   <button class="tour-arrow next" onclick="tourNext()">‹</button>
   <div class="tour-dots" id="tour-dots"></div>
-  <div class="tour-hint" id="tour-hint">🖱️ حرك الماوس — أو حرك موبايلك — لتتفرج حواليك</div>
-  <button class="tour-enable-motion" id="tour-enable-motion" onclick="enableTourMotion()">🔓 فعّل حركة الموبايل</button>
 </div>
 
 <!-- Why Us -->
@@ -1056,11 +1041,7 @@ window.renderGallery = function(items) {
 // ===== IMMERSIVE TOUR VIEWER =====
 window._tourIndex = 0;
 window._tourItems = [];
-// Live interactive look-around state
-window._tourTarget = { x: 0, y: 0 };   // -1..1, where the user wants to look
-window._tourCurrent = { x: 0, y: 0 };  // eased position actually applied (for smoothness)
-window._tourRAF = null;
-window._tourMotionBound = false;
+window._tourAutoplayTimer = null;
 
 window.openTour = function(groupIndex) {
   const group = (window._tourGroups || [])[groupIndex];
@@ -1072,18 +1053,13 @@ window.openTour = function(groupIndex) {
   showTourSlide(0);
   document.getElementById('tour-viewer').classList.add('open');
   document.body.style.overflow = 'hidden';
-  startTourInteraction();
-  // Hint fades out after a few seconds or on first movement
-  const hint = document.getElementById('tour-hint');
-  hint.classList.remove('hidden');
-  clearTimeout(window._tourHintTimer);
-  window._tourHintTimer = setTimeout(() => hint.classList.add('hidden'), 4000);
+  startTourAutoplay();
 };
 
 window.closeTour = function() {
   document.getElementById('tour-viewer').classList.remove('open');
   document.body.style.overflow = '';
-  stopTourInteraction();
+  stopTourAutoplay();
   document.getElementById('tour-stage').innerHTML = '';
 };
 
@@ -1098,107 +1074,37 @@ function showTourSlide(idx) {
   const stage = document.getElementById('tour-stage');
   const item = window._tourItems[idx];
   if (!item) return;
-  const isPano = item.type === 'panorama';
-  stage.innerHTML = `<div class="tour-slide active type-${isPano?'panorama':'regular'}"><img id="tour-active-img" src="${item.url}" alt="${item.title||''}"></div>`;
+  const kbClass = idx % 2 === 0 ? '' : 'kb-alt';
+  stage.innerHTML = `<div class="tour-slide active"><img src="${item.url}" class="${kbClass}" alt="${item.title||''}"></div>`;
   document.querySelectorAll('.tour-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
   window._tourIndex = idx;
-  // Reset look position for the new photo
-  window._tourTarget = { x: 0, y: 0 };
-  window._tourCurrent = { x: 0, y: 0 };
 }
 
-window.tourGoTo = function(idx) { showTourSlide(idx); };
-window.tourNext = function() { showTourSlide((window._tourIndex + 1) % window._tourItems.length); };
-window.tourPrev = function() { showTourSlide((window._tourIndex - 1 + window._tourItems.length) % window._tourItems.length); };
-
-// ---- Live interaction: mouse on desktop, device tilt on mobile ----
-function handleTourMouseMove(e) {
-  const nx = (e.clientX / window.innerWidth) * 2 - 1;   // -1..1
-  const ny = (e.clientY / window.innerHeight) * 2 - 1;  // -1..1
-  window._tourTarget.x = nx;
-  window._tourTarget.y = ny;
-  hideTourHintOnce();
-}
-let _tourOrientBase = null;
-function handleTourOrientation(e) {
-  if (e.beta === null || e.gamma === null) return;
-  // Use the first reading as a neutral baseline (however the user is holding the phone)
-  if (!_tourOrientBase) _tourOrientBase = { beta: e.beta, gamma: e.gamma };
-  const dBeta = e.beta - _tourOrientBase.beta;     // front/back tilt -> look up/down
-  const dGamma = e.gamma - _tourOrientBase.gamma;  // left/right tilt -> look left/right
-  window._tourTarget.x = Math.max(-1, Math.min(1, dGamma / 30));
-  window._tourTarget.y = Math.max(-1, Math.min(1, dBeta / 30));
-  hideTourHintOnce();
-}
-function hideTourHintOnce() {
-  const hint = document.getElementById('tour-hint');
-  if (hint && !hint.classList.contains('hidden')) hint.classList.add('hidden');
-}
-
-function tourAnimationLoop() {
-  // Smoothly ease current position toward the target (buttery movement, no jitter)
-  const ease = 0.08;
-  window._tourCurrent.x += (window._tourTarget.x - window._tourCurrent.x) * ease;
-  window._tourCurrent.y += (window._tourTarget.y - window._tourCurrent.y) * ease;
-  const img = document.getElementById('tour-active-img');
-  if (img) {
-    const slide = img.parentElement;
-    const isPano = slide && slide.classList.contains('type-panorama');
-    if (isPano) {
-      // Wide pan across the whole panorama strip + a touch of vertical movement
-      const panX = -window._tourCurrent.x * 22; // %
-      const panY = -window._tourCurrent.y * 6;
-      img.style.transform = `translate(calc(-50% + ${panX}%), calc(-50% + ${panY}%))`;
-    } else {
-      // Subtle look-around within the zoomed photo
-      const panX = -window._tourCurrent.x * 7;
-      const panY = -window._tourCurrent.y * 7;
-      img.style.transform = `translate(calc(-50% + ${panX}%), calc(-50% + ${panY}%))`;
-    }
-  }
-  window._tourRAF = requestAnimationFrame(tourAnimationLoop);
-}
-
-function startTourInteraction() {
-  stopTourInteraction();
-  window.addEventListener('mousemove', handleTourMouseMove);
-  bindTourDeviceOrientation();
-  window._tourRAF = requestAnimationFrame(tourAnimationLoop);
-}
-function stopTourInteraction() {
-  window.removeEventListener('mousemove', handleTourMouseMove);
-  if (window._tourRAF) { cancelAnimationFrame(window._tourRAF); window._tourRAF = null; }
-  _tourOrientBase = null;
-}
-function bindTourDeviceOrientation() {
-  if (typeof DeviceOrientationEvent === 'undefined') return;
-  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-    // iOS 13+ requires an explicit user gesture to grant motion access.
-    // openTour() is itself triggered by a tap, so this call is allowed here.
-    DeviceOrientationEvent.requestPermission().then(state => {
-      if (state === 'granted') {
-        window.addEventListener('deviceorientation', handleTourOrientation);
-        document.getElementById('tour-enable-motion').style.display = 'none';
-      } else {
-        document.getElementById('tour-enable-motion').style.display = 'flex';
-      }
-    }).catch(() => { document.getElementById('tour-enable-motion').style.display = 'flex'; });
-  } else {
-    // Android / other browsers — no permission prompt needed
-    window.addEventListener('deviceorientation', handleTourOrientation);
-  }
-}
-window.enableTourMotion = function() {
-  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-    DeviceOrientationEvent.requestPermission().then(state => {
-      if (state === 'granted') {
-        window.addEventListener('deviceorientation', handleTourOrientation);
-        document.getElementById('tour-enable-motion').style.display = 'none';
-      }
-    }).catch(()=>{});
-  }
+window.tourGoTo = function(idx) {
+  showTourSlide(idx);
+  restartTourAutoplay();
 };
-
+window.tourNext = function() {
+  const next = (window._tourIndex + 1) % window._tourItems.length;
+  showTourSlide(next);
+  restartTourAutoplay();
+};
+window.tourPrev = function() {
+  const prev = (window._tourIndex - 1 + window._tourItems.length) % window._tourItems.length;
+  showTourSlide(prev);
+  restartTourAutoplay();
+};
+function startTourAutoplay() {
+  stopTourAutoplay();
+  window._tourAutoplayTimer = setInterval(() => {
+    const next = (window._tourIndex + 1) % window._tourItems.length;
+    showTourSlide(next);
+  }, 5000);
+}
+function restartTourAutoplay() { startTourAutoplay(); }
+function stopTourAutoplay() {
+  if (window._tourAutoplayTimer) { clearInterval(window._tourAutoplayTimer); window._tourAutoplayTimer = null; }
+}
 document.addEventListener('keydown', (e) => {
   if (!document.getElementById('tour-viewer').classList.contains('open')) return;
   if (e.key === 'Escape') closeTour();
@@ -1295,12 +1201,10 @@ async function loadDynamicSettings() {
 
     // Update WhatsApp links
     if (s.contact && s.contact.whatsapp) {
-      const waDigits = String(s.contact.whatsapp).replace(/[^0-9]/g, ''); // strip spaces, dashes, +, etc.
-      if (waDigits) {
-        document.querySelectorAll('a[href^="https://wa.me/"]').forEach(el => {
-          el.href = 'https://wa.me/' + waDigits;
-        });
-      }
+      const wa = s.contact.whatsapp;
+      document.querySelectorAll('a[href^="https://wa.me/"]').forEach(el => {
+        el.href = 'https://wa.me/' + wa;
+      });
     }
     // Update phone links
     if (s.contact && s.contact.phone) {
